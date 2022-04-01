@@ -17,27 +17,16 @@ public abstract class BookPage {
         return true;
     }
 
-    public abstract void renderLeft(MinecraftClient minecraft, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float tickDelta);
+    public abstract void renderLeft(MinecraftClient minecraft, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta);
 
-    public abstract void renderRight(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float tickDelta);
+    public abstract void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta);
 
-    public void renderBackgroundLeft(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float tickDelta) {
-        int guiLeft = guiLeft();
-        int guiTop = guiTop();
-        ProgressionBookScreen.renderTexture(TEXTURE, matrices, guiLeft, guiTop, 1, 1, ProgressionBookScreen.screen.bookWidth - 147, ProgressionBookScreen.screen.bookHeight, 512, 512);
+    public void renderBackgroundLeft(MinecraftClient client, MatrixStack matrices, int guiLeft, int guiTop, int mouseX, int mouseY, float tickDelta) {
+        ProgressionBookScreen.renderTexture(TEXTURE, matrices, guiLeft, guiTop, 1, 1, 146, 189, 512, 512);
     }
 
-    public void renderBackgroundRight(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float tickDelta) {
-        int guiLeft = guiLeft();
-        int guiTop = guiTop();
-        ProgressionBookScreen.renderTexture(TEXTURE, matrices, guiLeft + 147, guiTop, 148, 1, ProgressionBookScreen.screen.bookWidth - 147, ProgressionBookScreen.screen.bookHeight, 512, 512);
+    public void renderBackgroundRight(MinecraftClient client, MatrixStack matrices, int guiLeft, int guiTop, int mouseX, int mouseY, float tickDelta) {
+        ProgressionBookScreen.renderTexture(TEXTURE, matrices, guiLeft + 147, guiTop, 147, 1, 146, 189, 512, 512);
     }
 
-    public int guiLeft() {
-        return (ProgressionBookScreen.screen.width - ProgressionBookScreen.screen.bookWidth) / 2;
-    }
-
-    public int guiTop() {
-        return (ProgressionBookScreen.screen.height - ProgressionBookScreen.screen.bookHeight) / 2;
-    }
 }

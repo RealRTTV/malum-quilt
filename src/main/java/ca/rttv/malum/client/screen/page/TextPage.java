@@ -19,16 +19,12 @@ public class TextPage extends BookPage {
     }
 
     @Override
-    public void renderLeft(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float partialTicks) {
-        int guiLeft = guiLeft();
-        int guiTop = guiTop();
+    public void renderLeft(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float partialTicks) {
         ProgressionBookScreen.renderWrappingText(matrices, translationKey(), guiLeft + 16, guiTop + 10, 120);
     }
 
     @Override
-    public void renderRight(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float partialTicks) {
-        int guiLeft = guiLeft();
-        int guiTop = guiTop();
+    public void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float partialTicks) {
         ProgressionBookScreen.renderWrappingText(matrices, translationKey(), guiLeft + 158, guiTop + 10, 120);
     }
 }

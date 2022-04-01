@@ -27,18 +27,14 @@ public class HeadlineTextPage extends BookPage {
     }
 
     @Override
-    public void renderLeft(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float tickDelta) {
-        int guiLeft = guiLeft();
-        int guiTop = guiTop();
+    public void renderLeft(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
         Text text = new TranslatableText(this.headlineTranslationKey());
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 75 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 10);
         ProgressionBookScreen.renderWrappingText(matrices, translationKey(), guiLeft + 16, guiTop + 31, 120);
     }
 
     @Override
-    public void renderRight(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float tickDelta) {
-        int guiLeft = guiLeft();
-        int guiTop = guiTop();
+    public void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
         Text text = new TranslatableText(this.headlineTranslationKey());
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 218 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 10);
         ProgressionBookScreen.renderWrappingText(matrices, translationKey(), guiLeft + 158, guiTop + 31, 120);

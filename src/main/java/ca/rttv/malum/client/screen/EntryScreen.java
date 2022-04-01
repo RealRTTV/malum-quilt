@@ -29,26 +29,28 @@ public class EntryScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float tickDelta) {
         BookEntry openEntry = openObject.entry;
         renderBackground(matrices);
-        super.render(matrices, mouseX, mouseY, partialTicks);
+        super.render(matrices, mouseX, mouseY, tickDelta);
         int guiLeft = (width - bookWidth) / 2;
         int guiTop = (height - bookHeight) / 2;
-        ProgressionBookScreen.renderTexture(BOOK_TEXTURE, matrices, guiLeft, guiTop, 1, 1, bookWidth, bookHeight, 512, 512);
+        ProgressionBookScreen.renderTexture(BOOK_TEXTURE, matrices, guiLeft, guiTop, 1, 1, bookWidth - 1, bookHeight - 1, 512, 512);
         if (!openEntry.pages.isEmpty()) {
             int openPages = grouping * 2;
             for (int i = openPages; i < openPages + 2; i++) {
                 if (i < openEntry.pages.size()) {
                     BookPage page = openEntry.pages.get(i);
                     if (i % 2 == 0) {
-                        page.renderBackgroundLeft(client, matrices, ProgressionBookScreen.screen.xOffset, ProgressionBookScreen.screen.yOffset, mouseX, mouseY, partialTicks);
+                        page.renderBackgroundLeft(client, matrices, guiLeft, guiTop, mouseX, mouseY, tickDelta);
                     } else {
-                        page.renderBackgroundRight(client, matrices, ProgressionBookScreen.screen.xOffset, ProgressionBookScreen.screen.yOffset, mouseX, mouseY, partialTicks);
+                        page.renderBackgroundRight(client, matrices, guiLeft, guiTop, mouseX, mouseY, tickDelta);
                     }
                 }
             }
         }
+
+        // buttons
         ProgressionBookScreen.renderTexture(BOOK_TEXTURE, matrices, guiLeft - 13, guiTop + 150, 1, 193, 28, 18, 512, 512);
         if (ProgressionBookScreen.isHovering(mouseX, mouseY, guiLeft - 13, guiTop + 150, 28, 18)) {
             ProgressionBookScreen.renderTexture(BOOK_TEXTURE, matrices, guiLeft - 13, guiTop + 150, 1, 232, 28, 18, 512, 512);
@@ -69,9 +71,9 @@ public class EntryScreen extends Screen {
                 if (i < openEntry.pages.size()) {
                     BookPage page = openEntry.pages.get(i);
                     if (i % 2 == 0) {
-                        page.renderLeft(client, matrices, ProgressionBookScreen.screen.xOffset, ProgressionBookScreen.screen.yOffset, mouseX, mouseY, partialTicks);
+                        page.renderLeft(client, matrices, guiTop, guiLeft, mouseX, mouseY, tickDelta);
                     } else {
-                        page.renderRight(client, matrices, ProgressionBookScreen.screen.xOffset, ProgressionBookScreen.screen.yOffset, mouseX, mouseY, partialTicks);
+                        page.renderRight(client, matrices, guiTop, guiLeft, mouseX, mouseY, tickDelta);
                     }
                 }
             }
