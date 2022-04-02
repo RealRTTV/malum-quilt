@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class RenderHelper {
+public final class RenderHelper {
     public static final int FULL_BRIGHT = 15728880;
 
     public static Shader getShader(RenderLayer type) {

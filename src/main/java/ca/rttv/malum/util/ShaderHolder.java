@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ShaderHolder {
+public final class ShaderHolder {
     public Shader instance;
     public final RenderPhase.Shader phase = new RenderPhase.Shader(getInstance());
     public ArrayList<String> uniforms;

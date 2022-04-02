@@ -28,6 +28,19 @@ public class EntryScreen extends Screen {
         super(new TranslatableText("malum.gui.entry.title"));
     }
 
+    public static void openScreen(EntryObject newObject) {
+        MinecraftClient.getInstance().setScreen(getInstance(newObject));
+        screen.playSound();
+    }
+
+    public static EntryScreen getInstance(EntryObject newObject) {
+        if (screen == null || !newObject.equals(openObject)) {
+            screen = new EntryScreen();
+            openObject = newObject;
+        }
+        return screen;
+    }
+
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float tickDelta) {
         BookEntry openEntry = openObject.entry;
@@ -148,18 +161,5 @@ public class EntryScreen extends Screen {
     public void playSound() {
         PlayerEntity player = MinecraftClient.getInstance().player;
         player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.PLAYERS, 1.0f, player.world.random.nextFloat() * 0.4F + 0.8F);
-    }
-
-    public static void openScreen(EntryObject newObject) {
-        MinecraftClient.getInstance().setScreen(getInstance(newObject));
-        screen.playSound();
-    }
-
-    public static EntryScreen getInstance(EntryObject newObject) {
-        if (screen == null || !newObject.equals(openObject)) {
-            screen = new EntryScreen();
-            openObject = newObject;
-        }
-        return screen;
     }
 }
