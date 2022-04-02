@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.hud.BackgroundHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -16,7 +17,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
@@ -552,12 +552,12 @@ public class ProgressionBookScreen extends Screen {
         int g = (int) MathHelper.lerp(glow, 61, 39);
         int b = (int) MathHelper.lerp(glow, 183, 228);
 
-        textRenderer.draw(matrices, text, x - 1, y, ColorHelper.Argb.getArgb(96, 255, 210, 243));
-        textRenderer.draw(matrices, text, x + 1, y, ColorHelper.Argb.getArgb(128, 240, 131, 232));
-        textRenderer.draw(matrices, text, x, y - 1, ColorHelper.Argb.getArgb(128, 255, 183, 236));
-        textRenderer.draw(matrices, text, x, y + 1, ColorHelper.Argb.getArgb(96, 236, 110, 226));
+        textRenderer.draw(matrices, text, x - 1, y, BackgroundHelper.ColorMixer.getArgb(96, 255, 210, 243));
+        textRenderer.draw(matrices, text, x + 1, y, BackgroundHelper.ColorMixer.getArgb(128, 240, 131, 232));
+        textRenderer.draw(matrices, text, x, y - 1, BackgroundHelper.ColorMixer.getArgb(128, 255, 183, 236));
+        textRenderer.draw(matrices, text, x, y + 1, BackgroundHelper.ColorMixer.getArgb(96, 236, 110, 226));
 
-        textRenderer.draw(matrices, text, x, y, ColorHelper.Argb.getArgb(255, r, g, b));
+        textRenderer.draw(matrices, text, x, y, BackgroundHelper.ColorMixer.getArgb(255, r, g, b));
     }
 
     public static float glow(float offset) {
@@ -655,14 +655,14 @@ public class ProgressionBookScreen extends Screen {
     }
 
     @Override
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == this.client.options.inventoryKey.getDefaultKey().getCode()) {
-            close();
+        if (keyCode == this.client.options.inventoryKey.getDefaultKey().getKeyCode()) {
+            onClose();
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);

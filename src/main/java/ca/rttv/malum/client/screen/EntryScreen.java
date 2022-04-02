@@ -107,7 +107,7 @@ public class EntryScreen extends Screen {
     }
 
     @Override
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 
@@ -120,7 +120,7 @@ public class EntryScreen extends Screen {
     }
 
     @Override
-    public void close() {
+    public void onClose() {
         close(false);
     }
 
