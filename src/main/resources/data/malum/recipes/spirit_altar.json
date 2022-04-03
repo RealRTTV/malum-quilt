@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " Y ",
+    "ZXZ",
+    "XXX"
+  ],
+  "key": {
+    "Z": {
+      "tag": "forge:ingots/gold"
+    },
+    "Y": {
+      "item": "malum:processed_soulstone"
+    },
+    "X": {
+      "item": "malum:runewood_planks"
+    }
+  },
+  "result": {
+    "item": "malum:spirit_altar"
+  }
+}

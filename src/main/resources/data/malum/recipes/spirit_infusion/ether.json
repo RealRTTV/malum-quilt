@@ -1,0 +1,30 @@
+{
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "minecraft:glowstone_dust",
+    "count": 4
+  },
+  "output": {
+    "item": "malum:ether",
+    "count": 2
+  },
+  "extra_items": [
+    {
+      "item": "malum:blazing_quartz_fragment",
+      "count": 4
+    },
+    {
+      "item": "minecraft:blaze_powder",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "item": "malum:infernal_spirit",
+      "count": 4
+    },
+    {
+      "item": "malum:arcane_spirit"
+    }
+  ]
+}

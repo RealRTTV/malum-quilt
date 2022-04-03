@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "X X",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "malum:soul_stained_steel_ingot"
+    },
+    "X": {
+      "tag": "forge:string"
+    }
+  },
+  "result": {
+    "item": "malum:ornate_necklace"
+  }
+}

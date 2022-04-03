@@ -17,8 +17,9 @@ import net.minecraft.world.World;
 public class ItemStandRenderer implements BlockEntityRenderer<ItemStandBlockEntity> {
     @Override
     public void render(ItemStandBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        World world = MinecraftClient.getInstance().world;
-        ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+        final MinecraftClient client = MinecraftClient.getInstance();
+        World world = client.world;
+        ItemRenderer itemRenderer = client.getItemRenderer();
         ItemStack stack = entity.getHeldItem();
         if (!stack.isEmpty()) {
             matrices.push();

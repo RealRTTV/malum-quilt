@@ -213,7 +213,8 @@ public class SpiritHelper {
 //    }
 
 //    public static void spawnSpiritScreenParticles(Color color, Color endColor, ItemStack stack, float pXPosition, float pYPosition, ScreenParticle.RenderOrder renderOrder) {
-//        Random rand = MinecraftClient.getInstance().world.getRandom();
+//        final MinecraftClient client = MinecraftClient.getInstance();
+//        Random rand = client.world.getRandom();
 //        ParticleBuilders.create(ScreenParticleRegistry.TWINKLE)
 //                .setAlpha(0.07f, 0f)
 //                .setLifetime(10 + rand.nextInt(10))

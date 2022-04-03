@@ -1,0 +1,47 @@
+{
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "minecraft:iron_helmet",
+    "count": 1
+  },
+  "output": {
+    "item": "malum:soul_stained_steel_helmet",
+    "count": 1
+  },
+  "extra_items": [
+    {
+      "item": "malum:soul_stained_steel_ingot",
+      "count": 4
+    },
+    {
+      "item": "malum:hex_ash",
+      "count": 1
+    },
+    {
+      "item": "malum:processed_soulstone",
+      "count": 2
+    },
+    {
+      "item": "malum:twisted_rock",
+      "count": 8
+    },
+    {
+      "tag": "forge:gems/diamond",
+      "count": 1
+    }
+  ],
+  "spirits": [
+    {
+      "item": "malum:earthen_spirit",
+      "count": 8
+    },
+    {
+      "item": "malum:wicked_spirit",
+      "count": 4
+    },
+    {
+      "item": "malum:arcane_spirit",
+      "count": 2
+    }
+  ]
+}

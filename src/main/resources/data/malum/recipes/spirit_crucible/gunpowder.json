@@ -1,0 +1,17 @@
+{
+  "type": "malum:spirit_focusing",
+  "time": 300,
+  "durabilityCost": 1,
+  "input": {
+    "item": "malum:alchemical_impetus"
+  },
+  "output": {
+    "item": "minecraft:gunpowder",
+    "count": 8
+  },
+  "spirits": [
+    {
+      "item": "malum:earthen_spirit"
+    }
+  ]
+}

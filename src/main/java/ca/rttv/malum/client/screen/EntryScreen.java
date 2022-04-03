@@ -31,7 +31,8 @@ public class EntryScreen extends Screen {
     }
 
     public static void openScreen(EntryObject newObject) {
-        MinecraftClient.getInstance().setScreen(getInstance(newObject));
+        final MinecraftClient client = MinecraftClient.getInstance();
+        client.setScreen(getInstance(newObject));
         screen.playSound();
     }
 
@@ -161,7 +162,7 @@ public class EntryScreen extends Screen {
     }
 
     public void playSound() {
-        PlayerEntity player = MinecraftClient.getInstance().player;
+        PlayerEntity player = client.player;
         player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.PLAYERS, 1.0f, player.world.random.nextFloat() * 0.4F + 0.8F);
     }
 }

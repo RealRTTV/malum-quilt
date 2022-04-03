@@ -4,9 +4,10 @@
   "package": "ca.rttv.malum.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "AxeItemMixin"
   ],
   "client": [
-    "ExampleMixin"
+    "AbstractFurnaceBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

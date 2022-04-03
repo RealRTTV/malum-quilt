@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "tag": "malum:soulwood_logs"
+  },
+  "result": "malum:arcane_charcoal",
+  "experience": 0.25,
+  "cookingtime": 200
+}

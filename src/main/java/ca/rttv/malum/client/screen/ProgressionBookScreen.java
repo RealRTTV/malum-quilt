@@ -25,6 +25,7 @@ import java.util.List;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumRegistry.*;
+import static net.minecraft.item.Items.SLIME_BALL;
 import static net.minecraft.item.Items.SOUL_SAND;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
 
@@ -37,7 +38,6 @@ public class ProgressionBookScreen extends Screen {
     public static ArrayList<BookObject> objects;
     public final int parallax_width = 1024;
     public final int parallax_height = 2560;
-    public final MinecraftClient client;
     public int bookWidth = 378;
     public int bookHeight = 250;
     public int bookInsideWidth = 344;
@@ -50,7 +50,7 @@ public class ProgressionBookScreen extends Screen {
 
     protected ProgressionBookScreen() {
         super(new TranslatableText("malum.gui.book.title"));
-        client = MinecraftClient.getInstance();
+        this.client = MinecraftClient.getInstance();
         setupEntries();
         setupObjects();
     }
@@ -83,13 +83,13 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
                 .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
                 .addPage(new HeadlineTextPage("arcane_charcoal", "arcane_charcoal"))
-//                .addPage(new SmeltingBookPage(RUNEWOOD_LOG, ARCANE_CHARCOAL.asItem()))
-//                .addPage(CraftingBookPage.fullPage(BLOCK_OF_ARCANE_CHARCOAL.asItem(), ARCANE_CHARCOAL.asItem()))
-//                .addPage(new HeadlineTextPage("holy_sap", "holy_sap_a"))
-//                .addPage(new TextPage("holy_sap_b"))
-//                .addPage(new CraftingBookPage(new ItemStack(HOLY_SAPBALL.asItem(), 3), SLIME_BALL, HOLY_SAP.asItem()))
-//                .addPage(new TextPage("holy_sap_c"))
-//                .addPage(new SmeltingBookPage(HOLY_SAP.asItem(), HOLY_SYRUP.asItem()))
+                .addPage(new SmeltingBookPage(RUNEWOOD_LOG.asItem(), ARCANE_CHARCOAL))
+                .addPage(CraftingBookPage.fullPage(BLOCK_OF_ARCANE_CHARCOAL.asItem(), ARCANE_CHARCOAL))
+                .addPage(new HeadlineTextPage("holy_sap", "holy_sap_a"))
+                .addPage(new TextPage("holy_sap_b"))
+                .addPage(new CraftingBookPage(new ItemStack(HOLY_SAPBALL.asItem(), 3), SLIME_BALL, HOLY_SAP.asItem()))
+                .addPage(new TextPage("holy_sap_c"))
+                .addPage(new SmeltingBookPage(HOLY_SAP.asItem(), HOLY_SYRUP.asItem()))
                 .addModCompatPage(new TextPage("holy_sap_d"), "thermal_expansion")
         );
 /*
@@ -497,15 +497,17 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public static void renderItem(MatrixStack matrices, ItemStack stack, int posX, int posY, int mouseX, int mouseY) {
-        MinecraftClient.getInstance().getItemRenderer().renderInGuiWithOverrides(stack, posX, posY);
-        MinecraftClient.getInstance().getItemRenderer().renderGuiItemOverlay(screen.textRenderer, stack, posX, posY, null);
+        final MinecraftClient client = MinecraftClient.getInstance();
+        client.getItemRenderer().renderInGuiWithOverrides(stack, posX, posY);
+        client.getItemRenderer().renderGuiItemOverlay(screen.textRenderer, stack, posX, posY, null);
         if (isHovering(mouseX, mouseY, posX, posY, 16, 16)) {
             screen.renderTooltip(matrices, new TranslatableText(stack.getTranslationKey()), mouseX, mouseY);
         }
     }
 
     public static void renderWrappingText(MatrixStack matrices, String text, int x, int y, int w) {
-        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+        final MinecraftClient client = MinecraftClient.getInstance();
+        TextRenderer textRenderer = client.textRenderer;
         text = new TranslatableText(text).getString();
         List<String> lines = new ArrayList<>();
         String[] words = text.split(" ");
@@ -562,11 +564,13 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public static float glow(float offset) {
-        return MathHelper.sin(offset + MinecraftClient.getInstance().player.world.getTime() / 40f) / 2f + 0.5f;
+        final MinecraftClient client = MinecraftClient.getInstance();
+        return MathHelper.sin(offset + client.player.world.getTime() / 40f) / 2f + 0.5f;
     }
 
     public static void openScreen(boolean ignoreNextMouseClick) {
-        MinecraftClient.getInstance().setScreen(getInstance());
+        final MinecraftClient client = MinecraftClient.getInstance();
+        client.setScreen(getInstance());
         screen.playSound();
         screen.ignoreNextMouseInput = ignoreNextMouseClick;
     }
@@ -687,7 +691,7 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public void renderBackground(Identifier texture, MatrixStack matrices, float xModifier, float yModifier) {
-        int guiLeft = (width - bookWidth) / 2; //TODO: literally just redo this entire garbage method, please
+        int guiLeft = (width - bookWidth) / 2; //TODO: literally just redo this entire garbage method, please, no u
         int guiTop = (height - bookHeight) / 2;
         int insideLeft = guiLeft + 17;
         int insideTop = guiTop + 14;
@@ -706,7 +710,7 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public void cut() {
-        int scale = (int) MinecraftClient.getInstance().getWindow().getScaleFactor();
+        int scale = (int) client.getWindow().getScaleFactor();
         int guiLeft = (width - bookWidth) / 2;
         int guiTop = (height - bookHeight) / 2;
         int insideLeft = guiLeft + 17;
@@ -715,7 +719,7 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public void playSound() {
-        PlayerEntity playerEntity = MinecraftClient.getInstance().player;
+        PlayerEntity playerEntity = client.player;
         playerEntity.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.PLAYERS, 1.0f, 1.0f);
     }
 }

@@ -17,11 +17,11 @@ import static net.minecraft.client.render.OverlayTexture.DEFAULT_UV;
 
 @Environment(EnvType.CLIENT)
 public class ItemPedestalRenderer implements BlockEntityRenderer<ItemPedestalBlockEntity> {
-
     @Override
     public void render(ItemPedestalBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        World world = MinecraftClient.getInstance().world;
-        ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+        final MinecraftClient client = MinecraftClient.getInstance();
+        World world = client.world;
+        ItemRenderer itemRenderer = client.getItemRenderer();
         ItemStack stack = entity.getHeldItem();
         if (!stack.isEmpty())
         {

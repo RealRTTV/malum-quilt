@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "malum:cluster_of_brilliance"
+    }
+  },
+  "result": {
+    "item": "malum:block_of_brilliance"
+  }
+}
