@@ -7,13 +7,15 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
+import static ca.rttv.malum.Malum.MODID;
+
 public class HeadlineTextPage extends BookPage {
 
     private final String headlineTranslationKey;
     private final String translationKey;
 
     public HeadlineTextPage(String headlineTranslationKey, String translationKey) {
-        super(new Identifier("malum", "textures/gui/book/pages/headline_page.png"));
+        super(new Identifier(MODID, "textures/gui/book/pages/headline_page.png"));
         this.headlineTranslationKey = headlineTranslationKey;
         this.translationKey = translationKey;
     }

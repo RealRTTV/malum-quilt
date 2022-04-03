@@ -13,8 +13,10 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
+import static ca.rttv.malum.Malum.MODID;
+
 public class EntryScreen extends Screen {
-    public static final Identifier BOOK_TEXTURE = new Identifier("malum", "textures/gui/book/entry.png");
+    public static final Identifier BOOK_TEXTURE = new Identifier(MODID, "textures/gui/book/entry.png");
 
     public static EntryScreen screen;
     public static EntryObject openObject;

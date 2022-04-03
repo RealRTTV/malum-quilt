@@ -23,14 +23,15 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ca.rttv.malum.RegistryEntries.ENCYCLOPEDIA_ARCANA;
+import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.RegistryEntries.*;
 import static net.minecraft.item.Items.SOUL_SAND;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
 
 public class ProgressionBookScreen extends Screen {
-    public static final Identifier FRAME_TEXTURE = new Identifier("malum", "textures/gui/book/frame.png");
-    public static final Identifier FADE_TEXTURE = new Identifier("malum", "textures/gui/book/fade.png");
-    public static final Identifier BACKGROUND_TEXTURE = new Identifier("malum", "textures/gui/book/background.png");
+    public static final Identifier FRAME_TEXTURE = new Identifier(MODID, "textures/gui/book/frame.png");
+    public static final Identifier FADE_TEXTURE = new Identifier(MODID, "textures/gui/book/fade.png");
+    public static final Identifier BACKGROUND_TEXTURE = new Identifier(MODID, "textures/gui/book/background.png");
     public static ProgressionBookScreen screen;
     public static ArrayList<BookEntry> entries;
     public static ArrayList<BookObject> objects;
@@ -75,22 +76,22 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new TextPage("spirit_magics_c"))
         );
 
-//        entries.add(new BookEntry(
-//                "runewood", RUNEWOOD_SAPLING, 1, 2)
-//                .addPage(new HeadlineTextPage("runewood", "runewood_a"))
-//                .addPage(new TextPage("runewood_b"))
-//                .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.get(), RUNEWOOD_PLANKS.get(), RUNEWOOD_PLANKS_SLAB.get()))
-//                .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.get(), RUNEWOOD_PLANKS.get(), RUNEWOOD_PLANKS_SLAB.get()))
-//                .addPage(new HeadlineTextPage("arcane_charcoal", "arcane_charcoal"))
-//                .addPage(new SmeltingBookPage(RUNEWOOD_LOG, ARCANE_CHARCOAL.get()))
-//                .addPage(CraftingBookPage.fullPage(BLOCK_OF_ARCANE_CHARCOAL.get(), ARCANE_CHARCOAL.get()))
+        entries.add(new BookEntry(
+                "runewood", RUNEWOOD_SAPLING.asItem(), 1, 2)
+                .addPage(new HeadlineTextPage("runewood", "runewood_a"))
+                .addPage(new TextPage("runewood_b"))
+                .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
+                .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
+                .addPage(new HeadlineTextPage("arcane_charcoal", "arcane_charcoal"))
+//                .addPage(new SmeltingBookPage(RUNEWOOD_LOG, ARCANE_CHARCOAL.asItem()))
+//                .addPage(CraftingBookPage.fullPage(BLOCK_OF_ARCANE_CHARCOAL.asItem(), ARCANE_CHARCOAL.asItem()))
 //                .addPage(new HeadlineTextPage("holy_sap", "holy_sap_a"))
 //                .addPage(new TextPage("holy_sap_b"))
-//                .addPage(new CraftingBookPage(new ItemStack(HOLY_SAPBALL.get(), 3), Items.SLIME_BALL, HOLY_SAP.get()))
+//                .addPage(new CraftingBookPage(new ItemStack(HOLY_SAPBALL.asItem(), 3), SLIME_BALL, HOLY_SAP.asItem()))
 //                .addPage(new TextPage("holy_sap_c"))
-//                .addPage(new SmeltingBookPage(HOLY_SAP.get(), HOLY_SYRUP.get()))
-//                .addModCompatPage(new TextPage("holy_sap_d"), "thermal_expansion")
-//        );
+//                .addPage(new SmeltingBookPage(HOLY_SAP.asItem(), HOLY_SYRUP.asItem()))
+                .addModCompatPage(new TextPage("holy_sap_d"), "thermal_expansion")
+        );
 /*
         entries.add(new BookEntry(
                 "soulstone", PROCESSED_SOULSTONE, -1, 2)

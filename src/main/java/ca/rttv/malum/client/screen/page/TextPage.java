@@ -5,12 +5,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
+import static ca.rttv.malum.Malum.MODID;
+
 public class TextPage extends BookPage {
 
     public final String translationKey;
 
     public TextPage(String translationKey) {
-        super(new Identifier("malum", "textures/gui/book/pages/blank_page.png"));
+        super(new Identifier(MODID, "textures/gui/book/pages/blank_page.png"));
         this.translationKey = translationKey;
     }
 
