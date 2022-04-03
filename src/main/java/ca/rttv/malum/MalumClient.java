@@ -15,6 +15,5 @@ public class MalumClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(MalumRegistry.ITEM_PEDESTAL_BLOCK_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new ItemPedestalRenderer());
         BlockEntityRendererRegistry.register(MalumRegistry.ITEM_STAND_BLOCK_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new ItemStandRenderer());
         TerraformBoatClientHelper.registerModelLayer(new Identifier(Malum.MODID, "runewood"));
-
     }
 }
