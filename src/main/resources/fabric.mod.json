@@ -21,6 +21,9 @@
   "entrypoints": {
     "main": [
       "ca.rttv.malum.Malum"
+    ],
+    "client": [
+      "ca.rttv.malum.MalumClient"
     ]
   },
   "mixins": [

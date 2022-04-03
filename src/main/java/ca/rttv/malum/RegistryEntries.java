@@ -8,7 +8,10 @@ import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.item.EncyclopediaArcanaItem;
 import ca.rttv.malum.world.gen.feature.RunewoodTreeFeature;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -34,6 +37,7 @@ import static ca.rttv.malum.Malum.MODID;
 public final class RegistryEntries { // maps make stuff look cooler ok?
     private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
     private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
+    private static final Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
 
     public static final Item ENCYCLOPEDIA_ARCANA = registerItem("encyclopedia_arcana", new EncyclopediaArcanaItem(new Settings().rarity(Rarity.UNCOMMON).group(MALUM)));
 
@@ -46,8 +50,8 @@ public final class RegistryEntries { // maps make stuff look cooler ok?
     public static final Block RUNEWOOD_ITEM_PEDESTAL = registerBlockItem("runewood_item_pedestal", new WoodenItemPedestalBlock(AbstractBlock.Settings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD)), MALUM);
     public static final Block RUNEWOOD_ITEM_STAND    = registerBlockItem("runewood_item_stand", new ItemStandBlock(AbstractBlock.Settings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD)), MALUM);
 
-    public static final BlockEntityType<ItemStandBlockEntity>    ITEM_STAND_BLOCK_ENTITY    = BlockEntityType.create(MODID + ":item_stand", BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND));
-    public static final BlockEntityType<ItemPedestalBlockEntity> ITEM_PEDESTAL_BLOCK_ENTITY = BlockEntityType.create(MODID + ":item_pedestal", BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL));
+    public static final BlockEntityType<ItemStandBlockEntity>    ITEM_STAND_BLOCK_ENTITY    = createBlockEntity("item_stand", FabricBlockEntityTypeBuilder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND).build(null));
+    public static final BlockEntityType<ItemPedestalBlockEntity> ITEM_PEDESTAL_BLOCK_ENTITY = createBlockEntity("item_pedestal", FabricBlockEntityTypeBuilder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL).build(null));
 
     public static final Feature<DefaultFeatureConfig> RUNEWOOD_TREE_FEATURE = registerFeature("runewood_tree", new RunewoodTreeFeature());
 
@@ -68,6 +72,10 @@ public final class RegistryEntries { // maps make stuff look cooler ok?
         ITEMS.put(item, new Identifier(MODID, id));
         return item;
     }
+    private static <T extends BlockEntity> BlockEntityType<T> createBlockEntity(String name, BlockEntityType<T> type) {
+        BLOCK_ENTITY_TYPES.put(type, new Identifier(MODID, name));
+        return type;
+    }
 
     private static <C extends FeatureConfig, F extends Feature<C>> F registerFeature(String name, F feature) {
         return Registry.register(Registry.FEATURE, new Identifier(MODID, name), feature);
@@ -76,5 +84,6 @@ public final class RegistryEntries { // maps make stuff look cooler ok?
     public static void init() {
         ITEMS.forEach((item, id) -> Registry.register(Registry.ITEM, id, item));
         BLOCKS.forEach((block, id) -> Registry.register(Registry.BLOCK, id, block));
+        BLOCK_ENTITY_TYPES.keySet().forEach(entityType -> Registry.register(Registry.BLOCK_ENTITY_TYPE, BLOCK_ENTITY_TYPES.get(entityType), entityType));
     }
 }
