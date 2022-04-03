@@ -1,6 +1,6 @@
 package ca.rttv.malum.item.spirit;
 
-import ca.rttv.malum.item.intface.IFloatingGlowItem;
+import ca.rttv.malum.item.interfaces.IFloatingGlowItem;
 import ca.rttv.malum.util.spirit.MalumSpiritType;
 import net.minecraft.item.Item;
 

@@ -18,6 +18,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -30,6 +31,10 @@ public abstract class AbstractItemDisplayBlockEntity extends BlockEntity impleme
     }
 
     public void swapSlots(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (player.getStackInHand(hand).isEmpty() && inventory.get(0).isEmpty()) {
+            return;
+        }
+
         if (player.getStackInHand(hand).isEmpty()) {
             world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
         }
@@ -120,4 +125,6 @@ public abstract class AbstractItemDisplayBlockEntity extends BlockEntity impleme
         Inventories.writeNbt(nbt, this.inventory);
         super.writeNbt(nbt);
     }
+
+    public abstract Vec3d itemOffset();
 }

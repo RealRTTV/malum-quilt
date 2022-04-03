@@ -26,6 +26,7 @@ import java.awt.*;
 public class FloatingEntity extends ProjectileEntity {
     protected static final TrackedData<Integer> DATA_COLOR = DataTracker.registerData(FloatingEntity.class, TrackedDataHandlerRegistry.INTEGER);
     protected static final TrackedData<Integer> DATA_END_COLOR = DataTracker.registerData(FloatingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public final float hoverStart;
     public Color color = SpiritTypeRegistry.SACRED_SPIRIT_COLOR;
     public Color endColor = SpiritTypeRegistry.SACRED_SPIRIT.endColor;
     public int maxAge;
@@ -33,13 +34,13 @@ public class FloatingEntity extends ProjectileEntity {
     public float moveTime;
     public int speed = 3;
     public float windUp;
-    public final float hoverStart;
 
     public FloatingEntity(EntityType<? extends FloatingEntity> type, World world) {
         super(type, world);
         noClip = false;
         this.hoverStart = (float) (Math.random() * Math.PI * 2.0D);
     }
+
     @Override
     protected void initDataTracker() {
         this.getDataTracker().startTracking(DATA_COLOR, SpiritTypeRegistry.SACRED_SPIRIT_COLOR.getRGB());
@@ -85,6 +86,7 @@ public class FloatingEntity extends ProjectileEntity {
         }
         super.onTrackedDataSet(data);
     }
+
     @Override
     public void tick() {
         super.tick();
@@ -103,8 +105,8 @@ public class FloatingEntity extends ProjectileEntity {
             move();
         }
     }
-    public void baseTick()
-    {
+
+    public void baseTick() {
         HitResult hitresult = ProjectileUtil.getCollision(this, this::canHit);
         boolean flag = false;
         if (hitresult.getType() == HitResult.Type.BLOCK) {
@@ -123,20 +125,21 @@ public class FloatingEntity extends ProjectileEntity {
             }
         }
 
-        if (hitresult.getType() != HitResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)) {
-            this.onHit(hitresult);
+        if (hitresult.getType() != HitResult.Type.MISS && !flag/* && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)*/) {
+            this.onBlockHit(((BlockHitResult) hitresult));
         }
 
-        this.checkInsideBlocks();
+        this.checkBlockCollision();
         Vec3d vec3 = this.getVelocity();
         double d2 = this.getX() + vec3.x;
         double d0 = this.getY() + vec3.y;
         double d1 = this.getZ() + vec3.z;
         this.updateRotation();
 
-        this.setVelocity(vec3.scale(1f)); //this is apparently important, don't remove it
+        this.setVelocity(vec3.multiply(1f)); // this is apparently important, don't remove it
         this.setPos(d2, d0, d1);
     }
+
     public void spawnParticles(double x, double y, double z) {
 
     }
