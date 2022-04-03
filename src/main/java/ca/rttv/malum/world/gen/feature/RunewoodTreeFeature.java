@@ -17,7 +17,7 @@ import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.Random;
 
-import static ca.rttv.malum.RegistryEntries.*;
+import static ca.rttv.malum.registry.MalumRegistry.*;
 
 public class RunewoodTreeFeature extends Feature<DefaultFeatureConfig> {
     private static final int minimumSapBlockCount = 2;

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.RegistryEntries.*;
+import static ca.rttv.malum.registry.MalumRegistry.*;
 import static net.minecraft.item.Items.SOUL_SAND;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
 

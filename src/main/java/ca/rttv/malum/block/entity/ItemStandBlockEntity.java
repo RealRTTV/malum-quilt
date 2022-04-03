@@ -1,6 +1,6 @@
 package ca.rttv.malum.block.entity;
 
-import ca.rttv.malum.RegistryEntries;
+import ca.rttv.malum.registry.MalumRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.state.property.Properties;
@@ -10,7 +10,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class ItemStandBlockEntity extends AbstractItemDisplayBlockEntity {
     public ItemStandBlockEntity(BlockPos pos, BlockState state) {
-        this(RegistryEntries.ITEM_STAND_BLOCK_ENTITY, pos, state);
+        this(MalumRegistry.ITEM_STAND_BLOCK_ENTITY, pos, state);
     }
 
     public ItemStandBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {

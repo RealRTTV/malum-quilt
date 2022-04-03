@@ -1,5 +1,6 @@
 package ca.rttv.malum.util;
 
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
@@ -7,6 +8,8 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static ca.rttv.malum.Malum.MODID;
 
 public final class DataHelper {
     public static Vec3d fromBlockPos(BlockPos pos) {
@@ -22,6 +25,10 @@ public final class DataHelper {
         double y = MathHelper.nextDouble(rand, min, max) + pos.getY();
         double z = MathHelper.nextDouble(rand, min, max) + pos.getZ();
         return new Vec3d(x, y, z);
+    }
+
+    public static Identifier prefix(String path) {
+        return new Identifier(MODID, path);
     }
 
     public static <T, K extends Collection<T>> K reverseOrder(Supplier<K> reversed, Collection<T> items) {

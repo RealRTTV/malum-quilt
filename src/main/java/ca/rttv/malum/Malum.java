@@ -1,12 +1,13 @@
 package ca.rttv.malum;
 
+import ca.rttv.malum.registry.MalumRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import static ca.rttv.malum.RegistryEntries.ENCYCLOPEDIA_ARCANA;
+import static ca.rttv.malum.registry.MalumRegistry.ENCYCLOPEDIA_ARCANA;
 
 public final class Malum implements ModInitializer {
 
@@ -15,6 +16,6 @@ public final class Malum implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        RegistryEntries.init();
+        MalumRegistry.init();
     }
 }
