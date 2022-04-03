@@ -9,9 +9,9 @@ import net.minecraft.util.math.Vec3d;
 import java.util.ArrayList;
 
 public interface ISoulContainerItem {
-    public TypedActionResult<ItemStack> interactWithSoul(PlayerEntity player, Hand hand, SoulEntity soul);
+    TypedActionResult<ItemStack> interactWithSoul(PlayerEntity player, Hand hand, SoulEntity soul);
 
-    public default TypedActionResult<ItemStack> fetchSoul(PlayerEntity player, Hand hand) {
+    default TypedActionResult<ItemStack> fetchSoul(PlayerEntity player, Hand hand) {
         ArrayList<SoulEntity> entities = new ArrayList<>(player.world.getEntitiesByClass(SoulEntity.class, player.getBoundingBox().inflate(player.getAttributeValue(ForgeMod.REACH_DISTANCE.get())*0.4f)));
         double biggestAngle = 0;
         SoulEntity chosenEntity = null;

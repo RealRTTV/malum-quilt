@@ -13,6 +13,8 @@ import net.minecraft.util.hit.BlockHitResult;
 
 import java.awt.*;
 
+import static ca.rttv.malum.Malum.MODID;
+
 public class MalumSpiritType {
     public final Color color;
     public final Color endColor;
@@ -51,7 +53,7 @@ public class MalumSpiritType {
     }
 
     public Identifier getOverlayTexture() {
-        return DataHelper.prefix("block/totem/" + identifier + "_glow");
+        return new Identifier(MODID, "block/totem/" + identifier + "_glow");
     }
 
 //TODO: ALL OF THIS

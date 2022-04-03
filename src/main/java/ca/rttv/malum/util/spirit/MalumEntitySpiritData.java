@@ -26,10 +26,10 @@ public class MalumEntitySpiritData {
     }
 
     public void saveTo(NbtCompound tag) {
-        tag.put(SOUL_DATA, save());
+        tag.put(SOUL_DATA, writeNbt());
     }
 
-    public NbtCompound save() {
+    public NbtCompound writeNbt() {
         NbtCompound tag = new NbtCompound();
         tag.putString("primaryType", primaryType.identifier);
         tag.putInt("dataAmount", dataEntries.size());
@@ -40,18 +40,18 @@ public class MalumEntitySpiritData {
         return tag;
     }
 
-    public static MalumEntitySpiritData load(NbtCompound tag) {
-        NbtCompound nbt = tag.getCompound(SOUL_DATA);
+    public static MalumEntitySpiritData readNbt(NbtCompound nbt) {
+        NbtCompound soulData = nbt.getCompound(SOUL_DATA);
 
 
-        String type = nbt.getString("primaryType");
-        int dataAmount = nbt.getInt("dataAmount");
+        String type = soulData.getString("primaryType");
+        int dataAmount = soulData.getInt("dataAmount");
         if (dataAmount == 0) {
             return EMPTY;
         }
         ArrayList<SpiritDataEntry> data = new ArrayList<>();
         for (int i = 0; i < dataAmount; i++) {
-            data.add(SpiritDataEntry.load(nbt.getCompound("dataEntry" + i)));
+            data.add(SpiritDataEntry.load(soulData.getCompound("dataEntry" + i)));
         }
         return new MalumEntitySpiritData(SpiritHelper.getSpiritType(type), data);
     }
