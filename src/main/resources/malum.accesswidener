@@ -3,12 +3,13 @@ accessWidener   v1        named
 accessible      class     net/minecraft/client/render/RenderLayer$MultiPhase
 accessible      class     net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
 
-accessible      field     net/minecraft/client/render/RenderLayer$MultiPhase                       phases              Lnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;
-accessible      field     net/minecraft/client/render/RenderLayer$MultiPhaseParameters             shader              Lnet/minecraft/client/render/RenderPhase$Shader;
-accessible      field     net/minecraft/client/render/RenderPhase$Shader                           supplier            Ljava/util/Optional;
-accessible      field     net/minecraft/entity/vehicle/BoatEntity                                  location            Lnet/minecraft/entity/vehicle/BoatEntity$Location;
+accessible      field     net/minecraft/client/render/RenderLayer$MultiPhase                       phases                       Lnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;
+accessible      field     net/minecraft/client/render/RenderLayer$MultiPhaseParameters             shader                       Lnet/minecraft/client/render/RenderPhase$Shader;
+accessible      field     net/minecraft/client/render/RenderPhase$Shader                           supplier                     Ljava/util/Optional;
+accessible      field     net/minecraft/entity/vehicle/BoatEntity                                  location                     Lnet/minecraft/entity/vehicle/BoatEntity$Location;
 
-accessible      method    net/minecraft/block/Blocks                                               canSpawnOnLeaves    (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/EntityType;)Ljava/lang/Boolean;
-accessible      method    net/minecraft/block/Blocks                                               never               (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z
-accessible      method    net/minecraft/block/entity/BlockEntityType                               create              (Ljava/lang/String;Lnet/minecraft/block/entity/BlockEntityType$Builder;)Lnet/minecraft/block/entity/BlockEntityType;
-accessible      method    net/minecraft/entity/projectile/ProjectileEntity                         <init>              (Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V
+accessible      method    net/minecraft/block/Blocks                                               canSpawnOnLeaves             (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/EntityType;)Ljava/lang/Boolean;
+accessible      method    net/minecraft/block/Blocks                                               never                        (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z
+accessible      method    net/minecraft/block/entity/BlockEntityType                               create                       (Ljava/lang/String;Lnet/minecraft/block/entity/BlockEntityType$Builder;)Lnet/minecraft/block/entity/BlockEntityType;
+accessible      method    net/minecraft/entity/projectile/ProjectileEntity                         <init>                       (Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V
+accessible      method    net/minecraft/world/gen/feature/OrePlacedFeatures                        commonOrePlacementModifiers  (ILnet/minecraft/world/gen/feature/PlacementModifier;)Ljava/util/List;

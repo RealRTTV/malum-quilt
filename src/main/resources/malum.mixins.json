@@ -4,7 +4,8 @@
   "package": "ca.rttv.malum.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "AxeItemMixin"
+    "AxeItemMixin",
+    "DefaultBiomeFeaturesMixin"
   ],
   "client": [
     "AbstractFurnaceBlockEntityMixin"

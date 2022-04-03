@@ -35,9 +35,10 @@ public abstract class AbstractItemDisplayBlockEntity extends BlockEntity impleme
             return;
         }
 
-        if (player.getStackInHand(hand).isEmpty()) {
+        if (!inventory.get(0).isEmpty()) {
             world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
         }
+
         ItemStack prevItem = getHeldItem();
         setStack(0, player.getStackInHand(hand));
         player.setStackInHand(hand, prevItem);

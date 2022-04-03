@@ -92,15 +92,15 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new SmeltingBookPage(HOLY_SAP.asItem(), HOLY_SYRUP.asItem()))
                 .addModCompatPage(new TextPage("holy_sap_d"), "thermal_expansion")
         );
-/*
+
         entries.add(new BookEntry(
                 "soulstone", PROCESSED_SOULSTONE, -1, 2)
                 .addPage(new HeadlineTextPage("soulstone", "soulstone_a"))
                 .addPage(new TextPage("soulstone_b"))
                 .addPage(new TextPage("soulstone_c"))
-                .addPage(CraftingBookPage.fullPage(BLOCK_OF_SOULSTONE.get(), PROCESSED_SOULSTONE.get()))
+                .addPage(CraftingBookPage.fullPage(BLOCK_OF_SOULSTONE.asItem(), PROCESSED_SOULSTONE))
         );
-
+/*
         entries.add(new BookEntry(
                 "scythes", CRUDE_SCYTHE.get(), 0, 3)
                 .addPage(new HeadlineTextPage("scythes", "scythes_a"))
