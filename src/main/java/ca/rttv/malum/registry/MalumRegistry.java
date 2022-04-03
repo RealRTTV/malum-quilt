@@ -15,8 +15,11 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.*;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.FoodComponent;
+import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Holder;
@@ -34,7 +37,6 @@ import java.util.Map;
 
 import static ca.rttv.malum.Malum.MALUM;
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.registry.MalumEntityRegistry.*;
 
 @SuppressWarnings("unused")
 public final class MalumRegistry { // maps make stuff look cooler ok?
