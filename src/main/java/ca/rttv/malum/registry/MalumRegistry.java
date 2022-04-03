@@ -34,6 +34,7 @@ import java.util.Map;
 
 import static ca.rttv.malum.Malum.MALUM;
 import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.registry.MalumEntityRegistry.*;
 
 @SuppressWarnings("unused")
 public final class MalumRegistry { // maps make stuff look cooler ok?
@@ -74,8 +75,8 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Block BLOCK_OF_ARCANE_CHARCOAL = registerBlockItem("block_of_arcane_charcoal", new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 6.0f).sounds(BLOCK_ARCANE_CHARCOAL_SOUNDS)), MALUM);
 
     // block entities
-    public static final BlockEntityType<ItemStandBlockEntity>    ITEM_STAND_BLOCK_ENTITY    = createBlockEntity("item_stand", BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND).build(null));
-    public static final BlockEntityType<ItemPedestalBlockEntity> ITEM_PEDESTAL_BLOCK_ENTITY = createBlockEntity("item_pedestal", BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL).build(null));
+    public static final BlockEntityType<ItemStandBlockEntity>    ITEM_STAND_BLOCK_ENTITY    = registerBlockEntity("item_stand", BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND).build(null));
+    public static final BlockEntityType<ItemPedestalBlockEntity> ITEM_PEDESTAL_BLOCK_ENTITY = registerBlockEntity("item_pedestal", BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL).build(null));
 
     // spirits
     public static final Item SACRED_SPIRIT   = registerItem("sacred_spirit", new MalumSpiritItem(SPLINTER_PROPERTIES(), SpiritTypeRegistry.SACRED_SPIRIT));
@@ -107,7 +108,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         ITEMS.put(item, new Identifier(MODID, id));
         return item;
     }
-    private static <T extends BlockEntity> BlockEntityType<T> createBlockEntity(String name, BlockEntityType<T> type) {
+    private static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String name, BlockEntityType<T> type) {
         BLOCK_ENTITY_TYPES.put(type, new Identifier(MODID, name));
         return type;
     }
@@ -128,6 +129,8 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static void init() {
         ITEMS.forEach((item, id) -> Registry.register(Registry.ITEM, id, item));
         BLOCKS.forEach((block, id) -> Registry.register(Registry.BLOCK, id, block));
+        MalumBoatTypes.init();
+        MalumEntityRegistry.init();
         BLOCK_ENTITY_TYPES.keySet().forEach(entityType -> Registry.register(Registry.BLOCK_ENTITY_TYPE, BLOCK_ENTITY_TYPES.get(entityType), entityType));
         FEATURES.forEach((feature, id) -> Registry.register(Registry.FEATURE, id, feature));
     }
