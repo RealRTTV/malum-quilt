@@ -1,15 +1,11 @@
 package ca.rttv.malum.util.spirit;
 
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
-import ca.rttv.malum.util.DataHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
 
 import java.awt.*;
 

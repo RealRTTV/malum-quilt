@@ -1,7 +1,7 @@
 package ca.rttv.malum.util.spirit;
 
 import ca.rttv.malum.registry.SpiritTypeRegistry;
-import ca.rttv.malum.util.SpiritHelper;
+import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.nbt.NbtCompound;
 
 import java.awt.*;

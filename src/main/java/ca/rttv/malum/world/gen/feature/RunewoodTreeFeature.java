@@ -1,8 +1,8 @@
 package ca.rttv.malum.world.gen.feature;
 
 import ca.rttv.malum.block.RunewoodLeavesBlock;
-import ca.rttv.malum.util.BlockHelper;
-import ca.rttv.malum.util.DataHelper;
+import ca.rttv.malum.util.helper.BlockHelper;
+import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.world.gen.MalumFiller;
 import ca.rttv.malum.world.gen.MalumFiller.BlockStateEntry;
 import net.minecraft.block.BlockState;

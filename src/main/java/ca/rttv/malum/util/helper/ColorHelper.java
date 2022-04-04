@@ -1,4 +1,4 @@
-package ca.rttv.malum.util;
+package ca.rttv.malum.util.helper;
 
 import net.minecraft.client.gui.hud.BackgroundHelper;
 import net.minecraft.util.math.MathHelper;

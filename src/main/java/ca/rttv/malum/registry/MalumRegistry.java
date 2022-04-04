@@ -11,6 +11,7 @@ import ca.rttv.malum.item.HolySyrupItem;
 import ca.rttv.malum.item.ScytheItem;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.world.gen.feature.RunewoodTreeFeature;
+import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -33,6 +34,7 @@ import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static ca.rttv.malum.Malum.MALUM;
 import static ca.rttv.malum.Malum.MODID;
@@ -43,6 +45,7 @@ import static net.minecraft.world.gen.feature.OreConfiguredFeatures.STONE_ORE_RE
 public final class MalumRegistry { // maps make stuff look cooler ok?
     private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
     private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
+    public static final Set<ScytheItem> SCYTHES = new ReferenceOpenHashSet<>();
     private static final Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
     private static final Map<Feature<? extends FeatureConfig>, Identifier> FEATURES = new LinkedHashMap<>();
 
@@ -68,7 +71,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Item                                          HOLY_SYRUP                     = registerItem      ("holy_syrup",                        new HolySyrupItem(new Settings().group(MALUM).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
     public static final Item                                          PROCESSED_SOULSTONE            = registerItem      ("processed_soulstone",               new Item(new Settings().group(MALUM)));
     public static final Item                                          RAW_SOULSTONE                  = registerItem      ("raw_soulstone",                     new Item(new Settings().group(MALUM)));
-    public static final Item                                          CRUDE_SCYTHE                   = registerItem      ("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
+    public static final Item                                          CRUDE_SCYTHE                   = registerScytheItem      ("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
 
     // blocks
     public static final Block                                         RUNEWOOD_SAPLING               = registerBlockItem ("runewood_sapling",                  new SaplingBlock(new RunewoodSaplingGenerator(), AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM);
@@ -131,6 +134,10 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         BLOCKS.put(block, new Identifier(MODID, id));
         ITEMS.put(new BlockItem(block, new Settings().group(itemGroup)), new Identifier(MODID, id));
         return block;
+    }
+    public static <T extends ScytheItem> T registerScytheItem(String id, T item) {
+        SCYTHES.add(item);
+        return registerItem(id, item);
     }
 
     public static <T extends Item> T registerItem(String id, T item) {

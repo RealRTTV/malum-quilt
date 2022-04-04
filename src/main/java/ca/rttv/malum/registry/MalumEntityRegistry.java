@@ -1,9 +1,8 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.entity.spirit.MirrorItemEntity;
-import ca.rttv.malum.util.DataHelper;
+import ca.rttv.malum.util.helper.DataHelper;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.util.Identifier;
@@ -13,7 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.registry.MalumRegistry.*;
 
 public class MalumEntityRegistry {
     private static final Map<EntityType<?>, Identifier> ENTITY_TYPES = new LinkedHashMap<>();

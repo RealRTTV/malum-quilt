@@ -1,4 +1,4 @@
-package ca.rttv.malum.util;
+package ca.rttv.malum.util.helper;
 
 import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.spirit.MalumEntitySpiritData;

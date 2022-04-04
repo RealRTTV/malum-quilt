@@ -1,4 +1,4 @@
-package ca.rttv.malum.util;
+package ca.rttv.malum.util.helper;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;

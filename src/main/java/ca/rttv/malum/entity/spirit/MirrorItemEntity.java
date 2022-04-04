@@ -3,17 +3,14 @@ package ca.rttv.malum.entity.spirit;
 import ca.rttv.malum.entity.FloatingItemEntity;
 import ca.rttv.malum.item.interfaces.IFloatingGlowItem;
 import ca.rttv.malum.registry.MalumEntityRegistry;
-import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.registry.SpiritTypeRegistry;
-import ca.rttv.malum.util.ColorHelper;
-import ca.rttv.malum.util.SpiritHelper;
+import ca.rttv.malum.util.helper.ColorHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Overwrite;
 
 public class MirrorItemEntity extends FloatingItemEntity {
 

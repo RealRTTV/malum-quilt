@@ -1,5 +1,6 @@
-package ca.rttv.malum.util;
+package ca.rttv.malum.util.helper;
 
+import ca.rttv.malum.util.ShaderHolder;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;

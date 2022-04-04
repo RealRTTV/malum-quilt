@@ -1,6 +1,6 @@
 package ca.rttv.malum.world.gen;
 
-import ca.rttv.malum.util.BlockHelper;
+import ca.rttv.malum.util.helper.BlockHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.StructureWorldAccess;
