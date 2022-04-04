@@ -8,6 +8,7 @@ import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.item.EncyclopediaArcanaItem;
 import ca.rttv.malum.item.HolySyrupItem;
+import ca.rttv.malum.item.ScytheItem;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.world.gen.feature.RunewoodTreeFeature;
 import net.minecraft.block.*;
@@ -15,11 +16,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Holder;
@@ -69,7 +67,8 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Item                                          HOLY_SAPBALL                   = registerItem      ("holy_sapball",                      new Item(new Settings().group(MALUM)));
     public static final Item                                          HOLY_SYRUP                     = registerItem      ("holy_syrup",                        new HolySyrupItem(new Settings().group(MALUM).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
     public static final Item                                          PROCESSED_SOULSTONE            = registerItem      ("processed_soulstone",               new Item(new Settings().group(MALUM)));
-    public static final Item                                          SOULSTONE_CLUSTER              = registerItem      ("soulstone_cluster",                 new Item(new Settings().group(MALUM)));
+    public static final Item                                          RAW_SOULSTONE                  = registerItem      ("raw_soulstone",                     new Item(new Settings().group(MALUM)));
+    public static final Item                                          CRUDE_SCYTHE                   = registerItem      ("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
 
     // blocks
     public static final Block                                         RUNEWOOD_SAPLING               = registerBlockItem ("runewood_sapling",                  new SaplingBlock(new RunewoodSaplingGenerator(), AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM);

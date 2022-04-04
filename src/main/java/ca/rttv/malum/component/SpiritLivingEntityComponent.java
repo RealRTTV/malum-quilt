@@ -77,14 +77,14 @@ public class SpiritLivingEntityComponent implements AutoSyncedComponent {
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        tag.putFloat("soulHarvestProgress", soulHarvestProgress);
-        tag.putFloat("exposedSoul", exposedSoul);
-        tag.putBoolean("soulless", soulless);
-        tag.putBoolean("spawnerSpawned", spawnerSpawned);
-        if (ownerUuid != null) {
-            tag.putUuid("ownerUUID", ownerUuid);
-        }
-        spiritData.saveTo(tag);
+//        tag.putFloat("soulHarvestProgress", soulHarvestProgress);
+//        tag.putFloat("exposedSoul", exposedSoul);
+//        tag.putBoolean("soulless", soulless);
+//        tag.putBoolean("spawnerSpawned", spawnerSpawned);
+//        if (ownerUuid != null) {
+//            tag.putUuid("ownerUUID", ownerUuid);
+//        }
+//        spiritData.saveTo(tag);
     }
     @Override
     public void writeToNbt(NbtCompound tag) {

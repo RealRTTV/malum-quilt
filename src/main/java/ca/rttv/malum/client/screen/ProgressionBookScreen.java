@@ -25,8 +25,7 @@ import java.util.List;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumRegistry.*;
-import static net.minecraft.item.Items.SLIME_BALL;
-import static net.minecraft.item.Items.SOUL_SAND;
+import static net.minecraft.item.Items.*;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
 
 public class ProgressionBookScreen extends Screen {
@@ -100,31 +99,31 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new TextPage("soulstone_c"))
                 .addPage(CraftingBookPage.fullPage(BLOCK_OF_SOULSTONE.asItem(), PROCESSED_SOULSTONE))
         );
-/*
+
         entries.add(new BookEntry(
-                "scythes", CRUDE_SCYTHE.get(), 0, 3)
+                "scythes", CRUDE_SCYTHE, 0, 3)
                 .addPage(new HeadlineTextPage("scythes", "scythes_a"))
                 .addPage(new TextPage("scythes_b"))
                 .addPage(new TextPage("scythes_c"))
-                .addPage(CraftingBookPage.scythePage(ItemRegistry.CRUDE_SCYTHE.get(), Items.IRON_INGOT, PROCESSED_SOULSTONE.get()))
+                .addPage(CraftingBookPage.scythePage(CRUDE_SCYTHE, IRON_INGOT, PROCESSED_SOULSTONE))
                 .addPage(new HeadlineTextPage("haunted", "haunted"))
                 .addPage(new HeadlineTextPage("spirit_plunder", "spirit_plunder"))
                 .addPage(new HeadlineTextPage("rebound", "rebound"))
         );
 
-        entries.add(new BookEntry(
-                "spirit_infusion", SPIRIT_ALTAR.get(), 0, 5)
-                .setObjectSupplier(ImportantEntryObject::new)
-                .addPage(new HeadlineTextPage("spirit_infusion", "spirit_infusion_a"))
-                .addPage(new TextPage("spirit_infusion_b"))
-                .addPage(new TextPage("spirit_infusion_c"))
-                .addPage(new CraftingBookPage(SPIRIT_ALTAR.get(), AIR, PROCESSED_SOULSTONE.get(), AIR, GOLD_INGOT, RUNEWOOD.get(), GOLD_INGOT, RUNEWOOD.get(), RUNEWOOD.get(), RUNEWOOD.get()))
-                .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.get(), RUNEWOOD_PLANKS.get(), RUNEWOOD_PLANKS_SLAB.get()))
-                .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.get(), RUNEWOOD_PLANKS.get(), RUNEWOOD_PLANKS_SLAB.get()))
-                .addPage(new HeadlineTextPage("hex_ash", "hex_ash"))
-                .addPage(SpiritInfusionPage.fromOutput(HEX_ASH.get()))
-        );
-
+//        entries.add(new BookEntry(
+//                "spirit_infusion", SPIRIT_ALTAR, 0, 5)
+//                .setObjectSupplier(ImportantEntryObject::new)
+//                .addPage(new HeadlineTextPage("spirit_infusion", "spirit_infusion_a"))
+//                .addPage(new TextPage("spirit_infusion_b"))
+//                .addPage(new TextPage("spirit_infusion_c"))
+//                .addPage(new CraftingBookPage(SPIRIT_ALTAR, AIR, PROCESSED_SOULSTONE.asItem(), AIR, GOLD_INGOT.asItem(), RUNEWOOD.asItem(), GOLD_INGOT.asItem(), RUNEWOOD.asItem(), RUNEWOOD.asItem(), RUNEWOOD.asItem()))
+//                .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
+//                .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
+//                .addPage(new HeadlineTextPage("hex_ash", "hex_ash"))
+//                .addPage(SpiritInfusionPage.fromOutput(HEX_ASH))
+//        );
+/*
         entries.add(new BookEntry(
                 "simple_spirits", ARCANE_SPIRIT.get(), -2, 4)
                 .addPage(new SpiritTextPage("sacred_spirit", "sacred_spirit_a", SACRED_SPIRIT.get()))
