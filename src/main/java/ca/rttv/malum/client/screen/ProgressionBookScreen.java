@@ -111,18 +111,18 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new HeadlineTextPage("rebound", "rebound"))
         );
 
-//        entries.add(new BookEntry(
-//                "spirit_infusion", SPIRIT_ALTAR, 0, 5)
-//                .setObjectSupplier(ImportantEntryObject::new)
-//                .addPage(new HeadlineTextPage("spirit_infusion", "spirit_infusion_a"))
-//                .addPage(new TextPage("spirit_infusion_b"))
-//                .addPage(new TextPage("spirit_infusion_c"))
-//                .addPage(new CraftingBookPage(SPIRIT_ALTAR, AIR, PROCESSED_SOULSTONE.asItem(), AIR, GOLD_INGOT.asItem(), RUNEWOOD.asItem(), GOLD_INGOT.asItem(), RUNEWOOD.asItem(), RUNEWOOD.asItem(), RUNEWOOD.asItem()))
-//                .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
-//                .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
-//                .addPage(new HeadlineTextPage("hex_ash", "hex_ash"))
+        entries.add(new BookEntry(
+                "spirit_infusion", SPIRIT_ALTAR.asItem(), 0, 5)
+                .setObjectSupplier(ImportantEntryObject::new)
+                .addPage(new HeadlineTextPage("spirit_infusion", "spirit_infusion_a"))
+                .addPage(new TextPage("spirit_infusion_b"))
+                .addPage(new TextPage("spirit_infusion_c"))
+                .addPage(new CraftingBookPage(SPIRIT_ALTAR.asItem(), AIR, PROCESSED_SOULSTONE.asItem(), AIR, GOLD_INGOT.asItem(), RUNEWOOD.asItem(), GOLD_INGOT.asItem(), RUNEWOOD.asItem(), RUNEWOOD.asItem(), RUNEWOOD.asItem()))
+                .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
+                .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
+                .addPage(new HeadlineTextPage("hex_ash", "hex_ash"))
 //                .addPage(SpiritInfusionPage.fromOutput(HEX_ASH))
-//        );
+        );
 /*
         entries.add(new BookEntry(
                 "simple_spirits", ARCANE_SPIRIT.get(), -2, 4)

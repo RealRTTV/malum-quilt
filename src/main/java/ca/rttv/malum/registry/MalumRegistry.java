@@ -2,6 +2,7 @@ package ca.rttv.malum.registry;
 
 import ca.rttv.malum.block.ItemStandBlock;
 import ca.rttv.malum.block.RunewoodLeavesBlock;
+import ca.rttv.malum.block.SpiritAltarBlock;
 import ca.rttv.malum.block.WoodenItemPedestalBlock;
 import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
@@ -69,6 +70,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Item                                          PROCESSED_SOULSTONE            = registerItem      ("processed_soulstone",               new Item(new Settings().group(MALUM)));
     public static final Item                                          RAW_SOULSTONE                  = registerItem      ("raw_soulstone",                     new Item(new Settings().group(MALUM)));
     public static final Item                                          CRUDE_SCYTHE                   = registerItem      ("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
+    public static final Item                                          HEX_ASH                        = registerItem      ("hex_ash",                           new Item(new Settings().group(MALUM)));
 
     // blocks
     public static final Block                                         RUNEWOOD_SAPLING               = registerBlockItem ("runewood_sapling",                  new SaplingBlock(new RunewoodSaplingGenerator(), AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM);
@@ -88,6 +90,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Block                                         BLOCK_OF_RAW_SOULSTONE         = registerBlockItem ("block_of_raw_soulstone",            new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
     public static final Block                                         SOULSTONE_ORE                  = registerBlockItem ("soulstone_ore",                     new OreBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
     public static final Block                                         DEEPSLATE_SOULSTONE_ORE        = registerBlockItem ("deepslate_soulstone_ore",           new OreBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(7.0f, 6.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+    public static final Block                                         SPIRIT_ALTAR                   = registerBlockItem ("spirit_altar",                      new SpiritAltarBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
 
     // block entities
     public static final BlockEntityType<ItemStandBlockEntity>         ITEM_STAND_BLOCK_ENTITY        = registerBlockEntity("item_stand",                       BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND).build(null));
