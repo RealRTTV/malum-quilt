@@ -1,5 +1,9 @@
 package ca.rttv.malum.block.entity;
 
+import ca.rttv.malum.SpiritInfusionRecipe;
+import ca.rttv.malum.util.block.entity.IAltarAccelerator;
+import ca.rttv.malum.util.helper.BlockHelper;
+import ca.rttv.malum.util.helper.DataHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -20,15 +24,33 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
 public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
+    private static final int HORIZONTAL_RANGE = 4;
+    private static final int VERTICAL_RANGE = 2;
+
+    public float speed;
+    public int progress;
+    public int spinUp;
+
+    public ArrayList<BlockPos> acceleratorPositions = new ArrayList<>();
+    public ArrayList<IAltarAccelerator> accelerators = new ArrayList<>();
+    public float spiritAmount;
+    public float spiritSpin;
+    public ArrayList<SpiritInfusionRecipe> possibleRecipes = new ArrayList<>();
+    public SpiritInfusionRecipe recipe;
+
+
+    public boolean updateRecipe;
 
     public final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
@@ -81,6 +103,18 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         ItemStack prevItem = getHeldItem();
         setStack(0, player.getStackInHand(hand));
         player.setStackInHand(hand, prevItem);
+    }
+    public static Vec3d itemPos(SpiritAltarBlockEntity blockEntity) {
+        return DataHelper.fromBlockPos(blockEntity.getPos()).add(blockEntity.itemOffset());
+    }
+
+    public Vec3d itemOffset() {
+        return new Vec3d(0.5f, 1.25f, 0.5f);
+    }
+    public static Vec3d spiritOffset(SpiritAltarBlockEntity blockEntity, int slot) {
+        float distance = 1 - Math.min(0.25f, blockEntity.spinUp / 40f) + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
+        float height = 0.75f + Math.min(0.5f, blockEntity.spinUp / 20f);
+        return DataHelper.rotatedCirclePosition(new Vec3d(0.5f, height, 0.5f), distance, slot, blockEntity.spiritAmount, (long) blockEntity.spiritSpin, 360);
     }
 
     public ItemStack getHeldItem() {
@@ -146,6 +180,23 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public void readNbt(NbtCompound nbt) {
+        progress = nbt.getInt("progress");
+        spinUp = nbt.getInt("spinUp");
+        speed = nbt.getFloat("speed");
+
+        acceleratorPositions.clear();
+        accelerators.clear();
+        int amount = nbt.getInt("acceleratorAmount");
+        for (int i = 0; i < amount; i++) {
+            BlockPos pos = BlockHelper.loadBlockPos(nbt, "" + i);
+            if (world != null && world.getBlockEntity(pos) instanceof IAltarAccelerator accelerator) {
+                acceleratorPositions.add(pos);
+                accelerators.add(accelerator);
+            }
+        }
+
+        spiritAmount = nbt.getFloat("spiritAmount");
+        updateRecipe = true;
         this.inventory.clear();
         Inventories.readNbt(nbt, this.inventory);
         super.readNbt(nbt);
@@ -153,6 +204,27 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public void writeNbt(NbtCompound nbt) {
+        if (progress != 0) {
+            nbt.putInt("progress", progress);
+        }
+        if (spinUp != 0) {
+            nbt.putInt("spinUp", spinUp);
+        }
+        if (speed != 0) {
+            nbt.putFloat("speed", speed);
+        }
+        if (spiritAmount != 0) {
+            nbt.putFloat("spiritAmount", spiritAmount);
+        }
+
+        if (!acceleratorPositions.isEmpty())
+        {
+            nbt.putInt("acceleratorAmount", acceleratorPositions.size());
+            for (int i = 0; i < acceleratorPositions.size(); i++)
+            {
+                BlockHelper.saveBlockPos(nbt, acceleratorPositions.get(i), "" + i);
+            }
+        }
         Inventories.writeNbt(nbt, this.inventory);
         super.writeNbt(nbt);
     }
