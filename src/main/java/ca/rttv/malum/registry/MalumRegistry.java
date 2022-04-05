@@ -8,7 +8,7 @@ import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
-import ca.rttv.malum.SpiritInfusionRecipe;
+import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.item.EncyclopediaArcanaItem;
 import ca.rttv.malum.item.HolySyrupItem;
 import ca.rttv.malum.item.ScytheItem;
@@ -49,13 +49,13 @@ import static net.minecraft.world.gen.feature.OreConfiguredFeatures.STONE_ORE_RE
 
 @SuppressWarnings({"unused", "SameParameterValue"})
 public final class MalumRegistry { // maps make stuff look cooler ok?
-    private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
-    private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
+    private static final Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
+    private static final Map<Identifier, Item> ITEMS = new LinkedHashMap<>();
     public static final Set<ScytheItem> SCYTHES = new ReferenceOpenHashSet<>();
-    private static final Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
-    private static final Map<Feature<? extends FeatureConfig>, Identifier> FEATURES = new LinkedHashMap<>();
-    private static final Map<RecipeType<? extends Recipe<?>>, Identifier> RECIPE_TYPES = new LinkedHashMap<>();
-    private static final Map<RecipeSerializer<? extends Recipe<?>>, Identifier> RECIPE_SERIALIZER = new LinkedHashMap<>();
+    private static final Map<Identifier, BlockEntityType<?>> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
+    private static final Map<Identifier, Feature<? extends FeatureConfig>> FEATURES = new LinkedHashMap<>();
+    private static final Map<Identifier, RecipeType<? extends Recipe<?>>> RECIPE_TYPES = new LinkedHashMap<>();
+    private static final Map<Identifier, RecipeSerializer<? extends Recipe<?>>> RECIPE_SERIALIZER = new LinkedHashMap<>();
 
     // sound events
     public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_BREAK    = registerSoundEvent       ("arcane_charcoal_block_break");
@@ -138,13 +138,13 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     }
 
     static <T extends Block> T registerBlock(String id, T block) {
-        BLOCKS.put(block, new Identifier(MODID, id));
+        BLOCKS.put(new Identifier(MODID, id), block);
         return block;
     }
 
     static <T extends Block> T registerBlockItem(String id, T block, ItemGroup itemGroup) {
-        BLOCKS.put(block, new Identifier(MODID, id));
-        ITEMS.put(new BlockItem(block, new Settings().group(itemGroup)), new Identifier(MODID, id));
+        BLOCKS.put(new Identifier(MODID, id), block);
+        ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Settings().group(itemGroup)));
         return block;
     }
 
@@ -154,17 +154,17 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     }
 
     static <T extends Item> T registerItem(String id, T item) {
-        ITEMS.put(item, new Identifier(MODID, id));
+        ITEMS.put(new Identifier(MODID, id), item);
         return item;
     }
 
     static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String id, BlockEntityType<T> type) {
-        BLOCK_ENTITY_TYPES.put(type, new Identifier(MODID, id));
+        BLOCK_ENTITY_TYPES.put(new Identifier(MODID, id), type);
         return type;
     }
 
     static <C extends FeatureConfig, F extends Feature<C>> F registerFeature(String id, F feature) {
-        FEATURES.put(feature, new Identifier(MODID, id));
+        FEATURES.put(new Identifier(MODID, id), feature);
         return feature;
     }
 
@@ -181,22 +181,22 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     }
 
     static <T extends Recipe<?>> RecipeType<T> registerRecipeType(String id, RecipeType<T> type) {
-        RECIPE_TYPES.put(type, new Identifier(MODID, id));
+        RECIPE_TYPES.put(new Identifier(MODID, id), type);
         return type;
     }
 
     static <S extends RecipeSerializer<T>, T extends Recipe<?>> S registerRecipeSerializer(String id, S serializer) {
-        RECIPE_SERIALIZER.put(serializer, new Identifier(MODID, id));
+        RECIPE_SERIALIZER.put(new Identifier(MODID, id), serializer);
         return serializer;
     }
 
     public static void init() {
-        ITEMS.forEach((item, id) -> Registry.register(Registry.ITEM, id, item));
-        BLOCKS.forEach((block, id) -> Registry.register(Registry.BLOCK, id, block));
-        BLOCK_ENTITY_TYPES.forEach((entityType, id) -> Registry.register(Registry.BLOCK_ENTITY_TYPE, id, entityType));
-        FEATURES.forEach((feature, id) -> Registry.register(Registry.FEATURE, id, feature));
-        RECIPE_TYPES.forEach((type, id) -> Registry.register(Registry.RECIPE_TYPE, id, type));
-        RECIPE_SERIALIZER.forEach((serializer, id) -> Registry.register(Registry.RECIPE_SERIALIZER, id, serializer));
+        ITEMS.forEach((id, item) -> Registry.register(Registry.ITEM, id, item));
+        BLOCKS.forEach((id, block) -> Registry.register(Registry.BLOCK, id, block));
+        BLOCK_ENTITY_TYPES.forEach((id, entityType) -> Registry.register(Registry.BLOCK_ENTITY_TYPE, id, entityType));
+        FEATURES.forEach((id, feature) -> Registry.register(Registry.FEATURE, id, feature));
+        RECIPE_TYPES.forEach((id, type) -> Registry.register(Registry.RECIPE_TYPE, id, type));
+        RECIPE_SERIALIZER.forEach((id, serializer) -> Registry.register(Registry.RECIPE_SERIALIZER, id, serializer));
         MalumSoundRegistry.init();
         MalumBoatTypes.init();
         MalumEntityRegistry.init();

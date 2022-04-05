@@ -12,7 +12,7 @@ import java.util.Map;
 import static ca.rttv.malum.Malum.MODID;
 
 public class MalumAttributeRegistry {
-    private static final Map<EntityAttribute, Identifier> ATTRIBUTES = new LinkedHashMap<>();
+    private static final Map<Identifier, EntityAttribute> ATTRIBUTES = new LinkedHashMap<>();
 
     public static final EntityAttribute MAGIC_RESISTANCE = create("magic_resistance", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".magic_resistance", 0.0D, 0.0D, 2048.0D).setTracked(true));
     public static final EntityAttribute MAGIC_PROFICIENCY = create("magic_proficiency", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".magic_proficiency", 0.0D, 0.0D, 2048.0D).setTracked(true));
@@ -33,10 +33,10 @@ public class MalumAttributeRegistry {
 
 
     private static <T extends EntityAttribute> EntityAttribute create(String id, EntityAttribute attribute) {
-        ATTRIBUTES.put(attribute, new Identifier(MODID, id));
+        ATTRIBUTES.put(new Identifier(MODID, id), attribute);
         return attribute;
     }
     public static void init() {
-        ATTRIBUTES.keySet().forEach(effect -> Registry.register(Registry.ATTRIBUTE, ATTRIBUTES.get(effect), effect));
+        ATTRIBUTES.forEach((id, attribute) -> Registry.register(Registry.ATTRIBUTE, id, attribute));
     }
 }

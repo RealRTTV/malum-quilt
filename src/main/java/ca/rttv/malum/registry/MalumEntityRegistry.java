@@ -17,13 +17,13 @@ import java.util.Map;
 import static ca.rttv.malum.Malum.MODID;
 
 public class MalumEntityRegistry {
-    private static final Map<EntityType<?>, Identifier> ENTITY_TYPES = new LinkedHashMap<>();
+    private static final Map<Identifier, EntityType<?>> ENTITY_TYPES = new LinkedHashMap<>();
     // entities
     public static final EntityType<MirrorItemEntity> MIRROR_ITEM = registerEntity("mirror_item", EntityType.Builder.<MirrorItemEntity>create((e, w)->new MirrorItemEntity(w), SpawnGroup.MISC).setDimensions(0.5F, 0.5F).maxTrackingRange(10).build(DataHelper.prefix("mirror_item").toString()));
     public static final EntityType<ScytheBoomerangEntity> SCYTHE_BOOMERANG = registerEntity("scythe_boomerang", EntityType.Builder.<ScytheBoomerangEntity>create((e, w)->new ScytheBoomerangEntity(w), SpawnGroup.MISC).setDimensions(2.5F, 0.75F).maxTrackingRange(10).build(DataHelper.prefix("scythe_boomerang").toString()));
 
     private static <T extends Entity> EntityType<T> registerEntity(String id, EntityType<T> type) {
-        ENTITY_TYPES.put(type, new Identifier(MODID, id));
+        ENTITY_TYPES.put(new Identifier(MODID, id), type);
         return type;
     }
 
@@ -34,6 +34,6 @@ public class MalumEntityRegistry {
 //    }
 
     static void init() {
-        ENTITY_TYPES.forEach((entityType, id) -> Registry.register(Registry.ENTITY_TYPE, id, entityType));
+        ENTITY_TYPES.forEach((id, entityType) -> Registry.register(Registry.ENTITY_TYPE, id, entityType));
     }
 }

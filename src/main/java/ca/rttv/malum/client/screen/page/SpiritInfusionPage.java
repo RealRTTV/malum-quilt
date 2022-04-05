@@ -1,11 +1,10 @@
 package ca.rttv.malum.client.screen.page;
 
-import ca.rttv.malum.SpiritInfusionRecipe;
+import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
 import ca.rttv.malum.util.IngredientWithCount;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 

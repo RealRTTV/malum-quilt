@@ -1,6 +1,6 @@
 package ca.rttv.malum.block.entity;
 
-import ca.rttv.malum.SpiritInfusionRecipe;
+import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.util.block.entity.IAltarAccelerator;
 import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
@@ -35,9 +35,6 @@ import java.util.Map;
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
 public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
-    private static final int HORIZONTAL_RANGE = 4;
-    private static final int VERTICAL_RANGE = 2;
-
     public float speed;
     public int progress;
     public int spinUp;
@@ -104,6 +101,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         setStack(0, player.getStackInHand(hand));
         player.setStackInHand(hand, prevItem);
     }
+
     public static Vec3d itemPos(SpiritAltarBlockEntity blockEntity) {
         return DataHelper.fromBlockPos(blockEntity.getPos()).add(blockEntity.itemOffset());
     }
@@ -111,6 +109,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public Vec3d itemOffset() {
         return new Vec3d(0.5f, 1.25f, 0.5f);
     }
+
     public static Vec3d spiritOffset(SpiritAltarBlockEntity blockEntity, int slot) {
         float distance = 1 - Math.min(0.25f, blockEntity.spinUp / 40f) + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
         float height = 0.75f + Math.min(0.5f, blockEntity.spinUp / 20f);

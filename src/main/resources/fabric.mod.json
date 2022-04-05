@@ -26,6 +26,9 @@
     "cardinal-components-entity": [
       "ca.rttv.malum.component.MalumComponents"
     ],
+    "mm:early_risers":[
+      "ca.rttv.malum.MalumEarlyRiser"
+    ],
     "client": [
       "ca.rttv.malum.MalumClient"
     ]

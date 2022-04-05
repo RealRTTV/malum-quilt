@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MalumSoundRegistry {
-    private static final Map<SoundEvent, Identifier> SOUND_EVENTS = new LinkedHashMap<>();
+    private static final Map<Identifier, SoundEvent> SOUND_EVENTS = new LinkedHashMap<>();
     public static final SoundEvent SOULSTONE_BREAK = create("soulstone_break");
     public static final SoundEvent SOULSTONE_PLACE = create("soulstone_place");
     public static final SoundEvent SOULSTONE_STEP = create("soulstone_step");
@@ -88,11 +88,11 @@ public class MalumSoundRegistry {
     private static SoundEvent create(String name) {
         Identifier id = new Identifier(Malum.MODID, name);
         SoundEvent soundEvent = new SoundEvent(id);
-        SOUND_EVENTS.put(soundEvent, id);
+        SOUND_EVENTS.put(id, soundEvent);
         return soundEvent;
     }
 
     public static void init() {
-        SOUND_EVENTS.forEach((effect, id) -> Registry.register(Registry.SOUND_EVENT, id, effect));
+        SOUND_EVENTS.forEach((id, sound) -> Registry.register(Registry.SOUND_EVENT, id, sound));
     }
 }

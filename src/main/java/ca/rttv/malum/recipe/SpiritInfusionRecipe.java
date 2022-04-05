@@ -1,4 +1,4 @@
-package ca.rttv.malum;
+package ca.rttv.malum.recipe;
 
 import ca.rttv.malum.util.IngredientWithCount;
 import com.google.gson.JsonObject;
