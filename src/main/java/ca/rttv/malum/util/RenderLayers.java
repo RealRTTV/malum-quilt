@@ -1,15 +1,16 @@
 package ca.rttv.malum.util;
 
 import ca.rttv.malum.Malum;
-import ca.rttv.malum.client.init.ShaderRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderPhase;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.function.Function;
-import static net.minecraft.client.render.VertexFormats.*;
 
 public class RenderLayers extends RenderPhase {
     public RenderLayers(String string, Runnable runnable, Runnable runnable2) {

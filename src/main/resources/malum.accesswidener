@@ -19,3 +19,4 @@ accessible      method    net/minecraft/block/Blocks                            
 accessible      method    net/minecraft/block/entity/BlockEntityType                               create                       (Ljava/lang/String;Lnet/minecraft/block/entity/BlockEntityType$Builder;)Lnet/minecraft/block/entity/BlockEntityType;
 accessible      method    net/minecraft/entity/projectile/ProjectileEntity                         <init>                       (Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V
 accessible      method    net/minecraft/world/gen/feature/OrePlacedFeatures                        commonOrePlacementModifiers  (ILnet/minecraft/world/gen/feature/PlacementModifier;)Ljava/util/List;
+accessible      method    net/minecraft/recipe/RecipeManager                                       getAllOfType                 (Lnet/minecraft/recipe/RecipeType;)Ljava/util/Map;

@@ -8,6 +8,7 @@ import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
+import ca.rttv.malum.SpiritInfusionRecipe;
 import ca.rttv.malum.item.EncyclopediaArcanaItem;
 import ca.rttv.malum.item.HolySyrupItem;
 import ca.rttv.malum.item.ScytheItem;
@@ -21,6 +22,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Holder;
@@ -50,6 +53,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Set<ScytheItem> SCYTHES = new ReferenceOpenHashSet<>();
     private static final Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
     private static final Map<Feature<? extends FeatureConfig>, Identifier> FEATURES = new LinkedHashMap<>();
+    private static final Map<RecipeType<? extends Recipe<?>>, Identifier> RECIPE_TYPES = new LinkedHashMap<>();
 
     // sound events
     public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_BREAK    = registerSoundEvent ("arcane_charcoal_block_break");
@@ -74,6 +78,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Item                                          PROCESSED_SOULSTONE            = registerItem      ("processed_soulstone",               new Item(new Settings().group(MALUM)));
     public static final Item                                          RAW_SOULSTONE                  = registerItem      ("raw_soulstone",                     new Item(new Settings().group(MALUM)));
     public static final Item                                          CRUDE_SCYTHE                   = registerScytheItem("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
+    public static final Item                                          HEX_ASH                        = registerItem      ("hex_ash",                           new Item(new Settings().group(MALUM)));
 
     // blocks
     public static final Block                                         RUNEWOOD_SAPLING               = registerBlockItem ("runewood_sapling",                  new SaplingBlock(new RunewoodSaplingGenerator(), AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM);
@@ -110,6 +115,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Item                                          AERIAL_SPIRIT                  = registerItem       ("aerial_spirit",                    new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.AERIAL_SPIRIT));
     public static final Item                                          AQUEOUS_SPIRIT                 = registerItem       ("aqueous_spirit",                   new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.AQUEOUS_SPIRIT));
 
+    public static final RecipeType<SpiritInfusionRecipe>              SPIRIT_INFUSION                = registerRecipeType ("spirit_infusion", new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
 
     public static final Feature<DefaultFeatureConfig>                 RUNEWOOD_TREE_FEATURE          = registerFeature    ("runewood_tree",                    new RunewoodTreeFeature());
     public static final List<OreFeatureConfig.Target>                 SOULSTONE_ORE_TARGETS          = List.of            (OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()),
@@ -169,6 +175,11 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(new Identifier(MODID, id)));
     }
 
+    private static <T extends Recipe<?>> RecipeType<T> registerRecipeType(String id, RecipeType<T> type) {
+        RECIPE_TYPES.put(type, new Identifier(MODID, id));
+        return type;
+    }
+
     public static void init() {
         ITEMS.forEach((item, id) -> Registry.register(Registry.ITEM, id, item));
         BLOCKS.forEach((block, id) -> Registry.register(Registry.BLOCK, id, block));
@@ -176,5 +187,6 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         MalumEntityRegistry.init();
         BLOCK_ENTITY_TYPES.keySet().forEach(entityType -> Registry.register(Registry.BLOCK_ENTITY_TYPE, BLOCK_ENTITY_TYPES.get(entityType), entityType));
         FEATURES.forEach((feature, id) -> Registry.register(Registry.FEATURE, id, feature));
+        RECIPE_TYPES.forEach((type, id) -> Registry.register(Registry.RECIPE_TYPE, id, type));
     }
 }

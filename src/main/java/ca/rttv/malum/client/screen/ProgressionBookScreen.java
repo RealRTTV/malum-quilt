@@ -121,7 +121,7 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
                 .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
                 .addPage(new HeadlineTextPage("hex_ash", "hex_ash"))
-//                .addPage(SpiritInfusionPage.fromOutput(HEX_ASH))
+                .addPage(SpiritInfusionPage.fromOutput(HEX_ASH))
         );
 /*
         entries.add(new BookEntry(
@@ -690,7 +690,7 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public void renderBackground(Identifier texture, MatrixStack matrices, float xModifier, float yModifier) {
-        int guiLeft = (width - bookWidth) / 2; //TODO: literally just redo this entire garbage method, please, no u
+        int guiLeft = (width - bookWidth) / 2;
         int guiTop = (height - bookHeight) / 2;
         int insideLeft = guiLeft + 17;
         int insideTop = guiTop + 14;
