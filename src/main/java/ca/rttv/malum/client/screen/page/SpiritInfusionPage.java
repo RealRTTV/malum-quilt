@@ -2,6 +2,7 @@ package ca.rttv.malum.client.screen.page;
 
 import ca.rttv.malum.SpiritInfusionRecipe;
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
+import ca.rttv.malum.util.IngredientWithCount;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
@@ -10,9 +11,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_INFUSION;
@@ -38,11 +37,11 @@ public class SpiritInfusionPage extends BookPage {
     }
 
     public static SpiritInfusionPage fromInput(Item inputItem) {
-        return new SpiritInfusionPage(s -> s.input.test(inputItem.getDefaultStack()));
+        return new SpiritInfusionPage(recipe -> recipe.input.test(inputItem.getDefaultStack()));
     }
 
     public static SpiritInfusionPage fromOutput(Item outputItem) {
-        return new SpiritInfusionPage(s -> s.output.isItemEqual(outputItem.getDefaultStack()));
+        return new SpiritInfusionPage(recipe -> recipe.output.streamTags().anyMatch(tag -> outputItem.getDefaultStack().streamTags().toList().contains(tag)));
     }
 
     public static int[] uOffset() {
@@ -67,7 +66,7 @@ public class SpiritInfusionPage extends BookPage {
         }
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 67, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 67, guiTop + 126, mouseX, mouseY);
-        renderItems(matrices, guiLeft + 15, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getMatchingStacks()));
+        renderItems(matrices, guiLeft + 15, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getEntries()));
     }
 
     @Override
@@ -79,16 +78,14 @@ public class SpiritInfusionPage extends BookPage {
         }
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 209, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 209, guiTop + 126, mouseX, mouseY);
-        renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getMatchingStacks()));
+        renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getEntries()));
     }
 
-    public void renderIngredients(MatrixStack matrices, int left, int top, int mouseX, int mouseY, Ingredient ingredients) {
-        List<ItemStack> items = List.of(ingredients.getMatchingStacks());
-
-        renderItems(matrices, left, top, mouseX, mouseY, items);
+    public void renderIngredients(MatrixStack matrices, int left, int top, int mouseX, int mouseY, IngredientWithCount ingredients) {
+        renderItems(matrices, left, top, mouseX, mouseY, List.of(ingredients.getEntries()));
     }
 
-    public void renderItems(MatrixStack matrices, int left, int top, int mouseX, int mouseY, List<ItemStack> extraItems) {
+    public void renderItems(MatrixStack matrices, int left, int top, int mouseX, int mouseY, List<IngredientWithCount.Entry> extraItems) {
         int index = extraItems.size() - 1;
         int textureHeight = 32 + index * 19;
         int offset = (int) (6.5f * index);
@@ -98,7 +95,7 @@ public class SpiritInfusionPage extends BookPage {
         ProgressionBookScreen.renderTexture(TEXTURE, matrices, left, top, uOffset, vOffset, 32, textureHeight, 512, 512);
 
         for (int i = 0; i < extraItems.size(); i++) {
-            ItemStack stack = extraItems.get(i);
+            ItemStack stack = extraItems.get(i).getStacks().get(0);
             ProgressionBookScreen.renderItem(matrices, stack, left + 8, top + 8 + 19 * i, mouseX, mouseY);
         }
     }

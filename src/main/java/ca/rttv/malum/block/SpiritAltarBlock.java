@@ -1,6 +1,5 @@
 package ca.rttv.malum.block;
 
-import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;

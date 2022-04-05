@@ -79,8 +79,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Item                                          RAW_SOULSTONE                  = registerItem      ("raw_soulstone",                     new Item(new Settings().group(MALUM)));
     public static final Item                                          CRUDE_SCYTHE                   = registerScytheItem("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
     public static final Item                                          HEX_ASH                        = registerItem      ("hex_ash",                           new Item(new Settings().group(MALUM)));
-        //creatives
-    public static final Item                                          CREATIVE_SCYTHE                = registerScytheItem("creative_scythe",                   new ScytheItem(ToolMaterials.IRON, 9993, 9.1f, new Settings().group(MALUM).maxDamage(-1)));
+
     // blocks
     public static final Block                                         RUNEWOOD_SAPLING               = registerBlockItem ("runewood_sapling",                  new SaplingBlock(new RunewoodSaplingGenerator(), AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM);
     public static final Block                                         RUNEWOOD_LOG                   = registerBlockItem ("runewood_log",                      new PillarBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
@@ -186,7 +185,6 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         BLOCKS.forEach((block, id) -> Registry.register(Registry.BLOCK, id, block));
         MalumSoundRegistry.init();
         MalumBoatTypes.init();
-        MalumEnchantments.init();
         MalumEntityRegistry.init();
         BLOCK_ENTITY_TYPES.keySet().forEach(entityType -> Registry.register(Registry.BLOCK_ENTITY_TYPE, BLOCK_ENTITY_TYPES.get(entityType), entityType));
         FEATURES.forEach((feature, id) -> Registry.register(Registry.FEATURE, id, feature));

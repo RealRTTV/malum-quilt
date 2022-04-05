@@ -7,7 +7,8 @@
     "AxeItemMixin",
     "BlockColorsMixin",
     "BlockEntityRendererFactoriesMixin",
-    "DefaultBiomeFeaturesMixin"
+    "DefaultBiomeFeaturesMixin",
+    "LivingEntityMixin"
   ],
   "client": [
     "AbstractFurnaceBlockEntityMixin"
