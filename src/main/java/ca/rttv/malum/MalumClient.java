@@ -1,5 +1,6 @@
 package ca.rttv.malum;
 
+import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
 import ca.rttv.malum.registry.MalumRegistry;
 import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
@@ -17,6 +18,7 @@ public class MalumClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         TerraformBoatClientHelper.registerModelLayer(new Identifier(Malum.MODID, "runewood"));
+        MalumParticleRegistry.init();
 
         for(Item item : MalumRegistry.SCYTHES) {
             Identifier scytheId = Registry.ITEM.getId(item);

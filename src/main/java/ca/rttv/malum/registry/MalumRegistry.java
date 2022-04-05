@@ -9,6 +9,7 @@ import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.SpiritInfusionRecipe;
+import ca.rttv.malum.client.init.MalumSoundRegistry;
 import ca.rttv.malum.item.EncyclopediaArcanaItem;
 import ca.rttv.malum.item.HolySyrupItem;
 import ca.rttv.malum.item.ScytheItem;
@@ -183,6 +184,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static void init() {
         ITEMS.forEach((item, id) -> Registry.register(Registry.ITEM, id, item));
         BLOCKS.forEach((block, id) -> Registry.register(Registry.BLOCK, id, block));
+        MalumSoundRegistry.init();
         MalumBoatTypes.init();
         MalumEntityRegistry.init();
         BLOCK_ENTITY_TYPES.keySet().forEach(entityType -> Registry.register(Registry.BLOCK_ENTITY_TYPE, BLOCK_ENTITY_TYPES.get(entityType), entityType));
