@@ -2,6 +2,7 @@ accessWidener   v1        named
 
 accessible      class     net/minecraft/client/render/RenderLayer$MultiPhase
 accessible      class     net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
+accessible      class     net/minecraft/enchantment/EnchantmentHelper$Consumer
 
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhase                       phases                       Lnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhaseParameters             shader                       Lnet/minecraft/client/render/RenderPhase$Shader;
@@ -11,6 +12,8 @@ accessible      field     net/minecraft/client/render/Shader                    
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhaseParameters             transparency                 Lnet/minecraft/client/render/RenderPhase$Transparency;
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhaseParameters             texture                      Lnet/minecraft/client/render/RenderPhase$TextureBase;
 
+accessible      method    net/minecraft/enchantment/EnchantmentHelper                              forEachEnchantment           (Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Lnet/minecraft/item/ItemStack;)V
+accessible      method    net/minecraft/enchantment/EnchantmentHelper                              forEachEnchantment           (Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Ljava/lang/Iterable;)V
 accessible      method    net/minecraft/client/render/RenderLayer                                  of                           (Ljava/lang/String;Lnet/minecraft/client/render/VertexFormat;Lnet/minecraft/client/render/VertexFormat$DrawMode;IZZLnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;)Lnet/minecraft/client/render/RenderLayer$MultiPhase;
 accessible      method    net/minecraft/client/render/RenderPhase$TextureBase                      getId                        ()Ljava/util/Optional;
 extendable      method    net/minecraft/client/render/Shader                                       addUniform                   (Lcom/google/gson/JsonElement;)V

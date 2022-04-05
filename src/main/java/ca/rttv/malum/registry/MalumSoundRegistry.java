@@ -1,4 +1,4 @@
-package ca.rttv.malum.client.init;
+package ca.rttv.malum.registry;
 
 import ca.rttv.malum.Malum;
 import net.minecraft.sound.SoundEvent;

@@ -1,12 +1,15 @@
 package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.client.render.entity.ScytheBoomerangEntityRenderer;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
+import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumRegistry;
 import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.Item;
@@ -19,6 +22,7 @@ public class MalumClient implements ClientModInitializer {
     public void onInitializeClient() {
         TerraformBoatClientHelper.registerModelLayer(new Identifier(Malum.MODID, "runewood"));
         MalumParticleRegistry.init();
+        EntityRendererRegistry.register(MalumEntityRegistry.SCYTHE_BOOMERANG, ScytheBoomerangEntityRenderer::new);
 
         for(Item item : MalumRegistry.SCYTHES) {
             Identifier scytheId = Registry.ITEM.getId(item);
