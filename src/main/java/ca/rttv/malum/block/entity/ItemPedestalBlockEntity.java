@@ -18,5 +18,4 @@ public class ItemPedestalBlockEntity extends AbstractItemDisplayBlockEntity {
     public Vec3d itemOffset() {
         return new Vec3d(0.5f, 1.1f, 0.5f);
     }
-
 }

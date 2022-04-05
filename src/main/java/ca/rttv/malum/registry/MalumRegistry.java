@@ -2,9 +2,11 @@ package ca.rttv.malum.registry;
 
 import ca.rttv.malum.block.ItemStandBlock;
 import ca.rttv.malum.block.RunewoodLeavesBlock;
+import ca.rttv.malum.block.SpiritAltarBlock;
 import ca.rttv.malum.block.WoodenItemPedestalBlock;
 import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
+import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.item.EncyclopediaArcanaItem;
 import ca.rttv.malum.item.HolySyrupItem;
@@ -71,7 +73,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Item                                          HOLY_SYRUP                     = registerItem      ("holy_syrup",                        new HolySyrupItem(new Settings().group(MALUM).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
     public static final Item                                          PROCESSED_SOULSTONE            = registerItem      ("processed_soulstone",               new Item(new Settings().group(MALUM)));
     public static final Item                                          RAW_SOULSTONE                  = registerItem      ("raw_soulstone",                     new Item(new Settings().group(MALUM)));
-    public static final Item                                          CRUDE_SCYTHE                   = registerScytheItem      ("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
+    public static final Item                                          CRUDE_SCYTHE                   = registerScytheItem("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
 
     // blocks
     public static final Block                                         RUNEWOOD_SAPLING               = registerBlockItem ("runewood_sapling",                  new SaplingBlock(new RunewoodSaplingGenerator(), AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM);
@@ -91,10 +93,12 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Block                                         BLOCK_OF_RAW_SOULSTONE         = registerBlockItem ("block_of_raw_soulstone",            new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
     public static final Block                                         SOULSTONE_ORE                  = registerBlockItem ("soulstone_ore",                     new OreBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
     public static final Block                                         DEEPSLATE_SOULSTONE_ORE        = registerBlockItem ("deepslate_soulstone_ore",           new OreBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(7.0f, 6.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+    public static final Block                                         SPIRIT_ALTAR                   = registerBlockItem ("spirit_altar",                      new SpiritAltarBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(2.0f)), MALUM);
 
     // block entities
     public static final BlockEntityType<ItemStandBlockEntity>         ITEM_STAND_BLOCK_ENTITY        = registerBlockEntity("item_stand",                       BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND).build(null));
     public static final BlockEntityType<ItemPedestalBlockEntity>      ITEM_PEDESTAL_BLOCK_ENTITY     = registerBlockEntity("item_pedestal",                    BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL).build(null));
+    public static final BlockEntityType<SpiritAltarBlockEntity>       SPIRIT_ALTAR_BLOCK_ENTITY      = registerBlockEntity("spirit_altar",                     BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
 
     // spirits
     public static final Item                                          SACRED_SPIRIT                  = registerItem       ("sacred_spirit",                    new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.SACRED_SPIRIT));
@@ -108,18 +112,16 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
 
 
     public static final Feature<DefaultFeatureConfig>                 RUNEWOOD_TREE_FEATURE          = registerFeature    ("runewood_tree",                    new RunewoodTreeFeature());
-    public static final List<OreFeatureConfig.Target> SOULSTONE_ORE_TARGETS = List.of(
-            OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()),
-            OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState())
-    );
+    public static final List<OreFeatureConfig.Target>                 SOULSTONE_ORE_TARGETS          = List.of            (OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()),
+                                                                                                                           OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
 
-    public static final Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE = registerConfiguredFeature("runewood_tree",      RUNEWOOD_TREE_FEATURE);
+    public static final Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE = registerConfiguredFeature  ("runewood_tree",       RUNEWOOD_TREE_FEATURE);
 
-    public static final Holder<ConfiguredFeature<OreFeatureConfig, ?>> LOWER_ORE_SOULSTONE_CONFIGURED = registerConfiguredFeature("lower_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 12)); // i == maxSize
-    public static final Holder<PlacedFeature> LOWER_ORE_SOULSTONE_PLACED = registerPlacedFeature("lower_ore_soulstone", LOWER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(8, HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(30)))); // bottom of world and y 30
+    public static final Holder<ConfiguredFeature<OreFeatureConfig, ?>>     LOWER_ORE_SOULSTONE_CONFIGURED   = registerConfiguredFeature  ("lower_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 12)); // i == maxSize
+    public static final Holder<PlacedFeature>                              LOWER_ORE_SOULSTONE_PLACED       = registerPlacedFeature      ("lower_ore_soulstone", LOWER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(8, HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(30)))); // bottom of world and y 30
 
-    public static final Holder<ConfiguredFeature<OreFeatureConfig, ?>> UPPER_ORE_SOULSTONE_CONFIGURED = registerConfiguredFeature("upper_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 6)); // i == maxSize
-    public static final Holder<PlacedFeature> UPPER_ORE_SOULSTONE_PLACED = registerPlacedFeature("upper_ore_soulstone", UPPER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(5, HeightRangePlacementModifier.createUniform(YOffset.fixed(60), YOffset.fixed(100)))); // y 60 to y 100
+    public static final Holder<ConfiguredFeature<OreFeatureConfig, ?>>     UPPER_ORE_SOULSTONE_CONFIGURED   = registerConfiguredFeature  ("upper_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 6)); // i == maxSize
+    public static final Holder<PlacedFeature>                              UPPER_ORE_SOULSTONE_PLACED       = registerPlacedFeature      ("upper_ore_soulstone", UPPER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(5, HeightRangePlacementModifier.createUniform(YOffset.fixed(60), YOffset.fixed(100)))); // y 60 to y 100
 
     private static Holder<PlacedFeature> registerPlacedFeature(String id, Holder<? extends ConfiguredFeature<?, ?>> configuredFeature, List<PlacementModifier> modifiers) {
         return PlacedFeatureUtil.register(id, configuredFeature, modifiers);
