@@ -44,6 +44,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
 
     public static SpiritInfusionRecipe getRecipe(World world, Predicate<SpiritInfusionRecipe> predicate) {
         List<SpiritInfusionRecipe> recipes = getRecipes(world);
+        System.out.println(recipes.size());
         for (SpiritInfusionRecipe recipe : recipes) {
             if (predicate.test(recipe)) {
                 return recipe;

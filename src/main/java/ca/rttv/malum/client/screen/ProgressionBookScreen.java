@@ -121,7 +121,7 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
                 .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
                 .addPage(new HeadlineTextPage("hex_ash", "hex_ash"))
-                .addPage(SpiritInfusionPage.fromOutput(HEX_ASH))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/hex_ash")))
         );
 /*
         entries.add(new BookEntry(

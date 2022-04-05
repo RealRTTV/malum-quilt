@@ -7,7 +7,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -36,12 +35,8 @@ public class SpiritInfusionPage extends BookPage {
         this.recipe = recipe;
     }
 
-    public static SpiritInfusionPage fromInput(Item inputItem) {
-        return new SpiritInfusionPage(recipe -> recipe.input.test(inputItem.getDefaultStack()));
-    }
-
-    public static SpiritInfusionPage fromOutput(Item outputItem) {
-        return new SpiritInfusionPage(recipe -> recipe.output.streamTags().anyMatch(tag -> outputItem.getDefaultStack().streamTags().toList().contains(tag)));
+    public static SpiritInfusionPage fromId(Identifier id) {
+        return new SpiritInfusionPage(recipe -> recipe.getId().equals(id));
     }
 
     public static int[] uOffset() {

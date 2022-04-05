@@ -12,6 +12,7 @@ import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.Contract;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class IngredientWithCount implements Predicate<ItemStack> {
             } else if (json.isJsonArray()) {
                 JsonArray jsonArray = json.getAsJsonArray();
                 if (jsonArray.size() == 0) {
-                    throw new JsonSyntaxException("Item array cannot be empty, at least one item must be defined");
+                    return EMPTY;
                 } else {
                     return ofEntries(StreamSupport.stream(jsonArray.spliterator(), false).map(jsonElement -> entryFromJson(JsonHelper.asObject(jsonElement, "item"))));
                 }

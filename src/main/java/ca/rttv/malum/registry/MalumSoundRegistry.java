@@ -93,6 +93,6 @@ public class MalumSoundRegistry {
     }
 
     public static void init() {
-        SOUND_EVENTS.keySet().forEach(effect -> Registry.register(Registry.SOUND_EVENT, SOUND_EVENTS.get(effect), effect));
+        SOUND_EVENTS.forEach((effect, id) -> Registry.register(Registry.SOUND_EVENT, id, effect));
     }
 }
