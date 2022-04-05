@@ -1,5 +1,6 @@
 package ca.rttv.malum;
 
+import ca.rttv.malum.util.IngredientWithCount;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -17,24 +18,23 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_INFUSION;
+import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_INFUSION_SERIALIZER;
 
 public class SpiritInfusionRecipe implements Recipe<Inventory> {
     public final Identifier id;
     public final String group;
-    public final Ingredient input;
+    public final IngredientWithCount input;
     public final ItemStack output;
-    public final Ingredient extraItems;
-    public final Ingredient spirits;
-    public final RecipeSerializer<?> serializer;
+    public final IngredientWithCount extraItems;
+    public final IngredientWithCount spirits;
 
-    public SpiritInfusionRecipe(Identifier id, String group, Ingredient input, ItemStack output, Ingredient extraItems, Ingredient spirits, RecipeSerializer<?> serializer) {
+    public SpiritInfusionRecipe(Identifier id, String group, IngredientWithCount input, ItemStack output, IngredientWithCount extraItems, IngredientWithCount spirits) {
         this.id = id;
         this.group = group;
         this.input = input;
         this.output = output;
         this.extraItems = extraItems;
         this.spirits = spirits;
-        this.serializer = serializer;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
     @Override
     public DefaultedList<Ingredient> getIngredients() {
         DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-        defaultedList.add(this.input);
+        defaultedList.add(this.input.asIngredient());
         return defaultedList;
     }
 
@@ -90,7 +90,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return this.serializer;
+        return SPIRIT_INFUSION_SERIALIZER;
     }
 
     @Override
@@ -101,25 +101,25 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
     public static class Serializer<T extends SpiritInfusionRecipe> implements RecipeSerializer<T> {
         final RecipeFactory<T> recipeFactory;
 
-        protected Serializer(RecipeFactory<T> recipeFactory) {
+        public Serializer(RecipeFactory<T> recipeFactory) {
             this.recipeFactory = recipeFactory;
         }
 
         public T read(Identifier id, JsonObject jsonObject) {
             String group = JsonHelper.getString(jsonObject, "group", "");
-            Ingredient input = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "output"));
-            ItemStack output = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "input")).getMatchingStacks()[0];
-            Ingredient extraItems = Ingredient.fromJson(JsonHelper.getArray(jsonObject, "extra_items"));
-            Ingredient spirits = Ingredient.fromJson(JsonHelper.getArray(jsonObject, "spirits"));
+            IngredientWithCount input = IngredientWithCount.fromJson(JsonHelper.getObject(jsonObject, "output"));
+            ItemStack output = IngredientWithCount.fromJson(JsonHelper.getObject(jsonObject, "input")).getMatchingStacks()[0];
+            IngredientWithCount extraItems = IngredientWithCount.fromJson(JsonHelper.getArray(jsonObject, "extra_items"));
+            IngredientWithCount spirits = IngredientWithCount.fromJson(JsonHelper.getArray(jsonObject, "spirits"));
             return this.recipeFactory.create(id, group, input, output, extraItems, spirits);
         }
 
-        public T read(Identifier identifier, PacketByteBuf packetByteBuf) {
-            String group = packetByteBuf.readString();
-            Ingredient input = Ingredient.fromPacket(packetByteBuf);
-            ItemStack output = packetByteBuf.readItemStack();
-            Ingredient extraItems = Ingredient.fromPacket(packetByteBuf);
-            Ingredient spirits = Ingredient.fromPacket(packetByteBuf);
+        public T read(Identifier identifier, PacketByteBuf buf) {
+            String group = buf.readString();
+            IngredientWithCount input = IngredientWithCount.fromPacket(buf);
+            ItemStack output = buf.readItemStack();
+            IngredientWithCount extraItems = IngredientWithCount.fromPacket(buf);
+            IngredientWithCount spirits = IngredientWithCount.fromPacket(buf);
             return this.recipeFactory.create(identifier, group, input, output, extraItems, spirits);
         }
 
@@ -132,7 +132,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
         }
 
         public interface RecipeFactory<T extends SpiritInfusionRecipe> {
-            T create(Identifier id, String group, Ingredient input, ItemStack output, Ingredient extraItems, Ingredient spirits);
+            T create(Identifier id, String group, IngredientWithCount input, ItemStack output, IngredientWithCount extraItems, IngredientWithCount spirits);
         }
     }
 }
