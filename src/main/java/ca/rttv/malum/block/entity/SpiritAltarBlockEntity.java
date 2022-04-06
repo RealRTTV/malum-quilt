@@ -2,6 +2,8 @@ package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
+import ca.rttv.malum.registry.MalumRegistry;
+import ca.rttv.malum.util.IngredientWithCount;
 import ca.rttv.malum.util.block.entity.IAltarAccelerator;
 import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
@@ -31,20 +33,11 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.*;
 
+import static ca.rttv.malum.registry.MalumRegistry.HOLY_SAPBALL;
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
 public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
-    public float speed;
-    public int progress;
-    public int spinUp;
-    public ArrayList<BlockPos> acceleratorPositions = new ArrayList<>();
-    public ArrayList<IAltarAccelerator> accelerators = new ArrayList<>();
-    public float spiritAmount;
-    public float spiritSpin;
-    public ArrayList<SpiritInfusionRecipe> possibleRecipes = new ArrayList<>();
     public SpiritInfusionRecipe recipe;
-    public boolean updateRecipe;
-
     public final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
     public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(7, ItemStack.EMPTY);
 
@@ -61,14 +54,14 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
             this.addSpirits(state, world, pos, player, hand, hit);
         } else if (this.getHeldItem().isEmpty() && player.getStackInHand(hand).isEmpty()) {
             this.grabSpirit(state, world, pos, player, hand, hit);
-        } else {
+        } else if (player.getStackInHand(hand).getItem() != HOLY_SAPBALL) {
             this.swapSlots(state, world, pos, player, hand, hit);
         }
         recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), this.spiritSlots);
         if (recipe == null) {
-            // do stuff
             return ActionResult.CONSUME;
         }
+        System.out.println(hasExtraItems(state, world, pos, getExtraItems(state, world, pos), recipe));
         return ActionResult.CONSUME;
     }
 
@@ -80,6 +73,21 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 return;
             }
         }
+    }
+
+    private boolean hasExtraItems(BlockState state, World world, BlockPos pos, List<ItemStack> extraItems, SpiritInfusionRecipe recipe) {
+        for (IngredientWithCount.Entry entry : recipe.extraItems.getEntries()) {
+            boolean found = false;
+            for (ItemStack extraItem : extraItems) {
+                if (entry.isValidItem(extraItem)) {
+                    found = true;
+                    // we don't remove the entry since it can cause errors with index of extra items, thus is has to be used twice
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+        return true;
     }
 
     private void addSpirits(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -110,7 +118,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         player.setStackInHand(hand, ItemStack.EMPTY);
     }
 
-    private List<ItemStack> getReagents(BlockState state, World world, BlockPos pos) {
+    private List<ItemStack> getExtraItems(BlockState state, World world, BlockPos pos) {
+        // id have to use a map cause i don't think theres an @Override to equals on itemstack thus memory location shit
         Map<Item, Integer> map = new LinkedHashMap<>();
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPosition -> {
             if (world.getBlockEntity(reagentPosition) instanceof AbstractItemDisplayBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
@@ -156,9 +165,10 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     }
 
     public static Vec3d spiritOffset(SpiritAltarBlockEntity blockEntity, int slot) {
-        float distance = 1 - Math.min(0.25f, blockEntity.spinUp / 40f) + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
-        float height = 0.75f + Math.min(0.5f, blockEntity.spinUp / 20f);
-        return DataHelper.rotatedCirclePosition(new Vec3d(0.5f, height, 0.5f), distance, slot, blockEntity.spiritAmount, (long) blockEntity.spiritSpin, 360);
+//        float distance = 1 - Math.min(0.25f, blockEntity.spinUp / 40f) + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
+//        float height = 0.75f + Math.min(0.5f, blockEntity.spinUp / 20f);
+//        return DataHelper.rotatedCirclePosition(new Vec3d(0.5f, height, 0.5f), distance, slot, blockEntity.spiritAmount, (long) blockEntity.spiritSpin, 360);
+        return new Vec3d(0.5d, 1.25d, 0.5d);
     }
 
     public ItemStack getHeldItem() {
@@ -233,12 +243,6 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        if (!acceleratorPositions.isEmpty()) {
-            nbt.putInt("acceleratorAmount", acceleratorPositions.size());
-            for (int i = 0; i < acceleratorPositions.size(); i++) {
-                BlockHelper.saveBlockPos(nbt, acceleratorPositions.get(i), "" + i);
-            }
-        }
         Inventories.writeNbt(nbt, this.heldItem);
         DataHelper.writeNbt(nbt, this.spiritSlots, "Spirits");
         super.writeNbt(nbt);

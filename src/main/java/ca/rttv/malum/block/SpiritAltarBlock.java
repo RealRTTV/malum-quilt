@@ -57,6 +57,7 @@ public class SpiritAltarBlock extends BlockWithEntity implements Waterloggable {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof SpiritAltarBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory)blockEntity);
+                ItemScatterer.spawn(world, pos, ((SpiritAltarBlockEntity) blockEntity).spiritSlots);
                 world.updateComparators(pos, this);
             }
 
