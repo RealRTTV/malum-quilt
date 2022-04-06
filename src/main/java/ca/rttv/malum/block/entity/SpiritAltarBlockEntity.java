@@ -38,15 +38,12 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public float speed;
     public int progress;
     public int spinUp;
-
     public ArrayList<BlockPos> acceleratorPositions = new ArrayList<>();
     public ArrayList<IAltarAccelerator> accelerators = new ArrayList<>();
     public float spiritAmount;
     public float spiritSpin;
     public ArrayList<SpiritInfusionRecipe> possibleRecipes = new ArrayList<>();
     public SpiritInfusionRecipe recipe;
-
-
     public boolean updateRecipe;
 
     public final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
