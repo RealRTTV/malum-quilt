@@ -39,7 +39,7 @@ import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public SpiritInfusionRecipe recipe;
     public final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
-    public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(7, ItemStack.EMPTY);
+    public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
     public SpiritAltarBlockEntity(BlockPos pos, BlockState state) {
         this(SPIRIT_ALTAR_BLOCK_ENTITY, pos, state);
