@@ -44,12 +44,8 @@ public class ScytheAttackParticle extends SpriteBillboardParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public static class Factory implements ParticleFactory<DefaultParticleType> {
-        private final SpriteProvider spriteSet;
-
-        public Factory(SpriteProvider spriteSet) {
-            this.spriteSet = spriteSet;
-        }
+    public record Factory(
+            SpriteProvider spriteSet) implements ParticleFactory<DefaultParticleType> {
 
         @Nullable
         @Override

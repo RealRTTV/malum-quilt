@@ -11,7 +11,7 @@ public class BookEntry {
     public final String id;
     public final int xOffset;
     public final int yOffset;
-    public ArrayList<BookPage> pages = new ArrayList<>();
+    public final ArrayList<BookPage> pages = new ArrayList<>();
     public EntryObjectSupplier objectSupplier = EntryObject::new;
 
     public BookEntry(String id, Item item, int xOffset, int yOffset) {

@@ -126,8 +126,8 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         }
     }
 
-    public boolean isEmpty() {
-        return this.entries.length == 0 && (this.matchingStacks == null || this.matchingStacks.length == 0);
+    public boolean isPresent() {
+        return this.entries.length != 0 || (this.matchingStacks != null && this.matchingStacks.length != 0);
     }
 
     public static IngredientWithCount empty() {
@@ -166,14 +166,7 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         boolean isValidItem(ItemStack stack);
     }
 
-    public static final class StackEntry implements Entry {
-
-        public final ItemStack stack;
-
-        StackEntry(ItemStack stack) {
-            this.stack = stack;
-        }
-
+    public record StackEntry(ItemStack stack) implements Entry {
         @Override
         public List<ItemStack> getStacks() {
             return List.of(stack);
@@ -187,21 +180,17 @@ public class IngredientWithCount implements Predicate<ItemStack> {
             return json;
         }
 
+        public ItemStack getStack() {
+            return stack;
+        }
+
         @Override
         public boolean isValidItem(ItemStack stack) {
             return this.stack.getCount() == stack.getCount() && this.stack.getItem() == stack.getItem();
         }
     }
 
-    public static final class TagEntry implements Entry {
-        private final TagKey<Item> tag;
-        private final int count;
-
-        TagEntry(TagKey<Item> tag, int count) {
-            this.tag = tag;
-            this.count = count;
-        }
-
+    public record TagEntry(TagKey<Item> tag, int count) implements Entry {
         @Override
         public List<ItemStack> getStacks() {
             List<ItemStack> stacks = new ArrayList<>();

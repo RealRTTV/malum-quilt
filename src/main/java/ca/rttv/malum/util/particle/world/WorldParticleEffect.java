@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class WorldParticleEffect extends SimpleParticleEffect implements ParticleEffect {
 
-    ParticleType<?> type;
+    public ParticleType<?> type;
     public Vec3f startingMotion = Vec3f.ZERO, endingMotion = Vec3f.ZERO;
     public WorldParticleEffect(ParticleType<?> type) {
         this.type = type;
@@ -30,16 +30,9 @@ public class WorldParticleEffect extends SimpleParticleEffect implements Particl
         return type;
     }
 
-    public static final Codec<WorldParticleEffect> CODEC = RecordCodecBuilder.create((instance) -> {
-        return instance.group(Codec.FLOAT.fieldOf("sx").forGetter((worldParticleEffect) -> {
-            return worldParticleEffect.startingMotion.getX();
-        }), Codec.FLOAT.fieldOf("sy").forGetter((worldParticleEffect) -> {
-            return worldParticleEffect.startingMotion.getY();
-        }), Codec.FLOAT.fieldOf("zy").forGetter((worldParticleEffect) -> {
-            return worldParticleEffect.startingMotion.getZ();
-        })).apply(instance, WorldParticleEffect::new);
-    });
-    public static final ParticleEffect.Factory<WorldParticleEffect> PARAMETERS_FACTORY = new ParticleEffect.Factory<WorldParticleEffect>() {
+    public static final Codec<WorldParticleEffect> CODEC = RecordCodecBuilder.create((instance) ->
+            instance.group(Codec.FLOAT.fieldOf("sx").forGetter((worldParticleEffect) -> worldParticleEffect.startingMotion.getX()), Codec.FLOAT.fieldOf("sy").forGetter((worldParticleEffect) -> worldParticleEffect.startingMotion.getY()), Codec.FLOAT.fieldOf("zy").forGetter((worldParticleEffect) -> worldParticleEffect.startingMotion.getZ())).apply(instance, WorldParticleEffect::new));
+    public static final ParticleEffect.Factory<WorldParticleEffect> PARAMETERS_FACTORY = new ParticleEffect.Factory<>() {
         public WorldParticleEffect read(ParticleType<WorldParticleEffect> particleType, StringReader stringReader) throws CommandSyntaxException {
             stringReader.expect(' ');
             float sx = (float) stringReader.readDouble();
@@ -67,7 +60,7 @@ public class WorldParticleEffect extends SimpleParticleEffect implements Particl
     }
     public static final Factory<WorldParticleEffect> DESERIALIZER = new Factory<>() {
         @Override
-        public WorldParticleEffect read(ParticleType<WorldParticleEffect> type, StringReader reader) throws CommandSyntaxException {
+        public WorldParticleEffect read(ParticleType<WorldParticleEffect> type, StringReader reader) {
             return new WorldParticleEffect(type);
         }
 

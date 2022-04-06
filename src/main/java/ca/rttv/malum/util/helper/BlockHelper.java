@@ -88,6 +88,7 @@ public final class BlockHelper {
                     if (box.contains(p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5)) {
                         BlockEntity t = world.getBlockEntity(p);
                         if (type.isInstance(t)) {
+                            //noinspection unchecked
                             tileList.add((T) t);
                         }
                     }

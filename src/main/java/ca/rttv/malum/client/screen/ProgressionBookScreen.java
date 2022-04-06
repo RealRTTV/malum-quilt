@@ -37,10 +37,10 @@ public class ProgressionBookScreen extends Screen {
     public static ArrayList<BookObject> objects;
     public final int parallax_width = 1024;
     public final int parallax_height = 2560;
-    public int bookWidth = 378;
-    public int bookHeight = 250;
-    public int bookInsideWidth = 344;
-    public int bookInsideHeight = 218;
+    public final int bookWidth = 378;
+    public final int bookHeight = 250;
+    public final int bookInsideWidth = 344;
+    public final int bookInsideHeight = 218;
     public float xOffset;
     public float yOffset;
     public float cachedXOffset;
