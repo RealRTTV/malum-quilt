@@ -13,8 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
-import static net.minecraft.client.render.OverlayTexture.DEFAULT_UV;
-
 @Environment(EnvType.CLIENT)
 public class ItemPedestalRenderer implements BlockEntityRenderer<ItemPedestalBlockEntity> {
     @Override

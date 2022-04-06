@@ -2,10 +2,7 @@ package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
-import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.util.IngredientWithCount;
-import ca.rttv.malum.util.block.entity.IAltarAccelerator;
-import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -31,7 +28,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static ca.rttv.malum.registry.MalumRegistry.HOLY_SAPBALL;
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;

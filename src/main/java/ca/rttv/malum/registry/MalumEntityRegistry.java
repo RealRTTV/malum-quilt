@@ -5,9 +5,7 @@ import ca.rttv.malum.entity.spirit.MirrorItemEntity;
 import ca.rttv.malum.util.helper.DataHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 

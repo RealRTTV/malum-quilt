@@ -1,6 +1,5 @@
 package ca.rttv.malum.util;
 
-import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import com.google.gson.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -13,7 +12,6 @@ import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

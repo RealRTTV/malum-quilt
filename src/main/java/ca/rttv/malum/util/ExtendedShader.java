@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.ShaderParseException;
-import net.minecraft.client.gl.Uniform;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.resource.ResourceFactory;

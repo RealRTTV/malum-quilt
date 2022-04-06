@@ -1,13 +1,5 @@
 package ca.rttv.malum.item.interfaces;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.Vec3d;
-
-import java.util.ArrayList;
-
 public interface ISoulContainerItem {
 //    TypedActionResult<ItemStack> interactWithSoul(PlayerEntity player, Hand hand, SoulEntity soul);
 //

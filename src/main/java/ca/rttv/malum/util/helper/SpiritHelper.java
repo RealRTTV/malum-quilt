@@ -1,22 +1,9 @@
 package ca.rttv.malum.util.helper;
 
 import ca.rttv.malum.registry.SpiritTypeRegistry;
-import ca.rttv.malum.util.spirit.MalumEntitySpiritData;
 import ca.rttv.malum.util.spirit.MalumSpiritType;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Random;
-
-import static net.minecraft.util.math.MathHelper.nextFloat;
 
 public class SpiritHelper {
 //    public static void createSpiritsFromSoul(MalumEntitySpiritData data, World world, Vec3d position, LivingEntity attacker) {

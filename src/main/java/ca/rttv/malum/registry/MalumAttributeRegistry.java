@@ -1,6 +1,5 @@
 package ca.rttv.malum.registry;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.util.Identifier;

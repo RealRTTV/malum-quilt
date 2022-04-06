@@ -1,10 +1,8 @@
 package ca.rttv.malum.util.handler;
 
 import ca.rttv.malum.util.ExtendedShader;
-import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.ShaderUniformHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.Shader;
