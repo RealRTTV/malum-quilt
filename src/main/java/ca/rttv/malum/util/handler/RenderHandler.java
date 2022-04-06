@@ -14,8 +14,8 @@ import net.minecraft.util.math.Matrix4f;
 import java.util.HashMap;
 
 public class RenderHandler {
-    public static HashMap<RenderLayer, BufferBuilder> BUFFERS = new HashMap<>();
-    public static HashMap<RenderLayer, ShaderUniformHandler> HANDLERS = new HashMap<>();
+    public static final HashMap<RenderLayer, BufferBuilder> BUFFERS = new HashMap<>();
+    public static final HashMap<RenderLayer, ShaderUniformHandler> HANDLERS = new HashMap<>();
     public static VertexConsumerProvider.Immediate DELAYED_RENDER;
     public static Matrix4f PARTICLE_MATRIX = null;
 

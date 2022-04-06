@@ -54,7 +54,7 @@ public class SpiritInfusionPage extends BookPage {
     public void renderLeft(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
         ItemStack inputStack = recipe.input.getMatchingStacks()[0];
         ItemStack outputStack = recipe.output;
-        if (!recipe.extraItems.isEmpty()) {
+        if (recipe.extraItems.isPresent()) {
             renderIngredients(matrices, guiLeft + 105, guiTop + 51, mouseX, mouseY, recipe.extraItems);
         }
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 67, guiTop + 59, mouseX, mouseY);
@@ -66,7 +66,7 @@ public class SpiritInfusionPage extends BookPage {
     public void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
         ItemStack inputStack = recipe.input.getMatchingStacks()[0];
         ItemStack outputStack = recipe.output;
-        if (!recipe.extraItems.isEmpty()) {
+        if (recipe.extraItems.isPresent()) {
             renderIngredients(matrices, guiLeft + 247, guiTop + 51, mouseX, mouseY, recipe.extraItems);
         }
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 209, guiTop + 59, mouseX, mouseY);

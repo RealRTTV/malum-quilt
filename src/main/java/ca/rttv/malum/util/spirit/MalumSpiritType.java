@@ -16,7 +16,7 @@ public class MalumSpiritType {
     public final Color endColor;
 
     public final String identifier;
-    protected Item splinterItem;
+    protected final Item splinterItem;
 
     public MalumSpiritType(String identifier, Color color, Item splinterItem) {
         this.identifier = identifier;

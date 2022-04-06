@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class MalumFiller {
     public final boolean careful;
-    public ArrayList<BlockStateEntry> entries = new ArrayList<>();
+    public final ArrayList<BlockStateEntry> entries = new ArrayList<>();
 
     public MalumFiller(boolean careful) {
         this.careful = careful;

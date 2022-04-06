@@ -102,7 +102,7 @@ public class RenderLayers extends RenderPhase {
         }
 
         public RenderLayerData(RenderLayer.MultiPhase type) {
-            this(type.toString(), type.getVertexFormat(), type.getDrawMode(), type.phases.shader, type.phases.transparency, type.phases.texture.getId().get());
+            this(type.toString(), type.getVertexFormat(), type.getDrawMode(), type.phases.shader, type.phases.transparency, type.phases.texture.getId().orElseThrow());
         }
     }
 }

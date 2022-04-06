@@ -25,6 +25,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 @SuppressWarnings("deprecation")
 public abstract class AbstractItemPedestalBlock extends BlockWithEntity implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -45,7 +47,7 @@ public abstract class AbstractItemPedestalBlock extends BlockWithEntity implemen
         }
 
         AbstractItemDisplayBlockEntity blockEntity = (AbstractItemDisplayBlockEntity) world.getBlockEntity(pos);
-        blockEntity.swapSlots(state, world, pos, player, hand, hit);
+        Objects.requireNonNull(blockEntity).swapSlots(state, world, pos, player, hand, hit);
 
         return ActionResult.CONSUME;
     }

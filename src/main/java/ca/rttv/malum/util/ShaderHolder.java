@@ -10,8 +10,8 @@ import java.util.function.Supplier;
 public final class ShaderHolder {
     public Shader instance;
     public final RenderPhase.Shader phase = new RenderPhase.Shader(getInstance());
-    public ArrayList<String> uniforms;
-    public ArrayList<UniformData> defaultUniformData = new ArrayList<>();
+    public final ArrayList<String> uniforms;
+    public final ArrayList<UniformData> defaultUniformData = new ArrayList<>();
 
     public ShaderHolder(String... uniforms) {
         this.uniforms = new ArrayList<>(List.of(uniforms));

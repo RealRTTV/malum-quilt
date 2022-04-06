@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class MalumSpiritItem extends Item implements IFloatingGlowItem {
     // , ItemParticleEmitter
-    public MalumSpiritType type;
+    public final MalumSpiritType type;
 
     public MalumSpiritItem(Item.Settings settings, MalumSpiritType type) {
         super(settings);

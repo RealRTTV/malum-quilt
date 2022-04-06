@@ -56,14 +56,7 @@ public class MalumEntitySpiritData {
         return new MalumEntitySpiritData(SpiritHelper.getSpiritType(type), data);
     }
 
-    public static class SpiritDataEntry {
-        public final MalumSpiritType type;
-        public final int count;
-
-        public SpiritDataEntry(MalumSpiritType type, int count) {
-            this.type = type;
-            this.count = count;
-        }
+    public record SpiritDataEntry(MalumSpiritType type, int count) {
 
         public Component getComponent() {
             return type.getComponent(count);

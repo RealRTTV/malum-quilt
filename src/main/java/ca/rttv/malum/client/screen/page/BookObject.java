@@ -7,10 +7,10 @@ import net.minecraft.client.util.math.MatrixStack;
 public class BookObject {
     public boolean isHovering;
     public float hover;
-    public int posX;
-    public int posY;
-    public int width;
-    public int height;
+    public final int posX;
+    public final int posY;
+    public final int width;
+    public final int height;
 
     public BookObject(int posX, int posY, int width, int height) {
         this.posX = posX;

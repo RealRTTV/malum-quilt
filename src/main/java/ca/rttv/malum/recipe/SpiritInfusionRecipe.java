@@ -1,5 +1,6 @@
 package ca.rttv.malum.recipe;
 
+import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.IngredientWithCount;
 import com.google.gson.JsonObject;
@@ -14,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +62,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
     }
 
     public boolean doSpiritsMatch(List<ItemStack> spirits) {
-        if (Arrays.stream(this.spirits.getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).stack.getItem() instanceof MalumSpiritItem))) {
+        if (Arrays.stream(this.spirits.getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).getStack().getItem() instanceof MalumSpiritItem))) {
             throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
         }
         List<ItemStack> newSpirits = new ArrayList<>(spirits);
@@ -87,9 +89,16 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
         return world.getRecipeManager().listAllOfType(SPIRIT_INFUSION);
     }
 
+    @Nullable
     @Override
     public ItemStack craft(Inventory inventory) {
-        return this.output.copy();
+        if (inventory instanceof SpiritAltarBlockEntity blockEntity) {
+            blockEntity.spiritSlots.clear();
+            blockEntity.setStack(0, this.output.copy());
+            return null;
+        } else {
+            throw new IllegalStateException("Parameter inventory must be an instanceof SpiritAltarBlockEntity");
+        }
     }
 
     @Override
@@ -129,12 +138,8 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
         return SPIRIT_INFUSION;
     }
 
-    public static class Serializer<T extends SpiritInfusionRecipe> implements RecipeSerializer<T> {
-        final RecipeFactory<T> recipeFactory;
-
-        public Serializer(RecipeFactory<T> recipeFactory) {
-            this.recipeFactory = recipeFactory;
-        }
+    public record Serializer<T extends SpiritInfusionRecipe>(
+            SpiritInfusionRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
 
         public T read(Identifier id, JsonObject jsonObject) {
             String group = JsonHelper.getString(jsonObject, "group", "");

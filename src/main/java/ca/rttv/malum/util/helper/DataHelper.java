@@ -53,7 +53,7 @@ public final class DataHelper {
         return stringBuilder.toString().trim().replaceAll(regex, " ").substring(0, stringBuilder.length() - 1);
     }
 
-    public static NbtCompound writeNbt(NbtCompound nbt, DefaultedList<ItemStack> stacks, String key) {
+    public static void writeNbt(NbtCompound nbt, DefaultedList<ItemStack> stacks, String key) {
         NbtList nbtList = new NbtList();
 
         for(int i = 0; i < stacks.size(); ++i) {
@@ -66,7 +66,6 @@ public final class DataHelper {
             }
         }
         nbt.put(key, nbtList);
-        return nbt;
     }
 
     public static void readNbt(NbtCompound nbt, DefaultedList<ItemStack> stacks, String key) {

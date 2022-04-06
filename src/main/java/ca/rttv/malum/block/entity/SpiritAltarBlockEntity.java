@@ -41,7 +41,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ca.rttv.malum.registry.MalumRegistry.HOLY_SAPBALL;
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
 public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Inventory {
@@ -55,7 +54,7 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
     public float spiritSpin;
 
     public SpiritInfusionRecipe recipe;
-    public final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
     public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
     public SpiritAltarBlockEntity(BlockPos pos, BlockState state) {
@@ -171,14 +170,18 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
             this.addSpirits(state, world, pos, player, hand, hit);
         } else if (this.getHeldItem().isEmpty() && player.getStackInHand(hand).isEmpty()) {
             this.grabSpirit(state, world, pos, player, hand, hit);
-        } else if (player.getStackInHand(hand).getItem() != HOLY_SAPBALL) {
+        } else {
             this.swapSlots(state, world, pos, player, hand, hit);
         }
         recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), this.spiritSlots);
+
         if (recipe == null) {
             return ActionResult.CONSUME;
         }
-        System.out.println(hasExtraItems(state, world, pos, getExtraItems(state, world, pos), recipe));
+
+        if (hasExtraItems(state, world, pos, getExtraItems(state, world, pos), recipe)) {
+            recipe.craft(this);
+        }
         return ActionResult.CONSUME;
     }
 
@@ -198,7 +201,7 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
             for (ItemStack extraItem : extraItems) {
                 if (entry.isValidItem(extraItem)) {
                     found = true;
-                    // we don't remove the entry since it can cause errors with index of extra items, thus is has to be used twice
+                    // we don't remove the entry since it can cause errors with tags accepting the "wrong" item, thus it can be used twice
                     break;
                 }
             }
