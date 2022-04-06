@@ -54,7 +54,7 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
     public float spiritSpin;
 
     public SpiritInfusionRecipe recipe;
-    private final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    public final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
     public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
     public SpiritAltarBlockEntity(BlockPos pos, BlockState state) {

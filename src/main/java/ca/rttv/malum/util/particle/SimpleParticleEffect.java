@@ -15,14 +15,14 @@ public class SimpleParticleEffect {
     public Easing colorCurveEasing = Easing.LINEAR;
 
     public float scale1 = 1;
-    public final float scale2 = 0;
-    public final float scale3 = 0;
+    public float scale2 = 0;
+    public float scale3 = 0;
     public float scaleCurveMultiplier = 1f;
     public Easing scaleCurveStartEasing = Easing.LINEAR, scaleCurveEndEasing = Easing.LINEAR;
 
     public float alpha1 = 1;
-    public final float alpha2 = 0;
-    public final float alpha3 = 0;
+    public float alpha2 = 0;
+    public float alpha3 = 0;
     public float alphaCurveMultiplier = 1f;
     public Easing alphaCurveStartEasing = Easing.LINEAR, alphaCurveEndEasing = Easing.LINEAR;
 
