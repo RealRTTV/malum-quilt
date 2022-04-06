@@ -1,5 +1,6 @@
 package ca.rttv.malum.block.entity;
 
+import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.util.block.entity.IAltarAccelerator;
 import ca.rttv.malum.util.helper.BlockHelper;
@@ -28,10 +29,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
@@ -59,24 +57,57 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-//        this.swapSlots(state, world, pos, player, hand, hit);
+        if (player.getStackInHand(hand).getItem() instanceof MalumSpiritItem) {
+            this.addSpirits(state, world, pos, player, hand, hit);
+        } else if (this.getHeldItem().isEmpty() && player.getStackInHand(hand).isEmpty()) {
+            this.grabSpirit(state, world, pos, player, hand, hit);
+        } else {
+            this.swapSlots(state, world, pos, player, hand, hit);
+        }
         recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), this.spiritSlots);
         if (recipe == null) {
+            // do stuff
             return ActionResult.CONSUME;
         }
-        System.out.println("valid!");
         return ActionResult.CONSUME;
     }
 
-    @Nullable
-    private SpiritInfusionRecipe getRecipe(BlockState state, World world, BlockPos pos, List<ItemStack> reagents) {
-        for (SpiritInfusionRecipe possibleRecipe : SpiritInfusionRecipe.getRecipes(world)) {
-            if (possibleRecipe.extraItems.isValidItems(reagents)) {
-                return possibleRecipe;
+    private void grabSpirit(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        for (int i = this.spiritSlots.size() - 1; i >= 0; i--) {
+            if (!this.spiritSlots.get(i).isEmpty()) {
+                player.setStackInHand(hand, this.spiritSlots.get(i));
+                this.spiritSlots.set(i, ItemStack.EMPTY);
+                return;
             }
         }
+    }
 
-        return null;
+    private void addSpirits(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        ItemStack handStack = player.getStackInHand(hand);
+        if (handStack.isEmpty()) return;
+        for (ItemStack stack : this.spiritSlots) {
+            if (stack.getItem() == handStack.getItem()) {
+                if (stack.getCount() + handStack.getCount() <= stack.getMaxCount()) {
+                    stack.increment(handStack.getCount());
+                    player.setStackInHand(hand, ItemStack.EMPTY);
+                } else {
+                    int maxAddition = Math.max(stack.getMaxCount() - stack.getCount(), 0);
+                    stack.increment(maxAddition);
+                    handStack.decrement(maxAddition);
+                }
+                return;
+            }
+        }
+        int index = -1;
+        for (int i = 0; i < this.spiritSlots.size(); i++) {
+            if (this.spiritSlots.get(i).isEmpty()) {
+                index = i;
+                break;
+            }
+        }
+        if (index == -1) return;
+        this.spiritSlots.set(index, handStack);
+        player.setStackInHand(hand, ItemStack.EMPTY);
     }
 
     private List<ItemStack> getReagents(BlockState state, World world, BlockPos pos) {
@@ -109,9 +140,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
             return;
         }
 
-        if (!this.getHeldItem().isEmpty()) {
-            world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
-        }
+        world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
 
         ItemStack prevItem = getHeldItem();
         setStack(0, player.getStackInHand(hand));
@@ -195,52 +224,23 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        progress = nbt.getInt("progress");
-        spinUp = nbt.getInt("spinUp");
-        speed = nbt.getFloat("speed");
-
-        acceleratorPositions.clear();
-        accelerators.clear();
-        int amount = nbt.getInt("acceleratorAmount");
-        for (int i = 0; i < amount; i++) {
-            BlockPos pos = BlockHelper.loadBlockPos(nbt, "" + i);
-            if (world != null && world.getBlockEntity(pos) instanceof IAltarAccelerator accelerator) {
-                acceleratorPositions.add(pos);
-                accelerators.add(accelerator);
-            }
-        }
-
-        spiritAmount = nbt.getFloat("spiritAmount");
-        updateRecipe = true;
         this.heldItem.clear();
+        this.spiritSlots.clear();
         Inventories.readNbt(nbt, this.heldItem);
+        DataHelper.readNbt(nbt, this.spiritSlots, "Spirits");
         super.readNbt(nbt);
     }
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        if (progress != 0) {
-            nbt.putInt("progress", progress);
-        }
-        if (spinUp != 0) {
-            nbt.putInt("spinUp", spinUp);
-        }
-        if (speed != 0) {
-            nbt.putFloat("speed", speed);
-        }
-        if (spiritAmount != 0) {
-            nbt.putFloat("spiritAmount", spiritAmount);
-        }
-
-        if (!acceleratorPositions.isEmpty())
-        {
+        if (!acceleratorPositions.isEmpty()) {
             nbt.putInt("acceleratorAmount", acceleratorPositions.size());
-            for (int i = 0; i < acceleratorPositions.size(); i++)
-            {
+            for (int i = 0; i < acceleratorPositions.size(); i++) {
                 BlockHelper.saveBlockPos(nbt, acceleratorPositions.get(i), "" + i);
             }
         }
         Inventories.writeNbt(nbt, this.heldItem);
+        DataHelper.writeNbt(nbt, this.spiritSlots, "Spirits");
         super.writeNbt(nbt);
     }
 }

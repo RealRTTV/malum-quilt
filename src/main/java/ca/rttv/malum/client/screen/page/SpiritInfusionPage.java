@@ -25,7 +25,6 @@ public class SpiritInfusionPage extends BookPage {
             return;
         }
         this.recipe = SpiritInfusionRecipe.getRecipe(client.world, predicate);
-        System.out.println(this.recipe);
         client.world.getRecipeManager().getAllOfType(SPIRIT_INFUSION).forEach((id, recipee) -> System.out.println(recipee.getId()));
     }
 

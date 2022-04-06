@@ -1,6 +1,10 @@
 package ca.rttv.malum.util.helper;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
@@ -47,6 +51,35 @@ public final class DataHelper {
             stringBuilder.append(Character.toUpperCase(string.charAt(0))).append(string.substring(1)).append(regex);
         }
         return stringBuilder.toString().trim().replaceAll(regex, " ").substring(0, stringBuilder.length() - 1);
+    }
+
+    public static NbtCompound writeNbt(NbtCompound nbt, DefaultedList<ItemStack> stacks, String key) {
+        NbtList nbtList = new NbtList();
+
+        for(int i = 0; i < stacks.size(); ++i) {
+            ItemStack itemStack = stacks.get(i);
+            if (!itemStack.isEmpty()) {
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putByte("Slot", (byte)i);
+                itemStack.writeNbt(nbtCompound);
+                nbtList.add(nbtCompound);
+            }
+        }
+        nbt.put(key, nbtList);
+        return nbt;
+    }
+
+    public static void readNbt(NbtCompound nbt, DefaultedList<ItemStack> stacks, String key) {
+        NbtList nbtList = nbt.getList(key, 10);
+
+        for(int i = 0; i < nbtList.size(); ++i) {
+            NbtCompound nbtCompound = nbtList.getCompound(i);
+            int j = nbtCompound.getByte("Slot") & 255;
+            if (j < stacks.size()) {
+                stacks.set(j, ItemStack.fromNbt(nbtCompound));
+            }
+        }
+
     }
 
     public static int[] nextInts(Random rand, int count, int range) {

@@ -63,6 +63,19 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
         if (Arrays.stream(this.spirits.getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).stack.getItem() instanceof MalumSpiritItem))) {
             throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
         }
+        List<ItemStack> newSpirits = new ArrayList<>(spirits);
+        for (IngredientWithCount.Entry entry : this.spirits.getEntries()){
+            IngredientWithCount.StackEntry stackEntry = (IngredientWithCount.StackEntry) entry;
+            boolean foundMatch = false;
+            for (int i = 0; i < newSpirits.size(); i++) {
+                if (stackEntry.isValidItem(spirits.get(i))) {
+                    foundMatch = true;
+                    newSpirits.remove(i);
+                    break;
+                }
+            }
+            if (!foundMatch) return false;
+        }
         return true;
     }
 
