@@ -197,6 +197,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         FEATURES.forEach((id, feature) -> Registry.register(Registry.FEATURE, id, feature));
         RECIPE_TYPES.forEach((id, type) -> Registry.register(Registry.RECIPE_TYPE, id, type));
         RECIPE_SERIALIZER.forEach((id, serializer) -> Registry.register(Registry.RECIPE_SERIALIZER, id, serializer));
+        MalumEnchantments.init();
         MalumSoundRegistry.init();
         MalumBoatTypes.init();
         MalumEntityRegistry.init();

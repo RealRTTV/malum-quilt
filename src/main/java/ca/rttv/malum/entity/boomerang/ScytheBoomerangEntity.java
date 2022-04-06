@@ -1,5 +1,6 @@
 package ca.rttv.malum.entity.boomerang;
 
+import ca.rttv.malum.item.ScytheItem;
 import ca.rttv.malum.registry.MalumEnchantments;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
@@ -86,17 +87,21 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         super.onEntityHit(entityHitResult);
     }
     @Override
-    public void tick()
-    {
+    public void tick() {
         super.tick();
         age++;
         if (world.isClient)
         {
             if (!isInsideWaterOrBubbleColumn())
             {
-                if (EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, getItem()) > 0)
-                {
-                    world.addParticle(ParticleTypes.FLAME, getParticleX(1), getRandomBodyY(), getParticleZ(1), 0, 0, 0);
+                if (EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, getItem()) > 0) {
+                    Vec3d vector = new Vec3d(getParticleX(0.7), getRandomBodyY(), getParticleZ(0.7));
+                    if(scythe.getItem() instanceof ScytheItem) {
+                        vector = new Vec3d(Math.cos(this.age) * 0.8f + this.getX(), getBodyY(0.1), Math.sin(this.age) * 0.8f + this.getZ());
+                        world.addParticle(ParticleTypes.FLAME, Math.cos(this.age + 1) * 0.8f + this.getX(), vector.y, Math.sin(this.age + 1) * 0.8f + this.getZ(), 0, 0, 0);
+                        world.addParticle(ParticleTypes.FLAME, Math.cos(this.age - 1) * 0.8f + this.getX(), vector.y, Math.sin(this.age - 1) * 0.8f + this.getZ(), 0, 0, 0);
+                    }
+                    world.addParticle(ParticleTypes.FLAME, vector.x, vector.y, vector.z, 0, 0, 0);
                 }
             }
         }

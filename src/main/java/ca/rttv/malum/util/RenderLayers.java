@@ -3,14 +3,19 @@ package ca.rttv.malum.util;
 import ca.rttv.malum.Malum;
 import ca.rttv.malum.util.handler.RenderHandler;
 import com.mojang.datafixers.util.Pair;
+import ladysnake.satin.api.managed.ManagedShaderEffect;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
 import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.function.Function;
+
+import static net.minecraft.client.render.VertexFormats.POSITION_COLOR_TEXTURE_LIGHT;
+import static net.minecraft.client.render.VertexFormats.POSITION_TEXTURE_COLOR_LIGHT;
 
 public class RenderLayers extends RenderPhase {
     public RenderLayers(String string, Runnable runnable, Runnable runnable2) {
@@ -23,9 +28,9 @@ public class RenderLayers extends RenderPhase {
      */
     public static final HashMap<Pair<Integer, RenderLayer>, RenderLayer> COPIES = new HashMap<>();
 
-//    public static final RenderLayer ADDITIVE_PARTICLE = createGenericRenderLayer("additive_particle", POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, ShaderRegistry.additiveParticle.shard, StateShards.ADDITIVE_TRANSPARENCY, TextureAtlas.LOCATION_PARTICLES);
-//    public static final RenderLayer ADDITIVE_BLOCK_PARTICLE = createGenericRenderLayer("additive_block_particle", POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, ShaderRegistry.additiveParticle.shard, StateShards.ADDITIVE_TRANSPARENCY, TextureAtlas.LOCATION_BLOCKS);
-//    public static final RenderLayer ADDITIVE_BLOCK = createGenericRenderLayer("block", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, ShaderRegistry.additiveTexture.shard, StateShards.ADDITIVE_TRANSPARENCY, TextureAtlas.LOCATION_BLOCKS);
+//    public static final RenderLayer ADDITIVE_PARTICLE = createGenericRenderLayer("additive_particle", POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, ShaderRegistry.additiveParticle.shard, StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
+//    public static final RenderLayer ADDITIVE_BLOCK_PARTICLE = createGenericRenderLayer("additive_block_particle", POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, ShaderRegistry.additiveParticle.shard, StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+//    public static final RenderLayer ADDITIVE_BLOCK = createGenericRenderLayer("block", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, ShaderRegistry.additiveTexture.shard, StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 //
 //    /**
 //     * Render Functions. You can create Render Types by statically applying these to your texture. Alternatively, use {@link #GENERIC} if none of the presets suit your needs.

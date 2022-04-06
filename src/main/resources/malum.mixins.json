@@ -8,7 +8,8 @@
     "BlockColorsMixin",
     "BlockEntityRendererFactoriesMixin",
     "DefaultBiomeFeaturesMixin",
-    "LivingEntityMixin"
+    "EnchantmentTargetMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
     "AbstractFurnaceBlockEntityMixin"

@@ -1,6 +1,7 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.Malum;
+import ca.rttv.malum.entity.BoatEntityTypeTinkerer;
 import com.terraformersmc.terraform.boat.api.TerraformBoatType;
 import com.terraformersmc.terraform.boat.api.TerraformBoatTypeRegistry;
 import com.terraformersmc.terraform.boat.api.item.TerraformBoatItemHelper;

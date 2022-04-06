@@ -1,6 +1,7 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.enchantment.ReboundEnchantment;
+import com.chocohead.mm.api.ClassTinkerers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -14,13 +15,12 @@ import static ca.rttv.malum.Malum.MODID;
 
 public class MalumEnchantments {
     private static final Map<Identifier, Enchantment> ENCHANTMENTS = new LinkedHashMap<>();
-//    public static final EnchantmentTarget SOUL_HUNTER_WEAPON = EnchantmentTarget.create(MalumMod.MODID + ":soul_hunter_only", i -> i.getDefaultInstance().is(ItemTagRegistry.SOUL_HUNTER_WEAPON));
-//    public static final EnchantmentTarget SCYTHE = EnchantmentTarget.create(MalumMod.MODID + ":scythe_only", i -> i.getDefaultInstance().is(ItemTagRegistry.SCYTHE));
-//    public static final EnchantmentTarget REBOUND_SCYTHE = EnchantmentTarget.create(MalumMod.MODID + ":rebound_scythe_only", i -> i.getDefaultInstance().is(ItemTagRegistry.SCYTHE) || (CommonConfig.ULTIMATE_REBOUND.get() && i instanceof TieredItem));
-
-    public static final Enchantment REBOUND = create("rebound", new ReboundEnchantment(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.WEAPON, EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
-//    public static final RegistryObject<Enchantment> HAUNTED = ENCHANTMENTS.register("haunted", HauntedEnchantment::new);
-//    public static final RegistryObject<Enchantment> SPIRIT_PLUNDER = ENCHANTMENTS.register("spirit_plunder", SpiritPlunderEnchantment::new);
+    public static final EnchantmentTarget SCYTHE = ClassTinkerers.getEnum(EnchantmentTarget.class, "SCYTHE");
+    public static final EnchantmentTarget REBOUND_SCYTHE = ClassTinkerers.getEnum(EnchantmentTarget.class, "REBOUND_SCYTHE");
+    public static final EnchantmentTarget SOUL_HUNTER_WEAPON = ClassTinkerers.getEnum(EnchantmentTarget.class, "SOUL_HUNTER");
+    public static final Enchantment REBOUND = create("rebound", new ReboundEnchantment(Enchantment.Rarity.UNCOMMON, REBOUND_SCYTHE, EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
+//    public static final Enchantment HAUNTED = create("haunted", HauntedEnchantment::new);
+//    public static final Enchantment SPIRIT_PLUNDER = create("spirit_plunder", SpiritPlunderEnchantment::new);
     private static <T extends Enchantment> Enchantment create(String id, Enchantment enchantment) {
         ENCHANTMENTS.put(new Identifier(MODID, id), enchantment);
         return enchantment;

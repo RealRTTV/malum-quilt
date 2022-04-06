@@ -1,6 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
-	id 'io.github.juuxel.loom-quiltflower' version '1.6.1'
+	id 'io.github.juuxel.loom-quiltflower' version '1.7.0'
 	id 'org.quiltmc.quilt-mappings-on-loom' version '4.0.0'
 	id 'maven-publish'
 }
@@ -45,9 +45,10 @@ dependencies {
 	modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
 	include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "dev.emi:trinkets:${project.trinkets_version}"
+	modImplementation "io.github.ladysnake:satin:${project.satin_version}"
+	include "io.github.ladysnake:satin:${project.satin_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
 	modImplementation("com.github.Chocohead:Fabric-ASM:v${project.fabric_asm_version}") {

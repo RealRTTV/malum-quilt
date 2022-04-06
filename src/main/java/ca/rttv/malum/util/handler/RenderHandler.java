@@ -1,5 +1,6 @@
 package ca.rttv.malum.util.handler;
 
+import ca.rttv.malum.config.ClientConfig;
 import ca.rttv.malum.util.ExtendedShader;
 import ca.rttv.malum.util.ShaderUniformHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
@@ -24,10 +25,10 @@ public class RenderHandler {
 
     public static void renderLast(MatrixStack stack) {
         stack.push();
-//        if (ClientConfig.DELAYED_PARTICLE_RENDERING.get()) {
+//        if (ClientConfig.DELAYED_PARTICLE_RENDERING) {
 //            RenderSystem.getModelViewStack().push();
 //            RenderSystem.getModelViewStack().loadIdentity();
-//            if (PARTICLE_MATRIX != null) RenderSystem.getModelViewStack().method_34425(PARTICLE_MATRIX);
+//            if (PARTICLE_MATRIX != null) RenderSystem.getModelViewStack().mulPoseMatrix(PARTICLE_MATRIX);
 //            RenderSystem.applyModelViewMatrix();
 //            DELAYED_RENDER.draw(RenderLayers.ADDITIVE_PARTICLE);
 //            DELAYED_RENDER.draw(RenderLayers.ADDITIVE_BLOCK_PARTICLE);
