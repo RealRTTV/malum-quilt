@@ -31,6 +31,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class ScytheBoomerangEntity extends ThrownItemEntity {
@@ -97,9 +98,12 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
                 if (EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, getItem()) > 0) {
                     Vec3d vector = new Vec3d(getParticleX(0.7), getRandomBodyY(), getParticleZ(0.7));
                     if(scythe.getItem() instanceof ScytheItem) {
+                        Random random = new Random();
+                        float f1 = random.nextFloat();
+                        float f2 = random.nextFloat();
                         vector = new Vec3d(Math.cos(this.age) * 0.8f + this.getX(), getBodyY(0.1), Math.sin(this.age) * 0.8f + this.getZ());
-                        world.addParticle(ParticleTypes.FLAME, Math.cos(this.age + 1) * 0.8f + this.getX(), vector.y, Math.sin(this.age + 1) * 0.8f + this.getZ(), 0, 0, 0);
-                        world.addParticle(ParticleTypes.FLAME, Math.cos(this.age - 1) * 0.8f + this.getX(), vector.y, Math.sin(this.age - 1) * 0.8f + this.getZ(), 0, 0, 0);
+                        world.addParticle(ParticleTypes.FLAME, Math.cos(this.age + f1 * 2 - 1) * 0.8f + this.getX(), vector.y, Math.sin(this.age + f1 * 2 - 1) * 0.8f + this.getZ(), 0, 0, 0);
+                        world.addParticle(ParticleTypes.FLAME, Math.cos(this.age + f1 * 2 - 1) * 0.8f + this.getX(), vector.y, Math.sin(this.age + f1 * 2 - 1) * 0.8f + this.getZ(), 0, 0, 0);
                     }
                     world.addParticle(ParticleTypes.FLAME, vector.x, vector.y, vector.z, 0, 0, 0);
                 }
