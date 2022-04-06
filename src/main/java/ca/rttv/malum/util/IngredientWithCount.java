@@ -1,5 +1,6 @@
 package ca.rttv.malum.util;
 
+import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import com.google.gson.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -12,7 +13,7 @@ import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
-import org.jetbrains.annotations.Contract;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -163,11 +164,13 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         List<ItemStack> getStacks();
 
         JsonObject toJson();
+
+        boolean isValidItem(ItemStack stack);
     }
 
-    static class StackEntry implements Entry {
+    public static final class StackEntry implements Entry {
 
-        private final ItemStack stack;
+        public final ItemStack stack;
 
         StackEntry(ItemStack stack) {
             this.stack = stack;
@@ -185,10 +188,14 @@ public class IngredientWithCount implements Predicate<ItemStack> {
             json.addProperty("count", stack.getCount());
             return json;
         }
+
+        @Override
+        public boolean isValidItem(ItemStack stack) {
+            return this.stack.getCount() == stack.getCount() && this.stack.getItem() == stack.getItem();
+        }
     }
 
-    static class TagEntry implements Entry {
-
+    public static final class TagEntry implements Entry {
         private final TagKey<Item> tag;
         private final int count;
 
@@ -214,6 +221,11 @@ public class IngredientWithCount implements Predicate<ItemStack> {
             json.addProperty("tag", this.tag.id().toString());
             json.addProperty("count", count);
             return json;
+        }
+
+        @Override
+        public boolean isValidItem(ItemStack stack) {
+            return stack.streamTags().anyMatch(tag -> tag == this.tag);
         }
     }
 }

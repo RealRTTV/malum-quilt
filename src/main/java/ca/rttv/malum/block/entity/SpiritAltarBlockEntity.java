@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
@@ -46,7 +47,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public SpiritInfusionRecipe recipe;
     public boolean updateRecipe;
 
-    public final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    public final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(7, ItemStack.EMPTY);
 
     public SpiritAltarBlockEntity(BlockPos pos, BlockState state) {
         this(SPIRIT_ALTAR_BLOCK_ENTITY, pos, state);
@@ -57,12 +59,27 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        this.swapSlots(state, world, pos, player, hand, hit);
-        this.getReagents(state, world, pos).forEach((item, count) -> System.out.println(item + " " + count));
+//        this.swapSlots(state, world, pos, player, hand, hit);
+        recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), this.spiritSlots);
+        if (recipe == null) {
+            return ActionResult.CONSUME;
+        }
+        System.out.println("valid!");
         return ActionResult.CONSUME;
     }
 
-    public Map<Item, Integer> getReagents(BlockState state, World world, BlockPos pos) {
+    @Nullable
+    private SpiritInfusionRecipe getRecipe(BlockState state, World world, BlockPos pos, List<ItemStack> reagents) {
+        for (SpiritInfusionRecipe possibleRecipe : SpiritInfusionRecipe.getRecipes(world)) {
+            if (possibleRecipe.extraItems.isValidItems(reagents)) {
+                return possibleRecipe;
+            }
+        }
+
+        return null;
+    }
+
+    private List<ItemStack> getReagents(BlockState state, World world, BlockPos pos) {
         Map<Item, Integer> map = new LinkedHashMap<>();
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPosition -> {
             if (world.getBlockEntity(reagentPosition) instanceof AbstractItemDisplayBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
@@ -75,7 +92,9 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 }
             }
         });
-        return map;
+        ArrayList<ItemStack> stacks = new ArrayList<>();
+        map.forEach((item, count) -> stacks.add(new ItemStack(item, count)));
+        return stacks;
     }
 
     public void notifyListeners() {
@@ -132,34 +151,34 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public int size() {
-        return this.inventory.size();
+        return this.heldItem.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.inventory.isEmpty();
+        return this.heldItem.isEmpty();
     }
 
     @Override
     public ItemStack getStack(int slot) {
-        return this.inventory.get(slot);
+        return this.heldItem.get(slot);
     }
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        ItemStack stack = Inventories.splitStack(this.inventory, slot, amount);
+        ItemStack stack = Inventories.splitStack(this.heldItem, slot, amount);
         this.notifyListeners();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        return Inventories.removeStack(this.inventory, slot);
+        return Inventories.removeStack(this.heldItem, slot);
     }
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        this.inventory.set(slot, stack);
+        this.heldItem.set(slot, stack);
         this.notifyListeners();
     }
 
@@ -170,7 +189,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public void clear() {
-        this.inventory.clear();
+        this.heldItem.clear();
         this.notifyListeners();
     }
 
@@ -193,8 +212,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
         spiritAmount = nbt.getFloat("spiritAmount");
         updateRecipe = true;
-        this.inventory.clear();
-        Inventories.readNbt(nbt, this.inventory);
+        this.heldItem.clear();
+        Inventories.readNbt(nbt, this.heldItem);
         super.readNbt(nbt);
     }
 
@@ -221,7 +240,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 BlockHelper.saveBlockPos(nbt, acceleratorPositions.get(i), "" + i);
             }
         }
-        Inventories.writeNbt(nbt, this.inventory);
+        Inventories.writeNbt(nbt, this.heldItem);
         super.writeNbt(nbt);
     }
 }

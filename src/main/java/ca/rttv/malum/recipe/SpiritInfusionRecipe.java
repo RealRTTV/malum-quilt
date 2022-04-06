@@ -1,5 +1,6 @@
 package ca.rttv.malum.recipe;
 
+import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.IngredientWithCount;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.Inventory;
@@ -14,6 +15,8 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -44,13 +47,27 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
 
     public static SpiritInfusionRecipe getRecipe(World world, Predicate<SpiritInfusionRecipe> predicate) {
         List<SpiritInfusionRecipe> recipes = getRecipes(world);
-        System.out.println(recipes.size());
         for (SpiritInfusionRecipe recipe : recipes) {
             if (predicate.test(recipe)) {
                 return recipe;
             }
         }
         return null;
+    }
+
+    public static SpiritInfusionRecipe getRecipe(World world, ItemStack stack, List<ItemStack> spirits) {
+        return getRecipe(world, recipe -> recipe.doesInputMatch(stack) && recipe.doSpiritsMatch(spirits));
+    }
+
+    public boolean doSpiritsMatch(List<ItemStack> spirits) {
+        if (Arrays.stream(this.spirits.getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).stack.getItem() instanceof MalumSpiritItem))) {
+            throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
+        }
+        return true;
+    }
+
+    private boolean doesInputMatch(ItemStack stack) {
+        return this.input.getEntries()[0].isValidItem(stack);
     }
 
     public static List<SpiritInfusionRecipe> getRecipes(World world) {
