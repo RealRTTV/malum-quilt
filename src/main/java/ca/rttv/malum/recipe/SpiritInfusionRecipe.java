@@ -12,6 +12,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -93,9 +94,13 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
     @Override
     public ItemStack craft(Inventory inventory) {
         if (inventory instanceof SpiritAltarBlockEntity blockEntity) {
-            blockEntity.spiritSlots.clear();
-            blockEntity.setStack(0, this.output.copy());
-            return null;
+            for (int i = 0; i < blockEntity.spiritSlots.size(); i++) {
+                if (blockEntity.spiritSlots.get(i).isEmpty()) break;
+                blockEntity.spiritSlots.get(i).decrement(this.spirits.getEntries()[i].getCount());
+            }
+            blockEntity.getHeldItem().decrement(this.input.getEntries()[0].getCount());
+            ItemScatterer.spawn(blockEntity.getWorld(), blockEntity.getPos(), DefaultedList.ofSize(1, this.output));
+            return this.output.copy();
         } else {
             throw new IllegalStateException("Parameter inventory must be an instanceof SpiritAltarBlockEntity");
         }

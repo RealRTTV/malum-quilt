@@ -164,6 +164,8 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         JsonObject toJson();
 
         boolean isValidItem(ItemStack stack);
+
+        int getCount();
     }
 
     public record StackEntry(ItemStack stack) implements Entry {
@@ -187,6 +189,11 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         @Override
         public boolean isValidItem(ItemStack stack) {
             return this.stack.getCount() == stack.getCount() && this.stack.getItem() == stack.getItem();
+        }
+
+        @Override
+        public int getCount() {
+            return stack.getCount();
         }
     }
 
@@ -213,6 +220,11 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         @Override
         public boolean isValidItem(ItemStack stack) {
             return stack.streamTags().anyMatch(tag -> tag == this.tag);
+        }
+
+        @Override
+        public int getCount() {
+            return count;
         }
     }
 }
