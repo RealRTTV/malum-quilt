@@ -66,8 +66,9 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public void clientTick(World world, BlockPos pos, BlockState state) {
         spiritSpin += 1 + spinUp / 5f;
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if(blockEntity instanceof SpiritAltarBlockEntity altar)
-        altar.passiveParticles();
+        if (blockEntity instanceof SpiritAltarBlockEntity altar) {
+            altar.passiveParticles();
+        }
 
     }
 
