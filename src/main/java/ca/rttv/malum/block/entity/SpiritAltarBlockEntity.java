@@ -166,9 +166,6 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         }
         recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), this.spiritSlots);
 
-        if (recipe == null) {
-            return ActionResult.CONSUME;
-        }
         return ActionResult.CONSUME;
     }
 
@@ -186,6 +183,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
             if (!this.spiritSlots.get(i).isEmpty()) {
                 player.setStackInHand(hand, this.spiritSlots.get(i));
                 this.spiritSlots.set(i, ItemStack.EMPTY);
+                this.notifyListeners();
+                this.recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
                 return;
             }
         }
@@ -219,6 +218,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                     stack.increment(maxAddition);
                     handStack.decrement(maxAddition);
                 }
+                this.notifyListeners();
+                recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
                 return;
             }
         }
@@ -232,6 +233,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         if (index == -1) return;
         this.spiritSlots.set(index, handStack);
         player.setStackInHand(hand, ItemStack.EMPTY);
+        this.notifyListeners();
     }
 
     private List<ItemStack> getExtraItems(BlockState state, World world, BlockPos pos) {
@@ -269,7 +271,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
 
         ItemStack prevItem = getHeldItem();
-        setStack(0, player.getStackInHand(hand));
+        this.setStack(0, player.getStackInHand(hand));
         player.setStackInHand(hand, prevItem);
     }
 

@@ -30,8 +30,8 @@ public abstract class BlockColorsMixin {
     private static void create(CallbackInfoReturnable<BlockColors> cir) {
         blockColors.registerColorProvider((state, world, pos, tintIndex) -> {
             float color = state.get(RunewoodLeavesBlock.COLOR);
-            Color minColor = new Color(175, 65, 48);
-            Color maxColor = new Color(251, 193, 76);
+            Color maxColor = new Color(175, 65, 48);
+            Color minColor = new Color(251, 193, 76);
             int red = (int) MathHelper.lerp(color / 5.0f, minColor.getRed(), maxColor.getRed());
             int green = (int) MathHelper.lerp(color / 5.0f, minColor.getGreen(), maxColor.getGreen());
             int blue = (int) MathHelper.lerp(color / 5.0f, minColor.getBlue(), maxColor.getBlue());

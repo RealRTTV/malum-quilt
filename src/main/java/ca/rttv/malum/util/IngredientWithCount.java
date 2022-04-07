@@ -219,7 +219,7 @@ public class IngredientWithCount implements Predicate<ItemStack> {
 
         @Override
         public boolean isValidItem(ItemStack stack) {
-            return stack.streamTags().anyMatch(tag -> tag == this.tag);
+            return stack.streamTags().anyMatch(tag -> tag == this.tag) && stack.getCount() >= count;
         }
 
         @Override
