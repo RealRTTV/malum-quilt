@@ -1,6 +1,7 @@
 package ca.rttv.malum.client.render.block;
 
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
+import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -24,11 +25,11 @@ public class ItemStandRenderer implements BlockEntityRenderer<ItemStandBlockEnti
         if (!stack.isEmpty()) {
             matrices.push();
             Vec3f offset = new Vec3f(entity.itemOffset());
-//            if (stack.getItem() instanceof MalumSpiritItem)
-//            {
-//                double y = Math.sin(((world.getTime() + tickDelta) ) / 20f) * 0.05f;
-//                matrices.translate(0, y, 0);
-//            }
+            if (stack.getItem() instanceof MalumSpiritItem)
+            {
+                double y = Math.sin(((world.getTime() + tickDelta) ) / 20f) * 0.05f;
+                matrices.translate(0, y, 0);
+            }
             matrices.translate(offset.getX(), offset.getY(), offset.getZ());
             matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() )* 3 + tickDelta));
             matrices.scale(0.6f, 0.6f, 0.6f);

@@ -65,8 +65,10 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
     public void clientTick(World world, BlockPos pos, BlockState state) {
         spiritSpin += 1 + spinUp / 5f;
-//        blockEntity.passiveParticles();
-//            world.playSound(this);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if(blockEntity instanceof SpiritAltarBlockEntity altar)
+        altar.passiveParticles();
+
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -116,7 +118,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 double y = getPos().getY() + offset.getY();
                 double z = getPos().getZ() + offset.getZ();
                 SpiritHelper.spawnSpiritParticles(world, x, y, z, color, endColor);
-                if (!recipe.isEmpty()) {
+                if (recipe != null && !recipe.isEmpty()) {
                     Vec3d velocity = new Vec3d(x, y, z).subtract(itemPos).normalize().multiply(-0.03f);
                     float alpha = 0.07f /* / spiritSlots. */;
                     for (IAltarAccelerator accelerator : accelerators) {
@@ -280,7 +282,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     }
 
     public static Vec3d spiritOffset(SpiritAltarBlockEntity blockEntity, int slot) {
-        float distance = 1 - Math.min(0.25f, blockEntity.spiritAmount / 40f) + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
+        float distance = 1 - Math.min(0.25f, blockEntity.spinUp / 40f) + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
         float height = 0.75f + Math.min(0.5f, blockEntity.spinUp / 20f);
         return DataHelper.rotatedCirclePosition(new Vec3d(0.5f, height, 0.5f), distance, slot, blockEntity.spiritAmount, (long) blockEntity.spiritSpin, 360);
     }

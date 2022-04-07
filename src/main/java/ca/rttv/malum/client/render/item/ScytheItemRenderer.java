@@ -51,7 +51,7 @@ public class ScytheItemRenderer implements BuiltinItemRendererRegistry.DynamicIt
         matrices.pop();
         matrices.push();
         if (mode != ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND && mode != ModelTransformation.Mode.FIRST_PERSON_RIGHT_HAND && mode != ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND && mode != ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND) {
-            itemRenderer.renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryScytheModel);
+            itemRenderer.renderItem(stack, mode == ModelTransformation.Mode.GUI ? ModelTransformation.Mode.FIXED : mode, false, matrices, vertexConsumers, light, overlay, this.inventoryScytheModel);
         } else {
             boolean leftHanded;
             switch(mode) {

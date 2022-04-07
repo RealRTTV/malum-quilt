@@ -11,7 +11,7 @@ import java.util.Map;
 import static ca.rttv.malum.Malum.MODID;
 
 public class MalumAttributeRegistry {
-    private static final Map<Identifier, EntityAttribute> ATTRIBUTES = new LinkedHashMap<>();
+    public static final Map<Identifier, EntityAttribute> ATTRIBUTES = new LinkedHashMap<>();
 
     public static final EntityAttribute MAGIC_RESISTANCE = create("magic_resistance", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".magic_resistance", 0.0D, 0.0D, 2048.0D).setTracked(true));
     public static final EntityAttribute MAGIC_PROFICIENCY = create("magic_proficiency", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".magic_proficiency", 0.0D, 0.0D, 2048.0D).setTracked(true));

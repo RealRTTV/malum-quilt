@@ -2,8 +2,10 @@ package ca.rttv.malum.util.handler;
 
 import ca.rttv.malum.config.ClientConfig;
 import ca.rttv.malum.util.ExtendedShader;
+import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.ShaderUniformHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.Shader;
@@ -25,16 +27,16 @@ public class RenderHandler {
 
     public static void renderLast(MatrixStack stack) {
         stack.push();
-//        if (ClientConfig.DELAYED_PARTICLE_RENDERING) {
-//            RenderSystem.getModelViewStack().push();
-//            RenderSystem.getModelViewStack().loadIdentity();
-//            if (PARTICLE_MATRIX != null) RenderSystem.getModelViewStack().mulPoseMatrix(PARTICLE_MATRIX);
-//            RenderSystem.applyModelViewMatrix();
-//            DELAYED_RENDER.draw(RenderLayers.ADDITIVE_PARTICLE);
-//            DELAYED_RENDER.draw(RenderLayers.ADDITIVE_BLOCK_PARTICLE);
-//            RenderSystem.getModelViewStack().pop();
-//            RenderSystem.applyModelViewMatrix();
-//        }
+        if (ClientConfig.DELAYED_PARTICLE_RENDERING) {
+            RenderSystem.getModelViewStack().push();
+            RenderSystem.getModelViewStack().loadIdentity();
+            if (PARTICLE_MATRIX != null) RenderSystem.getModelViewStack().mulPoseMatrix(PARTICLE_MATRIX);
+            RenderSystem.applyModelViewMatrix();
+            DELAYED_RENDER.draw(RenderLayers.ADDITIVE_PARTICLE);
+            DELAYED_RENDER.draw(RenderLayers.ADDITIVE_BLOCK_PARTICLE);
+            RenderSystem.getModelViewStack().pop();
+            RenderSystem.applyModelViewMatrix();
+        }
         for (RenderLayer layer : BUFFERS.keySet()) {
             Shader shader = RenderHelper.getShader(layer);
             if (HANDLERS.containsKey(layer)) {
