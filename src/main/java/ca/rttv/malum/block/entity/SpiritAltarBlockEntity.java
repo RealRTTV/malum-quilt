@@ -5,7 +5,6 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.util.IngredientWithCount;
 import ca.rttv.malum.util.block.entity.IAltarAccelerator;
-import ca.rttv.malum.util.block.entity.SimpleBlockEntity;
 import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
@@ -23,6 +22,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -36,14 +36,12 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
-public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Inventory {
+public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public float speed;
     public int progress;
     public int spinUp;
@@ -65,24 +63,18 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
         super(blockEntityType, pos, state);
     }
 
-    @Override
-    public void tick() {
-//        spiritAmount = Math.max(1, MathHelper.lerp(0.1f, spiritAmount, ));
-//        if (updateRecipe)
-//        {
-//            if (level.isClientSide && possibleRecipes.isEmpty()) {
-//                AltarSoundInstance.playSound(this);
-//            }
-//            ItemStack stack = inventory.getStackInSlot(0);
-//            possibleRecipes = new ArrayList<>(DataHelper.getAll(SpiritInfusionRecipe.getRecipes(level), r -> r.doesInputMatch(stack) && r.doSpiritsMatch(spiritInventory.getNonEmptyItemStacks())));
-//            recipe = SpiritInfusionRecipe.getRecipe(level, stack, spiritInventory.getNonEmptyItemStacks());
-//            updateRecipe = false;
-//        }
-        if (!recipe.isEmpty()) {
+    public void clientTick(World world, BlockPos pos, BlockState state) {
+        spiritSpin += 1 + spinUp / 5f;
+//        blockEntity.passiveParticles();
+//            world.playSound(this);
+    }
+
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        spiritAmount = Math.max(1, MathHelper.lerp(0.1f, spiritAmount, getSpiritCount(spiritSlots)));
+        if (recipe != null) {
             if (spinUp < 10) {
                 spinUp++;
             }
-            if (!world.isClient) {
                 progress++;
                 if (world.getTime() % 20L == 0) {
                     boolean canAccelerate = accelerators.stream().allMatch(IAltarAccelerator::canAccelerate);
@@ -90,24 +82,21 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
 //                        recalibrateAccelerators();
                     }
                 }
-                int progressCap = (int) (300*Math.exp(-0.15*speed));
+                int progressCap = (int) (300 * Math.exp(-0.15 * speed));
                 if (progress >= progressCap) {
-//                    boolean success = consume();
-//                    if (success) {
-//                        craft();
-//                    }
+                    recipe.craft(this);
+                    recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
+                    this.progress = 0;
+                    this.notifyListeners();
                 }
-            }
         } else {
             progress = 0;
             if (spinUp > 0) {
                 spinUp--;
             }
         }
-        if (world.isClient) {
-            spiritSpin += 1 + spinUp / 5f;
-            passiveParticles();
-        }
+
+        world.scheduleBlockTick(pos, state.getBlock(), 1);
     }
 
     public void passiveParticles() {
@@ -178,11 +167,16 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
         if (recipe == null) {
             return ActionResult.CONSUME;
         }
-
-        if (hasExtraItems(state, world, pos, getExtraItems(state, world, pos), recipe)) {
-            recipe.craft(this);
-        }
         return ActionResult.CONSUME;
+    }
+
+    private static int getSpiritCount(List<ItemStack> spirits) {
+        for (int i = spirits.size() - 1; i >= 0; i--) {
+            if (!spirits.get(i).isEmpty()) {
+                return i + 1;
+            }
+        }
+        return 0;
     }
 
     private void grabSpirit(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -239,7 +233,7 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
     }
 
     private List<ItemStack> getExtraItems(BlockState state, World world, BlockPos pos) {
-        // id have to use a map cause i don't think theres an @Override to equals on itemstack thus memory location shit
+        // id have to use a map cause i don't think theres an @Override to equals on itemstack thus memory location equals
         Map<Item, Integer> map = new LinkedHashMap<>();
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPosition -> {
             if (world.getBlockEntity(reagentPosition) instanceof AbstractItemDisplayBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
@@ -260,8 +254,9 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
     public void notifyListeners() {
         this.markDirty();
 
-        if(world != null && !world.isClient())
+        if (world != null && !world.isClient) {
             world.updateListeners(getPos(), getCachedState(), getCachedState(), Block.NOTIFY_ALL);
+        }
     }
 
     public void swapSlots(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -297,7 +292,7 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         NbtCompound tag = super.toInitialChunkDataNbt();
-        writeNbt(tag);
+        this.writeNbt(tag);
         return tag;
     }
 
@@ -379,18 +374,10 @@ public class SpiritAltarBlockEntity extends SimpleBlockEntity implements Invento
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        if (progress != 0) {
-            nbt.putInt("progress", progress);
-        }
-        if (spinUp != 0) {
-            nbt.putInt("spinUp", spinUp);
-        }
-        if (speed != 0) {
-            nbt.putFloat("speed", speed);
-        }
-        if (spiritAmount != 0) {
-            nbt.putFloat("spiritAmount", spiritAmount);
-        }
+        nbt.putInt("progress", progress);
+        nbt.putInt("spinUp", spinUp);
+        nbt.putFloat("speed", speed);
+        nbt.putFloat("spiritAmount", spiritAmount);
 
         if (!acceleratorPositions.isEmpty())
         {

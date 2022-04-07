@@ -188,7 +188,7 @@ public class IngredientWithCount implements Predicate<ItemStack> {
 
         @Override
         public boolean isValidItem(ItemStack stack) {
-            return this.stack.getCount() == stack.getCount() && this.stack.getItem() == stack.getItem();
+            return this.stack.getCount() <= stack.getCount() && this.stack.getItem() == stack.getItem();
         }
 
         @Override

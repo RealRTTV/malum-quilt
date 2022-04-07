@@ -48,6 +48,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
         return this.input.test(inventory.getStack(0));
     }
 
+    @Nullable
     public static SpiritInfusionRecipe getRecipe(World world, Predicate<SpiritInfusionRecipe> predicate) {
         List<SpiritInfusionRecipe> recipes = getRecipes(world);
         for (SpiritInfusionRecipe recipe : recipes) {
@@ -90,7 +91,6 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
         return world.getRecipeManager().listAllOfType(SPIRIT_INFUSION);
     }
 
-    @Nullable
     @Override
     public ItemStack craft(Inventory inventory) {
         if (inventory instanceof SpiritAltarBlockEntity blockEntity) {
@@ -99,7 +99,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
                 blockEntity.spiritSlots.get(i).decrement(this.spirits.getEntries()[i].getCount());
             }
             blockEntity.getHeldItem().decrement(this.input.getEntries()[0].getCount());
-            ItemScatterer.spawn(blockEntity.getWorld(), blockEntity.getPos(), DefaultedList.ofSize(1, this.output));
+            ItemScatterer.spawn(blockEntity.getWorld(), blockEntity.getPos(), DefaultedList.ofSize(1, this.output.copy())); // this has to be copied since these recipes are stored statically iirc
             return this.output.copy();
         } else {
             throw new IllegalStateException("Parameter inventory must be an instanceof SpiritAltarBlockEntity");
@@ -148,8 +148,8 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
 
         public T read(Identifier id, JsonObject jsonObject) {
             String group = JsonHelper.getString(jsonObject, "group", "");
-            IngredientWithCount input = IngredientWithCount.fromJson(JsonHelper.getObject(jsonObject, "output"));
-            ItemStack output = IngredientWithCount.fromJson(JsonHelper.getObject(jsonObject, "input")).getMatchingStacks()[0];
+            IngredientWithCount input = IngredientWithCount.fromJson(JsonHelper.getObject(jsonObject, "input"));
+            ItemStack output = IngredientWithCount.fromJson(JsonHelper.getObject(jsonObject, "output")).getMatchingStacks()[0];
             IngredientWithCount extraItems = IngredientWithCount.fromJson(JsonHelper.getArray(jsonObject, "extra_items"));
             IngredientWithCount spirits = IngredientWithCount.fromJson(JsonHelper.getArray(jsonObject, "spirits"));
             return this.recipeFactory.create(id, group, input, output, extraItems, spirits);

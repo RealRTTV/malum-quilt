@@ -12,8 +12,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 
-public class SimpleBlockEntity extends BlockEntity {
+import java.util.Random;
+
+public abstract class SimpleBlockEntity extends BlockEntity {
     public SimpleBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
@@ -23,9 +26,6 @@ public class SimpleBlockEntity extends BlockEntity {
     }
 
     public void onPlace(LivingEntity placer, ItemStack stack) {
-    }
-
-    public void onNeighborUpdate(BlockState state, BlockPos pos, BlockPos neighbor) {
     }
 
     public ItemStack onClone(BlockState state, HitResult target, BlockView level, BlockPos pos, PlayerEntity player) {
@@ -60,8 +60,4 @@ public class SimpleBlockEntity extends BlockEntity {
 //        super.onDataPacket(net, pkt);
 //        handleUpdateTag(getUpdatePacket().getTag());
 //    }
-
-    public void tick() {
-
-    }
 }

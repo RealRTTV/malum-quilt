@@ -7,17 +7,18 @@ import java.awt.*;
 
 public interface IAltarAccelerator {
     AltarAcceleratorType getAcceleratorType();
-    default boolean canAccelerate()
-    {
+
+    default boolean canAccelerate() {
         return true;
     }
+
     float getAcceleration();
 
     default void addParticles(BlockPos altarPos, Vec3d altarItemPos) {
 
     }
-    default void addParticles(Color color, Color endColor, float alpha, BlockPos altarPos, Vec3d altarItemPos)
-    {
+
+    default void addParticles(Color color, Color endColor, float alpha, BlockPos altarPos, Vec3d altarItemPos) {
 
     }
 

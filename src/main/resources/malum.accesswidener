@@ -4,7 +4,7 @@ accessible      class     net/minecraft/client/render/RenderLayer$MultiPhase
 accessible      class     net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
 accessible      class     net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible      class     net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider
-extendable      class net/minecraft/enchantment/EnchantmentTarget
+extendable      class     net/minecraft/enchantment/EnchantmentTarget
 
 accessible      field     net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider       sprites                      Ljava/util/List;
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhase                       phases                       Lnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;
