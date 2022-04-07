@@ -1,9 +1,6 @@
 package ca.rttv.malum.registry;
 
-import ca.rttv.malum.block.ItemStandBlock;
-import ca.rttv.malum.block.RunewoodLeavesBlock;
-import ca.rttv.malum.block.SpiritAltarBlock;
-import ca.rttv.malum.block.WoodenItemPedestalBlock;
+import ca.rttv.malum.block.*;
 import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
@@ -66,11 +63,15 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final SoundEvent                                    BLOCK_SOULSTONE_STEP           = registerSoundEvent       ("soulstone_step");
     public static final SoundEvent                                    BLOCK_SOULSTONE_PLACE          = registerSoundEvent       ("soulstone_place");
     public static final SoundEvent                                    BLOCK_SOULSTONE_HIT            = registerSoundEvent       ("soulstone_hit");
+    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_BREAK       = registerSoundEvent       ("tainted_rock_break");
+    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_STEP        = registerSoundEvent       ("tainted_rock_step");
+    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_PLACE       = registerSoundEvent       ("tainted_rock_place");
+    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_HIT         = registerSoundEvent       ("tainted_rock_hit");
 
     // sound groups
     public static final BlockSoundGroup                               BLOCK_ARCANE_CHARCOAL_SOUNDS   = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_ARCANE_CHARCOAL_BREAK, BLOCK_ARCANE_CHARCOAL_STEP, BLOCK_ARCANE_CHARCOAL_PLACE, BLOCK_ARCANE_CHARCOAL_HIT, BLOCK_ARCANE_CHARCOAL_STEP);
     public static final BlockSoundGroup                               BLOCK_SOULSTONE_SOUNDS         = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_SOULSTONE_BREAK, BLOCK_SOULSTONE_STEP, BLOCK_SOULSTONE_PLACE, BLOCK_SOULSTONE_HIT, BLOCK_SOULSTONE_STEP);
-
+    public static final BlockSoundGroup                               BLOCK_TAINTED_ROCK_SOUNDS      = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_TAINTED_ROCK_BREAK, BLOCK_TAINTED_ROCK_STEP, BLOCK_TAINTED_ROCK_PLACE, BLOCK_TAINTED_ROCK_HIT, BLOCK_TAINTED_ROCK_STEP);
     // items
     public static final Item                                          ENCYCLOPEDIA_ARCANA            = registerItem             ("encyclopedia_arcana",               new EncyclopediaArcanaItem(new Settings().rarity(Rarity.UNCOMMON).group(MALUM)));
     public static final Item                                          ARCANE_CHARCOAL                = registerItem             ("arcane_charcoal",                   new Item(new Settings().group(MALUM)));
@@ -100,11 +101,21 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Block                                         BLOCK_OF_RAW_SOULSTONE         = registerBlockItem        ("block_of_raw_soulstone",            new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
     public static final Block                                         SOULSTONE_ORE                  = registerBlockItem        ("soulstone_ore",                     new OreBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
     public static final Block                                         DEEPSLATE_SOULSTONE_ORE        = registerBlockItem        ("deepslate_soulstone_ore",           new OreBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(7.0f, 6.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-    public static final Block                                         SPIRIT_ALTAR                   = registerBlockItem        ("spirit_altar",                      new SpiritAltarBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(2.0f)), MALUM);
+    public static final Block                                         SPIRIT_ALTAR                   = registerBlockItem        ("spirit_altar",                      new SpiritAltarBlock(AbstractBlock.Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)), MALUM);
+    public static final Block                                         TAINTED_ROCK                   = registerBlockItem        ("tainted_rock",                      new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         SMOOTH_TAINTED_ROCK            = registerBlockItem        ("smooth_tainted_rock",               new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         TAINTED_ROCK_SLAB              = registerBlockItem        ("tainted_rock_slab",                 new SlabBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         TAINTED_ROCK_ITEM_PEDESTAL     = registerBlockItem        ("tainted_rock_item_pedestal",        new StoneItemPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         TAINTED_ROCK_ITEM_STAND        = registerBlockItem        ("tainted_rock_item_stand",           new ItemStandBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         TWISTED_ROCK                   = registerBlockItem        ("twisted_rock",                      new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         SMOOTH_TWISTED_ROCK            = registerBlockItem        ("smooth_twisted_rock",               new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         TWISTED_ROCK_SLAB              = registerBlockItem        ("twisted_rock_slab",                 new SlabBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         TWISTED_ROCK_ITEM_PEDESTAL     = registerBlockItem        ("twisted_rock_item_pedestal",        new StoneItemPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    public static final Block                                         TWISTED_ROCK_ITEM_STAND        = registerBlockItem        ("twisted_rock_item_stand",           new ItemStandBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
 
     // block entities
-    public static final BlockEntityType<ItemStandBlockEntity>         ITEM_STAND_BLOCK_ENTITY        = registerBlockEntity      ("item_stand",                       BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND).build(null));
-    public static final BlockEntityType<ItemPedestalBlockEntity>      ITEM_PEDESTAL_BLOCK_ENTITY     = registerBlockEntity      ("item_pedestal",                    BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL).build(null));
+    public static final BlockEntityType<ItemStandBlockEntity>         ITEM_STAND_BLOCK_ENTITY        = registerBlockEntity      ("item_stand",                       BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND, TAINTED_ROCK_ITEM_STAND, TWISTED_ROCK_ITEM_STAND).build(null));
+    public static final BlockEntityType<ItemPedestalBlockEntity>      ITEM_PEDESTAL_BLOCK_ENTITY     = registerBlockEntity      ("item_pedestal",                    BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL, TAINTED_ROCK_ITEM_PEDESTAL, TWISTED_ROCK_ITEM_PEDESTAL).build(null));
     public static final BlockEntityType<SpiritAltarBlockEntity>       SPIRIT_ALTAR_BLOCK_ENTITY      = registerBlockEntity      ("spirit_altar",                     BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
 
     // spirits

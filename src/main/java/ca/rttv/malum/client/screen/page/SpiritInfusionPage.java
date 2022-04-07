@@ -6,6 +6,8 @@ import ca.rttv.malum.util.IngredientWithCount;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -25,7 +27,6 @@ public class SpiritInfusionPage extends BookPage {
             return;
         }
         this.recipe = SpiritInfusionRecipe.getRecipe(client.world, predicate);
-        client.world.getRecipeManager().getAllOfType(SPIRIT_INFUSION).forEach((id, recipee) -> System.out.println(recipee.getId()));
     }
 
     public SpiritInfusionPage(SpiritInfusionRecipe recipe) {
@@ -52,26 +53,38 @@ public class SpiritInfusionPage extends BookPage {
 
     @Override
     public void renderLeft(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
-        ItemStack inputStack = recipe.input.getMatchingStacks()[0];
+        ItemStack[] inputStacks = recipe.input.getMatchingStacks();
+        ItemStack inputStack;
+        if (inputStacks.length == 1) {
+            inputStack = inputStacks[0];
+        } else {
+            inputStack = inputStacks[(int) ((client.world.getTime() / 20L) % inputStacks.length)];
+        }
         ItemStack outputStack = recipe.output;
         if (recipe.extraItems.isPresent()) {
             renderIngredients(matrices, guiLeft + 105, guiTop + 51, mouseX, mouseY, recipe.extraItems);
         }
+        renderItems(matrices, guiLeft + 15, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getEntries()));
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 67, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 67, guiTop + 126, mouseX, mouseY);
-        renderItems(matrices, guiLeft + 15, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getEntries()));
     }
 
     @Override
     public void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
-        ItemStack inputStack = recipe.input.getMatchingStacks()[0];
+        ItemStack[] inputStacks = recipe.input.getMatchingStacks();
+        ItemStack inputStack;
+        if (inputStacks.length == 1) {
+            inputStack = inputStacks[0];
+        } else {
+            inputStack = inputStacks[(int) ((client.world.getTime() / 20L) % inputStacks.length)];
+        }
         ItemStack outputStack = recipe.output;
         if (recipe.extraItems.isPresent()) {
             renderIngredients(matrices, guiLeft + 247, guiTop + 51, mouseX, mouseY, recipe.extraItems);
         }
+        renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getEntries()));
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 209, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 209, guiTop + 126, mouseX, mouseY);
-        renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getEntries()));
     }
 
     public void renderIngredients(MatrixStack matrices, int left, int top, int mouseX, int mouseY, IngredientWithCount ingredients) {

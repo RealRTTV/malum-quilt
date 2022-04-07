@@ -152,17 +152,17 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new SpiritTextPage("eldritch_spirit", "eldritch_spirit_a", ELDRITCH_SPIRIT))
                 .addPage(new TextPage("eldritch_spirit_b"))
         );
-/*
+
         entries.add(new BookEntry(
-                "arcane_rock", TAINTED_ROCK, 3, 6)
+                "arcane_rock", TAINTED_ROCK.asItem(), 3, 6)
                 .addPage(new HeadlineTextPage("tainted_rock", "tainted_rock"))
-                .addPage(SpiritInfusionPage.fromId(null))
-                .addPage(CraftingBookPage.itemPedestalPage(TAINTED_ROCK_ITEM_PEDESTAL, TAINTED_ROCK, TAINTED_ROCK_SLAB))
-                .addPage(CraftingBookPage.itemStandPage(TAINTED_ROCK_ITEM_STAND, TAINTED_ROCK, TAINTED_ROCK_SLAB))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/tainted_rock")))
+                .addPage(CraftingBookPage.itemPedestalPage(TAINTED_ROCK_ITEM_PEDESTAL.asItem(), TAINTED_ROCK.asItem(), TAINTED_ROCK_SLAB.asItem()))
+                .addPage(CraftingBookPage.itemStandPage(TAINTED_ROCK_ITEM_STAND.asItem(), TAINTED_ROCK.asItem(), TAINTED_ROCK_SLAB.asItem()))
                 .addPage(new HeadlineTextPage("twisted_rock", "twisted_rock"))
-                .addPage(SpiritInfusionPage.fromId(null))
-                .addPage(CraftingBookPage.itemPedestalPage(TWISTED_ROCK_ITEM_PEDESTAL, TWISTED_ROCK, TWISTED_ROCK_SLAB))
-                .addPage(CraftingBookPage.itemStandPage(TWISTED_ROCK_ITEM_STAND, TWISTED_ROCK, TWISTED_ROCK_SLAB))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/twisted_rock")))
+                .addPage(CraftingBookPage.itemPedestalPage(TWISTED_ROCK_ITEM_PEDESTAL.asItem(), TWISTED_ROCK.asItem(), TWISTED_ROCK_SLAB.asItem()))
+                .addPage(CraftingBookPage.itemStandPage(TWISTED_ROCK_ITEM_STAND.asItem(), TWISTED_ROCK.asItem(), TWISTED_ROCK_SLAB.asItem()))
         );
 /*
         entries.add(new BookEntry(
@@ -502,6 +502,15 @@ public class ProgressionBookScreen extends Screen {
         client.getItemRenderer().renderGuiItemOverlay(screen.textRenderer, stack, posX, posY, null);
         if (isHovering(mouseX, mouseY, posX, posY, 16, 16)) {
             screen.renderTooltip(matrices, new TranslatableText(stack.getTranslationKey()), mouseX, mouseY);
+        }
+    }
+
+    public static void renderItemWithTagTooltip(MatrixStack matrices, ItemStack stack, int posX, int posY, int mouseX, int mouseY, Text tag) {
+        final MinecraftClient client = MinecraftClient.getInstance();
+        client.getItemRenderer().renderInGuiWithOverrides(stack, posX, posY);
+        client.getItemRenderer().renderGuiItemOverlay(screen.textRenderer, stack, posX, posY, null);
+        if (isHovering(mouseX, mouseY, posX, posY, 16, 16)) {
+            screen.renderTooltip(matrices, List.of(new TranslatableText(stack.getTranslationKey()), tag), mouseX, mouseY);
         }
     }
 

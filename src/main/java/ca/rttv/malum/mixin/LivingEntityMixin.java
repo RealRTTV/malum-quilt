@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.ATTRIBUTES;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin {
+public abstract class LivingEntityMixin {
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void createLivingAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
         ATTRIBUTES.forEach((id, entityAttribute) -> {
