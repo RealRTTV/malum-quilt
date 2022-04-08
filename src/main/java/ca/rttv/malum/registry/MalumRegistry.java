@@ -1,6 +1,7 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.block.*;
+import ca.rttv.malum.block.entity.EtherBlockEntity;
 import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
@@ -20,7 +21,6 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -46,16 +46,16 @@ import static net.minecraft.world.gen.feature.OreConfiguredFeatures.STONE_ORE_RE
 
 @SuppressWarnings({"unused", "SameParameterValue"})
 public final class MalumRegistry { // maps make stuff look cooler ok?
-    private static final Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
-    private static final Map<Identifier, Item> ITEMS = new LinkedHashMap<>();
+    public static final Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
+    public static final Map<Identifier, Item> ITEMS = new LinkedHashMap<>();
     public static final Set<ScytheItem> SCYTHES = new ReferenceOpenHashSet<>();
-    private static final Map<Identifier, BlockEntityType<?>> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
-    private static final Map<Identifier, Feature<? extends FeatureConfig>> FEATURES = new LinkedHashMap<>();
-    private static final Map<Identifier, RecipeType<? extends Recipe<?>>> RECIPE_TYPES = new LinkedHashMap<>();
-    private static final Map<Identifier, RecipeSerializer<? extends Recipe<?>>> RECIPE_SERIALIZER = new LinkedHashMap<>();
-    private static final ArrayList<SignType> SIGN_TYPES = new ArrayList<>();
-    private static final Map<Identifier, SoundEvent> SOUND_EVENTS = new LinkedHashMap<>();
-    private static final Map<Identifier, ConfiguredFeature<? extends FeatureConfig, ?>> CONFIGURED_FEATURES = new LinkedHashMap<>();
+    public static final Map<Identifier, BlockEntityType<?>> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
+    public static final Map<Identifier, Feature<? extends FeatureConfig>> FEATURES = new LinkedHashMap<>();
+    public static final Map<Identifier, RecipeType<? extends Recipe<?>>> RECIPE_TYPES = new LinkedHashMap<>();
+    public static final Map<Identifier, RecipeSerializer<? extends Recipe<?>>> RECIPE_SERIALIZER = new LinkedHashMap<>();
+    public static final ArrayList<SignType> SIGN_TYPES = new ArrayList<>();
+    public static final Map<Identifier, SoundEvent> SOUND_EVENTS = new LinkedHashMap<>();
+    public static final Map<Identifier, ConfiguredFeature<? extends FeatureConfig, ?>> CONFIGURED_FEATURES = new LinkedHashMap<>();
 
     // sign types
     public static final SignType                                      RUNEWOOD_SIGN_TYPE                        = registerSignType         (new SignType("runewood"));
@@ -85,7 +85,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     // soulwood plinth
     // soulwood fusion plate
     public static final Item                                          HEX_ASH                                   = registerItem             ("hex_ash",                                   new Item(new Item.Settings().group(MALUM)));
-    // spirit fabric
+    public static final Item                                          SPIRIT_FABRIC                             = registerItem             ("spirit_fabric",                             new Item(new Item.Settings().group(MALUM)));
     // spectral lens
     // poppet
     // hallowed gold ingot
@@ -106,9 +106,9 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     // copper impetus
     // cracked gold impetus
     // gold impetus
-    public static final Block                                         ETHER                                     = registerBlockItem        ("ether",                                     new Block(Settings.of(Material.WOOL) /* todo: abilities */), MALUM);
-    public static final Block                                         ETHER_TORCH                               = registerBlock            ("ether_torch",                               new EtherTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(BlockSoundGroup.WOOD), ParticleTypes.SOUL_FIRE_FLAME /* todo: particle */));
-    public static final Block                                         WALL_ETHER_TORCH                          = registerBlock            ("wall_ether_torch",                          new EtherWallTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(BlockSoundGroup.WOOD), ParticleTypes.SOUL_FIRE_FLAME /* todo: particle */));
+    public static final Block                                         ETHER                                     = registerBlockItem        ("ether",                                     new EtherBlock(Settings.of(Material.WOOL).noCollision().breakInstantly().luminance(state -> 14).sounds(BlockSoundGroup.WOOD) /* todo: particle */), MALUM);
+    public static final Block                                         ETHER_TORCH                               = registerBlock            ("ether_torch",                               new EtherTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(BlockSoundGroup.WOOD) /* todo: particle */));
+    public static final Block                                         WALL_ETHER_TORCH                          = registerBlock            ("wall_ether_torch",                          new EtherWallTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(BlockSoundGroup.WOOD) /* todo: particle */));
     public static final Item                                          ETHER_TORCH_ITEM                          = registerItem             ("ether_torch",                               new WallStandingBlockItem(ETHER_TORCH, WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
     // tainted ether brazier
     // twisted ether brazier
@@ -277,7 +277,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Block                                         RUNEWOOD_SIGN                             = registerBlock            ("runewood_sign",                             new SignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), RUNEWOOD_SIGN_TYPE));
     public static final Block                                         RUNEWOOD_WALL_SIGN                        = registerBlock            ("runewood_wall_sign",                        new WallSignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), RUNEWOOD_SIGN_TYPE));
     public static final Item                                          RUNEWOOD_SIGN_ITEM                        = registerItem             ("runewood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), RUNEWOOD_SIGN, RUNEWOOD_WALL_SIGN));
-    public static final Item                                          RUNEWOOD_BOAT                             = registerItem             ("runewood_boat",                             new BoatItem(MalumBoatTypes.SOULWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
+    public static final Item                                          RUNEWOOD_BOAT                             = registerItem             ("runewood_boat",                             new BoatItem(MalumBoatTypes.RUNEWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
     public static final Item                                          UNHOLY_SAP                                = registerItem             ("unholy_sap",                                new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     public static final Item                                          UNHOLY_SAPBALL                            = registerItem             ("unholy_sapball",                            new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     public static final Item                                          UNHOLY_SYRUP                              = registerItem             ("unholy_syrup",                              new HolySyrupItem(new Item.Settings().group(MALUM_NATURAL_WONDERS).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 300, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
@@ -335,6 +335,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final BlockEntityType<ItemStandBlockEntity>         ITEM_STAND_BLOCK_ENTITY                   = registerBlockEntity      ("item_stand",                                BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND, SOULWOOD_ITEM_STAND, TAINTED_ROCK_ITEM_STAND, TWISTED_ROCK_ITEM_STAND).build(null));
     public static final BlockEntityType<ItemPedestalBlockEntity>      ITEM_PEDESTAL_BLOCK_ENTITY                = registerBlockEntity      ("item_pedestal",                             BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL, SOULWOOD_ITEM_PEDESTAL, TAINTED_ROCK_ITEM_PEDESTAL, TWISTED_ROCK_ITEM_PEDESTAL).build(null));
     public static final BlockEntityType<SpiritAltarBlockEntity>       SPIRIT_ALTAR_BLOCK_ENTITY                 = registerBlockEntity      ("spirit_altar",                              BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
+    public static final BlockEntityType<EtherBlockEntity>             ETHER_BLOCK_ENTITY                        = registerBlockEntity      ("ether",                                     BlockEntityType.Builder.create(EtherBlockEntity::new, ETHER, ETHER_TORCH, WALL_ETHER_TORCH).build(null));
 
     public static final RecipeType<SpiritInfusionRecipe>              SPIRIT_INFUSION                           = registerRecipeType       ("spirit_infusion",                           new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
     public static final RecipeSerializer<SpiritInfusionRecipe>        SPIRIT_INFUSION_SERIALIZER                = registerRecipeSerializer ("spirit_infusion",                           new SpiritInfusionRecipe.Serializer<>(SpiritInfusionRecipe::new));

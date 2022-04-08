@@ -1,6 +1,7 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.block.GradientLeavesBlock;
+import ca.rttv.malum.block.entity.EtherBlockEntity;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,12 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.awt.*;
 
-import static ca.rttv.malum.registry.MalumRegistry.RUNEWOOD_LEAVES;
-import static ca.rttv.malum.registry.MalumRegistry.SOULWOOD_LEAVES;
+import static ca.rttv.malum.registry.MalumRegistry.*;
 
 @Mixin(BlockColors.class)
 public abstract class BlockColorsMixin {
-
     @Unique
     private static BlockColors blockColors;
 
@@ -49,5 +48,13 @@ public abstract class BlockColorsMixin {
             int blue = (int) MathHelper.lerp(color / 5.0f, minColor.getBlue(), maxColor.getBlue());
             return red << 16 | green << 8 | blue;
         }, SOULWOOD_LEAVES);
+        blockColors.registerColorProvider((state, world, pos, tintIndex) -> {
+            if (tintIndex != 1 || world == null || pos == null) return 255 << 16 | 255 << 8 | 255;
+            EtherBlockEntity blockEntity = (EtherBlockEntity) world.getBlockEntity(pos);
+            if (blockEntity == null) return 255 << 16 | 255 << 8 | 255;
+            int firstColor = blockEntity.firstColor;
+            int secondColor = blockEntity.secondColor;
+            return firstColor;
+        }, WALL_ETHER_TORCH, ETHER_TORCH);
     }
 }
