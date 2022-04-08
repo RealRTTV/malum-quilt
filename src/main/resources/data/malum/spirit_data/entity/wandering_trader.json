@@ -1,0 +1,14 @@
+{
+  "registry_name": "minecraft:wandering_trader",
+  "primary_type": "sacred",
+  "spirits": [
+    {
+      "spirit": "sacred",
+      "count": 2
+    },
+    {
+      "spirit": "arcane",
+      "count": 1
+    }
+  ]
+}

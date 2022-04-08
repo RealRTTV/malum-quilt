@@ -1,0 +1,10 @@
+{
+  "registry_name": "endergetic:booflo_baby",
+  "primary_type": "eldritch",
+  "spirits": [
+    {
+      "spirit": "eldritch",
+      "count": 1
+    }
+  ]
+}

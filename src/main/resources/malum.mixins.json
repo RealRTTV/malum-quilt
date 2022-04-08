@@ -17,6 +17,7 @@
     "TexturedRenderLayersMixin"
   ],
   "client": [
+    "GameRendererMixin",
     "AbstractFurnaceBlockEntityMixin"
   ],
   "injectors": {

@@ -1,6 +1,8 @@
 package ca.rttv.malum.item;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.registry.SpiritTypeRegistry;
+import ca.rttv.malum.util.listener.SpiritDataReloadListener;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -11,6 +13,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
 
 public class ScytheItem extends SwordItem {
     public ScytheItem(ToolMaterial material, int bonusMaterialDamage, float attackSpeed, Settings settings) {
@@ -29,6 +32,7 @@ public class ScytheItem extends SwordItem {
                 sound = SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP;
 //            }
             attacker.world.playSound(null, target.getX(), target.getY(), target.getZ(), sound, attacker.getSoundCategory(), 1, 1);
+            System.out.println(SpiritTypeRegistry.SPIRIT_DATA.get(Registry.ENTITY_TYPE.getId(target.getType())).primaryType.identifier);
         }
         return super.postHit(stack, target, attacker);
     }

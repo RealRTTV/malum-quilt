@@ -68,6 +68,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof SpiritAltarBlockEntity altar) {
             altar.passiveParticles();
+            System.out.println("why");
         }
 
     }

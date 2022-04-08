@@ -108,6 +108,7 @@ public class GenericParticle extends SpriteBillboardParticle {
     @Override
     public void tick() {
         updateTraits();
+        System.out.println("mogus");
         if (data.animator.equals(SimpleParticleEffect.Animator.WITH_AGE)) {
             setSpriteForAge(spriteProvider);
         }

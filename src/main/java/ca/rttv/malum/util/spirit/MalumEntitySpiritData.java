@@ -3,8 +3,8 @@ package ca.rttv.malum.util.spirit;
 import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.Text;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -21,7 +21,7 @@ public class MalumEntitySpiritData {
         this.dataEntries = dataEntries;
     }
 
-    public ArrayList<Component> createTooltip() {
+    public ArrayList<Text> createTooltip() {
         return dataEntries.stream().map(SpiritDataEntry::getComponent).collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -58,7 +58,7 @@ public class MalumEntitySpiritData {
 
     public record SpiritDataEntry(MalumSpiritType type, int count) {
 
-        public Component getComponent() {
+        public Text getComponent() {
             return type.getComponent(count);
         }
 

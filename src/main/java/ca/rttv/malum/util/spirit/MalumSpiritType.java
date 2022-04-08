@@ -4,6 +4,7 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import net.minecraft.item.Item;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
@@ -32,8 +33,8 @@ public class MalumSpiritType {
         this.splinterItem = splinterItem;
     }
 
-    public Component getComponent(int count) {
-        return (Component) new LiteralText(" " + count + " ").append(new TranslatableText(getDescription())).fillStyle(Style.EMPTY.withColor(color.getRGB()));
+    public Text getComponent(int count) {
+        return new LiteralText(" " + count + " ").append(new TranslatableText(getDescription())).fillStyle(Style.EMPTY.withColor(color.getRGB()));
     }
 
     public String getDescription() {

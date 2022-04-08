@@ -1,0 +1,10 @@
+{
+  "registry_name": "savageandravage:creepie",
+  "primary_type": "infernal",
+  "spirits": [
+    {
+      "spirit": "infernal",
+      "count": 1
+    }
+  ]
+}

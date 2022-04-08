@@ -1,0 +1,10 @@
+{
+  "registry_name": "ecologics:coconut_crab",
+  "primary_type": "aqueous",
+  "spirits": [
+    {
+      "spirit": "aqueous",
+      "count": 2
+    }
+  ]
+}

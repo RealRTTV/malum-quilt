@@ -1,0 +1,10 @@
+{
+  "registry_name": "minecraft:squid",
+  "primary_type": "aqueous",
+  "spirits": [
+    {
+      "spirit": "aqueous",
+      "count": 2
+    }
+  ]
+}
