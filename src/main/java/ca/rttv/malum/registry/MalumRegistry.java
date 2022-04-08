@@ -13,13 +13,7 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.world.gen.feature.RunewoodTreeFeature;
 import ca.rttv.malum.world.gen.feature.SoulwoodTreeFeature;
-import com.terraformersmc.terraform.boat.api.TerraformBoatType;
-import com.terraformersmc.terraform.boat.api.TerraformBoatTypeRegistry;
-import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
-import com.terraformersmc.terraform.boat.api.item.TerraformBoatItemHelper;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -293,7 +287,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Block                                         RUNEWOOD_SIGN                             = registerBlock            ("runewood_sign",                             new SignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), RUNEWOOD_SIGN_TYPE));
     public static final Block                                         RUNEWOOD_WALL_SIGN                        = registerBlock            ("runewood_wall_sign",                        new WallSignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), RUNEWOOD_SIGN_TYPE));
     public static final Item                                          RUNEWOOD_SIGN_ITEM                        = registerItem             ("runewood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), RUNEWOOD_SIGN, RUNEWOOD_WALL_SIGN));
-    public static final Item                                          RUNEWOOD_BOAT                             = registerBoat             ("runewood");
+    public static final Item                                          RUNEWOOD_BOAT                             = registerItem             ("runewood_boat",                             new BoatItem(MalumBoatTypes.SOULWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
     public static final Item                                          UNHOLY_SAP                                = registerItem             ("unholy_sap",                                new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     public static final Item                                          UNHOLY_SAPBALL                            = registerItem             ("unholy_sapball",                            new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     public static final Item                                          UNHOLY_SYRUP                              = registerItem             ("unholy_syrup",                              new HolySyrupItem(new Item.Settings().group(MALUM_NATURAL_WONDERS).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 300, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
@@ -332,7 +326,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Block                                         SOULWOOD_SIGN                             = registerBlock            ("soulwood_sign",                             new SignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), SOULWOOD_SIGN_TYPE));
     public static final Block                                         SOULWOOD_WALL_SIGN                        = registerBlock            ("soulwood_wall_sign",                        new WallSignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), SOULWOOD_SIGN_TYPE));
     public static final Item                                          SOULWOOD_SIGN_ITEM                        = registerItem             ("soulwood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), SOULWOOD_SIGN, SOULWOOD_WALL_SIGN));
-    public static final Item                                          SOULWOOD_BOAT                             = registerBoat             ("soulwood");
+    public static final Item                                          SOULWOOD_BOAT                             = registerItem             ("soulwood_boat",                             new BoatItem(MalumBoatTypes.SOULWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
 
     // items & blocks, sorted [Malum: Spirits]
     public static final Item                                          SACRED_SPIRIT                             = registerItem             ("sacred_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.SACRED_SPIRIT));
@@ -429,19 +423,6 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
 
     static SignType registerSignType(SignType signType) {
         return SignType.register(signType);
-    }
-
-    static Item registerBoat(String id) { // todo, vanilla boats
-        var ref = new Object() {
-            TerraformBoatType boatType = null;
-        };
-        Item item = TerraformBoatItemHelper.registerBoatItem(new Identifier(MODID, id.concat("_boat")), () -> ref.boatType, MALUM_NATURAL_WONDERS);
-        ref.boatType = new TerraformBoatType.Builder().item(item).build();
-        Registry.register(TerraformBoatTypeRegistry.INSTANCE, new Identifier(MODID, id), ref.boatType);
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            TerraformBoatClientHelper.registerModelLayer(new Identifier(MODID, id));
-        }
-        return item;
     }
 
     public static void init() {

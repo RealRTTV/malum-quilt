@@ -6,10 +6,8 @@ import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import org.jetbrains.annotations.Nullable;
 

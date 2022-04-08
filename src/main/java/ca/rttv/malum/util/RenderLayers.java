@@ -4,14 +4,15 @@ import ca.rttv.malum.Malum;
 import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
 import com.mojang.datafixers.util.Pair;
-import ladysnake.satin.api.managed.ManagedShaderEffect;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderPhase;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static net.minecraft.client.render.VertexFormats.POSITION_COLOR_TEXTURE_LIGHT;
 import static net.minecraft.client.render.VertexFormats.POSITION_TEXTURE_COLOR_LIGHT;

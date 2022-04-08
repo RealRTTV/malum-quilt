@@ -6,15 +6,12 @@ import ca.rttv.malum.util.IngredientWithCount;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_INFUSION;
 
 public class SpiritInfusionPage extends BookPage {
     private final SpiritInfusionRecipe recipe;

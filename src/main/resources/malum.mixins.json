@@ -8,6 +8,7 @@
     "BlockColorsMixin",
     "BlockEntityRendererFactoriesMixin",
     "BlockEntityTypeMixin",
+    "BoatEntityRendererMixin",
     "DefaultBiomeFeaturesMixin",
     "EnchantmentTargetMixin",
     "EntityModelLayersMixin",

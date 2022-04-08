@@ -4,7 +4,6 @@ import ca.rttv.malum.util.helper.DataHelper;
 import ladysnake.satin.api.managed.ManagedCoreShader;
 import ladysnake.satin.api.managed.ShaderEffectManager;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.util.Identifier;
 
 public class MalumShaderRegistry {
     public static final ManagedCoreShader ADDITIVE_TEXTURE = ShaderEffectManager.getInstance().manageCoreShader(DataHelper.prefix("additive_texture"), VertexFormats.POSITION_COLOR_TEXTURE_LIGHT);

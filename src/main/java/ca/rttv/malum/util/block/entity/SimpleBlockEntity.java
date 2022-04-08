@@ -12,9 +12,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-
-import java.util.Random;
 
 public abstract class SimpleBlockEntity extends BlockEntity {
     public SimpleBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {

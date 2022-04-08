@@ -1,6 +1,5 @@
 package ca.rttv.malum.enchantment;
 
-import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.mixin.EnchantmentTargetMixin;
 import ca.rttv.malum.registry.MalumTags;
 import net.minecraft.item.Item;

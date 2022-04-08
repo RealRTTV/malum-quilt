@@ -5,7 +5,6 @@ import ca.rttv.malum.client.render.entity.ScytheBoomerangEntityRenderer;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumRegistry;
-import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -18,7 +17,6 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.SpiritTypeRegistry.*;
 
 public class MalumClient implements ClientModInitializer {
