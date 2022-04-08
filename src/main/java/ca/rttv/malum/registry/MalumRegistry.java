@@ -5,20 +5,28 @@ import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
+import ca.rttv.malum.block.sapling.SoulwoodSaplingGenerator;
 import ca.rttv.malum.item.EncyclopediaArcanaItem;
 import ca.rttv.malum.item.HolySyrupItem;
 import ca.rttv.malum.item.ScytheItem;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.world.gen.feature.RunewoodTreeFeature;
+import ca.rttv.malum.world.gen.feature.SoulwoodTreeFeature;
+import com.terraformersmc.terraform.boat.api.TerraformBoatType;
+import com.terraformersmc.terraform.boat.api.TerraformBoatTypeRegistry;
+import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
+import com.terraformersmc.terraform.boat.api.item.TerraformBoatItemHelper;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
-import net.minecraft.item.Item.Settings;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -27,6 +35,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.SignType;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.decorator.HeightRangePlacementModifier;
@@ -39,8 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static ca.rttv.malum.Malum.MALUM;
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Malum.*;
 import static net.minecraft.world.gen.feature.OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES;
 import static net.minecraft.world.gen.feature.OreConfiguredFeatures.STONE_ORE_REPLACEABLES;
 
@@ -54,95 +62,313 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     private static final Map<Identifier, RecipeType<? extends Recipe<?>>> RECIPE_TYPES = new LinkedHashMap<>();
     private static final Map<Identifier, RecipeSerializer<? extends Recipe<?>>> RECIPE_SERIALIZER = new LinkedHashMap<>();
 
+    // sign types
+    public static final SignType                                      RUNEWOOD_SIGN_TYPE                        = registerSignType         (new SignType("runewood"));
+    public static final SignType                                      SOULWOOD_SIGN_TYPE                        = registerSignType         (new SignType("soulwood"));
+
     // sound events
-    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_BREAK    = registerSoundEvent       ("arcane_charcoal_block_break");
-    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_STEP     = registerSoundEvent       ("arcane_charcoal_block_step");
-    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_PLACE    = registerSoundEvent       ("arcane_charcoal_block_place");
-    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_HIT      = registerSoundEvent       ("arcane_charcoal_block_hit");
-    public static final SoundEvent                                    BLOCK_SOULSTONE_BREAK          = registerSoundEvent       ("soulstone_break");
-    public static final SoundEvent                                    BLOCK_SOULSTONE_STEP           = registerSoundEvent       ("soulstone_step");
-    public static final SoundEvent                                    BLOCK_SOULSTONE_PLACE          = registerSoundEvent       ("soulstone_place");
-    public static final SoundEvent                                    BLOCK_SOULSTONE_HIT            = registerSoundEvent       ("soulstone_hit");
-    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_BREAK       = registerSoundEvent       ("tainted_rock_break");
-    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_STEP        = registerSoundEvent       ("tainted_rock_step");
-    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_PLACE       = registerSoundEvent       ("tainted_rock_place");
-    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_HIT         = registerSoundEvent       ("tainted_rock_hit");
+    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_BREAK               = registerSoundEvent       ("arcane_charcoal_block_break");
+    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_STEP                = registerSoundEvent       ("arcane_charcoal_block_step");
+    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_PLACE               = registerSoundEvent       ("arcane_charcoal_block_place");
+    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_HIT                 = registerSoundEvent       ("arcane_charcoal_block_hit");
+    public static final SoundEvent                                    BLOCK_SOULSTONE_BREAK                     = registerSoundEvent       ("soulstone_break");
+    public static final SoundEvent                                    BLOCK_SOULSTONE_STEP                      = registerSoundEvent       ("soulstone_step");
+    public static final SoundEvent                                    BLOCK_SOULSTONE_PLACE                     = registerSoundEvent       ("soulstone_place");
+    public static final SoundEvent                                    BLOCK_SOULSTONE_HIT                       = registerSoundEvent       ("soulstone_hit");
+    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_BREAK                  = registerSoundEvent       ("tainted_rock_break");
+    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_STEP                   = registerSoundEvent       ("tainted_rock_step");
+    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_PLACE                  = registerSoundEvent       ("tainted_rock_place");
+    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_HIT                    = registerSoundEvent       ("tainted_rock_hit");
 
     // sound groups
-    public static final BlockSoundGroup                               BLOCK_ARCANE_CHARCOAL_SOUNDS   = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_ARCANE_CHARCOAL_BREAK, BLOCK_ARCANE_CHARCOAL_STEP, BLOCK_ARCANE_CHARCOAL_PLACE, BLOCK_ARCANE_CHARCOAL_HIT, BLOCK_ARCANE_CHARCOAL_STEP);
-    public static final BlockSoundGroup                               BLOCK_SOULSTONE_SOUNDS         = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_SOULSTONE_BREAK, BLOCK_SOULSTONE_STEP, BLOCK_SOULSTONE_PLACE, BLOCK_SOULSTONE_HIT, BLOCK_SOULSTONE_STEP);
-    public static final BlockSoundGroup                               BLOCK_TAINTED_ROCK_SOUNDS      = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_TAINTED_ROCK_BREAK, BLOCK_TAINTED_ROCK_STEP, BLOCK_TAINTED_ROCK_PLACE, BLOCK_TAINTED_ROCK_HIT, BLOCK_TAINTED_ROCK_STEP);
-    // items
-    public static final Item                                          ENCYCLOPEDIA_ARCANA            = registerItem             ("encyclopedia_arcana",               new EncyclopediaArcanaItem(new Settings().rarity(Rarity.UNCOMMON).group(MALUM)));
-    public static final Item                                          ARCANE_CHARCOAL                = registerItem             ("arcane_charcoal",                   new Item(new Settings().group(MALUM)));
-    public static final Item                                          HOLY_SAP                       = registerItem             ("holy_sap",                          new Item(new Settings().group(MALUM)));
-    public static final Item                                          HOLY_SAPBALL                   = registerItem             ("holy_sapball",                      new Item(new Settings().group(MALUM)));
-    public static final Item                                          HOLY_SYRUP                     = registerItem             ("holy_syrup",                        new HolySyrupItem(new Settings().group(MALUM).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
-    public static final Item                                          PROCESSED_SOULSTONE            = registerItem             ("processed_soulstone",               new Item(new Settings().group(MALUM)));
-    public static final Item                                          RAW_SOULSTONE                  = registerItem             ("raw_soulstone",                     new Item(new Settings().group(MALUM)));
-    public static final Item                                          CRUDE_SCYTHE                   = registerScytheItem       ("crude_scythe",                      new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Settings().group(MALUM)));
-    public static final Item                                          HEX_ASH                        = registerItem             ("hex_ash",                           new Item(new Settings().group(MALUM)));
+    public static final BlockSoundGroup                               BLOCK_ARCANE_CHARCOAL_SOUNDS              = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_ARCANE_CHARCOAL_BREAK, BLOCK_ARCANE_CHARCOAL_STEP, BLOCK_ARCANE_CHARCOAL_PLACE, BLOCK_ARCANE_CHARCOAL_HIT, BLOCK_ARCANE_CHARCOAL_STEP);
+    public static final BlockSoundGroup                               BLOCK_SOULSTONE_SOUNDS                    = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_SOULSTONE_BREAK, BLOCK_SOULSTONE_STEP, BLOCK_SOULSTONE_PLACE, BLOCK_SOULSTONE_HIT, BLOCK_SOULSTONE_STEP);
+    public static final BlockSoundGroup                               BLOCK_TAINTED_ROCK_SOUNDS                 = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_TAINTED_ROCK_BREAK, BLOCK_TAINTED_ROCK_STEP, BLOCK_TAINTED_ROCK_PLACE, BLOCK_TAINTED_ROCK_HIT, BLOCK_TAINTED_ROCK_STEP);
 
-    // blocks
-    public static final Block                                         RUNEWOOD_SAPLING               = registerBlockItem        ("runewood_sapling",                  new SaplingBlock(new RunewoodSaplingGenerator(), AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM);
-    public static final Block                                         RUNEWOOD_LOG                   = registerBlockItem        ("runewood_log",                      new PillarBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         STRIPPED_RUNEWOOD_LOG          = registerBlockItem        ("stripped_runewood_log",             new PillarBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         EXPOSED_RUNEWOOD_LOG           = registerBlockItem        ("exposed_runewood_log",              new PillarBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         REVEALED_RUNEWOOD_LOG          = registerBlockItem        ("revealed_runewood_log",             new PillarBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         STRIPPED_RUNEWOOD              = registerBlockItem        ("stripped_runewood",                 new PillarBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         RUNEWOOD                       = registerBlockItem        ("runewood",                          new PillarBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         RUNEWOOD_LEAVES                = registerBlockItem        ("runewood_leaves",                   new RunewoodLeavesBlock(AbstractBlock.Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never)), MALUM);
-    public static final Block                                         RUNEWOOD_PLANKS                = registerBlockItem        ("runewood_planks",                   new Block(AbstractBlock.Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         RUNEWOOD_PLANKS_SLAB           = registerBlockItem        ("runewood_planks_slab",              new SlabBlock(AbstractBlock.Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         RUNEWOOD_ITEM_PEDESTAL         = registerBlockItem        ("runewood_item_pedestal",            new WoodenItemPedestalBlock(AbstractBlock.Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         RUNEWOOD_ITEM_STAND            = registerBlockItem        ("runewood_item_stand",               new ItemStandBlock(AbstractBlock.Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM);
-    public static final Block                                         BLOCK_OF_ARCANE_CHARCOAL       = registerBlockItem        ("block_of_arcane_charcoal",          new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 6.0f).sounds(BLOCK_ARCANE_CHARCOAL_SOUNDS)), MALUM);
-    public static final Block                                         BLOCK_OF_SOULSTONE             = registerBlockItem        ("block_of_soulstone",                new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-    public static final Block                                         BLOCK_OF_RAW_SOULSTONE         = registerBlockItem        ("block_of_raw_soulstone",            new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-    public static final Block                                         SOULSTONE_ORE                  = registerBlockItem        ("soulstone_ore",                     new OreBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-    public static final Block                                         DEEPSLATE_SOULSTONE_ORE        = registerBlockItem        ("deepslate_soulstone_ore",           new OreBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(7.0f, 6.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-    public static final Block                                         SPIRIT_ALTAR                   = registerBlockItem        ("spirit_altar",                      new SpiritAltarBlock(AbstractBlock.Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)), MALUM);
-    public static final Block                                         TAINTED_ROCK                   = registerBlockItem        ("tainted_rock",                      new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         SMOOTH_TAINTED_ROCK            = registerBlockItem        ("smooth_tainted_rock",               new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         TAINTED_ROCK_SLAB              = registerBlockItem        ("tainted_rock_slab",                 new SlabBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         TAINTED_ROCK_ITEM_PEDESTAL     = registerBlockItem        ("tainted_rock_item_pedestal",        new StoneItemPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         TAINTED_ROCK_ITEM_STAND        = registerBlockItem        ("tainted_rock_item_stand",           new ItemStandBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         TWISTED_ROCK                   = registerBlockItem        ("twisted_rock",                      new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         SMOOTH_TWISTED_ROCK            = registerBlockItem        ("smooth_twisted_rock",               new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         TWISTED_ROCK_SLAB              = registerBlockItem        ("twisted_rock_slab",                 new SlabBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         TWISTED_ROCK_ITEM_PEDESTAL     = registerBlockItem        ("twisted_rock_item_pedestal",        new StoneItemPedestalBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
-    public static final Block                                         TWISTED_ROCK_ITEM_STAND        = registerBlockItem        ("twisted_rock_item_stand",           new ItemStandBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM);
+    // items & blocks, sorted [Malum]
+    public static final Item                                          ENCYCLOPEDIA_ARCANA                       = registerItem             ("encyclopedia_arcana",                       new EncyclopediaArcanaItem(new Item.Settings().rarity(Rarity.UNCOMMON).group(MALUM)));
+    public static final Block                                         SOULSTONE_ORE                             = registerBlockItem        ("soulstone_ore",                             new OreBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+    public static final Block                                         DEEPSLATE_SOULSTONE_ORE                   = registerBlockItem        ("deepslate_soulstone_ore",                   new OreBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(7.0f, 6.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+    public static final Item                                          RAW_SOULSTONE                             = registerItem             ("raw_soulstone",                             new Item(new Item.Settings().group(MALUM)));
+    public static final Item                                          PROCESSED_SOULSTONE                       = registerItem             ("processed_soulstone",                       new Item(new Item.Settings().group(MALUM)));
+    public static final Block                                         BLOCK_OF_RAW_SOULSTONE                    = registerBlockItem        ("block_of_raw_soulstone",                    new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+    public static final Block                                         BLOCK_OF_SOULSTONE                        = registerBlockItem        ("block_of_soulstone",                        new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+    public static final Block                                         SPIRIT_ALTAR                              = registerBlockItem        ("spirit_altar",                              new SpiritAltarBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)), MALUM);
+    // spirit jar
+    // soul vial
+    // runewood obelisk
+    // brilliant obelisk
+    // spirit crucible
+    // runewood totem base
+    // soulwood totem base
+    // soulwood plinth
+    // soulwood fusion plate
+    public static final Item                                          HEX_ASH                                   = registerItem             ("hex_ash",                                   new Item(new Item.Settings().group(MALUM)));
+    // spirit fabric
+    // spectral lens
+    // poppet
+    // hallowed gold ingot
+    // hallowed gold nugget
+    // block of hallowed gold
+    // hallowed spirit resonator
+    // soul stained steel ingot
+    // soul stained steel nugget
+    // block of soul stained steel
+    // stained spirit resonator
+    // cracked alchemical impetus
+    // alchemical impetus
+    // cracked vitric impetus
+    // vitric impetus
+    // cracked iron impetus
+    // iron impetus
+    // cracked copper impetus
+    // copper impetus
+    // cracked gold impetus
+    // gold impetus
+    // ether torch
+    // tainted ether brazier
+    // twisted ether brazier
+    // iridescent ether
+    // iridescent ether torch
+    // tainted iridescent ether brazier
+    // twisted iridescent ether brazier
+    // spirit pouch
+    public static final Item                                          CRUDE_SCYTHE                              = registerScytheItem       ("crude_scythe",                              new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Item.Settings().group(MALUM)));
+    // soul stained steel scythe
+    // soulwood stave
+    // soul stained steel sword
+    // soul stained steel pickaxe
+    // soul stained steel axe
+    // soul stained steel shovel
+    // soul stained steel hoe
+    // soul stained steel helmet
+    // soul stained steel chestplate
+    // soul stained steel leggings
+    // soul stained steel boots
+    // soul hunter cloak
+    // soul hunter robe
+    // soul hunter leggings
+    // soul hunter boots
+    // tyrving
+    // gilded ring
+    // ornate ring
+    // ornate necklace
+    // gilded belt
+    // ring of arcane reach
+    // ring of arcane spoil
+    // ring of prowess
+    // ring of curative talent
+    // ring of wicket intent
+    // necklace of the mystic mirror
+    // necklace of the narrow edge
+    // warded belt
+    // magebane belt
+    // cracked ceaseless impetus
+    // ceaseless impetus
+
+    // items & blocks, sorted [Malum: Arcane Rocks]
+    public static final Block                                         TAINTED_ROCK                              = registerBlockItem        ("tainted_rock",                              new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMOOTH_TAINTED_ROCK                       = registerBlockItem        ("smooth_tainted_rock",                       new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         POLISHED_TAINTED_ROCK                     = registerBlockItem        ("polished_tainted_rock",                     new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_BRICKS                       = registerBlockItem        ("tainted_rock_bricks",                       new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TAINTED_ROCK_BRICKS               = registerBlockItem        ("cracked_tainted_rock_bricks",               new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_TILES                        = registerBlockItem        ("tainted_rock_tiles",                        new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TAINTED_ROCK_TILES                = registerBlockItem        ("cracked_tainted_rock_tiles",                new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMALL_TAINTED_ROCK_BRICKS                 = registerBlockItem        ("small_tainted_rock_bricks",                 new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_SMALL_TAINTED_ROCK_BRICKS         = registerBlockItem        ("cracked_small_tainted_rock_bricks",         new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_PILLAR                       = registerBlockItem        ("tainted_rock_pillar",                       new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_PILLAR_CAP                   = registerBlockItem        ("tainted_rock_pillar_cap",                   new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_COLUMN                       = registerBlockItem        ("tainted_rock_column",                       new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_COLUMN_CAP                   = registerBlockItem        ("tainted_rock_column_cap",                   new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CUT_TAINTED_ROCK                          = registerBlockItem        ("cut_tainted_rock",                          new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CHISELED_TAINTED_ROCK                     = registerBlockItem        ("chiseled_tainted_rock",                     new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_PRESSURE_PLATE               = registerBlockItem        ("tainted_rock_pressure_plate",               new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_WALL                         = registerBlockItem        ("tainted_rock_wall",                         new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_BRICKS_WALL                  = registerBlockItem        ("tainted_rock_bricks_wall",                  new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TAINTED_ROCK_BRICKS_WALL          = registerBlockItem        ("cracked_tainted_rock_bricks_wall",          new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_TILES_WALL                   = registerBlockItem        ("tainted_rock_tiles_wall",                   new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TAINTED_ROCK_TILES_WALL           = registerBlockItem        ("cracked_tainted_rock_tiles_wall",           new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMALL_TAINTED_ROCK_BRICKS_WALL            = registerBlockItem        ("small_tainted_rock_bricks_wall",            new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_SMALL_TAINTED_ROCK_BRICKS_WALL    = registerBlockItem        ("cracked_small_tainted_rock_bricks_wall",    new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_SLAB                         = registerBlockItem        ("tainted_rock_slab",                         new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMOOTH_TAINTED_ROCK_SLAB                  = registerBlockItem        ("smooth_tainted_rock_slab",                  new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         POLISHED_TAINTED_ROCK_SLAB                = registerBlockItem        ("polished_tainted_rock_slab",                new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_BRICKS_SLAB                  = registerBlockItem        ("tainted_rock_bricks_slab",                  new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TAINTED_ROCK_BRICKS_SLAB          = registerBlockItem        ("cracked_tainted_rock_bricks_slab",          new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_TILES_SLAB                   = registerBlockItem        ("tainted_rock_tiles_slab",                   new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TAINTED_ROCK_TILES_SLAB           = registerBlockItem        ("cracked_tainted_rock_tiles_slab",           new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMALL_TAINTED_ROCK_BRICKS_SLAB            = registerBlockItem        ("small_tainted_rock_bricks_slab",            new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_SMALL_TAINTED_ROCK_BRICKS_SLAB    = registerBlockItem        ("cracked_small_tainted_rock_bricks_slab",    new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_STAIRS                       = registerBlockItem        ("tainted_rock_stairs",                       new StairsBlock(TAINTED_ROCK.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMOOTH_TAINTED_ROCK_STAIRS                = registerBlockItem        ("smooth_tainted_rock_stairs",                new StairsBlock(SMOOTH_TAINTED_ROCK.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         POLISHED_TAINTED_ROCK_STAIRS              = registerBlockItem        ("polished_tainted_rock_stairs",              new StairsBlock(POLISHED_TAINTED_ROCK.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_BRICKS_STAIRS                = registerBlockItem        ("tainted_rock_bricks_stairs",                new StairsBlock(TAINTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TAINTED_ROCK_BRICKS_STAIRS        = registerBlockItem        ("cracked_tainted_rock_bricks_stairs",        new StairsBlock(CRACKED_TAINTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_TILES_STAIRS                 = registerBlockItem        ("tainted_rock_tiles_stairs",                 new StairsBlock(TAINTED_ROCK_TILES.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TAINTED_ROCK_TILES_STAIRS         = registerBlockItem        ("cracked_tainted_rock_tiles_stairs",         new StairsBlock(CRACKED_TAINTED_ROCK_TILES.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMALL_TAINTED_ROCK_BRICKS_STAIRS          = registerBlockItem        ("small_tainted_rock_bricks_stairs",          new StairsBlock(SMALL_TAINTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_SMALL_TAINTED_ROCK_BRICKS_STAIRS  = registerBlockItem        ("cracked_small_tainted_rock_bricks_stairs",  new StairsBlock(CRACKED_SMALL_TAINTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_ITEM_STAND                   = registerBlockItem        ("tainted_rock_item_stand",                   new ItemStandBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TAINTED_ROCK_ITEM_PEDESTAL                = registerBlockItem        ("tainted_rock_item_pedestal",                new StoneItemPedestalBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK                              = registerBlockItem        ("twisted_rock",                              new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMOOTH_TWISTED_ROCK                       = registerBlockItem        ("smooth_twisted_rock",                       new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         POLISHED_TWISTED_ROCK                     = registerBlockItem        ("polished_twisted_rock",                     new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_BRICKS                       = registerBlockItem        ("twisted_rock_bricks",                       new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TWISTED_ROCK_BRICKS               = registerBlockItem        ("cracked_twisted_rock_bricks",               new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_TILES                        = registerBlockItem        ("twisted_rock_tiles",                        new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TWISTED_ROCK_TILES                = registerBlockItem        ("cracked_twisted_rock_tiles",                new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMALL_TWISTED_ROCK_BRICKS                 = registerBlockItem        ("small_twisted_rock_bricks",                 new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_SMALL_TWISTED_ROCK_BRICKS         = registerBlockItem        ("cracked_small_twisted_rock_bricks",         new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_PILLAR                       = registerBlockItem        ("twisted_rock_pillar",                       new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_PILLAR_CAP                   = registerBlockItem        ("twisted_rock_pillar_cap",                   new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_COLUMN                       = registerBlockItem        ("twisted_rock_column",                       new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_COLUMN_CAP                   = registerBlockItem        ("twisted_rock_column_cap",                   new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CUT_TWISTED_ROCK                          = registerBlockItem        ("cut_twisted_rock",                          new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CHISELED_TWISTED_ROCK                     = registerBlockItem        ("chiseled_twisted_rock",                     new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_PRESSURE_PLATE               = registerBlockItem        ("twisted_rock_pressure_plate",               new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_WALL                         = registerBlockItem        ("twisted_rock_wall",                         new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_BRICKS_WALL                  = registerBlockItem        ("twisted_rock_bricks_wall",                  new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TWISTED_ROCK_BRICKS_WALL          = registerBlockItem        ("cracked_twisted_rock_bricks_wall",          new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_TILES_WALL                   = registerBlockItem        ("twisted_rock_tiles_wall",                   new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TWISTED_ROCK_TILES_WALL           = registerBlockItem        ("cracked_twisted_rock_tiles_wall",           new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMALL_TWISTED_ROCK_BRICKS_WALL            = registerBlockItem        ("small_twisted_rock_bricks_wall",            new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_SMALL_TWISTED_ROCK_BRICKS_WALL    = registerBlockItem        ("cracked_small_twisted_rock_bricks_wall",    new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_SLAB                         = registerBlockItem        ("twisted_rock_slab",                         new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMOOTH_TWISTED_ROCK_SLAB                  = registerBlockItem        ("smooth_twisted_rock_slab",                  new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         POLISHED_TWISTED_ROCK_SLAB                = registerBlockItem        ("polished_twisted_rock_slab",                new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_BRICKS_SLAB                  = registerBlockItem        ("twisted_rock_bricks_slab",                  new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TWISTED_ROCK_BRICKS_SLAB          = registerBlockItem        ("cracked_twisted_rock_bricks_slab",          new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_TILES_SLAB                   = registerBlockItem        ("twisted_rock_tiles_slab",                   new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TWISTED_ROCK_TILES_SLAB           = registerBlockItem        ("cracked_twisted_rock_tiles_slab",           new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMALL_TWISTED_ROCK_BRICKS_SLAB            = registerBlockItem        ("small_twisted_rock_bricks_slab",            new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_SMALL_TWISTED_ROCK_BRICKS_SLAB    = registerBlockItem        ("cracked_small_twisted_rock_bricks_slab",    new SlabBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_STAIRS                       = registerBlockItem        ("twisted_rock_stairs",                       new StairsBlock(TWISTED_ROCK.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMOOTH_TWISTED_ROCK_STAIRS                = registerBlockItem        ("smooth_twisted_rock_stairs",                new StairsBlock(SMOOTH_TWISTED_ROCK.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         POLISHED_TWISTED_ROCK_STAIRS              = registerBlockItem        ("polished_twisted_rock_stairs",              new StairsBlock(POLISHED_TWISTED_ROCK.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_BRICKS_STAIRS                = registerBlockItem        ("twisted_rock_bricks_stairs",                new StairsBlock(TWISTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TWISTED_ROCK_BRICKS_STAIRS        = registerBlockItem        ("cracked_twisted_rock_bricks_stairs",        new StairsBlock(CRACKED_TWISTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_TILES_STAIRS                 = registerBlockItem        ("twisted_rock_tiles_stairs",                 new StairsBlock(TWISTED_ROCK_TILES.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_TWISTED_ROCK_TILES_STAIRS         = registerBlockItem        ("cracked_twisted_rock_tiles_stairs",         new StairsBlock(CRACKED_TWISTED_ROCK_TILES.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         SMALL_TWISTED_ROCK_BRICKS_STAIRS          = registerBlockItem        ("small_twisted_rock_bricks_stairs",          new StairsBlock(SMALL_TWISTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         CRACKED_SMALL_TWISTED_ROCK_BRICKS_STAIRS  = registerBlockItem        ("cracked_small_twisted_rock_bricks_stairs",  new StairsBlock(CRACKED_SMALL_TWISTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_ITEM_STAND                   = registerBlockItem        ("twisted_rock_item_stand",                   new ItemStandBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+    public static final Block                                         TWISTED_ROCK_ITEM_PEDESTAL                = registerBlockItem        ("twisted_rock_item_pedestal",                new StoneItemPedestalBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+
+    // items & blocks, sorted [Malum: Natural Wonders]
+    public static final Item                                          HOLY_SAP                                  = registerItem             ("holy_sap",                                  new Item(new Item.Settings().group(MALUM)));
+    public static final Item                                          HOLY_SAPBALL                              = registerItem             ("holy_sapball",                              new Item(new Item.Settings().group(MALUM)));
+    public static final Item                                          HOLY_SYRUP                                = registerItem             ("holy_syrup",                                new HolySyrupItem(new Item.Settings().group(MALUM).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
+    public static final Block                                         RUNEWOOD_LEAVES                           = registerBlockItem        ("runewood_leaves",                           new RunewoodLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_SAPLING                          = registerBlockItem        ("runewood_sapling",                          new SaplingBlock(new RunewoodSaplingGenerator(), Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_LOG                              = registerBlockItem        ("runewood_log",                              new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         STRIPPED_RUNEWOOD_LOG                     = registerBlockItem        ("stripped_runewood_log",                     new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD                                  = registerBlockItem        ("runewood",                                  new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         STRIPPED_RUNEWOOD                         = registerBlockItem        ("stripped_runewood",                         new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         EXPOSED_RUNEWOOD_LOG                      = registerBlockItem        ("exposed_runewood_log",                      new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         REVEALED_RUNEWOOD_LOG                     = registerBlockItem        ("revealed_runewood_log",                     new RevealedPillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD), HOLY_SAP, STRIPPED_RUNEWOOD_LOG), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PLANKS                           = registerBlockItem        ("runewood_planks",                           new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         VERTICAL_RUNEWOOD_PLANKS                  = registerBlockItem        ("vertical_runewood_planks",                  new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PANEL                            = registerBlockItem        ("runewood_panel",                            new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_TILES                            = registerBlockItem        ("runewood_tiles",                            new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PLANKS_SLAB                      = registerBlockItem        ("runewood_planks_slab",                      new SlabBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         VERTICAL_RUNEWOOD_PLANKS_SLAB             = registerBlockItem        ("vertical_runewood_planks_slab",             new SlabBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PANEL_SLAB                       = registerBlockItem        ("runewood_panel_slab",                       new SlabBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_TILES_SLAB                       = registerBlockItem        ("runewood_tiles_slab",                       new SlabBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PLANKS_STAIRS                    = registerBlockItem        ("runewood_planks_stairs",                    new StairsBlock(RUNEWOOD_PLANKS.getDefaultState(), Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         VERTICAL_RUNEWOOD_PLANKS_STAIRS           = registerBlockItem        ("vertical_runewood_planks_stairs",           new StairsBlock(VERTICAL_RUNEWOOD_PLANKS.getDefaultState(), Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PANEL_STAIRS                     = registerBlockItem        ("runewood_panel_stairs",                     new StairsBlock(RUNEWOOD_PANEL.getDefaultState(), Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_TILES_STAIRS                     = registerBlockItem        ("runewood_tiles_stairs",                     new StairsBlock(RUNEWOOD_TILES.getDefaultState(), Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         CUT_RUNEWOOD_PLANKS                       = registerBlockItem        ("cut_runewood_planks",                       new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_BEAM                             = registerBlockItem        ("runewood_beam",                             new PillarBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_DOOR                             = registerBlock            ("runewood_door",                             new DoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(3.0F).sounds(BlockSoundGroup.WOOD).nonOpaque()));
+    public static final Item                                          RUNEWOOD_DOOR_ITEM                        = registerItem             ("runewood_door",                             new TallBlockItem(RUNEWOOD_DOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
+    public static final Block                                         RUNEWOOD_TRAPDOOR                         = registerBlockItem        ("runewood_trapdoor",                         new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOLID_RUNEWOOD_TRAPDOOR                   = registerBlockItem        ("solid_runewood_trapdoor",                   new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PLANKS_BUTTON                    = registerBlockItem        ("runewood_planks_button",                    new WoodenButtonBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PLANKS_PRESSURE_PLATE            = registerBlockItem        ("runewood_planks_pressure_plate",            new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PLANKS_FENCE                     = registerBlockItem        ("runewood_planks_fence",                     new FenceBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_PLANKS_FENCE_GATE                = registerBlockItem        ("runewood_planks_fence_gate",                new FenceGateBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_ITEM_STAND                       = registerBlockItem        ("runewood_item_stand",                       new ItemStandBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_ITEM_PEDESTAL                    = registerBlockItem        ("runewood_item_pedestal",                    new WoodenItemPedestalBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_SIGN                             = registerBlock            ("runewood_sign",                             new SignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), RUNEWOOD_SIGN_TYPE));
+    public static final Block                                         RUNEWOOD_WALL_SIGN                        = registerBlock            ("runewood_wall_sign",                        new WallSignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), RUNEWOOD_SIGN_TYPE));
+    public static final Item                                          RUNEWOOD_SIGN_ITEM                        = registerItem             ("runewood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), RUNEWOOD_SIGN, RUNEWOOD_WALL_SIGN));
+    public static final Item                                          RUNEWOOD_BOAT                             = registerBoat             ("runewood");
+    public static final Item                                          UNHOLY_SAP                                = registerItem             ("unholy_sap",                                new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
+    public static final Item                                          UNHOLY_SAPBALL                            = registerItem             ("unholy_sapball",                            new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
+    public static final Item                                          UNHOLY_SYRUP                              = registerItem             ("unholy_syrup",                              new HolySyrupItem(new Item.Settings().group(MALUM_NATURAL_WONDERS).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 300, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
+    public static final Block                                         SOULWOOD_LEAVES                           = registerBlockItem        ("soulwood_leaves",                           new SoulwoodLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_SAPLING                          = registerBlockItem        ("soulwood_sapling",                          new SaplingBlock(new SoulwoodSaplingGenerator(), Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_LOG                              = registerBlockItem        ("soulwood_log",                              new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         STRIPPED_SOULWOOD_LOG                     = registerBlockItem        ("stripped_soulwood_log",                     new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD                                  = registerBlockItem        ("soulwood",                                  new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         STRIPPED_SOULWOOD                         = registerBlockItem        ("stripped_soulwood",                         new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         EXPOSED_SOULWOOD_LOG                      = registerBlockItem        ("exposed_soulwood_log",                      new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         REVEALED_SOULWOOD_LOG                     = registerBlockItem        ("revealed_soulwood_log",                     new RevealedPillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD), UNHOLY_SAP, STRIPPED_SOULWOOD_LOG), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PLANKS                           = registerBlockItem        ("soulwood_planks",                           new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         VERTICAL_SOULWOOD_PLANKS                  = registerBlockItem        ("vertical_soulwood_planks",                  new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PANEL                            = registerBlockItem        ("soulwood_panel",                            new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_TILES                            = registerBlockItem        ("soulwood_tiles",                            new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PLANKS_SLAB                      = registerBlockItem        ("soulwood_planks_slab",                      new SlabBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         VERTICAL_SOULWOOD_PLANKS_SLAB             = registerBlockItem        ("vertical_soulwood_planks_slab",             new SlabBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PANEL_SLAB                       = registerBlockItem        ("soulwood_panel_slab",                       new SlabBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_TILES_SLAB                       = registerBlockItem        ("soulwood_tiles_slab",                       new SlabBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PLANKS_STAIRS                    = registerBlockItem        ("soulwood_planks_stairs",                    new StairsBlock(SOULWOOD_PLANKS.getDefaultState(), Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         VERTICAL_SOULWOOD_PLANKS_STAIRS           = registerBlockItem        ("vertical_soulwood_planks_stairs",           new StairsBlock(VERTICAL_SOULWOOD_PLANKS.getDefaultState(), Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PANEL_STAIRS                     = registerBlockItem        ("soulwood_panel_stairs",                     new StairsBlock(SOULWOOD_PANEL.getDefaultState(), Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_TILES_STAIRS                     = registerBlockItem        ("soulwood_tiles_stairs",                     new StairsBlock(SOULWOOD_TILES.getDefaultState(), Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         CUT_SOULWOOD_PLANKS                       = registerBlockItem        ("cut_soulwood_planks",                       new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_BEAM                             = registerBlockItem        ("soulwood_beam",                             new PillarBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_DOOR                             = registerBlock            ("soulwood_door",                             new DoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(3.0F).sounds(BlockSoundGroup.WOOD).nonOpaque()));
+    public static final Item                                          SOULWOOD_DOOR_ITEM                        = registerItem             ("soulwood_door",                             new TallBlockItem(SOULWOOD_DOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
+    public static final Block                                         SOULWOOD_TRAPDOOR                         = registerBlockItem        ("soulwood_trapdoor",                         new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOLID_SOULWOOD_TRAPDOOR                   = registerBlockItem        ("solid_soulwood_trapdoor",                   new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PLANKS_BUTTON                    = registerBlockItem        ("soulwood_planks_button",                    new WoodenButtonBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PLANKS_PRESSURE_PLATE            = registerBlockItem        ("soulwood_planks_pressure_plate",            new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PLANKS_FENCE                     = registerBlockItem        ("soulwood_planks_fence",                     new FenceBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_PLANKS_FENCE_GATE                = registerBlockItem        ("soulwood_planks_fence_gate",                new FenceGateBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_ITEM_STAND                       = registerBlockItem        ("soulwood_item_stand",                       new ItemStandBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_ITEM_PEDESTAL                    = registerBlockItem        ("soulwood_item_pedestal",                    new WoodenItemPedestalBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOULWOOD_SIGN                             = registerBlock            ("soulwood_sign",                             new SignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), SOULWOOD_SIGN_TYPE));
+    public static final Block                                         SOULWOOD_WALL_SIGN                        = registerBlock            ("soulwood_wall_sign",                        new WallSignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), SOULWOOD_SIGN_TYPE));
+    public static final Item                                          SOULWOOD_SIGN_ITEM                        = registerItem             ("soulwood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), SOULWOOD_SIGN, SOULWOOD_WALL_SIGN));
+    public static final Item                                          SOULWOOD_BOAT                             = registerBoat             ("soulwood");
+
+    // items & blocks, sorted [Malum: Spirits]
+    public static final Item                                          SACRED_SPIRIT                             = registerItem             ("sacred_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.SACRED_SPIRIT));
+    public static final Item                                          WICKED_SPIRIT                             = registerItem             ("wicked_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.WICKED_SPIRIT));
+    public static final Item                                          ARCANE_SPIRIT                             = registerItem             ("arcane_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.ARCANE_SPIRIT));
+    public static final Item                                          ELDRITCH_SPIRIT                           = registerItem             ("eldritch_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.ELDRITCH_SPIRIT));
+    public static final Item                                          EARTHEN_SPIRIT                            = registerItem             ("earthen_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.EARTHEN_SPIRIT));
+    public static final Item                                          INFERNAL_SPIRIT                           = registerItem             ("infernal_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.INFERNAL_SPIRIT));
+    public static final Item                                          AERIAL_SPIRIT                             = registerItem             ("aerial_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.AERIAL_SPIRIT));
+    public static final Item                                          AQUEOUS_SPIRIT                            = registerItem             ("aqueous_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.AQUEOUS_SPIRIT));
+
+    public static final Block                                         BLOCK_OF_ARCANE_CHARCOAL                  = registerBlockItem        ("block_of_arcane_charcoal",                  new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 6.0f).sounds(BLOCK_ARCANE_CHARCOAL_SOUNDS)), MALUM);
+    public static final Item                                          ARCANE_CHARCOAL                           = registerItem             ("arcane_charcoal",                           new Item(new Item.Settings().group(MALUM)));
 
     // block entities
-    public static final BlockEntityType<ItemStandBlockEntity>         ITEM_STAND_BLOCK_ENTITY        = registerBlockEntity      ("item_stand",                       BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND, TAINTED_ROCK_ITEM_STAND, TWISTED_ROCK_ITEM_STAND).build(null));
-    public static final BlockEntityType<ItemPedestalBlockEntity>      ITEM_PEDESTAL_BLOCK_ENTITY     = registerBlockEntity      ("item_pedestal",                    BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL, TAINTED_ROCK_ITEM_PEDESTAL, TWISTED_ROCK_ITEM_PEDESTAL).build(null));
-    public static final BlockEntityType<SpiritAltarBlockEntity>       SPIRIT_ALTAR_BLOCK_ENTITY      = registerBlockEntity      ("spirit_altar",                     BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
+    public static final BlockEntityType<ItemStandBlockEntity>         ITEM_STAND_BLOCK_ENTITY                   = registerBlockEntity      ("item_stand",                                BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND, TAINTED_ROCK_ITEM_STAND, TWISTED_ROCK_ITEM_STAND).build(null));
+    public static final BlockEntityType<ItemPedestalBlockEntity>      ITEM_PEDESTAL_BLOCK_ENTITY                = registerBlockEntity      ("item_pedestal",                             BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL, TAINTED_ROCK_ITEM_PEDESTAL, TWISTED_ROCK_ITEM_PEDESTAL).build(null));
+    public static final BlockEntityType<SpiritAltarBlockEntity>       SPIRIT_ALTAR_BLOCK_ENTITY                 = registerBlockEntity      ("spirit_altar",                              BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
 
-    // spirits
-    public static final Item                                          SACRED_SPIRIT                  = registerItem             ("sacred_spirit",                    new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.SACRED_SPIRIT));
-    public static final Item                                          WICKED_SPIRIT                  = registerItem             ("wicked_spirit",                    new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.WICKED_SPIRIT));
-    public static final Item                                          ARCANE_SPIRIT                  = registerItem             ("arcane_spirit",                    new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.ARCANE_SPIRIT));
-    public static final Item                                          ELDRITCH_SPIRIT                = registerItem             ("eldritch_spirit",                  new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.ELDRITCH_SPIRIT));
-    public static final Item                                          EARTHEN_SPIRIT                 = registerItem             ("earthen_spirit",                   new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.EARTHEN_SPIRIT));
-    public static final Item                                          INFERNAL_SPIRIT                = registerItem             ("infernal_spirit",                  new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.INFERNAL_SPIRIT));
-    public static final Item                                          AERIAL_SPIRIT                  = registerItem             ("aerial_spirit",                    new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.AERIAL_SPIRIT));
-    public static final Item                                          AQUEOUS_SPIRIT                 = registerItem             ("aqueous_spirit",                   new MalumSpiritItem(new Settings().group(MALUM), SpiritTypeRegistry.AQUEOUS_SPIRIT));
+    public static final RecipeType<SpiritInfusionRecipe>              SPIRIT_INFUSION                           = registerRecipeType       ("spirit_infusion",                           new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
+    public static final RecipeSerializer<SpiritInfusionRecipe>        SPIRIT_INFUSION_SERIALIZER                = registerRecipeSerializer ("spirit_infusion",                           new SpiritInfusionRecipe.Serializer<>(SpiritInfusionRecipe::new));
 
-    public static final RecipeType<SpiritInfusionRecipe>              SPIRIT_INFUSION                = registerRecipeType       ("spirit_infusion", new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
-    public static final RecipeSerializer<SpiritInfusionRecipe>        SPIRIT_INFUSION_SERIALIZER     = registerRecipeSerializer ("spirit_infusion", new SpiritInfusionRecipe.Serializer<>(SpiritInfusionRecipe::new));
+    public static final Feature<DefaultFeatureConfig>                 RUNEWOOD_TREE_FEATURE                     = registerFeature          ("runewood_tree",                             new RunewoodTreeFeature());
+    public static final Feature<DefaultFeatureConfig>                 SOULWOOD_TREE_FEATURE                     = registerFeature          ("soulwood_tree",                             new SoulwoodTreeFeature());
 
-    public static final Feature<DefaultFeatureConfig>                 RUNEWOOD_TREE_FEATURE          = registerFeature    ("runewood_tree",                    new RunewoodTreeFeature());
+    public static final List<OreFeatureConfig.Target>                 SOULSTONE_ORE_TARGETS                     = List.of                  (OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()),
+                                                                                                                                            OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
+    public static final Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE     = registerConfiguredFeature("runewood_tree",       RUNEWOOD_TREE_FEATURE);
+    public static final Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_SOULWOOD_TREE_FEATURE     = registerConfiguredFeature("soulwood_tree",       SOULWOOD_TREE_FEATURE);
 
-    public static final List<OreFeatureConfig.Target>                 SOULSTONE_ORE_TARGETS          = List.of            (OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()),
-                                                                                                                           OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
-    public static final Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE = registerConfiguredFeature  ("runewood_tree",       RUNEWOOD_TREE_FEATURE);
+    public static final Holder<ConfiguredFeature<OreFeatureConfig, ?>>     LOWER_ORE_SOULSTONE_CONFIGURED       = registerConfiguredFeature("lower_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 12)); // i == maxSize
+    public static final Holder<PlacedFeature>                              LOWER_ORE_SOULSTONE_PLACED           = registerPlacedFeature    ("lower_ore_soulstone", LOWER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(8, HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(30)))); // bottom of world and y 30
 
-    public static final Holder<ConfiguredFeature<OreFeatureConfig, ?>>     LOWER_ORE_SOULSTONE_CONFIGURED   = registerConfiguredFeature  ("lower_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 12)); // i == maxSize
+    public static final Holder<ConfiguredFeature<OreFeatureConfig, ?>>     UPPER_ORE_SOULSTONE_CONFIGURED       = registerConfiguredFeature("upper_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 6)); // i == maxSize
+    public static final Holder<PlacedFeature>                              UPPER_ORE_SOULSTONE_PLACED           = registerPlacedFeature    ("upper_ore_soulstone", UPPER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(5, HeightRangePlacementModifier.createUniform(YOffset.fixed(60), YOffset.fixed(100)))); // y 60 to y 100
 
-    public static final Holder<PlacedFeature>                              LOWER_ORE_SOULSTONE_PLACED       = registerPlacedFeature      ("lower_ore_soulstone", LOWER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(8, HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(30)))); // bottom of world and y 30
-    public static final Holder<ConfiguredFeature<OreFeatureConfig, ?>>     UPPER_ORE_SOULSTONE_CONFIGURED   = registerConfiguredFeature  ("upper_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 6)); // i == maxSize
-
-    public static final Holder<PlacedFeature>                              UPPER_ORE_SOULSTONE_PLACED       = registerPlacedFeature      ("upper_ore_soulstone", UPPER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(5, HeightRangePlacementModifier.createUniform(YOffset.fixed(60), YOffset.fixed(100)))); // y 60 to y 100
 
     static Holder<PlacedFeature> registerPlacedFeature(String id, Holder<? extends ConfiguredFeature<?, ?>> configuredFeature, List<PlacementModifier> modifiers) {
         return PlacedFeatureUtil.register(id, configuredFeature, modifiers);
@@ -155,7 +381,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
 
     static <T extends Block> T registerBlockItem(String id, T block, ItemGroup itemGroup) {
         BLOCKS.put(new Identifier(MODID, id), block);
-        ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Settings().group(itemGroup)));
+        ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Item.Settings().group(itemGroup)));
         return block;
     }
 
@@ -201,6 +427,23 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         return serializer;
     }
 
+    static SignType registerSignType(SignType signType) {
+        return SignType.register(signType);
+    }
+
+    static Item registerBoat(String id) { // todo, vanilla boats
+        var ref = new Object() {
+            TerraformBoatType boatType = null;
+        };
+        Item item = TerraformBoatItemHelper.registerBoatItem(new Identifier(MODID, id.concat("_boat")), () -> ref.boatType, MALUM_NATURAL_WONDERS);
+        ref.boatType = new TerraformBoatType.Builder().item(item).build();
+        Registry.register(TerraformBoatTypeRegistry.INSTANCE, new Identifier(MODID, id), ref.boatType);
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            TerraformBoatClientHelper.registerModelLayer(new Identifier(MODID, id));
+        }
+        return item;
+    }
+
     public static void init() {
         ITEMS.forEach((id, item) -> Registry.register(Registry.ITEM, id, item));
         BLOCKS.forEach((id, block) -> Registry.register(Registry.BLOCK, id, block));
@@ -210,7 +453,6 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         RECIPE_SERIALIZER.forEach((id, serializer) -> Registry.register(Registry.RECIPE_SERIALIZER, id, serializer));
         MalumEnchantments.init();
         MalumSoundRegistry.init();
-        MalumBoatTypes.init();
         MalumEntityRegistry.init();
     }
 }

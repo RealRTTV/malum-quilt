@@ -13,8 +13,6 @@ public class MalumEarlyRiser implements Runnable {
         String type = remapper.mapClassName("intermediary", "net.minecraft.class_1690$class_1692");
         String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
         String param1 = "L" + remapper.mapClassName("intermediary", "net.minecraft.class_2248") + ";";
-//        System.out.println(type);
-//        System.out.println(param1);
         ClassTinkerers.enumBuilder(type, param1, String.class).addEnum("RUNEWOOD", () -> new Object[]{RUNEWOOD_PLANKS, "runewood"}).build();
 
         //enchantmentTarget

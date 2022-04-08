@@ -18,12 +18,12 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.SpiritTypeRegistry.*;
 
 public class MalumClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        TerraformBoatClientHelper.registerModelLayer(new Identifier(Malum.MODID, "runewood"));
         MalumParticleRegistry.init();
         EntityRendererRegistry.register(MalumEntityRegistry.SCYTHE_BOOMERANG, ScytheBoomerangEntityRenderer::new);
 

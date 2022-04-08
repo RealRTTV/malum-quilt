@@ -23,6 +23,9 @@ public abstract class AxeItemMixin {
             .put(MalumRegistry.RUNEWOOD, MalumRegistry.STRIPPED_RUNEWOOD)
             .put(MalumRegistry.RUNEWOOD_LOG, MalumRegistry.STRIPPED_RUNEWOOD_LOG)
             .put(MalumRegistry.EXPOSED_RUNEWOOD_LOG, MalumRegistry.REVEALED_RUNEWOOD_LOG)
+            .put(MalumRegistry.SOULWOOD, MalumRegistry.STRIPPED_SOULWOOD)
+            .put(MalumRegistry.SOULWOOD_LOG, MalumRegistry.STRIPPED_SOULWOOD_LOG)
+            .put(MalumRegistry.EXPOSED_SOULWOOD_LOG, MalumRegistry.REVEALED_SOULWOOD_LOG)
             .build();
 
     @Inject(method = "getStrippedState", at = @At("HEAD"), cancellable = true)

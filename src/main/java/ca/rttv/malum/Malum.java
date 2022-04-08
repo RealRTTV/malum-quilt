@@ -6,17 +6,19 @@ import ca.rttv.malum.registry.MalumRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR;
+import static ca.rttv.malum.registry.MalumRegistry.*;
 
 public final class Malum implements ModInitializer {
 
     public static final String MODID = "malum"; // 1 character faster than MOD_ID!
     public static final ItemGroup MALUM = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(SPIRIT_ALTAR));
+    public static final ItemGroup MALUM_ARCANE_ROCKS = FabricItemGroupBuilder.build(new Identifier(MODID, "malum_shaped_stones"), () -> new ItemStack(TAINTED_ROCK));
+    public static final ItemGroup MALUM_NATURAL_WONDERS = FabricItemGroupBuilder.build(new Identifier(MODID, "malum_natural_wonders"), () -> new ItemStack(RUNEWOOD_SAPLING));
+    public static final ItemGroup MALUM_SPIRITS = FabricItemGroupBuilder.build(new Identifier(MODID, "malum_spirits"), () -> new ItemStack(ARCANE_SPIRIT));
 
     @Override
     public void onInitialize() {

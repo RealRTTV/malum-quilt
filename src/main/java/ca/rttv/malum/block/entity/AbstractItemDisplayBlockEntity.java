@@ -97,11 +97,10 @@ public abstract class AbstractItemDisplayBlockEntity extends BlockEntity impleme
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         NbtCompound tag = super.toInitialChunkDataNbt();
-        writeNbt(tag);
+        this.writeNbt(tag);
         return tag;
     }
 
-    @Nullable
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.of(this);
