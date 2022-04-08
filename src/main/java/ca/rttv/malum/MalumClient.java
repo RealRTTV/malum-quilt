@@ -8,14 +8,12 @@ import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.listener.SpiritDataReloadListener;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.Item;
 import net.minecraft.resource.ResourceManager;
@@ -33,9 +31,7 @@ public class MalumClient implements ClientModInitializer {
         RenderHandler.init();
         EntityRendererRegistry.register(MalumEntityRegistry.SCYTHE_BOOMERANG, ScytheBoomerangEntityRenderer::new);
 
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MalumRegistry.SOULWOOD_SAPLING, MalumRegistry.RUNEWOOD_SAPLING);
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SpiritDataReloadListenerFabricImpl());
-
         for(Item item : MalumRegistry.SCYTHES) {
             Identifier scytheId = Registry.ITEM.getId(item);
             ScytheItemRenderer scytheItemRenderer = new ScytheItemRenderer(scytheId);

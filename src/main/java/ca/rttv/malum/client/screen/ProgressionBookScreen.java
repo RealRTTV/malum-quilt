@@ -121,7 +121,7 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(CraftingBookPage.itemPedestalPage(RUNEWOOD_ITEM_PEDESTAL.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
                 .addPage(CraftingBookPage.itemStandPage(RUNEWOOD_ITEM_STAND.asItem(), RUNEWOOD_PLANKS.asItem(), RUNEWOOD_PLANKS_SLAB.asItem()))
                 .addPage(new HeadlineTextPage("hex_ash", "hex_ash"))
-                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/hex_ash")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "hex_ash")))
         );
 
         entries.add(new BookEntry(
@@ -156,31 +156,31 @@ public class ProgressionBookScreen extends Screen {
         entries.add(new BookEntry(
                 "arcane_rock", TAINTED_ROCK.asItem(), 3, 6)
                 .addPage(new HeadlineTextPage("tainted_rock", "tainted_rock"))
-                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/tainted_rock")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "tainted_rock")))
                 .addPage(CraftingBookPage.itemPedestalPage(TAINTED_ROCK_ITEM_PEDESTAL.asItem(), TAINTED_ROCK.asItem(), TAINTED_ROCK_SLAB.asItem()))
                 .addPage(CraftingBookPage.itemStandPage(TAINTED_ROCK_ITEM_STAND.asItem(), TAINTED_ROCK.asItem(), TAINTED_ROCK_SLAB.asItem()))
                 .addPage(new HeadlineTextPage("twisted_rock", "twisted_rock"))
-                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/twisted_rock")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "twisted_rock")))
                 .addPage(CraftingBookPage.itemPedestalPage(TWISTED_ROCK_ITEM_PEDESTAL.asItem(), TWISTED_ROCK.asItem(), TWISTED_ROCK_SLAB.asItem()))
                 .addPage(CraftingBookPage.itemStandPage(TWISTED_ROCK_ITEM_STAND.asItem(), TWISTED_ROCK.asItem(), TWISTED_ROCK_SLAB.asItem()))
         );
-/*
-        entries.add(new BookEntry(
-                "ether", ETHER.get(), 5, 6)
-                .addPage(new HeadlineTextPage("ether", "ether_a"))
-                .addPage(SpiritInfusionPage.fromOutput(ETHER.get()))
-                .addPage(new TextPage("ether_b"))
-                .addPage(new CraftingBookPage(ETHER_TORCH.get(), EMPTY, EMPTY, EMPTY, EMPTY, ETHER.get(), EMPTY, EMPTY, STICK, EMPTY))
-                .addPage(new CraftingBookPage(TAINTED_ETHER_BRAZIER.get(), EMPTY, EMPTY, EMPTY, TAINTED_ROCK.get(), ETHER.get(), TAINTED_ROCK.get(), STICK, TAINTED_ROCK.get(), STICK))
-                .addPage(new CraftingBookPage(TWISTED_ETHER_BRAZIER.get(), EMPTY, EMPTY, EMPTY, TWISTED_ROCK.get(), ETHER.get(), TWISTED_ROCK.get(), STICK, TWISTED_ROCK.get(), STICK))
-                .addPage(new HeadlineTextPage("iridescent_ether", "iridescent_ether_a"))
-                .addPage(new TextPage("iridescent_ether_b"))
-                .addPage(SpiritInfusionPage.fromOutput(IRIDESCENT_ETHER.get()))
-                .addPage(new CraftingBookPage(IRIDESCENT_ETHER_TORCH.get(), EMPTY, EMPTY, EMPTY, EMPTY, IRIDESCENT_ETHER.get(), EMPTY, EMPTY, STICK, EMPTY))
-                .addPage(new CraftingBookPage(TAINTED_IRIDESCENT_ETHER_BRAZIER.get(), EMPTY, EMPTY, EMPTY, TAINTED_ROCK.get(), IRIDESCENT_ETHER.get(), TAINTED_ROCK.get(), STICK, TAINTED_ROCK.get(), STICK))
-                .addPage(new CraftingBookPage(TWISTED_IRIDESCENT_ETHER_BRAZIER.get(), EMPTY, EMPTY, EMPTY, TWISTED_ROCK.get(), IRIDESCENT_ETHER.get(), TWISTED_ROCK.get(), STICK, TWISTED_ROCK.get(), STICK))
-        );
 
+        entries.add(new BookEntry(
+                "ether", ETHER.asItem(), 5, 6)
+                .addPage(new HeadlineTextPage("ether", "ether_a"))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/")))
+                .addPage(new TextPage("ether_b"))
+                .addPage(new CraftingBookPage(ETHER_TORCH_ITEM, EMPTY, EMPTY, EMPTY, EMPTY, ETHER.asItem(), EMPTY, EMPTY, STICK, EMPTY))
+//                .addPage(new CraftingBookPage(TAINTED_ETHER_BRAZIER, EMPTY, EMPTY, EMPTY, TAINTED_ROCK.asItem(), ETHER, TAINTED_ROCK, STICK, TAINTED_ROCK, STICK))
+//                .addPage(new CraftingBookPage(TWISTED_ETHER_BRAZIER, EMPTY, EMPTY, EMPTY, TWISTED_ROCK.asItem(), ETHER, TWISTED_ROCK, STICK, TWISTED_ROCK, STICK))
+//                .addPage(new HeadlineTextPage("iridescent_ether", "iridescent_ether_a"))
+//                .addPage(new TextPage("iridescent_ether_b"))
+//                .addPage(SpiritInfusionPage.fromOutput(IRIDESCENT_ETHER.get()))
+//                .addPage(new CraftingBookPage(IRIDESCENT_ETHER_TORCH.get(), EMPTY, EMPTY, EMPTY, EMPTY, IRIDESCENT_ETHER.get(), EMPTY, EMPTY, STICK, EMPTY))
+//                .addPage(new CraftingBookPage(TAINTED_IRIDESCENT_ETHER_BRAZIER.get(), EMPTY, EMPTY, EMPTY, TAINTED_ROCK.get(), IRIDESCENT_ETHER.get(), TAINTED_ROCK.get(), STICK, TAINTED_ROCK.get(), STICK))
+//                .addPage(new CraftingBookPage(TWISTED_IRIDESCENT_ETHER_BRAZIER.get(), EMPTY, EMPTY, EMPTY, TWISTED_ROCK.get(), IRIDESCENT_ETHER.get(), TWISTED_ROCK.get(), STICK, TWISTED_ROCK.get(), STICK))
+        );
+/*
         entries.add(new BookEntry(
                 "spirit_fabric", SPIRIT_FABRIC.get(), 4, 5)
                 .addPage(new HeadlineTextPage("spirit_fabric", "spirit_fabric"))

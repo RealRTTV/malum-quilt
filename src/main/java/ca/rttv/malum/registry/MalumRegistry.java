@@ -20,6 +20,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -39,6 +40,7 @@ import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
 import java.util.*;
 
 import static ca.rttv.malum.Malum.*;
+import static ca.rttv.malum.registry.MalumSoundRegistry.*;
 import static net.minecraft.world.gen.feature.OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES;
 import static net.minecraft.world.gen.feature.OreConfiguredFeatures.STONE_ORE_REPLACEABLES;
 
@@ -59,24 +61,10 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final SignType                                      RUNEWOOD_SIGN_TYPE                        = registerSignType         (new SignType("runewood"));
     public static final SignType                                      SOULWOOD_SIGN_TYPE                        = registerSignType         (new SignType("soulwood"));
 
-    // sound events
-    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_BREAK               = registerSoundEvent       ("arcane_charcoal_block_break");
-    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_STEP                = registerSoundEvent       ("arcane_charcoal_block_step");
-    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_PLACE               = registerSoundEvent       ("arcane_charcoal_block_place");
-    public static final SoundEvent                                    BLOCK_ARCANE_CHARCOAL_HIT                 = registerSoundEvent       ("arcane_charcoal_block_hit");
-    public static final SoundEvent                                    BLOCK_SOULSTONE_BREAK                     = registerSoundEvent       ("soulstone_break");
-    public static final SoundEvent                                    BLOCK_SOULSTONE_STEP                      = registerSoundEvent       ("soulstone_step");
-    public static final SoundEvent                                    BLOCK_SOULSTONE_PLACE                     = registerSoundEvent       ("soulstone_place");
-    public static final SoundEvent                                    BLOCK_SOULSTONE_HIT                       = registerSoundEvent       ("soulstone_hit");
-    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_BREAK                  = registerSoundEvent       ("tainted_rock_break");
-    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_STEP                   = registerSoundEvent       ("tainted_rock_step");
-    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_PLACE                  = registerSoundEvent       ("tainted_rock_place");
-    public static final SoundEvent                                    BLOCK_TAINTED_ROCK_HIT                    = registerSoundEvent       ("tainted_rock_hit");
-
     // sound groups
-    public static final BlockSoundGroup                               BLOCK_ARCANE_CHARCOAL_SOUNDS              = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_ARCANE_CHARCOAL_BREAK, BLOCK_ARCANE_CHARCOAL_STEP, BLOCK_ARCANE_CHARCOAL_PLACE, BLOCK_ARCANE_CHARCOAL_HIT, BLOCK_ARCANE_CHARCOAL_STEP);
-    public static final BlockSoundGroup                               BLOCK_SOULSTONE_SOUNDS                    = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_SOULSTONE_BREAK, BLOCK_SOULSTONE_STEP, BLOCK_SOULSTONE_PLACE, BLOCK_SOULSTONE_HIT, BLOCK_SOULSTONE_STEP);
-    public static final BlockSoundGroup                               BLOCK_TAINTED_ROCK_SOUNDS                 = new BlockSoundGroup      (1.0f, 1.0f, BLOCK_TAINTED_ROCK_BREAK, BLOCK_TAINTED_ROCK_STEP, BLOCK_TAINTED_ROCK_PLACE, BLOCK_TAINTED_ROCK_HIT, BLOCK_TAINTED_ROCK_STEP);
+    public static final BlockSoundGroup                               BLOCK_ARCANE_CHARCOAL_SOUNDS              = new BlockSoundGroup      (1.0f, 1.0f, ARCANE_CHARCOAL_BREAK, ARCANE_CHARCOAL_STEP, ARCANE_CHARCOAL_PLACE, ARCANE_CHARCOAL_HIT, ARCANE_CHARCOAL_STEP);
+    public static final BlockSoundGroup                               BLOCK_SOULSTONE_SOUNDS                    = new BlockSoundGroup      (1.0f, 1.0f, SOULSTONE_BREAK, SOULSTONE_STEP, SOULSTONE_PLACE, SOULSTONE_HIT, SOULSTONE_STEP);
+    public static final BlockSoundGroup                               BLOCK_TAINTED_ROCK_SOUNDS                 = new BlockSoundGroup      (1.0f, 1.0f, TAINTED_ROCK_BREAK, TAINTED_ROCK_STEP, TAINTED_ROCK_PLACE, TAINTED_ROCK_HIT, TAINTED_ROCK_STEP);
 
     // items & blocks, sorted [Malum]
     public static final Item                                          ENCYCLOPEDIA_ARCANA                       = registerItem             ("encyclopedia_arcana",                       new EncyclopediaArcanaItem(new Item.Settings().rarity(Rarity.UNCOMMON).group(MALUM)));
@@ -118,7 +106,10 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     // copper impetus
     // cracked gold impetus
     // gold impetus
-    // ether torch
+    public static final Block                                         ETHER                                     = registerBlockItem        ("ether",                                     new Block(Settings.of(Material.WOOL) /* todo: abilities */), MALUM);
+    public static final Block                                         ETHER_TORCH                               = registerBlock            ("ether_torch",                               new EtherTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(BlockSoundGroup.WOOD), ParticleTypes.SOUL_FIRE_FLAME /* todo: particle */));
+    public static final Block                                         WALL_ETHER_TORCH                          = registerBlock            ("wall_ether_torch",                          new EtherWallTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(BlockSoundGroup.WOOD), ParticleTypes.SOUL_FIRE_FLAME /* todo: particle */));
+    public static final Item                                          ETHER_TORCH_ITEM                          = registerItem             ("ether_torch",                               new WallStandingBlockItem(ETHER_TORCH, WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
     // tainted ether brazier
     // twisted ether brazier
     // iridescent ether
@@ -251,8 +242,8 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Item                                          HOLY_SAP                                  = registerItem             ("holy_sap",                                  new Item(new Item.Settings().group(MALUM)));
     public static final Item                                          HOLY_SAPBALL                              = registerItem             ("holy_sapball",                              new Item(new Item.Settings().group(MALUM)));
     public static final Item                                          HOLY_SYRUP                                = registerItem             ("holy_syrup",                                new HolySyrupItem(new Item.Settings().group(MALUM).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
-    public static final Block                                         RUNEWOOD_LEAVES                           = registerBlockItem        ("runewood_leaves",                           new GradientLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never)), MALUM_NATURAL_WONDERS);
-    public static final Block                                         RUNEWOOD_SAPLING                          = registerBlockItem        ("runewood_sapling",                          new SaplingBlock(new RunewoodSaplingGenerator(), Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_LEAVES                           = registerBlockItem        ("runewood_leaves",                           new GradientLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque()), MALUM_NATURAL_WONDERS);
+    public static final Block                                         RUNEWOOD_SAPLING                          = registerBlockItem        ("runewood_sapling",                          new SaplingBlock(new RunewoodSaplingGenerator(), Settings.of(Material.LEAVES).ticksRandomly().noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)), MALUM_NATURAL_WONDERS);
     public static final Block                                         RUNEWOOD_LOG                              = registerBlockItem        ("runewood_log",                              new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
     public static final Block                                         STRIPPED_RUNEWOOD_LOG                     = registerBlockItem        ("stripped_runewood_log",                     new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
     public static final Block                                         RUNEWOOD                                  = registerBlockItem        ("runewood",                                  new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
@@ -276,7 +267,7 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     public static final Block                                         RUNEWOOD_DOOR                             = registerBlock            ("runewood_door",                             new DoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(3.0F).sounds(BlockSoundGroup.WOOD).nonOpaque()));
     public static final Item                                          RUNEWOOD_DOOR_ITEM                        = registerItem             ("runewood_door",                             new TallBlockItem(RUNEWOOD_DOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     public static final Block                                         RUNEWOOD_TRAPDOOR                         = registerBlockItem        ("runewood_trapdoor",                         new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()), MALUM_NATURAL_WONDERS);
-    public static final Block                                         SOLID_RUNEWOOD_TRAPDOOR                   = registerBlockItem        ("solid_runewood_trapdoor",                   new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()), MALUM_NATURAL_WONDERS);
+    public static final Block                                         SOLID_RUNEWOOD_TRAPDOOR                   = registerBlockItem        ("solid_runewood_trapdoor",                   new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
     public static final Block                                         RUNEWOOD_PLANKS_BUTTON                    = registerBlockItem        ("runewood_planks_button",                    new WoodenButtonBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
     public static final Block                                         RUNEWOOD_PLANKS_PRESSURE_PLATE            = registerBlockItem        ("runewood_planks_pressure_plate",            new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
     public static final Block                                         RUNEWOOD_PLANKS_FENCE                     = registerBlockItem        ("runewood_planks_fence",                     new FenceBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)), MALUM_NATURAL_WONDERS);
