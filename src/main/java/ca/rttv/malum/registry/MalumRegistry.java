@@ -36,10 +36,7 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil;
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static ca.rttv.malum.Malum.*;
 import static net.minecraft.world.gen.feature.OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES;
@@ -54,6 +51,9 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     private static final Map<Identifier, Feature<? extends FeatureConfig>> FEATURES = new LinkedHashMap<>();
     private static final Map<Identifier, RecipeType<? extends Recipe<?>>> RECIPE_TYPES = new LinkedHashMap<>();
     private static final Map<Identifier, RecipeSerializer<? extends Recipe<?>>> RECIPE_SERIALIZER = new LinkedHashMap<>();
+    private static final ArrayList<SignType> SIGN_TYPES = new ArrayList<>();
+    private static final Map<Identifier, SoundEvent> SOUND_EVENTS = new LinkedHashMap<>();
+    private static final Map<Identifier, ConfiguredFeature<? extends FeatureConfig, ?>> CONFIGURED_FEATURES = new LinkedHashMap<>();
 
     // sign types
     public static final SignType                                      RUNEWOOD_SIGN_TYPE                        = registerSignType         (new SignType("runewood"));
@@ -402,12 +402,14 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         return ConfiguredFeatureUtil.register(new Identifier(MODID, id).toString(), feature);
     }
 
-    static <T extends FeatureConfig, U extends Feature<T>> Holder<ConfiguredFeature<T, ?>> registerConfiguredFeature(String id, U feature, T featureConfig) {
-        return ConfiguredFeatureUtil.register(id, feature, featureConfig);
+    static <FC extends FeatureConfig, F extends Feature<FC>> Holder<ConfiguredFeature<FC, ?>> registerConfiguredFeature(String id, F feature, FC featureConfig) {
+        return ConfiguredFeatureUtil.register(new Identifier(MODID, id).toString(), feature, featureConfig);
     }
 
     static SoundEvent registerSoundEvent(String id) {
-        return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(new Identifier(MODID, id)));
+        SoundEvent soundEvent = new SoundEvent(new Identifier(MODID, id));
+        SOUND_EVENTS.put(new Identifier(MODID, id), soundEvent);
+        return soundEvent;
     }
 
     static <T extends Recipe<?>> RecipeType<T> registerRecipeType(String id, RecipeType<T> type) {
@@ -421,7 +423,8 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
     }
 
     static SignType registerSignType(SignType signType) {
-        return SignType.register(signType);
+        SIGN_TYPES.add(signType);
+        return signType;
     }
 
     public static void init() {
@@ -431,6 +434,8 @@ public final class MalumRegistry { // maps make stuff look cooler ok?
         FEATURES.forEach((id, feature) -> Registry.register(Registry.FEATURE, id, feature));
         RECIPE_TYPES.forEach((id, type) -> Registry.register(Registry.RECIPE_TYPE, id, type));
         RECIPE_SERIALIZER.forEach((id, serializer) -> Registry.register(Registry.RECIPE_SERIALIZER, id, serializer));
+        SIGN_TYPES.forEach(SignType::register);
+        SOUND_EVENTS.forEach((id, soundEvent) -> Registry.register(Registry.SOUND_EVENT, id, soundEvent));
         MalumEnchantments.init();
         MalumSoundRegistry.init();
         MalumEntityRegistry.init();
