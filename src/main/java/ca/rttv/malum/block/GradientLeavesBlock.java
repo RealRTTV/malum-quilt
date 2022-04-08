@@ -7,10 +7,10 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 
-public class SoulwoodLeavesBlock extends LeavesBlock { // todo make abstract leaves regardless of wood type
+public class GradientLeavesBlock extends LeavesBlock {
     public static final IntProperty COLOR = IntProperty.of("color", 0, 4);
 
-    public SoulwoodLeavesBlock(Settings settings) {
+    public GradientLeavesBlock(Settings settings) {
         super(settings);
     }
 

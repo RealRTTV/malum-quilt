@@ -1,6 +1,6 @@
 package ca.rttv.malum.world.gen.feature;
 
-import ca.rttv.malum.block.SoulwoodLeavesBlock;
+import ca.rttv.malum.block.GradientLeavesBlock;
 import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.world.gen.MalumFiller;
@@ -69,7 +69,7 @@ public class SoulwoodTreeFeature extends Feature<DefaultFeatureConfig> { // todo
                     continue;
                 }
                 BlockPos leavesPos = new BlockPos(pos).add(x, 0, z);
-                filler.entries.add(new BlockStateEntry(SOULWOOD_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1).with(SoulwoodLeavesBlock.COLOR, leavesColor), leavesPos));
+                filler.entries.add(new BlockStateEntry(SOULWOOD_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1).with(GradientLeavesBlock.COLOR, leavesColor), leavesPos));
             }
         }
     }

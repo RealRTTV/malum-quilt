@@ -1,10 +1,11 @@
 package ca.rttv.malum.world.gen.feature;
 
-import ca.rttv.malum.block.RunewoodLeavesBlock;
+import ca.rttv.malum.block.GradientLeavesBlock;
 import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.world.gen.MalumFiller;
 import ca.rttv.malum.world.gen.MalumFiller.BlockStateEntry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.PillarBlock;
@@ -17,9 +18,7 @@ import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
-
-public class RunewoodTreeFeature extends Feature<DefaultFeatureConfig> {
+public class GradientTreeFeature extends Feature<DefaultFeatureConfig> {
     private static final int minimumSapBlockCount = 2;
     private static final int extraSapBlockCount = 1;
     private static final int minimumTrunkHeight = 7;
@@ -32,18 +31,26 @@ public class RunewoodTreeFeature extends Feature<DefaultFeatureConfig> {
     private static final int branchCoreOffsetExtra = 1;
     private static final int minimumBranchHeight = 3;
     private static final int branchHeightExtra = 2;
+    private final Block exposed;
+    private final Block leaves;
+    private final Block log;
+    private final Block sapling;
 
-    public RunewoodTreeFeature() {
+    public GradientTreeFeature(Block exposed, Block leaves, Block log, Block sapling) {
         super(DefaultFeatureConfig.CODEC);
+        this.exposed = exposed;
+        this.leaves = leaves;
+        this.log = log;
+        this.sapling = sapling;
     }
 
-    public static void downwardsTrunk(StructureWorldAccess world, MalumFiller filler, BlockPos pos) {
+    public void downwardsTrunk(StructureWorldAccess world, MalumFiller filler, BlockPos pos) {
         int i = 0;
         do {
             i++;
             BlockPos trunkPos = pos.down(i);
             if (canPlace(world, trunkPos)) {
-                filler.entries.add(new BlockStateEntry(RUNEWOOD_LOG.getDefaultState(), trunkPos));
+                filler.entries.add(new BlockStateEntry(log.getDefaultState(), trunkPos));
             } else {
                 break;
             }
@@ -54,7 +61,7 @@ public class RunewoodTreeFeature extends Feature<DefaultFeatureConfig> {
         while (true);
     }
 
-    public static void makeLeafBlob(MalumFiller filler, Random rand, BlockPos pos) {
+    public void makeLeafBlob(MalumFiller filler, Random rand, BlockPos pos) {
         makeLeafSlice(filler, pos, 1, 0);
         makeLeafSlice(filler, pos.up(1), 2, 1);
         makeLeafSlice(filler, pos.up(2), 2, 2);
@@ -62,24 +69,24 @@ public class RunewoodTreeFeature extends Feature<DefaultFeatureConfig> {
         makeLeafSlice(filler, pos.up(4), 1, 4);
     }
 
-    public static void makeLeafSlice(MalumFiller filler, BlockPos pos, int leavesSize, int leavesColor) {
+    public void makeLeafSlice(MalumFiller filler, BlockPos pos, int leavesSize, int leavesColor) {
         for (int x = -leavesSize; x <= leavesSize; x++) {
             for (int z = -leavesSize; z <= leavesSize; z++) {
                 if (Math.abs(x) == leavesSize && Math.abs(z) == leavesSize) {
                     continue;
                 }
                 BlockPos leavesPos = new BlockPos(pos).add(x, 0, z);
-                filler.entries.add(new BlockStateEntry(RUNEWOOD_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1).with(RunewoodLeavesBlock.COLOR, leavesColor), leavesPos));
+                filler.entries.add(new BlockStateEntry(leaves.getDefaultState().with(LeavesBlock.DISTANCE, 1).with(GradientLeavesBlock.COLOR, leavesColor), leavesPos));
             }
         }
     }
 
-    public static boolean canPlace(StructureWorldAccess level, BlockPos pos) {
+    public boolean canPlace(StructureWorldAccess level, BlockPos pos) {
         if (level.isOutOfHeightLimit(pos)) {
             return false;
         }
         BlockState state = level.getBlockState(pos);
-        return state.isOf(RUNEWOOD_SAPLING) || level.isAir(pos) || state.getMaterial().isReplaceable();
+        return state.isOf(sapling) || level.isAir(pos) || state.getMaterial().isReplaceable();
     }
 
     @Override
@@ -87,10 +94,10 @@ public class RunewoodTreeFeature extends Feature<DefaultFeatureConfig> {
         StructureWorldAccess world = ctx.getWorld();
         BlockPos pos = ctx.getOrigin();
         Random rand = ctx.getRandom();
-        if (world.isAir(pos.down()) || !RUNEWOOD_SAPLING.getDefaultState().canPlaceAt(world, pos)) {
+        if (world.isAir(pos.down()) || !sapling.getDefaultState().canPlaceAt(world, pos)) {
             return false;
         }
-        BlockState defaultLog = RUNEWOOD_LOG.getDefaultState();
+        BlockState defaultLog = log.getDefaultState();
 
         MalumFiller treeFiller = new MalumFiller(false);
         MalumFiller leavesFiller = new MalumFiller(true);
@@ -153,7 +160,7 @@ public class RunewoodTreeFeature extends Feature<DefaultFeatureConfig> {
         int[] sapBlockIndexes = DataHelper.nextInts(rand, sapBlockCount, treeFiller.entries.size());
         for (Integer index : sapBlockIndexes) {
             BlockStateEntry oldEntry = treeFiller.entries.get(index);
-            BlockState newState = BlockHelper.getBlockStateWithExistingProperties(oldEntry.state(), EXPOSED_RUNEWOOD_LOG.getDefaultState());
+            BlockState newState = BlockHelper.getBlockStateWithExistingProperties(oldEntry.state(), exposed.getDefaultState());
             treeFiller.replaceAt(index, new BlockStateEntry(newState, oldEntry.pos()));
         }
         treeFiller.fill(world);
