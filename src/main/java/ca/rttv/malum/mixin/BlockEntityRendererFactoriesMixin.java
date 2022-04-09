@@ -1,5 +1,6 @@
 package ca.rttv.malum.mixin;
 
+import ca.rttv.malum.client.render.block.EtherRenderer;
 import ca.rttv.malum.client.render.block.ItemPedestalRenderer;
 import ca.rttv.malum.client.render.block.ItemStandRenderer;
 import ca.rttv.malum.client.render.block.SpiritAltarRenderer;
@@ -21,5 +22,6 @@ public abstract class BlockEntityRendererFactoriesMixin {
         register(ITEM_PEDESTAL_BLOCK_ENTITY, rendererDispatcher -> new ItemPedestalRenderer());
         register(ITEM_STAND_BLOCK_ENTITY, rendererDispatcherIn -> new ItemStandRenderer());
         register(SPIRIT_ALTAR_BLOCK_ENTITY, rendererDispatcherIn -> new SpiritAltarRenderer());
+        register(ETHER_BLOCK_ENTITY, rendererDispatcherIn -> new EtherRenderer());
     }
 }

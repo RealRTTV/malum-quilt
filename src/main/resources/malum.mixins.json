@@ -18,8 +18,8 @@
     "TexturedRenderLayersMixin"
   ],
   "client": [
-    "GameRendererMixin",
-    "AbstractFurnaceBlockEntityMixin"
+    "AbstractFurnaceBlockEntityMixin",
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

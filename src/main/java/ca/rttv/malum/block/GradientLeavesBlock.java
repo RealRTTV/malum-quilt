@@ -6,8 +6,6 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 
 public class GradientLeavesBlock extends LeavesBlock {
     public static final IntProperty COLOR = IntProperty.of("color", 0, 4);

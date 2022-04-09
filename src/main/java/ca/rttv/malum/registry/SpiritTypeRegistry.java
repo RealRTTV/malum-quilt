@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpiritTypeRegistry {
-    public static Map<Identifier, MalumEntitySpiritData> SPIRIT_DATA = new HashMap<>();
+    public static final Map<Identifier, MalumEntitySpiritData> SPIRIT_DATA = new HashMap<>();
     public static final ArrayList<MalumSpiritType> SPIRITS = new ArrayList<>();
 
     public static final Color SACRED_SPIRIT_COLOR = new Color(243, 65, 107);

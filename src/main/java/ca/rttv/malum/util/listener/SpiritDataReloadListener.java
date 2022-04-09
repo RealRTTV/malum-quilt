@@ -11,7 +11,6 @@ import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import static ca.rttv.malum.registry.SpiritTypeRegistry.SPIRIT_DATA;
