@@ -2,6 +2,7 @@ package ca.rttv.malum.client.particle.cut;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
@@ -44,10 +45,8 @@ public class ScytheAttackParticle extends SpriteBillboardParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public record Factory(
-            SpriteProvider spriteSet) implements ParticleFactory<DefaultParticleType> {
+    public record Factory(SpriteProvider spriteSet) implements ParticleFactory<DefaultParticleType> {
 
-        @Nullable
         @Override
         public Particle createParticle(DefaultParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             return new ScytheAttackParticle(world, x, y, z, velocityX, this.spriteSet);

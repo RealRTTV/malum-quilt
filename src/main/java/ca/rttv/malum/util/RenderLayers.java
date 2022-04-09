@@ -28,18 +28,18 @@ public class RenderLayers extends RenderPhase {
      */
     public static final HashMap<Pair<Integer, RenderLayer>, RenderLayer> COPIES = new HashMap<>();
 
-    public static final RenderLayer ADDITIVE_PARTICLE = createGenericRenderLayer("additive_particle", POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, new Shader(MalumShaderRegistry.ADDITIVE_PARTICLE::getProgram), StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
-    public static final RenderLayer ADDITIVE_BLOCK_PARTICLE = createGenericRenderLayer("additive_block_particle", POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, new Shader(MalumShaderRegistry.ADDITIVE_PARTICLE::getProgram), StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-    public static final RenderLayer ADDITIVE_BLOCK = createGenericRenderLayer("block", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, new Shader(MalumShaderRegistry.ADDITIVE_TEXTURE::getProgram), StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+    public static final RenderLayer ADDITIVE_PARTICLE = createGenericRenderLayer("additive_particle", POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, MalumShaderRegistry.ADDITIVE_PARTICLE.phase, StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
+    public static final RenderLayer ADDITIVE_BLOCK_PARTICLE = createGenericRenderLayer("additive_block_particle", POSITION_TEXTURE_COLOR_LIGHT, VertexFormat.DrawMode.QUADS, MalumShaderRegistry.ADDITIVE_PARTICLE.phase, StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+    public static final RenderLayer ADDITIVE_BLOCK = createGenericRenderLayer("block", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, MalumShaderRegistry.ADDITIVE_TEXTURE.phase, StateShards.ADDITIVE_TRANSPARENCY, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 
     /**
      * Render Functions. You can create Render Layers by statically applying these to your texture. Alternatively, use {@link #GENERIC} if none of the presets suit your needs.
      */
-    public static final Function<Identifier, RenderLayer> ADDITIVE_TEXTURE = (texture) -> createGenericRenderLayer("additive_texture", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, new Shader(MalumShaderRegistry.ADDITIVE_TEXTURE::getProgram), StateShards.ADDITIVE_TRANSPARENCY, texture);
-    public static final Function<Identifier, RenderLayer> RADIAL_NOISE = (texture) -> createGenericRenderLayer("radial_noise", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, new Shader(MalumShaderRegistry.RADIAL_NOISE::getProgram), StateShards.ADDITIVE_TRANSPARENCY, texture);
-    public static final Function<Identifier, RenderLayer> RADIAL_SCATTER_NOISE = (texture) -> createGenericRenderLayer("radial_scatter_noise", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, new Shader(MalumShaderRegistry.RADIAL_SCATTER_NOISE::getProgram), StateShards.ADDITIVE_TRANSPARENCY, texture);
-    public static final Function<Identifier, RenderLayer> TEXTURE_TRIANGLE = (texture) -> createGenericRenderLayer("texture_triangle", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, new Shader(MalumShaderRegistry.TRIANGLE_TEXTURE::getProgram), StateShards.ADDITIVE_TRANSPARENCY, texture);
-    public static final Function<Identifier, RenderLayer> SCROLLING_TEXTURE_TRIANGLE = (texture) -> createGenericRenderLayer("scrolling_texture_triangle", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, new Shader(MalumShaderRegistry.SCROLLING_TRIANGLE_TEXTURE::getProgram), StateShards.ADDITIVE_TRANSPARENCY, texture);
+    public static final Function<Identifier, RenderLayer> ADDITIVE_TEXTURE = (texture) -> createGenericRenderLayer("additive_texture", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, MalumShaderRegistry.ADDITIVE_TEXTURE.phase, StateShards.ADDITIVE_TRANSPARENCY, texture);
+    public static final Function<Identifier, RenderLayer> RADIAL_NOISE = (texture) -> createGenericRenderLayer("radial_noise", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, MalumShaderRegistry.RADIAL_NOISE.phase, StateShards.ADDITIVE_TRANSPARENCY, texture);
+    public static final Function<Identifier, RenderLayer> RADIAL_SCATTER_NOISE = (texture) -> createGenericRenderLayer("radial_scatter_noise", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, MalumShaderRegistry.RADIAL_SCATTER_NOISE.phase, StateShards.ADDITIVE_TRANSPARENCY, texture);
+    public static final Function<Identifier, RenderLayer> TEXTURE_TRIANGLE = (texture) -> createGenericRenderLayer("texture_triangle", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, MalumShaderRegistry.TRIANGLE_TEXTURE.phase, StateShards.ADDITIVE_TRANSPARENCY, texture);
+    public static final Function<Identifier, RenderLayer> SCROLLING_TEXTURE_TRIANGLE = (texture) -> createGenericRenderLayer("scrolling_texture_triangle", POSITION_COLOR_TEXTURE_LIGHT, VertexFormat.DrawMode.QUADS, MalumShaderRegistry.SCROLLING_TRIANGLE_TEXTURE.phase, StateShards.ADDITIVE_TRANSPARENCY, texture);
 
     public static final Function<RenderLayerData, RenderLayer> GENERIC = (data) -> createGenericRenderLayer(data.name, data.format, data.mode, data.shader, data.transparency, data.texture);
 

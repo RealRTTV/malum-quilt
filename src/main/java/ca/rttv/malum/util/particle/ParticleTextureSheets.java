@@ -1,5 +1,6 @@
 package ca.rttv.malum.util.particle;
 
+import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.particle.ParticleTextureSheet;
@@ -18,7 +19,7 @@ public class ParticleTextureSheets {
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-            //RenderSystem.setShader(ShaderRegistry.additiveParticle.getInstance());
+            RenderSystem.setShader(MalumShaderRegistry.ADDITIVE_PARTICLE.getInstance());
             RenderSystem.setShaderTexture(0, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
             RenderHandler.PARTICLE_MATRIX = RenderSystem.getModelViewMatrix();
             builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);

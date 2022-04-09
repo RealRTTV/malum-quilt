@@ -1,5 +1,6 @@
 package ca.rttv.malum;
 
+import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.enchantment.ReboundEnchantment;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumRegistry;
@@ -24,6 +25,7 @@ public final class Malum implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        MalumParticleRegistry.init();
         MalumAttributeRegistry.init();
         MalumRegistry.init();
         UseItemCallback.EVENT.register(ReboundEnchantment::onRightClickItem);

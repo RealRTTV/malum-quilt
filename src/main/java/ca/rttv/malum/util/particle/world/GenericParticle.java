@@ -5,9 +5,12 @@ import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.particle.SimpleParticleEffect;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
+import net.fabricmc.fabric.mixin.client.particle.ParticleManagerAccessor;
 import net.minecraft.client.gui.hud.BackgroundHelper;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.world.ClientWorld;
@@ -18,9 +21,9 @@ import java.awt.*;
 public class GenericParticle extends SpriteBillboardParticle {
     protected WorldParticleEffect data;
     private final ParticleTextureSheet textureSheet;
-    protected final FabricSpriteProviderImpl spriteProvider;
+    protected final ParticleManager.SimpleSpriteProvider spriteProvider;
     float[] hsv1 = new float[3], hsv2 = new float[3];
-    public GenericParticle(ClientWorld world, WorldParticleEffect data, FabricSpriteProviderImpl spriteProvider, double x, double y, double z, double velocityX, double yd, double zd) {
+    public GenericParticle(ClientWorld world, WorldParticleEffect data, ParticleManager.SimpleSpriteProvider spriteProvider, double x, double y, double z, double velocityX, double yd, double zd) {
         super(world, x, y, z);
         this.data = data;
         this.textureSheet = data.renderType;
@@ -44,13 +47,13 @@ public class GenericParticle extends SpriteBillboardParticle {
             pickSprite(0);
         }
         if (getAnimator().equals(SimpleParticleEffect.Animator.LAST_INDEX)) {
-            pickSprite(spriteProvider.getSprites().size() - 1);
+            pickSprite(spriteProvider.sprites.size() - 1);
         }
         updateTraits();
     }
     public void pickSprite(int spriteIndex) {
-        if (spriteIndex < spriteProvider.getSprites().size() && spriteIndex >= 0) {
-            setSprite(spriteProvider.getSprites().get(spriteIndex));
+        if (spriteIndex < spriteProvider.sprites.size() && spriteIndex >= 0) {
+            setSprite(spriteProvider.sprites.get(spriteIndex));
         }
     }
     public void pickColor(float colorCoeff) {

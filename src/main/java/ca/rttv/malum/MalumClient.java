@@ -9,17 +9,25 @@ import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.listener.SpiritDataReloadListener;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.Item;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.util.function.Function;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.SpiritTypeRegistry.*;
@@ -27,7 +35,7 @@ import static ca.rttv.malum.registry.SpiritTypeRegistry.*;
 public class MalumClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        MalumParticleRegistry.init();
+        MalumParticleRegistry.registerFactories();
         RenderHandler.init();
         EntityRendererRegistry.register(MalumEntityRegistry.SCYTHE_BOOMERANG, ScytheBoomerangEntityRenderer::new);
 

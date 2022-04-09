@@ -47,7 +47,7 @@ public class ExtendedShader extends Shader {
         int i = GlUniform.getTypeIndex(JsonHelper.getString(jsonobject, "type"));
         int j = JsonHelper.getInt(jsonobject, "count");
         float[] afloat = new float[Math.max(j, 16)];
-        JsonArray jsonarray = JsonHelper.asArray(jsonobject, "values");
+        JsonArray jsonarray = JsonHelper.getArray(jsonobject, "values");
         if (jsonarray.size() != j && jsonarray.size() > 1) {
             throw new ShaderParseException("Invalid amount of values specified (expected " + j + ", found " + jsonarray.size() + ")");
         } else {
