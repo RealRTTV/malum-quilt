@@ -49,12 +49,11 @@ public abstract class BlockColorsMixin {
             return red << 16 | green << 8 | blue;
         }, SOULWOOD_LEAVES);
         blockColors.registerColorProvider((state, world, pos, tintIndex) -> {
-            if (tintIndex != 1 || world == null || pos == null) return 255 << 16 | 255 << 8 | 255;
+            if (tintIndex != 1 || world == null || pos == null) return -1;
             EtherBlockEntity blockEntity = (EtherBlockEntity) world.getBlockEntity(pos);
-            if (blockEntity == null) return 255 << 16 | 255 << 8 | 255;
-            int firstColor = blockEntity.firstColor;
-            int secondColor = blockEntity.secondColor;
-            return firstColor;
+            if (blockEntity == null) return -1;
+            System.out.println(blockEntity.firstColor);
+            return blockEntity.firstColor;
         }, WALL_ETHER_TORCH, ETHER_TORCH);
     }
 }

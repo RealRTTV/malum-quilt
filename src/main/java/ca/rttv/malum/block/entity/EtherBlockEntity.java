@@ -3,8 +3,12 @@ package ca.rttv.malum.block.entity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import static ca.rttv.malum.registry.MalumRegistry.ETHER_BLOCK_ENTITY;
 
@@ -23,18 +27,24 @@ public class EtherBlockEntity extends BlockEntity {
     }
 
     public EtherBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, 16777216, 16777216);
+        this(pos, state, -1, -1);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        firstColor = nbt.getInt("first_color");
-        secondColor = nbt.getInt("second_color");
     }
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        nbt.putInt("first_color", firstColor);
-        nbt.putInt("second_color", secondColor);
+    }
+
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if (!itemStack.hasNbt()) {
+            this.firstColor = -1;
+            this.secondColor = -1;
+            return;
+        }
+        this.firstColor = itemStack.getNbt().contains("first_color") ? itemStack.getNbt().getInt("first_color") : -1;
+        this.secondColor = itemStack.getNbt().contains("second_color") ? itemStack.getNbt().getInt("second_color") : -1;
     }
 }

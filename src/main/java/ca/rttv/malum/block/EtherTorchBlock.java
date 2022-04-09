@@ -3,10 +3,11 @@ package ca.rttv.malum.block;
 import ca.rttv.malum.block.entity.EtherBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.particle.ParticleEffect;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -14,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
@@ -22,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class EtherTorchBlock extends BlockWithEntity implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     protected static final VoxelShape BOUNDING_SHAPE = Block.createCuboidShape(6.0, 0.0, 6.0, 10.0, 10.0, 10.0);
+
     public EtherTorchBlock(Settings settings) {
         super(settings);
     }
@@ -31,6 +34,11 @@ public class EtherTorchBlock extends BlockWithEntity implements Waterloggable {
         FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 
         return this.getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        ((EtherBlockEntity) world.getBlockEntity(pos)).onPlaced(world, pos, state, placer, itemStack);
     }
 
     @Override
@@ -70,6 +78,8 @@ public class EtherTorchBlock extends BlockWithEntity implements Waterloggable {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new EtherBlockEntity(pos, state);
+//        System.out.println("a" + firstColorFromNbt);
+//        System.out.println("a" + secondColorFromNbt);
+        return new EtherBlockEntity(pos, state, -1, -1);
     }
 }
