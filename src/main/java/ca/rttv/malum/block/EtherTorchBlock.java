@@ -38,6 +38,7 @@ public class EtherTorchBlock extends BlockWithEntity implements Waterloggable {
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        //noinspection ConstantConditions
         ((EtherBlockEntity) world.getBlockEntity(pos)).onPlaced(world, pos, state, placer, itemStack);
     }
 
@@ -75,11 +76,8 @@ public class EtherTorchBlock extends BlockWithEntity implements Waterloggable {
         builder.add(WATERLOGGED);
     }
 
-    @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-//        System.out.println("a" + firstColorFromNbt);
-//        System.out.println("a" + secondColorFromNbt);
-        return new EtherBlockEntity(pos, state, -1, -1);
+        return new EtherBlockEntity(pos, state);
     }
 }

@@ -32,10 +32,21 @@ public class EtherBlockEntity extends BlockEntity {
 
     @Override
     public void readNbt(NbtCompound nbt) {
+        this.firstColor = nbt.getInt("FirstColor");
+        this.secondColor = nbt.getInt("SecondColor");
     }
 
     @Override
     public void writeNbt(NbtCompound nbt) {
+        nbt.putInt("FirstColor", firstColor);
+        nbt.putInt("SecondColor", secondColor);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        NbtCompound tag = super.toInitialChunkDataNbt();
+        this.writeNbt(tag);
+        return tag;
     }
 
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
@@ -44,7 +55,8 @@ public class EtherBlockEntity extends BlockEntity {
             this.secondColor = -1;
             return;
         }
-        this.firstColor = itemStack.getNbt().contains("first_color") ? itemStack.getNbt().getInt("first_color") : -1;
-        this.secondColor = itemStack.getNbt().contains("second_color") ? itemStack.getNbt().getInt("second_color") : -1;
+        //noinspection ConstantConditions
+        this.firstColor = itemStack.getNbt().contains("FirstColor") ? itemStack.getNbt().getInt("FirstColor") : -1;
+        this.secondColor = itemStack.getNbt().contains("SecondColor") ? itemStack.getNbt().getInt("SecondColor") : -1;
     }
 }

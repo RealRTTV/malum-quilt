@@ -2,7 +2,6 @@ package ca.rttv.malum.item;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.registry.SpiritTypeRegistry;
-import ca.rttv.malum.util.listener.SpiritDataReloadListener;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
