@@ -3,6 +3,8 @@ package ca.rttv.malum.block;
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -24,6 +26,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import static ca.rttv.malum.registry.MalumRegistry.ITEM_PEDESTAL_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumRegistry.ITEM_STAND_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public class ItemStandBlock extends BlockWithEntity implements Waterloggable {
@@ -83,6 +88,11 @@ public class ItemStandBlock extends BlockWithEntity implements Waterloggable {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         return super.getStateForNeighborUpdate(state, direction, neighbourState, world, pos, neighbourPos);
+    }
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? checkType(type, ITEM_STAND_BLOCK_ENTITY, (world1, pos, state1, blockEntity) -> blockEntity.clientTick(world1, pos, state1)) : null;
     }
 
     @Override

@@ -4,6 +4,8 @@ import ca.rttv.malum.block.entity.AbstractItemDisplayBlockEntity;
 import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -26,6 +28,9 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+
+import static ca.rttv.malum.registry.MalumRegistry.ETHER_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumRegistry.ITEM_PEDESTAL_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public abstract class AbstractItemPedestalBlock extends BlockWithEntity implements Waterloggable {
@@ -100,6 +105,11 @@ public abstract class AbstractItemPedestalBlock extends BlockWithEntity implemen
     @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    }
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? checkType(type, ITEM_PEDESTAL_BLOCK_ENTITY, (world1, pos, state1, blockEntity) -> blockEntity.clientTick(world1, pos, state1)) : null;
     }
 
     @Nullable

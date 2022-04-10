@@ -1,13 +1,17 @@
 package ca.rttv.malum.block;
 
 import ca.rttv.malum.block.entity.EtherBlockEntity;
+import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -18,6 +22,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
+
+import static ca.rttv.malum.registry.MalumRegistry.ETHER_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public abstract class AbstractEtherBlock extends BlockWithEntity implements Waterloggable {
@@ -60,6 +69,11 @@ public abstract class AbstractEtherBlock extends BlockWithEntity implements Wate
         FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 
         return this.getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+    }
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? checkType(type, ETHER_BLOCK_ENTITY, (world1, pos, state1, blockEntity) -> blockEntity.clientTick(world1, pos, state1)) : null;
     }
 
     @Override

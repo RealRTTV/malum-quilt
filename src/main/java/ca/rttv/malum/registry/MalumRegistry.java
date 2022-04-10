@@ -356,6 +356,9 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Item BRILLIANCE_CLUSTER                        = registerItem             ("brilliance_cluster",                        new Item(new Item.Settings().group(MISC)));
                                              Item BRILLIANCE_CHUNK                          = registerItem             ("brilliance_chunk",                          new Item(new Item.Settings().group(MISC)));
 
+    // the device
+
+                                             Block THE_DEVICE                               = registerBlockItem        ("the_device",                          new TheDevice(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), null);
     // block entities
             BlockEntityType<ItemStandBlockEntity> ITEM_STAND_BLOCK_ENTITY                   = registerBlockEntity      ("item_stand",                                BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND, SOULWOOD_ITEM_STAND, TAINTED_ROCK_ITEM_STAND, TWISTED_ROCK_ITEM_STAND).build(null));
          BlockEntityType<ItemPedestalBlockEntity> ITEM_PEDESTAL_BLOCK_ENTITY                = registerBlockEntity      ("item_pedestal",                             BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL, SOULWOOD_ITEM_PEDESTAL, TAINTED_ROCK_ITEM_PEDESTAL, TWISTED_ROCK_ITEM_PEDESTAL).build(null));
@@ -391,7 +394,11 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
 
     static <T extends Block> T registerBlockItem(String id, T block, ItemGroup itemGroup) {
         BLOCKS.put(new Identifier(MODID, id), block);
-        ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Item.Settings().group(itemGroup)));
+        if(itemGroup != null) {
+            ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Item.Settings().group(itemGroup)));
+        } else {
+            ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Item.Settings()));
+        }
         return block;
     }
 
