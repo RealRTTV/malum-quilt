@@ -4,6 +4,7 @@ import ca.rttv.malum.config.ClientConfig;
 import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.particle.SimpleParticleEffect;
+import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
 import net.minecraft.client.gui.hud.BackgroundHelper;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.particle.ParticleTextureSheet;
@@ -18,9 +19,9 @@ import java.awt.*;
 public class GenericParticle extends SpriteBillboardParticle {
     protected WorldParticleEffect data;
     private final ParticleTextureSheet textureSheet;
-    protected final ParticleManager.SimpleSpriteProvider spriteProvider;
+    protected final FabricSpriteProviderImpl spriteProvider;
     float[] hsv1 = new float[3], hsv2 = new float[3];
-    public GenericParticle(ClientWorld world, WorldParticleEffect data, ParticleManager.SimpleSpriteProvider spriteProvider, double x, double y, double z, double velocityX, double yd, double zd) {
+    public GenericParticle(ClientWorld world, WorldParticleEffect data, FabricSpriteProviderImpl spriteProvider, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         super(world, x, y, z);
         this.data = data;
         this.textureSheet = data.renderType;
@@ -28,8 +29,8 @@ public class GenericParticle extends SpriteBillboardParticle {
         this.angle = data.spinOffset + data.spin1;
         if (!data.forcedMotion) {
             this.velocityX = velocityX;
-            this.velocityY = yd;
-            this.velocityZ = zd;
+            this.velocityY = velocityY;
+            this.velocityZ = velocityZ;
         }
         this.setMaxAge(data.lifetime);
         this.gravityStrength = data.gravity ? 1 : 0;
@@ -44,13 +45,13 @@ public class GenericParticle extends SpriteBillboardParticle {
             pickSprite(0);
         }
         if (getAnimator().equals(SimpleParticleEffect.Animator.LAST_INDEX)) {
-            pickSprite(spriteProvider.sprites.size() - 1);
+            pickSprite(spriteProvider.getSprites().size() - 1);
         }
         updateTraits();
     }
     public void pickSprite(int spriteIndex) {
-        if (spriteIndex < spriteProvider.sprites.size() && spriteIndex >= 0) {
-            setSprite(spriteProvider.sprites.get(spriteIndex));
+        if (spriteIndex < spriteProvider.getSprites().size() && spriteIndex >= 0) {
+            setSprite(spriteProvider.getSprites().get(spriteIndex));
         }
     }
     public void pickColor(float colorCoeff) {
@@ -108,7 +109,6 @@ public class GenericParticle extends SpriteBillboardParticle {
     @Override
     public void tick() {
         updateTraits();
-        System.out.println("mogus");
         if (data.animator.equals(SimpleParticleEffect.Animator.WITH_AGE)) {
             setSpriteForAge(spriteProvider);
         }

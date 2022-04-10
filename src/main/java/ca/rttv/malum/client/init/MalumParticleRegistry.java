@@ -5,6 +5,7 @@ import ca.rttv.malum.client.particle.cut.ScytheAttackParticle;
 import ca.rttv.malum.client.particle.spiritflame.SpiritFlameParticleType;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.Identifier;
