@@ -1,5 +1,6 @@
 package ca.rttv.malum.block.entity;
 
+import ca.rttv.malum.util.helper.NbtHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -27,7 +28,7 @@ public class EtherBlockEntity extends BlockEntity {
     }
 
     public EtherBlockEntity(BlockPos pos, BlockState state) {
-        this(pos, state, -1, -1);
+        this(pos, state, 15712278, 4607909);
     }
 
     @Override
@@ -50,13 +51,7 @@ public class EtherBlockEntity extends BlockEntity {
     }
 
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (!itemStack.hasNbt()) {
-            this.firstColor = -1;
-            this.secondColor = -1;
-            return;
-        }
-        //noinspection ConstantConditions
-        this.firstColor = itemStack.getNbt().contains("FirstColor") ? itemStack.getNbt().getInt("FirstColor") : -1;
-        this.secondColor = itemStack.getNbt().contains("SecondColor") ? itemStack.getNbt().getInt("SecondColor") : -1;
+        firstColor = NbtHelper.getOrDefaultInt(nbt -> nbt.getCompound("display").getInt("FirstColor"), 15712278, itemStack.getNbt());
+        secondColor = NbtHelper.getOrDefaultInt(nbt -> nbt.getCompound("display").getInt("SecondColor"), 4607909, itemStack.getNbt());
     }
 }

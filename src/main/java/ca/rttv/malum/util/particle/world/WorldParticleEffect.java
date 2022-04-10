@@ -2,17 +2,11 @@ package ca.rttv.malum.util.particle.world;
 
 import ca.rttv.malum.util.particle.SimpleParticleEffect;
 import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.math.Vec3f;
-import net.minecraft.util.registry.Registry;
-
-import java.util.Locale;
 
 public class WorldParticleEffect extends SimpleParticleEffect implements ParticleEffect {
 

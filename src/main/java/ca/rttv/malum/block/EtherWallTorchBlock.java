@@ -1,31 +1,22 @@
 package ca.rttv.malum.block;
 
-import ca.rttv.malum.block.entity.EtherBlockEntity;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class EtherWallTorchBlock extends BlockWithEntity implements Waterloggable {
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+public class EtherWallTorchBlock extends AbstractEtherBlock implements Waterloggable {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public EtherWallTorchBlock(Settings settings) {
         super(settings);
@@ -38,19 +29,8 @@ public class EtherWallTorchBlock extends BlockWithEntity implements Waterloggabl
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
-    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return WallTorchBlock.getBoundingShape(state);
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        //noinspection ConstantConditions
-        ((EtherBlockEntity) world.getBlockEntity(pos)).onPlaced(world, pos, state, placer, itemStack);
     }
 
     @Override
@@ -88,12 +68,10 @@ public class EtherWallTorchBlock extends BlockWithEntity implements Waterloggabl
         if (state.get(WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
-        return direction.getOpposite() == state.get(FACING) && !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : state;
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        if (direction.getOpposite() == state.get(FACING) && !state.canPlaceAt(world, pos)) {
+            return Blocks.AIR.getDefaultState();
+        }
+        return state;
     }
 
     @Override
@@ -108,12 +86,7 @@ public class EtherWallTorchBlock extends BlockWithEntity implements Waterloggabl
 
     @Override
     public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED, FACING);
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new EtherBlockEntity(pos, state);
+        builder.add(FACING);
+        super.appendProperties(builder);
     }
 }

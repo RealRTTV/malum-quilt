@@ -5,11 +5,10 @@ import ca.rttv.malum.block.entity.EtherBlockEntity;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.awt.*;
 
@@ -17,17 +16,8 @@ import static ca.rttv.malum.registry.MalumRegistry.*;
 
 @Mixin(BlockColors.class)
 public abstract class BlockColorsMixin {
-    @Unique
-    private static BlockColors blockColors;
-
-    @ModifyVariable(method = "create", at = @At(value = "RETURN", shift = At.Shift.BEFORE), index = 0)
-    private static BlockColors captureBlockColors(BlockColors value) {
-        blockColors = value;
-        return value;
-    }
-
-    @Inject(method = "create", at = @At(value = "RETURN", shift = At.Shift.BEFORE))
-    private static void create(CallbackInfoReturnable<BlockColors> cir) {
+    @Inject(method = "create", at = @At(value = "RETURN", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILSOFT)
+    private static void create(CallbackInfoReturnable<BlockColors> cir, BlockColors blockColors) {
         blockColors.registerColorProvider((state, world, pos, tintIndex) -> {
             if (world == null && pos == null) return 251 << 16 | 193 << 8 | 76;
             float color = state.get(GradientLeavesBlock.COLOR);
@@ -52,8 +42,13 @@ public abstract class BlockColorsMixin {
             if (tintIndex != 1 || world == null || pos == null) return -1;
             EtherBlockEntity blockEntity = (EtherBlockEntity) world.getBlockEntity(pos);
             if (blockEntity == null) return -1;
-            System.out.println(blockEntity.firstColor);
             return blockEntity.firstColor;
         }, WALL_ETHER_TORCH, ETHER_TORCH);
+        blockColors.registerColorProvider((state, world, pos, tintIndex) -> {
+            if (tintIndex == -1 || tintIndex == 0 || world == null || pos == null) return -1;
+            EtherBlockEntity blockEntity = (EtherBlockEntity) world.getBlockEntity(pos);
+            if (blockEntity == null) return -1;
+            return tintIndex == 1 ? blockEntity.firstColor : blockEntity.secondColor;
+        }, IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH);
     }
 }

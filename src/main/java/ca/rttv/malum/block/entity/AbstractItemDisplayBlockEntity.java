@@ -107,8 +107,9 @@ public abstract class AbstractItemDisplayBlockEntity extends BlockEntity impleme
     public void notifyListeners() {
         this.markDirty();
 
-        if(world != null && !world.isClient())
+        if (world != null && !world.isClient) {
             world.updateListeners(getPos(), getCachedState(), getCachedState(), Block.NOTIFY_ALL);
+        }
     }
 
     @Override

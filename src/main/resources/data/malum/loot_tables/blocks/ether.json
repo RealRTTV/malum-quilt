@@ -17,18 +17,13 @@
               "source": "block_entity",
               "ops": [
                 {
-                  "source": "Level_key",
-                  "target": "BlockEntityTag.Level_key",
+                  "source": "FirstColor",
+                  "target": "display.FirstColor",
                   "op": "replace"
                 },
                 {
-                  "source": "firstColor",
-                  "target": "display.firstColor",
-                  "op": "replace"
-                },
-                {
-                  "source": "secondColor",
-                  "target": "display.secondColor",
+                  "source": "SecondColor",
+                  "target": "display.SecondColor",
                   "op": "replace"
                 }
               ]

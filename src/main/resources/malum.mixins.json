@@ -12,6 +12,7 @@
     "DefaultBiomeFeaturesMixin",
     "EnchantmentTargetMixin",
     "EntityModelLayersMixin",
+    "ItemColorsMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "RenderLayersMixin",

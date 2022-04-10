@@ -5,7 +5,7 @@ import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
-public class ColorHelper {
+public final class ColorHelper {
     public static Color getColor(int decimal) {
         int red = BackgroundHelper.ColorMixer.getRed(decimal);
         int green = BackgroundHelper.ColorMixer.getGreen(decimal);

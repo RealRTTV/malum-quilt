@@ -1,5 +1,6 @@
 package ca.rttv.malum.recipe;
 
+import ca.rttv.malum.block.entity.AbstractItemDisplayBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.IngredientWithCount;
@@ -15,6 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,22 +28,10 @@ import java.util.function.Predicate;
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_INFUSION;
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_INFUSION_SERIALIZER;
 
-public class SpiritInfusionRecipe implements Recipe<Inventory> {
-    public final Identifier id;
-    public final String group;
-    public final IngredientWithCount input;
-    public final ItemStack output;
-    public final IngredientWithCount extraItems;
-    public final IngredientWithCount spirits;
-
-    public SpiritInfusionRecipe(Identifier id, String group, IngredientWithCount input, ItemStack output, IngredientWithCount extraItems, IngredientWithCount spirits) {
-        this.id = id;
-        this.group = group;
-        this.input = input;
-        this.output = output;
-        this.extraItems = extraItems;
-        this.spirits = spirits;
-    }
+public record SpiritInfusionRecipe(Identifier id, String group,
+                                   IngredientWithCount input, ItemStack output,
+                                   IngredientWithCount extraItems,
+                                   IngredientWithCount spirits) implements Recipe<Inventory> {
 
     @Override
     public boolean matches(Inventory inventory, World world) {
@@ -68,7 +58,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
             throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
         }
         List<ItemStack> newSpirits = new ArrayList<>(spirits);
-        for (IngredientWithCount.Entry entry : this.spirits.getEntries()){
+        for (IngredientWithCount.Entry entry : this.spirits.getEntries()) {
             IngredientWithCount.StackEntry stackEntry = (IngredientWithCount.StackEntry) entry;
             boolean foundMatch = false;
             for (int i = 0; i < newSpirits.size(); i++) {
@@ -84,7 +74,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
     }
 
     private boolean doesInputMatch(ItemStack stack) {
-        return this.input.getEntries()[0].isValidItem(stack);
+        return input.getEntries()[0].isValidItem(stack);
     }
 
     public static List<SpiritInfusionRecipe> getRecipes(World world) {
@@ -94,15 +84,32 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
     @Override
     public ItemStack craft(Inventory inventory) {
         if (inventory instanceof SpiritAltarBlockEntity blockEntity) {
-            for (int i = 0; i < blockEntity.spiritSlots.size(); i++) {
-                if (blockEntity.spiritSlots.get(i).isEmpty()) break;
-                blockEntity.spiritSlots.get(i).decrement(this.spirits.getEntries()[i].getCount());
+            for (int[] i = new int[]{0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
+                if (blockEntity.spiritSlots.get(i[0]).isEmpty()) break;
+                blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElseThrow().getCount());
             }
-            blockEntity.getHeldItem().decrement(this.input.getEntries()[0].getCount());
-            ItemScatterer.spawn(blockEntity.getWorld(), blockEntity.getPos(), DefaultedList.ofSize(1, this.output.copy())); // this has to be copied since these recipes are stored statically iirc
-            return this.output.copy();
+            blockEntity.getHeldItem().decrement(input.getEntries()[0].getCount());
+            BlockPos pos = blockEntity.getPos();
+            IngredientWithCount.Entry[] entries = blockEntity.recipe.extraItems.getEntries().clone();
+            BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPos -> {
+                //noinspection ConstantConditions
+                if (blockEntity.getWorld().getBlockEntity(reagentPos) instanceof AbstractItemDisplayBlockEntity displayBlock) {
+                    for (IngredientWithCount.Entry entry : entries) {
+                        if (entry.getStacks().stream().anyMatch(stack -> stack.getItem() == displayBlock.getHeldItem().getItem())) {
+                            int amountToRemove = Math.min(entry.getCount(), displayBlock.getHeldItem().getCount());
+                            System.out.println(amountToRemove + " " + entry.getCount() + " " + displayBlock.getHeldItem().getCount());
+                            entry.decrement(amountToRemove);
+                            displayBlock.getHeldItem().decrement(amountToRemove);
+                            displayBlock.notifyListeners();
+                            break;
+                        }
+                    }
+                }
+            });
+            ItemScatterer.spawn(blockEntity.getWorld(), pos, DefaultedList.ofSize(1, output.copy())); // this has to be copied since these recipes are stored statically iirc
+            return output.copy();
         } else {
-            throw new IllegalStateException("Parameter inventory must be an instanceof SpiritAltarBlockEntity");
+            throw new IllegalStateException("Parameter 'inventory' must be an instanceof SpiritAltarBlockEntity");
         }
     }
 
@@ -114,23 +121,23 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
     @Override
     public DefaultedList<Ingredient> getIngredients() {
         DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-        defaultedList.add(this.input.asIngredient());
+        defaultedList.add(input.asIngredient());
         return defaultedList;
     }
 
     @Override
     public ItemStack getOutput() {
-        return this.output;
+        return output;
     }
 
     @Override
     public String getGroup() {
-        return this.group;
+        return group;
     }
 
     @Override
     public Identifier getId() {
-        return this.id;
+        return id;
     }
 
     @Override
@@ -152,7 +159,7 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
             ItemStack output = IngredientWithCount.fromJson(JsonHelper.getObject(jsonObject, "output")).getMatchingStacks()[0];
             IngredientWithCount extraItems = IngredientWithCount.fromJson(JsonHelper.getArray(jsonObject, "extra_items"));
             IngredientWithCount spirits = IngredientWithCount.fromJson(JsonHelper.getArray(jsonObject, "spirits"));
-            return this.recipeFactory.create(id, group, input, output, extraItems, spirits);
+            return recipeFactory.create(id, group, input, output, extraItems, spirits);
         }
 
         public T read(Identifier identifier, PacketByteBuf buf) {
@@ -161,15 +168,15 @@ public class SpiritInfusionRecipe implements Recipe<Inventory> {
             ItemStack output = buf.readItemStack();
             IngredientWithCount extraItems = IngredientWithCount.fromPacket(buf);
             IngredientWithCount spirits = IngredientWithCount.fromPacket(buf);
-            return this.recipeFactory.create(identifier, group, input, output, extraItems, spirits);
+            return recipeFactory.create(identifier, group, input, output, extraItems, spirits);
         }
 
         public void write(PacketByteBuf buf, T spiritInfusionRecipe) {
-            buf.writeString(spiritInfusionRecipe.group);
-            spiritInfusionRecipe.input.write(buf);
-            buf.writeItemStack(spiritInfusionRecipe.output);
-            spiritInfusionRecipe.extraItems.write(buf);
-            spiritInfusionRecipe.spirits.write(buf);
+            buf.writeString(spiritInfusionRecipe.group());
+            spiritInfusionRecipe.input().write(buf);
+            buf.writeItemStack(spiritInfusionRecipe.output());
+            spiritInfusionRecipe.extraItems().write(buf);
+            spiritInfusionRecipe.spirits().write(buf);
         }
 
         public interface RecipeFactory<T extends SpiritInfusionRecipe> {

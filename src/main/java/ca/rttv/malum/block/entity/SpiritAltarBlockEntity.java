@@ -67,15 +67,15 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         spiritSpin += 1 + spinUp / 5f;
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof SpiritAltarBlockEntity altar) {
-            altar.passiveParticles();
-            System.out.println("why");
+//            altar.passiveParticles();
+//            System.out.println("ARATHAIN WHY IT KWASH GAEM, I DONT WANT GAME KWASH WAAAAAAAAA"); //todo
         }
 
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         spiritAmount = Math.max(1, MathHelper.lerp(0.1f, spiritAmount, getSpiritCount(spiritSlots)));
-        if (recipe != null) {
+        if (recipe != null && this.hasExtraItems(state, world, pos, this.getExtraItems(state, world, pos), recipe)) {
             if (spinUp < 10) {
                 spinUp++;
             }
@@ -193,7 +193,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     }
 
     private boolean hasExtraItems(BlockState state, World world, BlockPos pos, List<ItemStack> extraItems, SpiritInfusionRecipe recipe) {
-        for (IngredientWithCount.Entry entry : recipe.extraItems.getEntries()) {
+        for (IngredientWithCount.Entry entry : recipe.extraItems().getEntries()) {
             boolean found = false;
             for (ItemStack extraItem : extraItems) {
                 if (entry.isValidItem(extraItem)) {
@@ -238,7 +238,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         this.notifyListeners();
     }
 
-    private List<ItemStack> getExtraItems(BlockState state, World world, BlockPos pos) {
+    public List<ItemStack> getExtraItems(BlockState state, World world, BlockPos pos) {
         // id have to use a map cause i don't think theres an @Override to equals on itemstack thus memory location equals
         Map<Item, Integer> map = new LinkedHashMap<>();
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPosition -> {

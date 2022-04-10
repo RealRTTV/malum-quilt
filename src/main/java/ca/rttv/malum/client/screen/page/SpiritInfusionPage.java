@@ -50,36 +50,36 @@ public class SpiritInfusionPage extends BookPage {
 
     @Override
     public void renderLeft(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
-        ItemStack[] inputStacks = recipe.input.getMatchingStacks();
+        ItemStack[] inputStacks = recipe.input().getMatchingStacks();
         ItemStack inputStack;
         if (inputStacks.length == 1) {
             inputStack = inputStacks[0];
         } else {
             inputStack = inputStacks[(int) ((client.world.getTime() / 20L) % inputStacks.length)];
         }
-        ItemStack outputStack = recipe.output;
-        if (recipe.extraItems.isPresent()) {
-            renderIngredients(matrices, guiLeft + 105, guiTop + 51, mouseX, mouseY, recipe.extraItems);
+        ItemStack outputStack = recipe.output();
+        if (recipe.extraItems().isPresent()) {
+            renderIngredients(matrices, guiLeft + 105, guiTop + 51, mouseX, mouseY, recipe.extraItems());
         }
-        renderItems(matrices, guiLeft + 15, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getEntries()));
+        renderItems(matrices, guiLeft + 15, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits().getEntries()));
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 67, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 67, guiTop + 126, mouseX, mouseY);
     }
 
     @Override
     public void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
-        ItemStack[] inputStacks = recipe.input.getMatchingStacks();
+        ItemStack[] inputStacks = recipe.input().getMatchingStacks();
         ItemStack inputStack;
         if (inputStacks.length == 1) {
             inputStack = inputStacks[0];
         } else {
             inputStack = inputStacks[(int) ((client.world.getTime() / 20L) % inputStacks.length)];
         }
-        ItemStack outputStack = recipe.output;
-        if (recipe.extraItems.isPresent()) {
-            renderIngredients(matrices, guiLeft + 247, guiTop + 51, mouseX, mouseY, recipe.extraItems);
+        ItemStack outputStack = recipe.output();
+        if (recipe.extraItems().isPresent()) {
+            renderIngredients(matrices, guiLeft + 247, guiTop + 51, mouseX, mouseY, recipe.extraItems());
         }
-        renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits.getEntries()));
+        renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits().getEntries()));
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 209, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 209, guiTop + 126, mouseX, mouseY);
     }

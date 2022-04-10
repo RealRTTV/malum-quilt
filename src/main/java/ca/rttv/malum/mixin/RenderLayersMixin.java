@@ -24,5 +24,11 @@ public abstract class RenderLayersMixin {
         BLOCKS.put(SOULWOOD_TRAPDOOR, RenderLayer.getCutout());
         BLOCKS.put(ETHER_TORCH, RenderLayer.getCutout());
         BLOCKS.put(WALL_ETHER_TORCH, RenderLayer.getCutout());
+        BLOCKS.put(TAINTED_ETHER_BRAZIER, RenderLayer.getCutout());
+        BLOCKS.put(TWISTED_ETHER_BRAZIER, RenderLayer.getCutout());
+        BLOCKS.put(IRIDESCENT_ETHER_TORCH, RenderLayer.getCutout());
+        BLOCKS.put(IRIDESCENT_WALL_ETHER_TORCH, RenderLayer.getCutout());
+        BLOCKS.put(TAINTED_IRIDESCENT_ETHER_BRAZIER, RenderLayer.getCutout());
+        BLOCKS.put(TWISTED_IRIDESCENT_ETHER_BRAZIER, RenderLayer.getCutout());
     }
 }

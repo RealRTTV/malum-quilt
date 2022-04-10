@@ -7,7 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
-public class ItemHelper {
+public final class ItemHelper {
     public static void applyEnchantments(LivingEntity user, Entity target, ItemStack stack) {
         EnchantmentHelper.Consumer consumer = (enchantment, level) ->
                 enchantment.onTargetDamaged(user, target, level);

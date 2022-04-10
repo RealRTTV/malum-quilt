@@ -26,22 +26,21 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
+
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void mixin(Entity target, CallbackInfo ci, float f, float g, boolean bl, boolean bl2, int i, boolean bl3, boolean bl4, double d) {
+    private void attack(Entity target, CallbackInfo ci, float f, float g, boolean bl, boolean bl2, int i, boolean bl3, boolean bl4, double d) {
         if(this.getStackInHand(Hand.MAIN_HAND).getItem() instanceof ScytheItem) {
             float l = 1.0F + EnchantmentHelper.getSweepingMultiplier(this) * f;
 
-            for(LivingEntity livingEntity : this.world.getNonSpectatingEntities(LivingEntity.class, target.getBoundingBox().expand(1.0, 0.25, 1.0))) {
+            for (LivingEntity livingEntity : this.world.getNonSpectatingEntities(LivingEntity.class, target.getBoundingBox().expand(1.0, 0.25, 1.0))) {
                 if (livingEntity != this
-                        && livingEntity != target
-                        && !this.isTeammate(livingEntity)
-                        && (!(livingEntity instanceof ArmorStandEntity) || !((ArmorStandEntity)livingEntity).isMarker())
-                        && this.squaredDistanceTo(livingEntity) < 9.0) {
-                    livingEntity.takeKnockback(
-                            0.4F, (double) MathHelper.sin(this.getYaw() * (float) (Math.PI / 180.0)), (double)(-MathHelper.cos(this.getYaw() * (float) (Math.PI / 180.0)))
-                    );
-                    livingEntity.damage(DamageSource.player( (PlayerEntity) (Object) this), l);
-
+                 && livingEntity != target
+                 && !this.isTeammate(livingEntity)
+                 && (!(livingEntity instanceof ArmorStandEntity) || !((ArmorStandEntity)livingEntity).isMarker())
+                 && this.squaredDistanceTo(livingEntity) < 9.0)
+                {
+                    livingEntity.takeKnockback(0.4F, MathHelper.sin(this.getYaw() * (float) (Math.PI / 180.0)), -MathHelper.cos(this.getYaw() * (float) (Math.PI / 180.0)));
+                    livingEntity.damage(DamageSource.player((PlayerEntity) (Object) this), l);
                 }
             }
 

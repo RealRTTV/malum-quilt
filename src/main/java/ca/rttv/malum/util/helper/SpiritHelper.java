@@ -13,7 +13,7 @@ import java.util.Random;
 
 import static net.minecraft.util.math.MathHelper.nextFloat;
 
-public class SpiritHelper {
+public final class SpiritHelper {
 //    public static void createSpiritsFromSoul(MalumEntitySpiritData data, World world, Vec3d position, LivingEntity attacker) {
 //        ArrayList<ItemStack> spirits = getSpiritItemStacks(data, attacker, ItemStack.EMPTY, 2);
 //        createSpiritEntities(spirits, data.totalCount, world, position, attacker);

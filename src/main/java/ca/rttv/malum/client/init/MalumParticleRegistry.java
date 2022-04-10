@@ -3,25 +3,18 @@ package ca.rttv.malum.client.init;
 import ca.rttv.malum.client.particle.SimpleMalumParticleType;
 import ca.rttv.malum.client.particle.cut.ScytheAttackParticle;
 import ca.rttv.malum.client.particle.spiritflame.SpiritFlameParticleType;
-import ca.rttv.malum.util.helper.DataHelper;
-import ca.rttv.malum.util.particle.world.WorldParticleEffect;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 import static ca.rttv.malum.util.helper.DataHelper.prefix;
 
+@SuppressWarnings("SameParameterValue")
 public class MalumParticleRegistry {
     public static final DefaultParticleType SCYTHE_CUT_ATTACK_PARTICLE = FabricParticleTypes.simple(true);
     public static final DefaultParticleType SCYTHE_SWEEP_ATTACK_PARTICLE = FabricParticleTypes.simple(true);

@@ -13,8 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-import static ca.rttv.malum.registry.MalumRegistry.ARCANE_CHARCOAL;
-import static ca.rttv.malum.registry.MalumRegistry.BLOCK_OF_ARCANE_CHARCOAL;
+import static ca.rttv.malum.registry.MalumRegistry.*;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
 public abstract class AbstractFurnaceBlockEntityMixin {
@@ -31,7 +30,12 @@ public abstract class AbstractFurnaceBlockEntityMixin {
     @Inject(method = "createFuelTimeMap", at = @At(value = "TAIL", shift = At.Shift.BEFORE))
     private static void createFuelTimeMap(CallbackInfoReturnable<Map<Item, Integer>> cir) {
         addFuel(map, ARCANE_CHARCOAL, 3200);
-        addFuel(map, BLOCK_OF_ARCANE_CHARCOAL, 32000);
+        addFuel(map, BLOCK_OF_ARCANE_CHARCOAL, 28800);
+        addFuel(map, ARCANE_CHARCOAL_FRAGMENT, 400);
+        addFuel(map, BLAZING_QUARTZ, 1600);
+        addFuel(map, BLAZING_QUARTZ_FRAGMENT, 200);
+        addFuel(map, BLOCK_OF_BLAZING_QUARTZ, 14400);
+        addFuel(map, CHARCOAL_FRAGMENT, 200);
     }
 
     @Shadow

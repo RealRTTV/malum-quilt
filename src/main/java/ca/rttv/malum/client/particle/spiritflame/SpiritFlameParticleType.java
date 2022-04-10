@@ -12,8 +12,6 @@ import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.ParticleType;
 
-import javax.annotation.Nullable;
-
 public class SpiritFlameParticleType extends ParticleType<WorldParticleEffect> {
 
     public SpiritFlameParticleType() {

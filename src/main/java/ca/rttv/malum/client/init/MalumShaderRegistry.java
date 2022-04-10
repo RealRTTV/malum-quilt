@@ -4,8 +4,6 @@ import ca.rttv.malum.util.ExtendedShader;
 import ca.rttv.malum.util.ShaderHolder;
 import ca.rttv.malum.util.helper.DataHelper;
 import com.mojang.datafixers.util.Pair;
-import ladysnake.satin.api.managed.ManagedCoreShader;
-import ladysnake.satin.api.managed.ShaderEffectManager;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.resource.ResourceManager;

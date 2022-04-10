@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -166,6 +167,8 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         boolean isValidItem(ItemStack stack);
 
         int getCount();
+
+        void decrement(int dec);
     }
 
     public record StackEntry(ItemStack stack) implements Entry {
@@ -195,9 +198,22 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         public int getCount() {
             return stack.getCount();
         }
+
+        @Override
+        public void decrement(int dec) {
+            stack.decrement(dec);
+        }
     }
 
-    public record TagEntry(TagKey<Item> tag, int count) implements Entry {
+    public static final class TagEntry implements Entry {
+        private final TagKey<Item> tag;
+        private int count;
+
+        public TagEntry(TagKey<Item> tag, int count) {
+            this.tag = tag;
+            this.count = count;
+        }
+
         @Override
         public List<ItemStack> getStacks() {
             List<ItemStack> stacks = new ArrayList<>();
@@ -226,5 +242,40 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         public int getCount() {
             return count;
         }
+
+        @Override
+        public void decrement(int dec) {
+            count = count - dec;
+        }
+
+        public TagKey<Item> tag() {
+            return tag;
+        }
+
+        public int count() {
+            return count;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) return true;
+            if (obj == null || obj.getClass() != this.getClass()) return false;
+            var that = (TagEntry) obj;
+            return Objects.equals(this.tag, that.tag) &&
+                    this.count == that.count;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(tag, count);
+        }
+
+        @Override
+        public String toString() {
+            return "TagEntry[" +
+                    "tag=" + tag + ", " +
+                    "count=" + count + ']';
+        }
+
     }
 }
