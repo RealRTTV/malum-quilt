@@ -191,16 +191,16 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new HeadlineTextPage("spirit_pouch", "spirit_pouch"))
                 .addPage(new CraftingBookPage(SPIRIT_POUCH, EMPTY, STRING, EMPTY, SPIRIT_FABRIC, SOUL_SAND, SPIRIT_FABRIC, EMPTY, SPIRIT_FABRIC, EMPTY))
         );
-/*
-        entries.add(new BookEntry(
-                "soul_hunter_gear", SOUL_HUNTER_CLOAK.get(), 4, 7)
-                .addPage(new HeadlineTextPage("soul_hunter_armor", "soul_hunter_armor"))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_HUNTER_CLOAK.get()))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_HUNTER_ROBE.get()))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_HUNTER_LEGGINGS.get()))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_HUNTER_BOOTS.get()))
-        );
 
+        entries.add(new BookEntry(
+                "soul_hunter_gear", SOUL_HUNTER_CLOAK, 4, 7)
+                .addPage(new HeadlineTextPage("soul_hunter_armor", "soul_hunter_armor"))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_hunter_cloak")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_hunter_robe")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_hunter_leggings")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_hunter_boots")))
+        );
+/*
         entries.add(new BookEntry(
                 "spirit_focusing", SPIRIT_CRUCIBLE.get(), 7, 6)
                 .addPage(new HeadlineTextPage("spirit_focusing", "spirit_focusing_a"))

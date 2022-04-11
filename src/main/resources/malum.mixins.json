@@ -4,6 +4,8 @@
   "package": "ca.rttv.malum.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "ArmorFeatureRendererMixin",
+    "ArmorMaterialsMixin",
     "AxeItemMixin",
     "BlockColorsMixin",
     "BlockEntityRendererFactoriesMixin",

@@ -18,6 +18,7 @@ import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
@@ -42,6 +43,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 import static ca.rttv.malum.Malum.*;
+import static ca.rttv.malum.registry.MalumArmorMaterials.SOUL_CLOAK;
 import static ca.rttv.malum.registry.MalumSoundRegistry.*;
 import static net.minecraft.item.ItemGroup.BUILDING_BLOCKS;
 import static net.minecraft.item.ItemGroup.MISC;
@@ -146,10 +148,10 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
     // soul stained steel chestplate
     // soul stained steel leggings
     // soul stained steel boots
-    // soul hunter cloak
-    // soul hunter robe
-    // soul hunter leggings
-    // soul hunter boots
+                                             Item SOUL_HUNTER_CLOAK                         = registerItem             ("soul_hunter_cloak",                         new ArmorItem(SOUL_CLOAK, EquipmentSlot.HEAD, new Item.Settings().group(MALUM)));
+                                             Item SOUL_HUNTER_ROBE                          = registerItem             ("soul_hunter_robe",                          new ArmorItem(SOUL_CLOAK, EquipmentSlot.CHEST, new Item.Settings().group(MALUM)));
+                                             Item SOUL_HUNTER_LEGGINGS                      = registerItem             ("soul_hunter_leggings",                      new ArmorItem(SOUL_CLOAK, EquipmentSlot.LEGS, new Item.Settings().group(MALUM)));
+                                             Item SOUL_HUNTER_BOOTS                         = registerItem             ("soul_hunter_boots",                         new ArmorItem(SOUL_CLOAK, EquipmentSlot.FEET, new Item.Settings().group(MALUM)));
     // tyrving
     // gilded ring
     // ornate ring
