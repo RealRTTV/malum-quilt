@@ -1,7 +1,7 @@
 {
   "parent": "malum:block/templates/template_glowing_block",
   "textures": {
-    "all": "minecraft:block/stone",
+    "all": "malum:block/brilliant_stone",
     "particle": "malum:block/brilliant_stone",
     "glow": "malum:block/brilliant_stone_glow"
   }
