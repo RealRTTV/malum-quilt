@@ -30,7 +30,7 @@ public class RenderHandler {
         if (ClientConfig.DELAYED_PARTICLE_RENDERING) {
             RenderSystem.getModelViewStack().push();
             RenderSystem.getModelViewStack().loadIdentity();
-            if (PARTICLE_MATRIX != null) RenderSystem.getModelViewStack().mulPoseMatrix(PARTICLE_MATRIX);
+            if (PARTICLE_MATRIX != null) RenderSystem.getModelViewStack().method_34425(PARTICLE_MATRIX);
             RenderSystem.applyModelViewMatrix();
             DELAYED_RENDER.draw(RenderLayers.ADDITIVE_PARTICLE);
             DELAYED_RENDER.draw(RenderLayers.ADDITIVE_BLOCK_PARTICLE);

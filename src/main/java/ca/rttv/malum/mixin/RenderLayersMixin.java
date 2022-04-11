@@ -30,5 +30,8 @@ public abstract class RenderLayersMixin {
         BLOCKS.put(IRIDESCENT_WALL_ETHER_TORCH, RenderLayer.getCutout());
         BLOCKS.put(TAINTED_IRIDESCENT_ETHER_BRAZIER, RenderLayer.getCutout());
         BLOCKS.put(TWISTED_IRIDESCENT_ETHER_BRAZIER, RenderLayer.getCutout());
+        BLOCKS.put(BRILLIANT_DEEPSLATE, RenderLayer.getCutout());
+        BLOCKS.put(BRILLIANT_STONE, RenderLayer.getCutout());
+        BLOCKS.put(BLAZING_QUARTZ_ORE, RenderLayer.getCutout());
     }
 }

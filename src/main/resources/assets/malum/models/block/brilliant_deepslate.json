@@ -1,7 +1,7 @@
 {
   "parent": "malum:block/templates/template_glowing_block",
   "textures": {
-    "all": "malum:block/brilliant_deepslate",
+    "all": "minecraft:block/deepslate",
     "particle": "malum:block/brilliant_deepslate",
     "glow": "malum:block/brilliant_deepslate_glow"
   }

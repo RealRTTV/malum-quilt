@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "malum:block/soulwood_leaves_colormapped"
-  }
+  "parent": "malum:block/soulwood_leaves"
 }

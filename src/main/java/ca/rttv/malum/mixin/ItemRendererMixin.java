@@ -1,5 +1,6 @@
 package ca.rttv.malum.mixin;
 
+import ca.rttv.malum.item.ScytheItem;
 import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
@@ -23,7 +24,7 @@ public abstract class ItemRendererMixin {
 
     @Inject(method = "getHeldItemModel", at = @At("HEAD"), cancellable = true)
     private void getHeldItemModel(ItemStack stack, World world, LivingEntity entity, int seed, CallbackInfoReturnable<BakedModel> cir) {
-        if (stack.isOf(CRUDE_SCYTHE)) {
+        if (stack.getItem() instanceof ScytheItem) {
             BakedModel bakedModel = models.getModelManager().getModel(new ModelIdentifier("minecraft:trident_in_hand#inventory")); // this is the model type (not the texture), its insane that copy-pasting this works first try
             ClientWorld clientWorld = world instanceof ClientWorld ? (ClientWorld)world : null;
             BakedModel bakedModel2 = bakedModel.getOverrides().apply(bakedModel, stack, clientWorld, entity, seed);
