@@ -183,15 +183,15 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new CraftingBookPage(TAINTED_IRIDESCENT_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TAINTED_ROCK.asItem(), IRIDESCENT_ETHER.asItem(), TAINTED_ROCK.asItem(), STICK, TAINTED_ROCK.asItem(), STICK))
                 .addPage(new CraftingBookPage(TWISTED_IRIDESCENT_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TWISTED_ROCK.asItem(), IRIDESCENT_ETHER.asItem(), TWISTED_ROCK.asItem(), STICK, TWISTED_ROCK.asItem(), STICK))
         );
-/*
-        entries.add(new BookEntry(
-                "spirit_fabric", SPIRIT_FABRIC.get(), 4, 5)
-                .addPage(new HeadlineTextPage("spirit_fabric", "spirit_fabric"))
-                .addPage(SpiritInfusionPage.fromOutput(SPIRIT_FABRIC.get()))
-                .addPage(new HeadlineTextPage("spirit_pouch", "spirit_pouch"))
-                .addPage(new CraftingBookPage(SPIRIT_POUCH.get(), EMPTY, STRING, EMPTY, SPIRIT_FABRIC.get(), SOUL_SAND, SPIRIT_FABRIC.get(), EMPTY, SPIRIT_FABRIC.get(), EMPTY))
-        );
 
+        entries.add(new BookEntry(
+                "spirit_fabric", SPIRIT_FABRIC, 4, 5)
+                .addPage(new HeadlineTextPage("spirit_fabric", "spirit_fabric"))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/spirit_fabric")))
+                .addPage(new HeadlineTextPage("spirit_pouch", "spirit_pouch"))
+                .addPage(new CraftingBookPage(SPIRIT_POUCH, EMPTY, STRING, EMPTY, SPIRIT_FABRIC, SOUL_SAND, SPIRIT_FABRIC, EMPTY, SPIRIT_FABRIC, EMPTY))
+        );
+/*
         entries.add(new BookEntry(
                 "soul_hunter_gear", SOUL_HUNTER_CLOAK.get(), 4, 7)
                 .addPage(new HeadlineTextPage("soul_hunter_armor", "soul_hunter_armor"))

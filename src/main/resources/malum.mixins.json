@@ -13,6 +13,7 @@
     "DefaultBiomeFeaturesMixin",
     "EnchantmentTargetMixin",
     "EntityModelLayersMixin",
+    "HandledScreensMixin",
     "ItemColorsMixin",
     "ItemRendererMixin",
     "JsonEffectGlShaderMixin",

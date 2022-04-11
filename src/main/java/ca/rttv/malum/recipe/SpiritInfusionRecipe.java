@@ -2,6 +2,10 @@ package ca.rttv.malum.recipe;
 
 import ca.rttv.malum.block.entity.AbstractItemDisplayBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
+import ca.rttv.malum.item.EtherBlockItem;
+import ca.rttv.malum.item.EtherWallStandingBlockItem;
+import ca.rttv.malum.item.IridescentEtherBlockItem;
+import ca.rttv.malum.item.IridescentEtherWallStandingBlockItem;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.helper.NbtHelper;
 import com.google.gson.JsonObject;
@@ -85,9 +89,9 @@ public record SpiritInfusionRecipe(Identifier id, String group,
     @Override
     public ItemStack craft(Inventory inventory) {
         if (inventory instanceof SpiritAltarBlockEntity blockEntity) {
-            for (int[] i = new int[]{0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
+            for (int[] i = {0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
                 if (blockEntity.spiritSlots.get(i[0]).isEmpty()) break;
-                blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElseThrow().getCount());
+                blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElseGet(() -> new IngredientWithCount.StackEntry(ItemStack.EMPTY)).getCount());
             }
             blockEntity.getHeldItem().decrement(input.getEntries()[0].getCount());
             BlockPos pos = blockEntity.getPos();
@@ -108,12 +112,14 @@ public record SpiritInfusionRecipe(Identifier id, String group,
                 }
             });
             ItemStack stack = output.copy();
-            NbtCompound nbt = new NbtCompound();
-            NbtCompound displayNbt = new NbtCompound();
-            displayNbt.putInt("FirstColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "FirstColor"), 15712278, blockEntity.getHeldItem().getNbt()));
-            displayNbt.putInt("SecondColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "SecondColor"), 4607909, blockEntity.getHeldItem().getNbt()));
-            nbt.put("display", displayNbt);
-            stack.setNbt(nbt);
+            if (stack.getItem() instanceof EtherBlockItem || stack.getItem() instanceof EtherWallStandingBlockItem || stack.getItem() instanceof IridescentEtherBlockItem || stack.getItem() instanceof IridescentEtherWallStandingBlockItem) {
+                NbtCompound nbt = new NbtCompound();
+                NbtCompound displayNbt = new NbtCompound();
+                displayNbt.putInt("FirstColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "FirstColor"), 15712278, blockEntity.getHeldItem().getNbt()));
+                displayNbt.putInt("SecondColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "SecondColor"), 4607909, blockEntity.getHeldItem().getNbt()));
+                nbt.put("display", displayNbt);
+                stack.setNbt(nbt);
+            }
             ItemScatterer.spawn(blockEntity.getWorld(), pos.up(), DefaultedList.ofSize(1, stack)); // this has to be copied since these recipes are stored statically-ish iirc
             return stack;
         } else {

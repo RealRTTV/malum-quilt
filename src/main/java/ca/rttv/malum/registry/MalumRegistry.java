@@ -11,6 +11,7 @@ import ca.rttv.malum.item.*;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SavedNbtRecipe;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
+import ca.rttv.malum.screen.SpiritPouchScreenHandler;
 import ca.rttv.malum.world.gen.feature.GradientTreeFeature;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import net.minecraft.block.AbstractBlock.Settings;
@@ -23,6 +24,8 @@ import net.minecraft.item.*;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
@@ -58,6 +61,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
     Map<Identifier, RecipeSerializer<? extends Recipe<?>>>         RECIPE_SERIALIZER = new LinkedHashMap<>();
     ArrayList<SignType>                                            SIGN_TYPES = new ArrayList<>();
     Map<Identifier, ConfiguredFeature<? extends FeatureConfig, ?>> CONFIGURED_FEATURES = new LinkedHashMap<>();
+    Map<Identifier, ScreenHandlerType<? extends ScreenHandler>>    SCREEN_HANDLERS     = new LinkedHashMap<>();
 
     // sign types
                                           SignType RUNEWOOD_SIGN_TYPE                        = registerSignType         (new SignType("runewood"));
@@ -72,14 +76,14 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                    BlockSoundGroup BLOCK_BRILLIANCE_SOUNDS                   = new BlockSoundGroup      (1.0f, 1.0f, BRILLIANCE_BREAK, BLOCK_STONE_STEP, BRILLIANCE_PLACE, BLOCK_STONE_HIT, BLOCK_STONE_FALL);
 
     // items & blocks, sorted [Malum]
-                                              Item ENCYCLOPEDIA_ARCANA                       = registerItem             ("encyclopedia_arcana",                       new EncyclopediaArcanaItem(new Item.Settings().rarity(Rarity.UNCOMMON).group(MALUM)));
-                                             Block SOULSTONE_ORE                             = registerBlockItem        ("soulstone_ore",                             new OreBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-                                             Block DEEPSLATE_SOULSTONE_ORE                   = registerBlockItem        ("deepslate_soulstone_ore",                   new OreBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(7.0f, 6.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-                                              Item RAW_SOULSTONE                             = registerItem             ("raw_soulstone",                             new Item(new Item.Settings().group(MALUM)));
-                                              Item PROCESSED_SOULSTONE                       = registerItem             ("processed_soulstone",                       new Item(new Item.Settings().group(MALUM)));
-                                             Block BLOCK_OF_RAW_SOULSTONE                    = registerBlockItem        ("block_of_raw_soulstone",                    new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-                                             Block BLOCK_OF_SOULSTONE                        = registerBlockItem        ("block_of_soulstone",                        new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
-                                             Block SPIRIT_ALTAR                              = registerBlockItem        ("spirit_altar",                              new SpiritAltarBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)), MALUM);
+                                              Item ENCYCLOPEDIA_ARCANA                      = registerItem             ("encyclopedia_arcana",                       new EncyclopediaArcanaItem(new Item.Settings().rarity(Rarity.UNCOMMON).group(MALUM)));
+                                             Block SOULSTONE_ORE                            = registerBlockItem        ("soulstone_ore",                             new OreBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+                                             Block DEEPSLATE_SOULSTONE_ORE                  = registerBlockItem        ("deepslate_soulstone_ore",                   new OreBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(7.0f, 6.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+                                              Item RAW_SOULSTONE                            = registerItem             ("raw_soulstone",                             new Item(new Item.Settings().group(MALUM)));
+                                              Item PROCESSED_SOULSTONE                      = registerItem             ("processed_soulstone",                       new Item(new Item.Settings().group(MALUM)));
+                                             Block BLOCK_OF_RAW_SOULSTONE                   = registerBlockItem        ("block_of_raw_soulstone",                    new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+                                             Block BLOCK_OF_SOULSTONE                       = registerBlockItem        ("block_of_soulstone",                        new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
+                                             Block SPIRIT_ALTAR                             = registerBlockItem        ("spirit_altar",                              new SpiritAltarBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)), MALUM);
     // spirit jar
     // soul vial
     // runewood obelisk
@@ -89,8 +93,8 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
     // soulwood totem base
     // soulwood plinth
     // soulwood fusion plate
-                                              Item HEX_ASH                                   = registerItem             ("hex_ash",                                   new Item(new Item.Settings().group(MALUM)));
-                                              Item SPIRIT_FABRIC                             = registerItem             ("spirit_fabric",                             new Item(new Item.Settings().group(MALUM)));
+                                              Item HEX_ASH                                  = registerItem             ("hex_ash",                                   new Item(new Item.Settings().group(MALUM)));
+                                              Item SPIRIT_FABRIC                            = registerItem             ("spirit_fabric",                             new Item(new Item.Settings().group(MALUM)));
     // spectral lens
     // poppet
     // hallowed gold ingot
@@ -129,7 +133,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Item TAINTED_IRIDESCENT_ETHER_BRAZIER_ITEM     = registerItem             ("tainted_iridescent_ether_brazier",          new IridescentEtherBlockItem(TAINTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
                                             Block TWISTED_IRIDESCENT_ETHER_BRAZIER          = registerBlock            ("twisted_iridescent_ether_brazier",          new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)));
                                              Item TWISTED_IRIDESCENT_ETHER_BRAZIER_ITEM     = registerItem             ("twisted_iridescent_ether_brazier",          new IridescentEtherBlockItem(TWISTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-    // spirit pouch
+                                             Item SPIRIT_POUCH                              = registerItem             ("spirit_pouch",                              new SpiritPouchItem(new Item.Settings().group(MALUM).maxCount(1)));
                                              Item CRUDE_SCYTHE                              = registerScytheItem       ("crude_scythe",                              new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Item.Settings().group(MALUM)));
     // soul stained steel scythe
     // soulwood stave
@@ -342,10 +346,10 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Item AQUEOUS_SPIRIT                            = registerItem             ("aqueous_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.AQUEOUS_SPIRIT));
     // items & blocks, sorted [Building Blocks]
                                             Block BLOCK_OF_ARCANE_CHARCOAL                  = registerBlockItem        ("block_of_arcane_charcoal",                  new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 6.0f).sounds(BLOCK_ARCANE_CHARCOAL_SOUNDS)), BUILDING_BLOCKS);
-                                            Block BLAZING_QUARTZ_ORE                        = registerBlockItem        ("blazing_quartz_ore",                        new Block(Settings.of(Material.STONE, MapColor.DARK_RED).strength(3.0f, 3.0f).sounds(BLOCK_BLAZING_QUARTZ_ORE_SOUNDS)), BUILDING_BLOCKS); // todo: natural generation
+                                            Block BLAZING_QUARTZ_ORE                        = registerBlockItem        ("blazing_quartz_ore",                        new Block(Settings.of(Material.STONE, MapColor.DARK_RED).strength(3.0f, 3.0f).sounds(BLOCK_BLAZING_QUARTZ_ORE_SOUNDS)), BUILDING_BLOCKS);
                                             Block BLOCK_OF_BLAZING_QUARTZ                   = registerBlockItem        ("block_of_blazing_quartz",                   new Block(Settings.of(Material.STONE, MapColor.RED).strength(5.0f, 6.0f).sounds(BLOCK_BLAZING_QUARTZ_BLOCK_SOUNDS)), BUILDING_BLOCKS);
-                                            Block BRILLIANT_STONE                           = registerBlockItem        ("brilliant_stone",                           new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).strength(3.0f, 3.0f).sounds(BLOCK_BRILLIANCE_SOUNDS)), BUILDING_BLOCKS); // todo: natural generation
-                                            Block BRILLIANT_DEEPSLATE                       = registerBlockItem        ("brilliant_deepslate",                       new Block(Settings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 3.0f).sounds(DEEPSLATE)), BUILDING_BLOCKS); // todo: natural generation
+                                            Block BRILLIANT_STONE                           = registerBlockItem        ("brilliant_stone",                           new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).strength(3.0f, 3.0f).sounds(BLOCK_BRILLIANCE_SOUNDS)), BUILDING_BLOCKS);
+                                            Block BRILLIANT_DEEPSLATE                       = registerBlockItem        ("brilliant_deepslate",                       new Block(Settings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 3.0f).sounds(DEEPSLATE)), BUILDING_BLOCKS);
                                             Block BLOCK_OF_BRILLIANCE                       = registerBlockItem        ("block_of_brilliance",                       new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).strength(3.0f, 3.0f).sounds(DEEPSLATE)), BUILDING_BLOCKS);
     // items & blocks, sorted [Miscellaneous]
     // copper nugget
@@ -391,6 +395,13 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
         Holder<ConfiguredFeature<OreFeatureConfig, ?>> ORE_BRILLIANCE_CONFIGURED            = registerConfiguredFeature("ore_brilliance", Feature.ORE, new OreFeatureConfig(BRILLIANCE_ORE_TARGETS, 2)); // i == maxSize
                                  Holder<PlacedFeature> ORE_BRILLIANCE_PLACED                = registerPlacedFeature    ("ore_brilliance", ORE_BRILLIANCE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(4, HeightRangePlacementModifier.createUniform(YOffset.fixed(-80), YOffset.fixed(40)))); // y -80 and y 40, count == spawn count
 
+           ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER          = registerScreenHandler    ("spirit_pouch", SpiritPouchScreenHandler::new);
+
+    static <T extends ScreenHandler> ScreenHandlerType<T> registerScreenHandler(String id, ScreenHandlerType.Factory<T> factory) {
+        ScreenHandlerType<T> screenHandlerType = new ScreenHandlerType<>(factory);
+        SCREEN_HANDLERS.put(new Identifier(MODID, id), screenHandlerType);
+        return screenHandlerType;
+    }
 
     static Holder<PlacedFeature> registerPlacedFeature(String id, Holder<? extends ConfiguredFeature<?, ?>> configuredFeature, List<PlacementModifier> modifiers) {
         return PlacedFeatureUtil.register(id, configuredFeature, modifiers);
@@ -457,6 +468,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                    FEATURES.forEach((id, feature)     ->   Registry.register(Registry.FEATURE,           id, feature   ));
                RECIPE_TYPES.forEach((id, type)        ->   Registry.register(Registry.RECIPE_TYPE,       id, type      ));
           RECIPE_SERIALIZER.forEach((id, serializer)  ->   Registry.register(Registry.RECIPE_SERIALIZER, id, serializer));
+            SCREEN_HANDLERS.forEach((id, handler)     ->   Registry.register(Registry.SCREEN_HANDLER,    id, handler   ));
                  SIGN_TYPES.forEach(                       SignType::register                                           );
           MalumEnchantments.init();
          MalumSoundRegistry.init();

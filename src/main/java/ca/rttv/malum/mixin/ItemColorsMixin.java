@@ -1,6 +1,5 @@
 package ca.rttv.malum.mixin;
 
-import ca.rttv.malum.util.helper.ColorHelper;
 import ca.rttv.malum.util.helper.NbtHelper;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
@@ -9,8 +8,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.awt.*;
 
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
@@ -38,11 +35,11 @@ public abstract class ItemColorsMixin {
         }, IRIDESCENT_ETHER_ITEM);
         itemColors.register((stack, tintIndex) -> {
             if (tintIndex != 0) return -1;
-            return ColorHelper.getColor(new Color(251, 193, 76));
+            return 251 << 16 | 193 << 8 | 76;
         }, RUNEWOOD_LEAVES);
         itemColors.register((stack, tintIndex) -> {
             if (tintIndex != 0) return -1;
-            return ColorHelper.getColor(new Color(224, 30, 214));
+            return 224 << 16 | 30 << 8 | 214;
         }, SOULWOOD_LEAVES);
     }
 }
