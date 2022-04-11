@@ -8,8 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static ca.rttv.malum.registry.MalumRegistry.LOWER_ORE_SOULSTONE_PLACED;
-import static ca.rttv.malum.registry.MalumRegistry.UPPER_ORE_SOULSTONE_PLACED;
+import static ca.rttv.malum.registry.MalumRegistry.*;
 
 @Mixin(DefaultBiomeFeatures.class)
 public abstract class DefaultBiomeFeaturesMixin {
@@ -17,5 +16,6 @@ public abstract class DefaultBiomeFeaturesMixin {
     private static void addSoulstoneOre(GenerationSettings.Builder builder, boolean largeCopperOreBlob, CallbackInfo ci) {
         builder.feature(GenerationStep.Feature.UNDERGROUND_ORES, LOWER_ORE_SOULSTONE_PLACED);
         builder.feature(GenerationStep.Feature.UNDERGROUND_ORES, UPPER_ORE_SOULSTONE_PLACED);
+        builder.feature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_BRILLIANCE_PLACED);
     }
 }
