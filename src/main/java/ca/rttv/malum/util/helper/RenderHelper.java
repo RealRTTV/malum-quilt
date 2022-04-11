@@ -240,11 +240,11 @@ public final class RenderHelper {
         }
 
         public VertexBuilder renderBeam(VertexConsumer vertexConsumer, MatrixStack matrices, Vec3d start, Vec3d end, float width) {
-            MinecraftClient minecraft = MinecraftClient.getInstance();
+            MinecraftClient client = MinecraftClient.getInstance();
             start.add(xOffset, yOffset, zOffset);
             end.add(xOffset, yOffset, zOffset);
             matrices.translate(-start.x, -start.y, -start.z);
-            Vec3d cameraPosition = minecraft.getBlockEntityRenderDispatcher().camera.getPos();
+            Vec3d cameraPosition = client.getBlockEntityRenderDispatcher().camera.getPos();
             Vec3d delta = end.subtract(start);
             Vec3d normal = start.subtract(cameraPosition).crossProduct(delta).normalize().multiply(width / 2f, width / 2f, width / 2f);
             Matrix4f last = matrices.peek().getModel();

@@ -41,10 +41,10 @@ public class ScytheItemRenderer implements BuiltinItemRendererRegistry.DynamicIt
 
     @Override
     public void reload(ResourceManager manager) {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        this.itemRenderer = mc.getItemRenderer();
-        this.inventoryScytheModel = mc.getBakedModelManager().getModel(new ModelIdentifier(this.scytheId + "_gui", "inventory"));
-        this.worldScytheModel = mc.getBakedModelManager().getModel(new ModelIdentifier(this.scytheId + "_handheld", "inventory"));
+        final MinecraftClient client = MinecraftClient.getInstance();
+        this.itemRenderer = client.getItemRenderer();
+        this.inventoryScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(this.scytheId + "_gui", "inventory"));
+        this.worldScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(this.scytheId + "_handheld", "inventory"));
     }
     @Override
     public void render(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
@@ -54,7 +54,7 @@ public class ScytheItemRenderer implements BuiltinItemRendererRegistry.DynamicIt
             itemRenderer.renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryScytheModel);
         } else {
             boolean leftHanded;
-            switch(mode) {
+            switch (mode) {
                 case FIRST_PERSON_LEFT_HAND, THIRD_PERSON_LEFT_HAND -> leftHanded = true;
                 default -> leftHanded = false;
             }

@@ -13,6 +13,7 @@
     "EnchantmentTargetMixin",
     "EntityModelLayersMixin",
     "ItemColorsMixin",
+    "ItemRendererMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "RenderLayersMixin",
