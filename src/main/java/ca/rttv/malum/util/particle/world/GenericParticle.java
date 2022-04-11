@@ -6,7 +6,6 @@ import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.particle.SimpleParticleEffect;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
 import net.minecraft.client.gui.hud.BackgroundHelper;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.render.Camera;

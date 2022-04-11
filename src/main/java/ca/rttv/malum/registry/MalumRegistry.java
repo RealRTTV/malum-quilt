@@ -9,6 +9,7 @@ import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.block.sapling.SoulwoodSaplingGenerator;
 import ca.rttv.malum.item.*;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.recipe.SavedNbtRecipe;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.world.gen.feature.GradientTreeFeature;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
@@ -33,6 +34,7 @@ import net.minecraft.world.gen.decorator.HeightRangePlacementModifier;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil;
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -109,23 +111,23 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
     // copper impetus
     // cracked gold impetus
     // gold impetus
-                                            Block ETHER                                     = registerBlock            ("ether",                                     new EtherBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD) /* todo: particle */));
+                                            Block ETHER                                     = registerBlock            ("ether",                                     new EtherBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)));
                                              Item ETHER_ITEM                                = registerItem             ("ether",                                     new EtherBlockItem(ETHER, new Item.Settings().group(MALUM)));
-                                            Block ETHER_TORCH                               = registerBlock            ("ether_torch",                               new EtherTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD) /* todo: particle */));
-                                            Block WALL_ETHER_TORCH                          = registerBlock            ("wall_ether_torch",                          new EtherWallTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD) /* todo: particle */));
+                                            Block ETHER_TORCH                               = registerBlock            ("ether_torch",                               new EtherTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)));
+                                            Block WALL_ETHER_TORCH                          = registerBlock            ("wall_ether_torch",                          new EtherWallTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)));
                                              Item ETHER_TORCH_ITEM                          = registerItem             ("ether_torch",                               new EtherWallStandingBlockItem(ETHER_TORCH, WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
-                                            Block TAINTED_ETHER_BRAZIER                     = registerBlock            ("tainted_ether_brazier",                     new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14) /* todo: particle */));
+                                            Block TAINTED_ETHER_BRAZIER                     = registerBlock            ("tainted_ether_brazier",                     new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)));
                                              Item TAINTED_ETHER_BRAZIER_ITEM                = registerItem             ("tainted_ether_brazier",                     new EtherBlockItem(TAINTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-                                            Block TWISTED_ETHER_BRAZIER                     = registerBlock            ("twisted_ether_brazier",                     new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14) /* todo: particle */));
+                                            Block TWISTED_ETHER_BRAZIER                     = registerBlock            ("twisted_ether_brazier",                     new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)));
                                              Item TWISTED_ETHER_BRAZIER_ITEM                = registerItem             ("twisted_ether_brazier",                     new EtherBlockItem(TWISTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-                                            Block IRIDESCENT_ETHER                          = registerBlock            ("iridescent_ether",                          new EtherBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD) /* todo: particle */));
+                                            Block IRIDESCENT_ETHER                          = registerBlock            ("iridescent_ether",                          new EtherBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)));
                                              Item IRIDESCENT_ETHER_ITEM                     = registerItem             ("iridescent_ether",                          new IridescentEtherBlockItem(IRIDESCENT_ETHER, new Item.Settings().group(MALUM)));
-                                            Block IRIDESCENT_ETHER_TORCH                    = registerBlock            ("iridescent_ether_torch",                    new EtherTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)) /* todo: particle */);
-                                            Block IRIDESCENT_WALL_ETHER_TORCH               = registerBlock            ("iridescent_wall_ether_torch",               new EtherWallTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)) /* todo: particle */);
+                                            Block IRIDESCENT_ETHER_TORCH                    = registerBlock            ("iridescent_ether_torch",                    new EtherTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)));
+                                            Block IRIDESCENT_WALL_ETHER_TORCH               = registerBlock            ("iridescent_wall_ether_torch",               new EtherWallTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)));
                                              Item IRIDESCENT_ETHER_TORCH_ITEM               = registerItem             ("iridescent_ether_torch",                    new IridescentEtherWallStandingBlockItem(IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
-                                            Block TAINTED_IRIDESCENT_ETHER_BRAZIER          = registerBlock            ("tainted_iridescent_ether_brazier",          new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)) /* todo: particle*/);
+                                            Block TAINTED_IRIDESCENT_ETHER_BRAZIER          = registerBlock            ("tainted_iridescent_ether_brazier",          new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)));
                                              Item TAINTED_IRIDESCENT_ETHER_BRAZIER_ITEM     = registerItem             ("tainted_iridescent_ether_brazier",          new IridescentEtherBlockItem(TAINTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-                                            Block TWISTED_IRIDESCENT_ETHER_BRAZIER          = registerBlock            ("twisted_iridescent_ether_brazier",          new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)) /* todo: particle */);
+                                            Block TWISTED_IRIDESCENT_ETHER_BRAZIER          = registerBlock            ("twisted_iridescent_ether_brazier",          new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)));
                                              Item TWISTED_IRIDESCENT_ETHER_BRAZIER_ITEM     = registerItem             ("twisted_iridescent_ether_brazier",          new IridescentEtherBlockItem(TWISTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
     // spirit pouch
                                              Item CRUDE_SCYTHE                              = registerScytheItem       ("crude_scythe",                              new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Item.Settings().group(MALUM)));
@@ -172,9 +174,9 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                             Block SMALL_TAINTED_ROCK_BRICKS                 = registerBlockItem        ("small_tainted_rock_bricks",                 new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block CRACKED_SMALL_TAINTED_ROCK_BRICKS         = registerBlockItem        ("cracked_small_tainted_rock_bricks",         new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block TAINTED_ROCK_PILLAR                       = registerBlockItem        ("tainted_rock_pillar",                       new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
-                                            Block TAINTED_ROCK_PILLAR_CAP                   = registerBlockItem        ("tainted_rock_pillar_cap",                   new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+                                            Block TAINTED_ROCK_PILLAR_CAP                   = registerBlockItem        ("tainted_rock_pillar_cap",                   new PillarCapBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block TAINTED_ROCK_COLUMN                       = registerBlockItem        ("tainted_rock_column",                       new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
-                                            Block TAINTED_ROCK_COLUMN_CAP                   = registerBlockItem        ("tainted_rock_column_cap",                   new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+                                            Block TAINTED_ROCK_COLUMN_CAP                   = registerBlockItem        ("tainted_rock_column_cap",                   new PillarCapBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block CUT_TAINTED_ROCK                          = registerBlockItem        ("cut_tainted_rock",                          new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block CHISELED_TAINTED_ROCK                     = registerBlockItem        ("chiseled_tainted_rock",                     new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block TAINTED_ROCK_PRESSURE_PLATE               = registerBlockItem        ("tainted_rock_pressure_plate",               new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
@@ -215,9 +217,9 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                             Block SMALL_TWISTED_ROCK_BRICKS                 = registerBlockItem        ("small_twisted_rock_bricks",                 new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block CRACKED_SMALL_TWISTED_ROCK_BRICKS         = registerBlockItem        ("cracked_small_twisted_rock_bricks",         new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block TWISTED_ROCK_PILLAR                       = registerBlockItem        ("twisted_rock_pillar",                       new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
-                                            Block TWISTED_ROCK_PILLAR_CAP                   = registerBlockItem        ("twisted_rock_pillar_cap",                   new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+                                            Block TWISTED_ROCK_PILLAR_CAP                   = registerBlockItem        ("twisted_rock_pillar_cap",                   new PillarCapBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block TWISTED_ROCK_COLUMN                       = registerBlockItem        ("twisted_rock_column",                       new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
-                                            Block TWISTED_ROCK_COLUMN_CAP                   = registerBlockItem        ("twisted_rock_column_cap",                   new PillarBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
+                                            Block TWISTED_ROCK_COLUMN_CAP                   = registerBlockItem        ("twisted_rock_column_cap",                   new PillarCapBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block CUT_TWISTED_ROCK                          = registerBlockItem        ("cut_twisted_rock",                          new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block CHISELED_TWISTED_ROCK                     = registerBlockItem        ("chiseled_twisted_rock",                     new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
                                             Block TWISTED_ROCK_PRESSURE_PLATE               = registerBlockItem        ("twisted_rock_pressure_plate",               new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
@@ -353,26 +355,28 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Item ARCANE_CHARCOAL_FRAGMENT                  = registerItem             ("arcane_charcoal_fragment",                  new Item(new Item.Settings().group(MISC)));
                                              Item BLAZING_QUARTZ                            = registerItem             ("blazing_quartz",                            new Item(new Item.Settings().group(MISC)));
                                              Item BLAZING_QUARTZ_FRAGMENT                   = registerItem             ("blazing_quartz_fragment",                   new Item(new Item.Settings().group(MISC)));
-                                             Item BRILLIANCE_CLUSTER                        = registerItem             ("brilliance_cluster",                        new Item(new Item.Settings().group(MISC)));
-                                             Item BRILLIANCE_CHUNK                          = registerItem             ("brilliance_chunk",                          new Item(new Item.Settings().group(MISC)));
+                                             Item CLUSTER_OF_BRILLIANCE                     = registerItem             ("cluster_of_brilliance",                     new Item(new Item.Settings().group(MISC)));
+                                             Item CHUNK_OF_BRILLIANCE                       = registerItem             ("chunk_of_brilliance",                       new Item(new Item.Settings().group(MISC)));
 
     // the device
 
-                                             Block THE_DEVICE                               = registerBlockItem        ("the_device",                          new TheDevice(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), null);
+                                             Block THE_DEVICE                               = registerBlockItem        ("the_device",                                new TheDevice(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), null);
     // block entities
             BlockEntityType<ItemStandBlockEntity> ITEM_STAND_BLOCK_ENTITY                   = registerBlockEntity      ("item_stand",                                BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND, SOULWOOD_ITEM_STAND, TAINTED_ROCK_ITEM_STAND, TWISTED_ROCK_ITEM_STAND).build(null));
          BlockEntityType<ItemPedestalBlockEntity> ITEM_PEDESTAL_BLOCK_ENTITY                = registerBlockEntity      ("item_pedestal",                             BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL, SOULWOOD_ITEM_PEDESTAL, TAINTED_ROCK_ITEM_PEDESTAL, TWISTED_ROCK_ITEM_PEDESTAL).build(null));
           BlockEntityType<SpiritAltarBlockEntity> SPIRIT_ALTAR_BLOCK_ENTITY                 = registerBlockEntity      ("spirit_altar",                              BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
-                BlockEntityType<EtherBlockEntity> ETHER_BLOCK_ENTITY                        = registerBlockEntity      ("ether",                                     BlockEntityType.Builder.create(EtherBlockEntity::new, ETHER, ETHER_TORCH, WALL_ETHER_TORCH, TAINTED_ETHER_BRAZIER, TWISTED_ETHER_BRAZIER).build(null));
+                BlockEntityType<EtherBlockEntity> ETHER_BLOCK_ENTITY                        = registerBlockEntity      ("ether",                                     BlockEntityType.Builder.create(EtherBlockEntity::new, ETHER, ETHER_TORCH, WALL_ETHER_TORCH, TAINTED_ETHER_BRAZIER, TWISTED_ETHER_BRAZIER, IRIDESCENT_ETHER, IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, TAINTED_IRIDESCENT_ETHER_BRAZIER, TWISTED_IRIDESCENT_ETHER_BRAZIER).build(null));
 
                  RecipeType<SpiritInfusionRecipe> SPIRIT_INFUSION                           = registerRecipeType       ("spirit_infusion",                           new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
            RecipeSerializer<SpiritInfusionRecipe> SPIRIT_INFUSION_SERIALIZER                = registerRecipeSerializer ("spirit_infusion",                           new SpiritInfusionRecipe.Serializer<>(SpiritInfusionRecipe::new));
+                       RecipeType<SavedNbtRecipe> SAVED_NBT_RECIPE                          = registerRecipeType       ("nbt_carry",                                 new RecipeType<>() { public String toString() { return "nbt_carry"; } });
+                 RecipeSerializer<SavedNbtRecipe> SAVED_NBT_RECIPE_SERIALIZER               = registerRecipeSerializer ("nbt_carry",                                 new SavedNbtRecipe.Serializer());
 
                     Feature<DefaultFeatureConfig> RUNEWOOD_TREE_FEATURE                     = registerFeature          ("runewood_tree",                             new GradientTreeFeature(EXPOSED_RUNEWOOD_LOG, RUNEWOOD_LEAVES, RUNEWOOD_LOG, RUNEWOOD_SAPLING));
                     Feature<DefaultFeatureConfig> SOULWOOD_TREE_FEATURE                     = registerFeature          ("soulwood_tree",                             new GradientTreeFeature(EXPOSED_SOULWOOD_LOG, SOULWOOD_LEAVES, SOULWOOD_LOG, SOULWOOD_SAPLING));
 
                     List<OreFeatureConfig.Target> SOULSTONE_ORE_TARGETS                     = List.of                  (OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()),
-                                                                                                                                            OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
+                                                                                                                        OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
     Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE     = registerConfiguredFeature("runewood_tree",       RUNEWOOD_TREE_FEATURE);
     Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_SOULWOOD_TREE_FEATURE     = registerConfiguredFeature("soulwood_tree",       SOULWOOD_TREE_FEATURE);
 
@@ -392,13 +396,9 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
         return block;
     }
 
-    static <T extends Block> T registerBlockItem(String id, T block, ItemGroup itemGroup) {
+    static <T extends Block> T registerBlockItem(String id, T block, @Nullable ItemGroup itemGroup) {
         BLOCKS.put(new Identifier(MODID, id), block);
-        if(itemGroup != null) {
-            ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Item.Settings().group(itemGroup)));
-        } else {
-            ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Item.Settings()));
-        }
+        ITEMS.put(new Identifier(MODID, id), new BlockItem(block, new Item.Settings().group(itemGroup)));
         return block;
     }
 

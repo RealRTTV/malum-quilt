@@ -29,7 +29,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-import static ca.rttv.malum.registry.MalumRegistry.ETHER_BLOCK_ENTITY;
 import static ca.rttv.malum.registry.MalumRegistry.ITEM_PEDESTAL_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")

@@ -153,13 +153,13 @@ public final class DataHelper {
         return pos.add(new Vec3d(x, 0, z));
     }
 
-    public static Vec3d rotatedCirclePosition(Vec3d pos, float distance, float current, float total, long gameTime, float time) {
-        return rotatedCirclePosition(pos, distance, distance, current, total, gameTime, time);
+    public static Vec3d rotatedCirclePosition(Vec3d pos, float distance, float current, float total, long gameTime, float time, float tickDelta) {
+        return rotatedCirclePosition(pos, distance, distance, current, total, gameTime, time, tickDelta);
     }
 
-    public static Vec3d rotatedCirclePosition(Vec3d pos, float distanceX, float distanceZ, float current, float total, long gameTime, float time) {
+    public static Vec3d rotatedCirclePosition(Vec3d pos, float distanceX, float distanceZ, float current, float total, long gameTime, float time, float tickDelta) {
         double angle = current / total * (Math.PI * 2);
-        angle += ((gameTime % time) / time) * (Math.PI * 2);
+        angle += (((gameTime % time) + tickDelta) / time) * (Math.PI * 2);
         double dx2 = (distanceX * Math.cos(angle));
         double dz2 = (distanceZ * Math.sin(angle));
 

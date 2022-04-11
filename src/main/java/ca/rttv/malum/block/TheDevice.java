@@ -11,6 +11,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class TheDevice extends Block {
     public TheDevice(Settings settings) {
         super(settings);
@@ -34,8 +35,7 @@ public class TheDevice extends Block {
         }
     }
 
-    public void playSound(World level, BlockPos pos)
-    {
-        level.playSound(null, pos, MalumSoundRegistry.SUSPICIOUS_SOUND, SoundCategory.BLOCKS, 1, 1 );
+    public void playSound(World level, BlockPos pos) {
+        level.playSound(null, pos, MalumSoundRegistry.SUSPICIOUS_SOUND, SoundCategory.BLOCKS, 1, 1);
     }
 }

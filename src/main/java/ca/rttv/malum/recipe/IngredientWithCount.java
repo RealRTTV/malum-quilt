@@ -1,4 +1,4 @@
-package ca.rttv.malum.util;
+package ca.rttv.malum.recipe;
 
 import com.google.gson.*;
 import net.minecraft.item.Item;
@@ -6,7 +6,6 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
@@ -22,7 +21,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class IngredientWithCount implements Predicate<ItemStack> {
+public final class IngredientWithCount implements Predicate<ItemStack> {
     public static final IngredientWithCount EMPTY = new IngredientWithCount(Stream.empty());
 
     private final IngredientWithCount.Entry[] entries;
@@ -89,7 +88,7 @@ public class IngredientWithCount implements Predicate<ItemStack> {
         if (json.has("item") && json.has("tag")) {
             throw new JsonParseException("An ingredient entry is either a tag or an item, not both");
         } else if (json.has("item")) {
-            Item item = ShapedRecipe.getItem(json);
+            Item item = SavedNbtRecipe.getItem(json);
             int count = JsonHelper.getInt(json, "count", 1);
             return new IngredientWithCount.StackEntry(new ItemStack(item, count));
         } else if (json.has("tag")) {

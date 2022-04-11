@@ -19,9 +19,9 @@
     "TexturedRenderLayersMixin"
   ],
   "client": [
-    "ParticleManagerMixin",
     "AbstractFurnaceBlockEntityMixin",
-    "GameRendererMixin"
+    "GameRendererMixin",
+    "ParticleManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

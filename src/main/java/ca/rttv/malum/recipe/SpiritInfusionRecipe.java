@@ -3,10 +3,11 @@ package ca.rttv.malum.recipe;
 import ca.rttv.malum.block.entity.AbstractItemDisplayBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
-import ca.rttv.malum.util.IngredientWithCount;
+import ca.rttv.malum.util.helper.NbtHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -90,7 +91,7 @@ public record SpiritInfusionRecipe(Identifier id, String group,
             }
             blockEntity.getHeldItem().decrement(input.getEntries()[0].getCount());
             BlockPos pos = blockEntity.getPos();
-            IngredientWithCount.Entry[] entries = blockEntity.recipe.extraItems.getEntries().clone();
+            IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.recipe.extraItems.getEntries()).map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count())).toArray(IngredientWithCount.Entry[]::new);
             BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPos -> {
                 //noinspection ConstantConditions
                 if (blockEntity.getWorld().getBlockEntity(reagentPos) instanceof AbstractItemDisplayBlockEntity displayBlock) {
@@ -106,8 +107,15 @@ public record SpiritInfusionRecipe(Identifier id, String group,
                     }
                 }
             });
-            ItemScatterer.spawn(blockEntity.getWorld(), pos, DefaultedList.ofSize(1, output.copy())); // this has to be copied since these recipes are stored statically iirc
-            return output.copy();
+            ItemStack stack = output.copy();
+            NbtCompound nbt = new NbtCompound();
+            NbtCompound displayNbt = new NbtCompound();
+            displayNbt.putInt("FirstColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "FirstColor"), 15712278, blockEntity.getHeldItem().getNbt()));
+            displayNbt.putInt("SecondColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "SecondColor"), 4607909, blockEntity.getHeldItem().getNbt()));
+            nbt.put("display", displayNbt);
+            stack.setNbt(nbt);
+            ItemScatterer.spawn(blockEntity.getWorld(), pos.up(), DefaultedList.ofSize(1, stack)); // this has to be copied since these recipes are stored statically-ish iirc
+            return stack;
         } else {
             throw new IllegalStateException("Parameter 'inventory' must be an instanceof SpiritAltarBlockEntity");
         }
@@ -150,8 +158,7 @@ public record SpiritInfusionRecipe(Identifier id, String group,
         return SPIRIT_INFUSION;
     }
 
-    public record Serializer<T extends SpiritInfusionRecipe>(
-            SpiritInfusionRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
+    public record Serializer<T extends SpiritInfusionRecipe>(SpiritInfusionRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
 
         public T read(Identifier id, JsonObject jsonObject) {
             String group = JsonHelper.getString(jsonObject, "group", "");

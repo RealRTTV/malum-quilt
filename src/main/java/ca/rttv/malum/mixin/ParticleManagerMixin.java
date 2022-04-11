@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(ParticleManager.class)
-public class ParticleManagerMixin {
+public abstract class ParticleManagerMixin {
     @Mutable
     @Final
     @Shadow

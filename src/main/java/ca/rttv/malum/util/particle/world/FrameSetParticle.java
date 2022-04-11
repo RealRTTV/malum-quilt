@@ -2,7 +2,6 @@ package ca.rttv.malum.util.particle.world;
 
 import ca.rttv.malum.util.particle.SimpleParticleEffect;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.world.ClientWorld;
 
 import java.util.ArrayList;

@@ -14,7 +14,8 @@ public class VanishingEntryObject extends EntryObject
 
     @Override
     public void exit() {
-        PlayerEntity playerEntity = MinecraftClient.getInstance().player;
+        final MinecraftClient client = MinecraftClient.getInstance();
+        PlayerEntity playerEntity = client.player;
         playerEntity.playSound(MalumSoundRegistry.SUSPICIOUS_SOUND, SoundCategory.PLAYERS, 1.0f, 1.0f);
         ProgressionBookScreen.objects.remove(this);
     }

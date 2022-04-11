@@ -6,7 +6,7 @@
   ],
   "key": {
     "#": {
-      "tag": "forge:rods/wooden"
+      "item": "minecraft:stick"
     },
     "X": {
       "item": "malum:iridescent_ether"

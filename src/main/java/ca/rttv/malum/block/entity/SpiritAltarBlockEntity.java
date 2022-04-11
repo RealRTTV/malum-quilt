@@ -2,8 +2,8 @@ package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.recipe.IngredientWithCount;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
-import ca.rttv.malum.util.IngredientWithCount;
 import ca.rttv.malum.util.block.entity.IAltarAccelerator;
 import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
@@ -73,6 +73,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         if (recipe != null && this.hasExtraItems(state, world, pos, this.getExtraItems(state, world, pos), recipe)) {
             if (spinUp < 10) {
                 spinUp++;
+                this.notifyListeners();
             }
                 progress++;
                 if (world.getTime() % 20L == 0) {
@@ -108,7 +109,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 }
             }
             if (item.getItem() instanceof MalumSpiritItem spiritSplinterItem) {
-                Vec3d offset = spiritOffset(this, i);
+                Vec3d offset = spiritOffset(this, i, 0.5f); // doing 0.5f makes it so the particle is in between this tick's particle and the next ticks particle. Instead of making it perfectly precise at the start and shittier at the end of the tick we make it about right at some points and perfect at others
                 Color color = spiritSplinterItem.type.color;
                 Color endColor = spiritSplinterItem.type.endColor;
                 double x = getPos().getX() + offset.getX();
@@ -280,10 +281,10 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         return new Vec3d(0.5f, 1.25f, 0.5f);
     }
 
-    public static Vec3d spiritOffset(SpiritAltarBlockEntity blockEntity, int slot) {
+    public static Vec3d spiritOffset(SpiritAltarBlockEntity blockEntity, int slot, float tickDelta) {
         float distance = 1 - Math.min(0.25f, blockEntity.spinUp / 40f) + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
         float height = 0.75f + Math.min(0.5f, blockEntity.spinUp / 20f);
-        return DataHelper.rotatedCirclePosition(new Vec3d(0.5f, height, 0.5f), distance, slot, blockEntity.spiritAmount, (long) blockEntity.spiritSpin, 360);
+        return DataHelper.rotatedCirclePosition(new Vec3d(0.5f, height, 0.5f), distance, slot, blockEntity.spiritAmount, (long) blockEntity.spiritSpin, 360, tickDelta);
     }
 
     public ItemStack getHeldItem() {

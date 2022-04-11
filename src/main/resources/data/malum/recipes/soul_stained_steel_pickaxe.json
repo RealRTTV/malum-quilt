@@ -7,7 +7,7 @@
   ],
   "key": {
     "#": {
-      "tag": "forge:rods/wooden"
+      "item": "minecraft:stick"
     },
     "X": {
       "item": "malum:soul_stained_steel_ingot"

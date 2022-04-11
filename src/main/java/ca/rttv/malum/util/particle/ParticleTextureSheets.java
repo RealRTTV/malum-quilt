@@ -2,7 +2,6 @@ package ca.rttv.malum.util.particle;
 
 import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.render.BufferBuilder;
