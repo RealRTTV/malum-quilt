@@ -193,7 +193,7 @@ public class ProgressionBookScreen extends Screen {
         );
 
         entries.add(new BookEntry(
-                "soul_hunter_gear", SOUL_HUNTER_CLOAK, 4, 7)
+                "soul_hunter_gear", SPIRIT_HUNTER_CLOAK, 4, 7)
                 .addPage(new HeadlineTextPage("soul_hunter_armor", "soul_hunter_armor"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_hunter_cloak")))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_hunter_robe")))

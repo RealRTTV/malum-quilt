@@ -1,17 +1,18 @@
 package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.client.model.SpiritHunterArmorModel;
+import ca.rttv.malum.client.render.MalumArmorRenderer;
 import ca.rttv.malum.client.render.entity.ScytheBoomerangEntityRenderer;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
+import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.listener.SpiritDataReloadListener;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.util.ModelIdentifier;
@@ -29,6 +30,8 @@ public class MalumClient implements ClientModInitializer {
     public void onInitializeClient() {
         MalumParticleRegistry.registerFactories();
         RenderHandler.init();
+        EntityModelLayerRegistry.registerModelLayer(SpiritHunterArmorModel.LAYER, SpiritHunterArmorModel::getTexturedModelData);
+        ArmorRenderer.register(new MalumArmorRenderer(DataHelper.prefix("textures/armor/spirit_hunter.png")), MalumRegistry.SPIRIT_HUNTER_CLOAK, MalumRegistry.SPIRIT_HUNTER_ROBE, MalumRegistry.SPIRIT_HUNTER_LEGGINGS, MalumRegistry.SPIRIT_HUNTER_BOOTS);
         EntityRendererRegistry.register(MalumEntityRegistry.SCYTHE_BOOMERANG, ScytheBoomerangEntityRenderer::new);
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SpiritDataReloadListenerFabricImpl());

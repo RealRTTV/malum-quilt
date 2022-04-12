@@ -148,10 +148,10 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
     // soul stained steel chestplate
     // soul stained steel leggings
     // soul stained steel boots
-                                             Item SOUL_HUNTER_CLOAK                         = registerItem             ("soul_hunter_cloak",                         new ArmorItem(SOUL_CLOAK, EquipmentSlot.HEAD, new Item.Settings().group(MALUM)));
-                                             Item SOUL_HUNTER_ROBE                          = registerItem             ("soul_hunter_robe",                          new ArmorItem(SOUL_CLOAK, EquipmentSlot.CHEST, new Item.Settings().group(MALUM)));
-                                             Item SOUL_HUNTER_LEGGINGS                      = registerItem             ("soul_hunter_leggings",                      new ArmorItem(SOUL_CLOAK, EquipmentSlot.LEGS, new Item.Settings().group(MALUM)));
-                                             Item SOUL_HUNTER_BOOTS                         = registerItem             ("soul_hunter_boots",                         new ArmorItem(SOUL_CLOAK, EquipmentSlot.FEET, new Item.Settings().group(MALUM)));
+                                             Item SPIRIT_HUNTER_CLOAK                         = registerItem             ("soul_hunter_cloak",                         new ArmorItem(SOUL_CLOAK, EquipmentSlot.HEAD, new Item.Settings().group(MALUM)));
+                                             Item SPIRIT_HUNTER_ROBE                          = registerItem             ("soul_hunter_robe",                          new ArmorItem(SOUL_CLOAK, EquipmentSlot.CHEST, new Item.Settings().group(MALUM)));
+                                             Item SPIRIT_HUNTER_LEGGINGS                      = registerItem             ("soul_hunter_leggings",                      new ArmorItem(SOUL_CLOAK, EquipmentSlot.LEGS, new Item.Settings().group(MALUM)));
+                                             Item SPIRIT_HUNTER_BOOTS                         = registerItem             ("soul_hunter_boots",                         new ArmorItem(SOUL_CLOAK, EquipmentSlot.FEET, new Item.Settings().group(MALUM)));
     // tyrving
     // gilded ring
     // ornate ring
