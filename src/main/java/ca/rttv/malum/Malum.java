@@ -13,9 +13,12 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Random;
+
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
 public final class Malum implements ModInitializer {
+    public static final Random RANDOM = new Random();
     public static final String MODID = "malum"; // 1 character faster than MOD_ID!
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final ItemGroup MALUM = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(SPIRIT_ALTAR));

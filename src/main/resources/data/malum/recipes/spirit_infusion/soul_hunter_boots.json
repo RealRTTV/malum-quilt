@@ -18,11 +18,11 @@
       "count": 1
     },
     {
-      "tag": "forge:leather",
+      "item": "minecraft:leather",
       "count": 1
     },
     {
-      "tag": "forge:feathers",
+      "item": "minecraft:feather",
       "count": 2
     }
   ],

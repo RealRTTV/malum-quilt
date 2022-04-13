@@ -31,7 +31,6 @@ public class ScytheItem extends SwordItem {
                 sound = SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP;
 //            }
             attacker.world.playSound(null, target.getX(), target.getY(), target.getZ(), sound, attacker.getSoundCategory(), 1, 1);
-            System.out.println(SpiritTypeRegistry.SPIRIT_DATA.get(Registry.ENTITY_TYPE.getId(target.getType())).primaryType.identifier);
         }
         return super.postHit(stack, target, attacker);
     }

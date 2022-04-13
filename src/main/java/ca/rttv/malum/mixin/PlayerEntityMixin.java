@@ -48,4 +48,5 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             this.spawnSweepAttackParticles();
         }
     }
+
 }

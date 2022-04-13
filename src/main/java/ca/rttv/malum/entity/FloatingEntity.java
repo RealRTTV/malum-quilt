@@ -125,7 +125,7 @@ public class FloatingEntity extends ProjectileEntity {
             }
         }
 
-        if (hitresult.getType() != HitResult.Type.MISS && !flag/* && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)*/) {
+        if (hitresult.getType() == HitResult.Type.BLOCK && !flag/* && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)*/) {
             this.onBlockHit(((BlockHitResult) hitresult));
         }
 

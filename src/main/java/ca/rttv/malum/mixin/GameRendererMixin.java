@@ -24,7 +24,7 @@ public abstract class GameRendererMixin {
     private void malum$renderWorldLast(float tickDelta, long limitTime, MatrixStack matrix, CallbackInfo ci) {
         RenderHandler.renderLast(matrix);
     }
-    @Inject(method = "loadShaders", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 53, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "loadShaders", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD)
     private void malum$registerShaders(ResourceManager manager, CallbackInfo ci, List<Program> list, List<Pair<Shader, Consumer<Shader>>> list2) throws IOException {
         MalumShaderRegistry.init(manager);
         list2.addAll(MalumShaderRegistry.shaderList);

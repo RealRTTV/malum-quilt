@@ -1,6 +1,7 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.enchantment.ReboundEnchantment;
+import ca.rttv.malum.enchantment.SpiritPlunderEnchantment;
 import com.chocohead.mm.api.ClassTinkerers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -20,7 +21,7 @@ public class MalumEnchantments {
     public static final EnchantmentTarget SOUL_HUNTER_WEAPON = ClassTinkerers.getEnum(EnchantmentTarget.class, "SOUL_HUNTER");
     public static final Enchantment REBOUND = create("rebound", new ReboundEnchantment(Enchantment.Rarity.UNCOMMON, REBOUND_SCYTHE, EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
 //    public static final Enchantment HAUNTED = create("haunted", HauntedEnchantment::new);
-//    public static final Enchantment SPIRIT_PLUNDER = create("spirit_plunder", SpiritPlunderEnchantment::new);
+    public static final Enchantment SPIRIT_PLUNDER = create("spirit_plunder", new SpiritPlunderEnchantment());
     private static <T extends Enchantment> Enchantment create(String id, Enchantment enchantment) {
         ENCHANTMENTS.put(new Identifier(MODID, id), enchantment);
         return enchantment;

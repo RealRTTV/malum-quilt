@@ -3,6 +3,7 @@ package ca.rttv.malum;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.client.model.SpiritHunterArmorModel;
 import ca.rttv.malum.client.render.MalumArmorRenderer;
+import ca.rttv.malum.client.render.entity.FloatingItemEntityRenderer;
 import ca.rttv.malum.client.render.entity.ScytheBoomerangEntityRenderer;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
 import ca.rttv.malum.registry.MalumEntityRegistry;
@@ -33,6 +34,7 @@ public class MalumClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(SpiritHunterArmorModel.LAYER, SpiritHunterArmorModel::getTexturedModelData);
         ArmorRenderer.register(new MalumArmorRenderer(DataHelper.prefix("textures/armor/spirit_hunter.png")), MalumRegistry.SPIRIT_HUNTER_CLOAK, MalumRegistry.SPIRIT_HUNTER_ROBE, MalumRegistry.SPIRIT_HUNTER_LEGGINGS, MalumRegistry.SPIRIT_HUNTER_BOOTS);
         EntityRendererRegistry.register(MalumEntityRegistry.SCYTHE_BOOMERANG, ScytheBoomerangEntityRenderer::new);
+        EntityRendererRegistry.register(MalumEntityRegistry.NATURAL_SPIRIT, FloatingItemEntityRenderer::new);
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SpiritDataReloadListenerFabricImpl());
         for(Item item : MalumRegistry.SCYTHES) {

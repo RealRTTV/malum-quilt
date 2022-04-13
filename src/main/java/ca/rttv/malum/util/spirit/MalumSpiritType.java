@@ -1,6 +1,7 @@
 package ca.rttv.malum.util.spirit;
 
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.registry.MalumRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
@@ -9,6 +10,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
 import java.awt.*;
+import java.util.function.Supplier;
 
 import static ca.rttv.malum.Malum.MODID;
 
@@ -17,20 +19,70 @@ public class MalumSpiritType {
     public final Color endColor;
 
     public final String identifier;
-    protected final Item splinterItem;
+    protected final Supplier<Item> splinterItem;
 
     public MalumSpiritType(String identifier, Color color, Item splinterItem) {
         this.identifier = identifier;
         this.color = color;
         this.endColor = createEndColor(color);
-        this.splinterItem = splinterItem;
+        switch(identifier) {
+            case "wicked" -> {
+                this.splinterItem = () -> MalumRegistry.WICKED_SPIRIT;
+            }
+            case "arcane" -> {
+                this.splinterItem = () -> MalumRegistry.ARCANE_SPIRIT;
+            }
+            case "eldritch" -> {
+                this.splinterItem = () -> MalumRegistry.ELDRITCH_SPIRIT;
+            }
+            case "aerial" -> {
+                this.splinterItem = () -> MalumRegistry.AERIAL_SPIRIT;
+            }
+            case "aqueous" -> {
+                this.splinterItem = () -> MalumRegistry.AQUEOUS_SPIRIT;
+            }
+            case "infernal" -> {
+                this.splinterItem = () -> MalumRegistry.INFERNAL_SPIRIT;
+            }
+            case "earthen" -> {
+                this.splinterItem = () -> MalumRegistry.EARTHEN_SPIRIT;
+            }
+            default -> {
+                this.splinterItem = () -> MalumRegistry.SACRED_SPIRIT;
+            }
+        }
     }
 
     public MalumSpiritType(String identifier, Color color, Color endColor, Item splinterItem) {
         this.identifier = identifier;
         this.color = color;
         this.endColor = endColor;
-        this.splinterItem = splinterItem;
+        switch(identifier) {
+            case "wicked" -> {
+                this.splinterItem = () -> MalumRegistry.WICKED_SPIRIT;
+            }
+            case "arcane" -> {
+                this.splinterItem = () -> MalumRegistry.ARCANE_SPIRIT;
+            }
+            case "eldritch" -> {
+                this.splinterItem = () -> MalumRegistry.ELDRITCH_SPIRIT;
+            }
+            case "aerial" -> {
+                this.splinterItem = () -> MalumRegistry.AERIAL_SPIRIT;
+            }
+            case "aqueous" -> {
+                this.splinterItem = () -> MalumRegistry.AQUEOUS_SPIRIT;
+            }
+            case "infernal" -> {
+                this.splinterItem = () -> MalumRegistry.INFERNAL_SPIRIT;
+            }
+            case "earthen" -> {
+                this.splinterItem = () -> MalumRegistry.EARTHEN_SPIRIT;
+            }
+            default -> {
+                this.splinterItem = () -> MalumRegistry.SACRED_SPIRIT;
+            }
+        }
     }
 
     public Text getComponent(int count) {
@@ -46,7 +98,7 @@ public class MalumSpiritType {
     }
 
     public MalumSpiritItem getSplinterItem() {
-        return (MalumSpiritItem) splinterItem;
+        return (MalumSpiritItem) splinterItem.get();
     }
 
     public Identifier getOverlayTexture() {
