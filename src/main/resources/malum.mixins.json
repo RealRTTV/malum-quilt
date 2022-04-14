@@ -21,7 +21,8 @@
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "RenderLayersMixin",
-    "TexturedRenderLayersMixin"
+    "TexturedRenderLayersMixin",
+    "ToolMaterialsMixin"
   ],
   "client": [
     "AbstractFurnaceBlockEntityMixin",

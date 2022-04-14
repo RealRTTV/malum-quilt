@@ -6,19 +6,18 @@ import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.entity.boomerang.ScytheBoomerangEntity;
 import ca.rttv.malum.item.SpiritPouchItem;
 import ca.rttv.malum.registry.MalumTags;
-import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.helper.ItemHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class SpiritHarvestHandler {
@@ -83,11 +82,18 @@ public class SpiritHarvestHandler {
                         if (nbt != null) {
                             Inventories.readNbt(nbt, stacks);
                         }
-                        if (stacks.add(stack)) {
-                            World level = playerEntity.world;
-                            level.playSound(null, playerEntity.getX(), playerEntity.getY() + 0.5, playerEntity.getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((level.random.nextFloat() - level.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                            return;
+                        SimpleInventory inventory = new SimpleInventory(stacks.delegate.toArray(ItemStack[]::new));
+
+                        ItemStack newStack = inventory.addStack(stack);
+                        if (!newStack.isEmpty()) {
+                            ItemHelper.giveItemToEntity(newStack, collector);
                         }
+
+                        Inventories.writeNbt(nbt, inventory.stacks);
+
+                        World world = playerEntity.world;
+                        world.playSound(null, playerEntity.getX(), playerEntity.getY() + 0.5, playerEntity.getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((world.random.nextFloat() - world.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                        return;
                     }
                 }
             }

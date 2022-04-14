@@ -10,6 +10,7 @@ import java.util.Map;
 
 import static ca.rttv.malum.Malum.MODID;
 
+@SuppressWarnings("unused")
 public class MalumAttributeRegistry {
     public static final Map<Identifier, EntityAttribute> ATTRIBUTES = new LinkedHashMap<>();
 
@@ -29,7 +30,6 @@ public class MalumAttributeRegistry {
     public static final EntityAttribute SOUL_WARD_RECOVERY_SPEED = create("soul_ward_recovery_speed", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_recovery_speed", 0D, 0.0D, 2048.0D).setTracked(true));
     public static final EntityAttribute SOUL_WARD_DAMAGE_PENALTY = create("soul_ward_damage_penalty", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_damage_penalty", 3D, 0.0D, 2048.0D).setTracked(true));
     public static final EntityAttribute SOUL_WARD_CAP = create("soul_ward_capacity", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_capacity", 0D, 0.0D, 2048.0D).setTracked(true));
-
 
     private static <T extends EntityAttribute> EntityAttribute create(String id, EntityAttribute attribute) {
         ATTRIBUTES.put(new Identifier(MODID, id), attribute);

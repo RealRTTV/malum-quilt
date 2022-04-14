@@ -1,6 +1,5 @@
 package ca.rttv.malum.client.render;
 
-import ca.rttv.malum.MalumClient;
 import ca.rttv.malum.client.model.SpiritHunterArmorModel;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.minecraft.client.MinecraftClient;

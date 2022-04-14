@@ -16,6 +16,7 @@ accessible      field     net/minecraft/client/render/Shader                    
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhaseParameters             transparency                 Lnet/minecraft/client/render/RenderPhase$Transparency;
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhaseParameters             texture                      Lnet/minecraft/client/render/RenderPhase$TextureBase;
 accessible      field     net/minecraft/inventory/SimpleInventory                                  stacks                       Lnet/minecraft/util/collection/DefaultedList;
+accessible      field     net/minecraft/util/collection/DefaultedList                              delegate                     Ljava/util/List;
 
 accessible      method    net/minecraft/client/particle/ParticleManager                            registerFactory              (Lnet/minecraft/particle/ParticleType;Lnet/minecraft/client/particle/ParticleFactory;)V
 accessible      method    net/minecraft/enchantment/EnchantmentHelper                              forEachEnchantment           (Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Lnet/minecraft/item/ItemStack;)V

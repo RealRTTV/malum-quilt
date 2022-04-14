@@ -18,11 +18,12 @@ public class ItemPedestalBlockEntity extends AbstractItemDisplayBlockEntity {
     public ItemPedestalBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
+
     public void clientTick(World world, BlockPos pos, BlockState state) {
         if (getHeldItem().getItem() instanceof MalumSpiritItem item) {
             Vec3d vec = DataHelper.fromBlockPos(pos).add(itemOffset());
             double x = vec.x;
-            double y = vec.y + Math.sin((world.getTime() ) / 20f) * 0.1f;
+            double y = vec.y + Math.sin(world.getTime() / 20f) * 0.1f;
             double z = vec.z;
             SpiritHelper.spawnSpiritParticles(world, x, y, z, item.type.color, item.type.endColor);
         }

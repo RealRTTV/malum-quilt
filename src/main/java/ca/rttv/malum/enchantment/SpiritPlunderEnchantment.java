@@ -2,7 +2,6 @@ package ca.rttv.malum.enchantment;
 
 import ca.rttv.malum.registry.MalumEnchantments;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 
 public class SpiritPlunderEnchantment extends Enchantment {

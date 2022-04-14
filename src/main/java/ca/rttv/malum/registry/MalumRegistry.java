@@ -1,10 +1,7 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.block.*;
-import ca.rttv.malum.block.entity.EtherBlockEntity;
-import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
-import ca.rttv.malum.block.entity.ItemStandBlockEntity;
-import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
+import ca.rttv.malum.block.entity.*;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.block.sapling.SoulwoodSaplingGenerator;
 import ca.rttv.malum.item.*;
@@ -19,6 +16,8 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.ClampedEntityAttribute;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
@@ -45,6 +44,7 @@ import java.util.*;
 import static ca.rttv.malum.Malum.*;
 import static ca.rttv.malum.registry.MalumArmorMaterials.SOUL_CLOAK;
 import static ca.rttv.malum.registry.MalumSoundRegistry.*;
+import static ca.rttv.malum.registry.MalumToolMaterials.SOUL_STAINED_STEEL;
 import static net.minecraft.item.ItemGroup.BUILDING_BLOCKS;
 import static net.minecraft.item.ItemGroup.MISC;
 import static net.minecraft.sound.BlockSoundGroup.*;
@@ -54,16 +54,20 @@ import static net.minecraft.world.gen.feature.OreConfiguredFeatures.STONE_ORE_RE
 
 @SuppressWarnings({"unused", "SameParameterValue"})
 public interface MalumRegistry { // maps make stuff look cooler ok?
-    Map<Identifier, Block>                                         BLOCKS = new LinkedHashMap<>();
-    Map<Identifier, Item>                                          ITEMS = new LinkedHashMap<>();
-    Set<ScytheItem>                                                SCYTHES = new ReferenceOpenHashSet<>();
-    Map<Identifier, BlockEntityType<?>>                            BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
-    Map<Identifier, Feature<? extends FeatureConfig>>              FEATURES = new LinkedHashMap<>();
-    Map<Identifier, RecipeType<? extends Recipe<?>>>               RECIPE_TYPES = new LinkedHashMap<>();
-    Map<Identifier, RecipeSerializer<? extends Recipe<?>>>         RECIPE_SERIALIZER = new LinkedHashMap<>();
-    ArrayList<SignType>                                            SIGN_TYPES = new ArrayList<>();
+                                            Map<Identifier, Block> BLOCKS              = new LinkedHashMap<>();
+                                             Map<Identifier, Item> ITEMS               = new LinkedHashMap<>();
+                                                   Set<ScytheItem> SCYTHES             = new ReferenceOpenHashSet<>();
+                               Map<Identifier, BlockEntityType<?>> BLOCK_ENTITY_TYPES  = new LinkedHashMap<>();
+                 Map<Identifier, Feature<? extends FeatureConfig>> FEATURES            = new LinkedHashMap<>();
+                  Map<Identifier, RecipeType<? extends Recipe<?>>> RECIPE_TYPES        = new LinkedHashMap<>();
+            Map<Identifier, RecipeSerializer<? extends Recipe<?>>> RECIPE_SERIALIZER   = new LinkedHashMap<>();
+                                               ArrayList<SignType> SIGN_TYPES          = new ArrayList<>();
     Map<Identifier, ConfiguredFeature<? extends FeatureConfig, ?>> CONFIGURED_FEATURES = new LinkedHashMap<>();
-    Map<Identifier, ScreenHandlerType<? extends ScreenHandler>>    SCREEN_HANDLERS     = new LinkedHashMap<>();
+       Map<Identifier, ScreenHandlerType<? extends ScreenHandler>> SCREEN_HANDLERS     = new LinkedHashMap<>();
+                                  Map<Identifier, EntityAttribute> ENTITY_ATTRIBUTES   = new LinkedHashMap<>();
+
+    // uuids
+                                              UUID MAGIC_DAMAGE_MODIFIER_ID                  = UUID.fromString("763FFDF7-B4CA-4802-BD58-9FD9B9D76622");
 
     // sign types
                                           SignType RUNEWOOD_SIGN_TYPE                        = registerSignType         (new SignType("runewood"));
@@ -86,7 +90,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Block BLOCK_OF_RAW_SOULSTONE                   = registerBlockItem        ("block_of_raw_soulstone",                    new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
                                              Block BLOCK_OF_SOULSTONE                       = registerBlockItem        ("block_of_soulstone",                        new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(BLOCK_SOULSTONE_SOUNDS)), MALUM);
                                              Block SPIRIT_ALTAR                             = registerBlockItem        ("spirit_altar",                              new SpiritAltarBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)), MALUM);
-    // spirit jar
+                                             Block SPIRIT_JAR                               = registerBlockItem        ("spirit_jar",                                new SpiritJarBlock(Settings.of(Material.GLASS, MapColor.BLUE)), MALUM);
     // soul vial
     // runewood obelisk
     // brilliant obelisk
@@ -99,14 +103,14 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                               Item SPIRIT_FABRIC                            = registerItem             ("spirit_fabric",                             new Item(new Item.Settings().group(MALUM)));
     // spectral lens
     // poppet
-    // hallowed gold ingot
-    // hallowed gold nugget
-    // block of hallowed gold
-    // hallowed spirit resonator
-    // soul stained steel ingot
-    // soul stained steel nugget
-    // block of soul stained steel
-    // stained spirit resonator
+                                              Item HALLOWED_GOLD_INGOT                      = registerItem             ("hallowed_gold_ingot",                       new Item(new Item.Settings().group(MALUM)));
+                                              Item HALLOWED_GOLD_NUGGET                     = registerItem             ("hallowed_gold_nugget",                      new Item(new Item.Settings().group(MALUM)));
+                                             Block BLOCK_OF_HALLOWED_GOLD                   = registerBlockItem        ("block_of_hallowed_gold",                    new Block(Settings.of(Material.METAL, MapColor.YELLOW)), MALUM);
+                                              Item HALLOWED_SPIRIT_RESONATOR                = registerItem             ("hallowed_spirit_resonator",                 new Item(new Item.Settings().group(MALUM)));
+                                              Item SOUL_STAINED_STEEL_INGOT                 = registerItem             ("soul_stained_steel_ingot",                  new Item(new Item.Settings().group(MALUM)));
+                                              Item SOUL_STAINED_STEEL_NUGGET                = registerItem             ("soul_stained_steel_nugget",                 new Item(new Item.Settings().group(MALUM)));
+                                             Block BLOCK_OF_SOUL_STAINED_STEEL              = registerBlockItem        ("block_of_soul_stained_steel",               new Block(Settings.of(Material.METAL, MapColor.PURPLE).strength(5.0f, 64.0f)), MALUM);
+                                              Item STAINED_SPIRIT_RESONATOR                 = registerItem             ("stained_spirit_resonator",                  new Item(new Item.Settings().group(MALUM)));
     // cracked alchemical impetus
     // alchemical impetus
     // cracked vitric impetus
@@ -139,7 +143,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Item CRUDE_SCYTHE                              = registerScytheItem       ("crude_scythe",                              new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Item.Settings().group(MALUM)));
     // soul stained steel scythe
     // soulwood stave
-    // soul stained steel sword
+                                             Item SOUL_STAINED_STEEL_SWORD                  = registerItem             ("soul_stained_steel_sword",                  new MagicSwordItem(SOUL_STAINED_STEEL, -3, 0, -3, new Item.Settings().group(MALUM)));
     // soul stained steel pickaxe
     // soul stained steel axe
     // soul stained steel shovel
@@ -372,6 +376,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
          BlockEntityType<ItemPedestalBlockEntity> ITEM_PEDESTAL_BLOCK_ENTITY                = registerBlockEntity      ("item_pedestal",                             BlockEntityType.Builder.create(ItemPedestalBlockEntity::new, RUNEWOOD_ITEM_PEDESTAL, SOULWOOD_ITEM_PEDESTAL, TAINTED_ROCK_ITEM_PEDESTAL, TWISTED_ROCK_ITEM_PEDESTAL).build(null));
           BlockEntityType<SpiritAltarBlockEntity> SPIRIT_ALTAR_BLOCK_ENTITY                 = registerBlockEntity      ("spirit_altar",                              BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
                 BlockEntityType<EtherBlockEntity> ETHER_BLOCK_ENTITY                        = registerBlockEntity      ("ether",                                     BlockEntityType.Builder.create(EtherBlockEntity::new, ETHER, ETHER_TORCH, WALL_ETHER_TORCH, TAINTED_ETHER_BRAZIER, TWISTED_ETHER_BRAZIER, IRIDESCENT_ETHER, IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, TAINTED_IRIDESCENT_ETHER_BRAZIER, TWISTED_IRIDESCENT_ETHER_BRAZIER).build(null));
+            BlockEntityType<SpiritJarBlockEntity> SPIRIT_JAR_BLOCK_ENTITY                   = registerBlockEntity      ("spirit_jar",                                BlockEntityType.Builder.create(SpiritJarBlockEntity::new, SPIRIT_JAR).build(null));
 
                  RecipeType<SpiritInfusionRecipe> SPIRIT_INFUSION                           = registerRecipeType       ("spirit_infusion",                           new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
            RecipeSerializer<SpiritInfusionRecipe> SPIRIT_INFUSION_SERIALIZER                = registerRecipeSerializer ("spirit_infusion",                           new SpiritInfusionRecipe.Serializer<>(SpiritInfusionRecipe::new));
@@ -394,10 +399,18 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
         Holder<ConfiguredFeature<OreFeatureConfig, ?>> UPPER_ORE_SOULSTONE_CONFIGURED       = registerConfiguredFeature("upper_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 6)); // i == maxSize
                                  Holder<PlacedFeature> UPPER_ORE_SOULSTONE_PLACED           = registerPlacedFeature    ("upper_ore_soulstone", UPPER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(5, HeightRangePlacementModifier.createUniform(YOffset.fixed(60), YOffset.fixed(100)))); // y 60 to y 100, count == spawn count
 
-        Holder<ConfiguredFeature<OreFeatureConfig, ?>> ORE_BRILLIANCE_CONFIGURED            = registerConfiguredFeature("ore_brilliance", Feature.ORE, new OreFeatureConfig(BRILLIANCE_ORE_TARGETS, 2)); // i == maxSize
-                                 Holder<PlacedFeature> ORE_BRILLIANCE_PLACED                = registerPlacedFeature    ("ore_brilliance", ORE_BRILLIANCE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(4, HeightRangePlacementModifier.createUniform(YOffset.fixed(-80), YOffset.fixed(40)))); // y -80 and y 40, count == spawn count
+        Holder<ConfiguredFeature<OreFeatureConfig, ?>> ORE_BRILLIANCE_CONFIGURED            = registerConfiguredFeature("ore_brilliance",      Feature.ORE, new OreFeatureConfig(BRILLIANCE_ORE_TARGETS, 2)); // i == maxSize
+                                 Holder<PlacedFeature> ORE_BRILLIANCE_PLACED                = registerPlacedFeature    ("ore_brilliance",      ORE_BRILLIANCE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(4, HeightRangePlacementModifier.createUniform(YOffset.fixed(-80), YOffset.fixed(40)))); // y -80 and y 40, count == spawn count
 
-           ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER          = registerScreenHandler    ("spirit_pouch", SpiritPouchScreenHandler::new);
+           ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER          = registerScreenHandler    ("spirit_pouch",        SpiritPouchScreenHandler::new);
+
+//                                       EntityAttribute GENERIC_MAGIC_DAMAGE                 = registerEntityAttribute  ("generic.magic_damage",(new ClampedEntityAttribute("attribute.name.generic.magic_damage", 2.0d, 0.0d, 2048.0d)).setTracked(true));
+
+
+    static EntityAttribute registerEntityAttribute(String id, EntityAttribute attribute) {
+//        return Registry.register(Registry.ATTRIBUTE, id, attribute);
+        return attribute;
+    }
 
     static <T extends ScreenHandler> ScreenHandlerType<T> registerScreenHandler(String id, ScreenHandlerType.Factory<T> factory) {
         ScreenHandlerType<T> screenHandlerType = new ScreenHandlerType<>(factory);
@@ -471,6 +484,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                RECIPE_TYPES.forEach((id, type)        ->   Registry.register(Registry.RECIPE_TYPE,       id, type      ));
           RECIPE_SERIALIZER.forEach((id, serializer)  ->   Registry.register(Registry.RECIPE_SERIALIZER, id, serializer));
             SCREEN_HANDLERS.forEach((id, handler)     ->   Registry.register(Registry.SCREEN_HANDLER,    id, handler   ));
+//          ENTITY_ATTRIBUTES.forEach((id, attribute)   ->   Registry.register(Registry.ATTRIBUTE,         id, attribute ));
                  SIGN_TYPES.forEach(                       SignType::register                                           );
           MalumEnchantments.init();
          MalumSoundRegistry.init();

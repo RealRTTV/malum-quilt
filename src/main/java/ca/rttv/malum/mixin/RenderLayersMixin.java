@@ -33,5 +33,6 @@ public abstract class RenderLayersMixin {
         BLOCKS.put(BRILLIANT_DEEPSLATE, RenderLayer.getCutout());
         BLOCKS.put(BRILLIANT_STONE, RenderLayer.getCutout());
         BLOCKS.put(BLAZING_QUARTZ_ORE, RenderLayer.getCutout());
+        BLOCKS.put(SPIRIT_JAR, RenderLayer.getCutout());
     }
 }

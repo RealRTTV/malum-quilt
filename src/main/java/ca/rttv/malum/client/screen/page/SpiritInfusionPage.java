@@ -8,6 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -79,7 +80,7 @@ public class SpiritInfusionPage extends BookPage {
         if (recipe.extraItems().isPresent()) {
             renderIngredients(matrices, guiLeft + 247, guiTop + 51, mouseX, mouseY, recipe.extraItems());
         }
-        renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, List.of(recipe.spirits().getEntries()));
+        renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, Arrays.asList(recipe.spirits().getEntries()));
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 209, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 209, guiTop + 126, mouseX, mouseY);
     }

@@ -1,12 +1,10 @@
 package ca.rttv.malum.entity.spirit;
 
-import ca.rttv.malum.entity.FloatingEntity;
 import ca.rttv.malum.entity.FloatingItemEntity;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.util.handler.SpiritHarvestHandler;
 import ca.rttv.malum.util.helper.SpiritHelper;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

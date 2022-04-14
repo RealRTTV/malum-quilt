@@ -1,7 +1,6 @@
 package ca.rttv.malum.block;
 
-import ca.rttv.malum.block.entity.AbstractItemDisplayBlockEntity;
-import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
+import ca.rttv.malum.block.entity.SpiritJarBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -22,26 +21,35 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
-
-import static ca.rttv.malum.registry.MalumRegistry.ITEM_PEDESTAL_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_JAR_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
-public abstract class AbstractItemPedestalBlock extends BlockWithEntity implements Waterloggable {
+public class SpiritJarBlock extends BlockWithEntity implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-
-    public AbstractItemPedestalBlock(Settings settings) {
-        super(settings);
-    }
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    public static final VoxelShape SHAPE = VoxelShapes.union(Block.createCuboidShape(5.5d, -0.5d, 5.5d, 10.5d, 2.0d, 10.5d),
+                                                             Block.createCuboidShape(2.5d, 0.5d, 2.5d, 13.5d, 13.5d, 13.5d),
+                                                             Block.createCuboidShape(4.5d, 13.5d, 4.5d, 11.5d, 14.5d, 11.5d),
+                                                             Block.createCuboidShape(3.5d, 14.5d, 3.5d, 12.5d, 16.5d, 12.5d));
+
+    public SpiritJarBlock(AbstractBlock.Settings settings) {
+        super(settings);
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
     }
 
     @Override
@@ -50,17 +58,17 @@ public abstract class AbstractItemPedestalBlock extends BlockWithEntity implemen
             return ActionResult.SUCCESS;
         }
 
-        AbstractItemDisplayBlockEntity blockEntity = (AbstractItemDisplayBlockEntity) world.getBlockEntity(pos);
-        Objects.requireNonNull(blockEntity).swapSlots(state, world, pos, player, hand, hit);
+        SpiritJarBlockEntity blockEntity = (SpiritJarBlockEntity) world.getBlockEntity(pos);
 
-        return ActionResult.CONSUME;
+        //noinspection ConstantConditions
+        return blockEntity.onUse(state, world, pos, player, hand, hit);
     }
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof AbstractItemDisplayBlockEntity) {
+            if (blockEntity instanceof SpiritJarBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory)blockEntity);
                 world.updateComparators(pos, this);
             }
@@ -69,11 +77,15 @@ public abstract class AbstractItemPedestalBlock extends BlockWithEntity implemen
         }
     }
 
+    @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? checkType(type, SPIRIT_JAR_BLOCK_ENTITY, (world1, pos, state1, blockEntity) -> blockEntity.clientTick(world1, pos, state1)) : null;
+    }
 
-        return this.getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(WATERLOGGED);
     }
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbourState, WorldAccess world, BlockPos pos, BlockPos neighbourPos) {
@@ -84,11 +96,10 @@ public abstract class AbstractItemPedestalBlock extends BlockWithEntity implemen
     }
 
     @Override
-    public abstract VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context);
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 
-    @Override
-    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        return this.getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
 
     @Override
@@ -108,13 +119,7 @@ public abstract class AbstractItemPedestalBlock extends BlockWithEntity implemen
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? checkType(type, ITEM_PEDESTAL_BLOCK_ENTITY, (world1, pos, state1, blockEntity) -> blockEntity.clientTick(world1, pos, state1)) : null;
-    }
-
-    @Nullable
-    @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new ItemPedestalBlockEntity(pos, state);
+        return new SpiritJarBlockEntity(pos, state);
     }
 }
