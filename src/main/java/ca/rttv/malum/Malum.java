@@ -2,6 +2,8 @@ package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.enchantment.ReboundEnchantment;
+import ca.rttv.malum.item.MagicAxeItem;
+import ca.rttv.malum.item.MagicHoeItem;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumRegistry;
 import net.fabricmc.api.ModInitializer;
@@ -32,6 +34,8 @@ public final class Malum implements ModInitializer {
     public void onInitialize() {
         HoeItem.BLOCK_ITEMS.getClass();
         AxeItem.BLOCK_ITEMS.getClass();
+        MagicHoeItem.BLOCK_ITEMS.getClass();
+        MagicAxeItem.BLOCK_ITEMS.getClass();
         MalumAttributeRegistry.init();
         MalumParticleRegistry.init();
         MalumRegistry.init();

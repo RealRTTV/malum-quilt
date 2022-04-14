@@ -16,9 +16,8 @@ import java.util.Optional;
 
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
-@Mixin(value = AxeItem.class, priority = 990)
+@Mixin(value = AxeItem.class, priority = 1010)
 public abstract class AxeItemMixin {
-
     @Unique
     private static final Map<Block, Block> MALUM_STRIPPED_BLOCKS = (new Builder<Block, Block>())
             .put(RUNEWOOD, STRIPPED_RUNEWOOD)
