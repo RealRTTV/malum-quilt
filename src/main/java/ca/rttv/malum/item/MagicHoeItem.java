@@ -6,15 +6,15 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.HoeItem;
 import net.minecraft.item.ToolMaterial;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
 import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
 
-public class MagicSwordItem extends SwordItem {
+public class MagicHoeItem extends HoeItem {
     private final Multimap<EntityAttribute, EntityAttributeModifier> magicAttributeModifiers;
-    public MagicSwordItem(ToolMaterial toolMaterial, float damage, float speed, float magic, Settings settings) {
+    public MagicHoeItem(ToolMaterial toolMaterial, float damage, float speed, float magic, Settings settings) {
         super(toolMaterial, (int) damage, speed, settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(

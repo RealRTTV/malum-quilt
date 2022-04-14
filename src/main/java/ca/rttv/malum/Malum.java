@@ -7,6 +7,8 @@ import ca.rttv.malum.registry.MalumRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -28,8 +30,10 @@ public final class Malum implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        MalumParticleRegistry.init();
+        HoeItem.BLOCK_ITEMS.getClass();
+        AxeItem.BLOCK_ITEMS.getClass();
         MalumAttributeRegistry.init();
+        MalumParticleRegistry.init();
         MalumRegistry.init();
         UseItemCallback.EVENT.register(ReboundEnchantment::onRightClickItem);
     }

@@ -6,16 +6,16 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.ShovelItem;
 import net.minecraft.item.ToolMaterial;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
 import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
 
-public class MagicSwordItem extends SwordItem {
+public class MagicShovelItem extends ShovelItem {
     private final Multimap<EntityAttribute, EntityAttributeModifier> magicAttributeModifiers;
-    public MagicSwordItem(ToolMaterial toolMaterial, float damage, float speed, float magic, Settings settings) {
-        super(toolMaterial, (int) damage, speed, settings);
+    public MagicShovelItem(ToolMaterial toolMaterial, float damage, float speed, float magic, Settings settings) {
+        super(toolMaterial, damage, speed, settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(
                 EntityAttributes.GENERIC_ATTACK_DAMAGE,

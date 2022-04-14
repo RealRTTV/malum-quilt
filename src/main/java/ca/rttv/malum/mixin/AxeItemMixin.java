@@ -1,6 +1,5 @@
 package ca.rttv.malum.mixin;
 
-import ca.rttv.malum.registry.MalumRegistry;
 import com.google.common.collect.ImmutableMap.Builder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,17 +14,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Map;
 import java.util.Optional;
 
+import static ca.rttv.malum.registry.MalumRegistry.*;
+
 @Mixin(value = AxeItem.class, priority = 990)
 public abstract class AxeItemMixin {
 
     @Unique
     private static final Map<Block, Block> MALUM_STRIPPED_BLOCKS = (new Builder<Block, Block>())
-            .put(MalumRegistry.RUNEWOOD, MalumRegistry.STRIPPED_RUNEWOOD)
-            .put(MalumRegistry.RUNEWOOD_LOG, MalumRegistry.STRIPPED_RUNEWOOD_LOG)
-            .put(MalumRegistry.EXPOSED_RUNEWOOD_LOG, MalumRegistry.REVEALED_RUNEWOOD_LOG)
-            .put(MalumRegistry.SOULWOOD, MalumRegistry.STRIPPED_SOULWOOD)
-            .put(MalumRegistry.SOULWOOD_LOG, MalumRegistry.STRIPPED_SOULWOOD_LOG)
-            .put(MalumRegistry.EXPOSED_SOULWOOD_LOG, MalumRegistry.REVEALED_SOULWOOD_LOG)
+            .put(RUNEWOOD, STRIPPED_RUNEWOOD)
+            .put(RUNEWOOD_LOG, STRIPPED_RUNEWOOD_LOG)
+            .put(EXPOSED_RUNEWOOD_LOG, REVEALED_RUNEWOOD_LOG)
+            .put(SOULWOOD, STRIPPED_SOULWOOD)
+            .put(SOULWOOD_LOG, STRIPPED_SOULWOOD_LOG)
+            .put(EXPOSED_SOULWOOD_LOG, REVEALED_SOULWOOD_LOG)
             .build();
 
     @Inject(method = "getStrippedState", at = @At("HEAD"), cancellable = true)

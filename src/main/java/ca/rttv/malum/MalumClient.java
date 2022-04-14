@@ -24,6 +24,14 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.registry.MalumRegistry.AERIAL_SPIRIT;
+import static ca.rttv.malum.registry.MalumRegistry.AQUEOUS_SPIRIT;
+import static ca.rttv.malum.registry.MalumRegistry.ARCANE_SPIRIT;
+import static ca.rttv.malum.registry.MalumRegistry.EARTHEN_SPIRIT;
+import static ca.rttv.malum.registry.MalumRegistry.ELDRITCH_SPIRIT;
+import static ca.rttv.malum.registry.MalumRegistry.INFERNAL_SPIRIT;
+import static ca.rttv.malum.registry.MalumRegistry.SACRED_SPIRIT;
+import static ca.rttv.malum.registry.MalumRegistry.WICKED_SPIRIT;
 import static ca.rttv.malum.registry.SpiritTypeRegistry.*;
 
 public class MalumClient implements ClientModInitializer {
@@ -47,14 +55,14 @@ public class MalumClient implements ClientModInitializer {
                 out.accept(new ModelIdentifier(scytheId + "_handheld", "inventory"));
             });
         }
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> SACRED_SPIRIT_COLOR.getRGB(), MalumRegistry.SACRED_SPIRIT);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> AERIAL_SPIRIT_COLOR.getRGB(), MalumRegistry.AERIAL_SPIRIT);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> AQUEOUS_SPIRIT_COLOR.getRGB(), MalumRegistry.AQUEOUS_SPIRIT);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ARCANE_SPIRIT_COLOR.getRGB(), MalumRegistry.ARCANE_SPIRIT);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ELDRITCH_SPIRIT_COLOR.getRGB(), MalumRegistry.ELDRITCH_SPIRIT);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> INFERNAL_SPIRIT_COLOR.getRGB(), MalumRegistry.INFERNAL_SPIRIT);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> EARTHEN_SPIRIT_COLOR.getRGB(), MalumRegistry.EARTHEN_SPIRIT);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> WICKED_SPIRIT_COLOR.getRGB(), MalumRegistry.WICKED_SPIRIT);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> SACRED_SPIRIT_COLOR.getRGB(), SACRED_SPIRIT);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> AERIAL_SPIRIT_COLOR.getRGB(), AERIAL_SPIRIT);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> AQUEOUS_SPIRIT_COLOR.getRGB(), AQUEOUS_SPIRIT);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ARCANE_SPIRIT_COLOR.getRGB(), ARCANE_SPIRIT);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ELDRITCH_SPIRIT_COLOR.getRGB(), ELDRITCH_SPIRIT);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> INFERNAL_SPIRIT_COLOR.getRGB(), INFERNAL_SPIRIT);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> EARTHEN_SPIRIT_COLOR.getRGB(), EARTHEN_SPIRIT);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> WICKED_SPIRIT_COLOR.getRGB(), WICKED_SPIRIT);
     }
     public static class SpiritDataReloadListenerFabricImpl extends SpiritDataReloadListener implements SimpleSynchronousResourceReloadListener {
 

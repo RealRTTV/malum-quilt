@@ -3,19 +3,31 @@ package ca.rttv.malum.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.item.SwordItem;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.World;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
 import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
 
-public class MagicSwordItem extends SwordItem {
+public class MagicAxeItem extends AxeItem {
     private final Multimap<EntityAttribute, EntityAttributeModifier> magicAttributeModifiers;
-    public MagicSwordItem(ToolMaterial toolMaterial, float damage, float speed, float magic, Settings settings) {
-        super(toolMaterial, (int) damage, speed, settings);
+
+    @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        super.usageTick(world, user, stack, remainingUseTicks);
+    }
+
+    public MagicAxeItem(ToolMaterial toolMaterial, float damage, float speed, float magic, Settings settings) {
+        super(toolMaterial, damage, speed, settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(
                 EntityAttributes.GENERIC_ATTACK_DAMAGE,

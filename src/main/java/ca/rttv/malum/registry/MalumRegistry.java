@@ -16,7 +16,6 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -143,11 +142,11 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Item CRUDE_SCYTHE                              = registerScytheItem       ("crude_scythe",                              new ScytheItem(ToolMaterials.IRON, 3, -3.1f, new Item.Settings().group(MALUM)));
     // soul stained steel scythe
     // soulwood stave
-                                             Item SOUL_STAINED_STEEL_SWORD                  = registerItem             ("soul_stained_steel_sword",                  new MagicSwordItem(SOUL_STAINED_STEEL, -3, 0, -3, new Item.Settings().group(MALUM)));
-    // soul stained steel pickaxe
-    // soul stained steel axe
-    // soul stained steel shovel
-    // soul stained steel hoe
+                                             Item SOUL_STAINED_STEEL_SWORD                  = registerItem             ("soul_stained_steel_sword",                  new MagicSwordItem(SOUL_STAINED_STEEL, 0.0f, -2.4f, -0.5f, new Item.Settings().group(MALUM)));
+                                             Item SOUL_STAINED_STEEL_PICKAXE                = registerItem             ("soul_stained_steel_pickaxe",                new MagicPickaxeItem(SOUL_STAINED_STEEL, -1.0f, -2.8f, -1.5f, new Item.Settings().group(MALUM)));
+//                                             Item SOUL_STAINED_STEEL_AXE                    = registerItem             ("soul_stained_steel_axe",                    new MagicAxeItem(SOUL_STAINED_STEEL, 2.0f, -3.2f, 0.0f, new Item.Settings().group(MALUM)));
+                                             Item SOUL_STAINED_STEEL_SHOVEL                 = registerItem             ("soul_stained_steel_shovel",                 new MagicShovelItem(SOUL_STAINED_STEEL, -0.5f, -3.0f, -2.0f, new Item.Settings().group(MALUM)));
+                                             Item SOUL_STAINED_STEEL_HOE                    = registerItem             ("soul_stained_steel_hoe",                    new MagicHoeItem(SOUL_STAINED_STEEL, -2.0f, 0.0f, -2.0f, new Item.Settings().group(MALUM)));
     // soul stained steel helmet
     // soul stained steel chestplate
     // soul stained steel leggings

@@ -1,7 +1,6 @@
 package ca.rttv.malum.util.spirit;
 
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
-import ca.rttv.malum.registry.MalumRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
@@ -13,6 +12,7 @@ import java.awt.*;
 import java.util.function.Supplier;
 
 import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.registry.MalumRegistry.*;
 
 public class MalumSpiritType {
     public final Color color;
@@ -27,28 +27,28 @@ public class MalumSpiritType {
         this.endColor = createEndColor(color);
         switch(identifier) {
             case "wicked" -> {
-                this.splinterItem = () -> MalumRegistry.WICKED_SPIRIT;
+                this.splinterItem = () -> WICKED_SPIRIT;
             }
             case "arcane" -> {
-                this.splinterItem = () -> MalumRegistry.ARCANE_SPIRIT;
+                this.splinterItem = () -> ARCANE_SPIRIT;
             }
             case "eldritch" -> {
-                this.splinterItem = () -> MalumRegistry.ELDRITCH_SPIRIT;
+                this.splinterItem = () -> ELDRITCH_SPIRIT;
             }
             case "aerial" -> {
-                this.splinterItem = () -> MalumRegistry.AERIAL_SPIRIT;
+                this.splinterItem = () -> AERIAL_SPIRIT;
             }
             case "aqueous" -> {
-                this.splinterItem = () -> MalumRegistry.AQUEOUS_SPIRIT;
+                this.splinterItem = () -> AQUEOUS_SPIRIT;
             }
             case "infernal" -> {
-                this.splinterItem = () -> MalumRegistry.INFERNAL_SPIRIT;
+                this.splinterItem = () -> INFERNAL_SPIRIT;
             }
             case "earthen" -> {
-                this.splinterItem = () -> MalumRegistry.EARTHEN_SPIRIT;
+                this.splinterItem = () -> EARTHEN_SPIRIT;
             }
             default -> {
-                this.splinterItem = () -> MalumRegistry.SACRED_SPIRIT;
+                this.splinterItem = () -> SACRED_SPIRIT;
             }
         }
     }
@@ -59,28 +59,28 @@ public class MalumSpiritType {
         this.endColor = endColor;
         switch(identifier) {
             case "wicked" -> {
-                this.splinterItem = () -> MalumRegistry.WICKED_SPIRIT;
+                this.splinterItem = () -> WICKED_SPIRIT;
             }
             case "arcane" -> {
-                this.splinterItem = () -> MalumRegistry.ARCANE_SPIRIT;
+                this.splinterItem = () -> ARCANE_SPIRIT;
             }
             case "eldritch" -> {
-                this.splinterItem = () -> MalumRegistry.ELDRITCH_SPIRIT;
+                this.splinterItem = () -> ELDRITCH_SPIRIT;
             }
             case "aerial" -> {
-                this.splinterItem = () -> MalumRegistry.AERIAL_SPIRIT;
+                this.splinterItem = () -> AERIAL_SPIRIT;
             }
             case "aqueous" -> {
-                this.splinterItem = () -> MalumRegistry.AQUEOUS_SPIRIT;
+                this.splinterItem = () -> AQUEOUS_SPIRIT;
             }
             case "infernal" -> {
-                this.splinterItem = () -> MalumRegistry.INFERNAL_SPIRIT;
+                this.splinterItem = () -> INFERNAL_SPIRIT;
             }
             case "earthen" -> {
-                this.splinterItem = () -> MalumRegistry.EARTHEN_SPIRIT;
+                this.splinterItem = () -> EARTHEN_SPIRIT;
             }
             default -> {
-                this.splinterItem = () -> MalumRegistry.SACRED_SPIRIT;
+                this.splinterItem = () -> SACRED_SPIRIT;
             }
         }
     }

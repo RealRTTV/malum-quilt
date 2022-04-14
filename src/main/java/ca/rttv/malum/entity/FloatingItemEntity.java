@@ -1,7 +1,6 @@
 package ca.rttv.malum.entity;
 
 import ca.rttv.malum.item.interfaces.IFloatingGlowItem;
-import ca.rttv.malum.registry.MalumRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -12,6 +11,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
 import java.awt.*;
+
+import static ca.rttv.malum.registry.MalumRegistry.SACRED_SPIRIT;
 
 public class FloatingItemEntity extends FloatingEntity {
     private static final TrackedData<ItemStack> DATA_ITEM_STACK = DataTracker.registerData(FloatingItemEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
@@ -55,7 +56,7 @@ public class FloatingItemEntity extends FloatingEntity {
     }
 
     protected Item getDefaultItem() {
-        return MalumRegistry.SACRED_SPIRIT;
+        return SACRED_SPIRIT;
     }
 
     public ItemStack getItem() {

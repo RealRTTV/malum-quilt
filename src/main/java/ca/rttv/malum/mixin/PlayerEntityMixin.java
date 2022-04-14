@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
@@ -49,4 +50,10 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         }
     }
 
+    @Inject(method = "updateTurtleHelmet", at = @At("HEAD"))
+    private void updateTurtleHelmet(CallbackInfo ci) {
+        if (((Object) this) instanceof ServerPlayerEntity serverPlayerEntity) {
+
+        }
+    }
 }

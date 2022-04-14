@@ -17,6 +17,7 @@
     "HandledScreensMixin",
     "ItemColorsMixin",
     "ItemRendererMixin",
+    "ItemStackMixin",
     "JsonEffectGlShaderMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
