@@ -1,9 +1,6 @@
 package ca.rttv.malum.mixin;
 
-import ca.rttv.malum.client.render.block.EtherRenderer;
-import ca.rttv.malum.client.render.block.ItemPedestalRenderer;
-import ca.rttv.malum.client.render.block.ItemStandRenderer;
-import ca.rttv.malum.client.render.block.SpiritAltarRenderer;
+import ca.rttv.malum.client.render.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -23,5 +20,6 @@ public abstract class BlockEntityRendererFactoriesMixin {
         register(ITEM_STAND_BLOCK_ENTITY, rendererDispatcherIn -> new ItemStandRenderer());
         register(SPIRIT_ALTAR_BLOCK_ENTITY, rendererDispatcherIn -> new SpiritAltarRenderer());
         register(ETHER_BLOCK_ENTITY, rendererDispatcherIn -> new EtherRenderer());
+        register(SPIRIT_JAR_BLOCK_ENTITY, rendererDispatcherIn -> new SpiritJarRenderer());
     }
 }

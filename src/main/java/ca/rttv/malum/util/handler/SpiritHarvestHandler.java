@@ -78,7 +78,7 @@ public class SpiritHarvestHandler {
                 for (ItemStack item : playerInventory) {
                     if (item.getItem() instanceof SpiritPouchItem) {
                         DefaultedList<ItemStack> stacks = DefaultedList.ofSize(27, ItemStack.EMPTY);
-                        NbtCompound nbt = item.getNbt();
+                        NbtCompound nbt = item.getOrCreateNbt();
                         if (nbt != null) {
                             Inventories.readNbt(nbt, stacks);
                         }

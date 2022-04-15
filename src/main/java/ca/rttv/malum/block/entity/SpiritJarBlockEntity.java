@@ -1,8 +1,12 @@
 package ca.rttv.malum.block.entity;
 
+import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.helper.DataHelper;
+import ca.rttv.malum.util.helper.RenderHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
+import ca.rttv.malum.util.particle.ParticleBuilders;
+import ca.rttv.malum.util.spirit.MalumSpiritType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -20,6 +24,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.awt.*;
 
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_JAR_BLOCK_ENTITY;
 
@@ -112,6 +118,9 @@ public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
         }
 
         if (player.getStackInHand(hand).getItem() != this.getHeldItem().getItem() && !this.getHeldItem().isEmpty() && !(player.getStackInHand(hand).getItem() instanceof MalumSpiritItem)) {
+            if(world.isClient) {
+                spawnUseParticles(world, pos, ((MalumSpiritItem) getHeldItem().getItem()).type);
+            }
             int count;
             if (player.isSneaking()) {
                 count = Math.min(64, this.getHeldItem().getCount());
@@ -124,6 +133,9 @@ public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
             return ActionResult.CONSUME;
         } else if (player.getStackInHand(hand).getItem() instanceof MalumSpiritItem && (player.getStackInHand(hand).getItem() == this.getHeldItem().getItem() || this.getHeldItem().isEmpty())) {
             ItemStack stack = player.getStackInHand(hand);
+            if(world.isClient) {
+                spawnUseParticles(world, pos, ((MalumSpiritItem) stack.getItem()).type);
+            }
             if (this.getHeldItem().isEmpty()) {
                 this.setStack(0, new ItemStack(stack.getItem(), stack.getCount())); // this is to not carry nbt
             } else {
@@ -134,5 +146,18 @@ public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
         }
 
         return ActionResult.PASS;
+    }
+    public void spawnUseParticles(World world, BlockPos pos, MalumSpiritType type) {
+        Color color = type.color;
+        ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                .setAlpha(0.15f, 0f)
+                .setLifetime(20)
+                .setScale(0.3f, 0)
+                .setSpin(0.2f)
+                .randomMotion(0.02f)
+                .randomOffset(0.1f, 0.1f)
+                .setColor(color, color.darker())
+                .enableNoClip()
+                .repeat(world, pos.getX()+0.5f, pos.getY()+0.5f + Math.sin(world.getTime() / 20f) * 0.2f, pos.getZ()+0.5f, 10);
     }
 }
