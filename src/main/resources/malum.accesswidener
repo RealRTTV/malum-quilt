@@ -6,6 +6,9 @@ accessible      class     net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible      class     net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider
 extendable      class     net/minecraft/enchantment/EnchantmentTarget
 
+accessible      field     net/minecraft/client/particle/ParticleManager                            spriteAwareFactories         Ljava/util/Map;
+accessible      field     net/minecraft/util/math/Matrix4f                                         a03                          F
+accessible      field     net/minecraft/util/math/Matrix4f                                         a13                          F
 accessible      field     net/minecraft/entity/player/PlayerInventory                              combinedInventory            Ljava/util/List;
 accessible      field     net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider       sprites                      Ljava/util/List;
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhase                       phases                       Lnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;

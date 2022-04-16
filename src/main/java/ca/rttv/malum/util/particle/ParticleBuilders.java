@@ -37,7 +37,7 @@ public class ParticleBuilders {
             return this;
         }
         public WorldParticleBuilder overwriteRenderType(ParticleTextureSheet renderType) {
-            data.renderType = renderType;
+            data.textureSheet = renderType;
             return this;
         }
         public WorldParticleBuilder setColorEasing(Easing easing) {

@@ -8,7 +8,7 @@ public class SimpleParticleEffect {
         FIRST_INDEX, LAST_INDEX, WITH_AGE, RANDOM_SPRITE
     }
 
-    public ParticleTextureSheet renderType = ParticleTextureSheets.ADDITIVE;
+    public ParticleTextureSheet textureSheet = ParticleTextureSheets.ADDITIVE;
     public Animator animator = Animator.FIRST_INDEX;
     public float r1 = 1, g1 = 1, b1 = 1, r2 = 1, g2 = 1, b2 = 1;
     public float colorCurveMultiplier = 1f;

@@ -35,7 +35,7 @@ public class SpiritItemEntity extends FloatingItemEntity {
     }
 
     public float getRange() {
-        return world.isSpaceEmpty(this) ? speed : speed * 5f;
+        return world.isSpaceEmpty(this) ? range : range * 5f;
     }
 
     public void setOwner(UUID ownerUuid) {
@@ -48,7 +48,7 @@ public class SpiritItemEntity extends FloatingItemEntity {
             owner = (LivingEntity) ((ServerWorld) world).getEntity(ownerUuid);
             if (owner != null)
             {
-                speed = (int) owner.getAttributeValue(MalumAttributeRegistry.SPIRIT_REACH);
+                range = (int) owner.getAttributeValue(MalumAttributeRegistry.SPIRIT_REACH);
             }
         }
     }

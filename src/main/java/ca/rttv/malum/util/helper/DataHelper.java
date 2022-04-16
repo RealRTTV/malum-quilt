@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static ca.rttv.malum.Malum.MODID;
+import static net.minecraft.util.math.MathHelper.sqrt;
 
 public final class DataHelper {
     public static Vec3d fromBlockPos(BlockPos pos) {
@@ -184,5 +185,16 @@ public final class DataHelper {
             }
         }
         return arrayList;
+    }
+    public static float distSqr(float... a) {
+        float d = 0.0F;
+        for (float f : a) {
+            d += f * f;
+        }
+        return d;
+    }
+
+    public static float distance(float... a) {
+        return sqrt(distSqr(a));
     }
 }

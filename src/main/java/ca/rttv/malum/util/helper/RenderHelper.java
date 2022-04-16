@@ -1,17 +1,18 @@
 package ca.rttv.malum.util.helper;
 
 import ca.rttv.malum.util.ShaderHolder;
+import ca.rttv.malum.util.TrailPoint;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.*;
 
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public final class RenderHelper {
@@ -273,6 +274,46 @@ public final class RenderHelper {
             return this;
         }
 
+        public VertexBuilder renderTrail(VertexConsumer vertexConsumer, MatrixStack stack, List<Vector4f> trailSegments, Function<Float, Float> widthFunc) {
+            return renderTrail(vertexConsumer, stack.peek().getModel(), trailSegments, widthFunc);
+        }
+        public VertexBuilder renderTrail(VertexConsumer vertexConsumer, Matrix4f matrix, List<Vector4f> trailSegments, Function<Float, Float> widthFunc) {
+            if (trailSegments.size() < 3) {
+                return this;
+            }
+            for (Vector4f pos : trailSegments) {
+                pos.add(xOffset, yOffset, zOffset, 0);
+                pos.transform(matrix);
+            }
+
+            int count = trailSegments.size() - 1;
+            float increment = 1.0F / (count - 1);
+            ArrayList<TrailPoint> points = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                float width = widthFunc.apply(increment * i);
+                Vector4f start = trailSegments.get(i);
+                Vector4f end = trailSegments.get(i + 1);
+                Vector4f mid = midpoint(start, end);
+                Vec2f offset = corners(start, end, width);
+                Vector4f positions = new Vector4f(mid.getX() + offset.x, mid.getX() - offset.x, mid.getY() + offset.y, mid.getY() - offset.y);
+                points.add(new TrailPoint(positions.getX(), positions.getY(), positions.getZ(), positions.getW(), mid.getZ()));
+            }
+            return renderPoints(vertexConsumer, points, u0, v0, u1, v1);
+        }
+        public VertexBuilder renderPoints(VertexConsumer vertexConsumer, List<TrailPoint> trailPoints, float u0, float v0, float u1, float v1) {
+            int count = trailPoints.size();
+            float increment = 1.0F / count;
+            for (int i = 1; i < count; i++) {
+                float current = MathHelper.lerp(i * increment, v0, v1);
+                float next = MathHelper.lerp((i + 1) * increment, v0, v1);
+                TrailPoint previousPoint = trailPoints.get(i - 1);
+                TrailPoint point = trailPoints.get(i);
+                previousPoint.renderStart(vertexConsumer, light, r, g, b, a, u0, current, u1, next);
+                point.renderEnd(vertexConsumer, light, r, g, b, a, u0, current, u1, next);
+            }
+            return this;
+        }
+
         public VertexBuilder renderSphere(VertexConsumer vertexConsumer, MatrixStack matrices, float radius, int longs, int lats) {
             Matrix4f last = matrices.peek().getModel();
             float startU = 0;
@@ -309,5 +350,33 @@ public final class RenderHelper {
             }
             return this;
         }
+    }
+    public static Vec2f corners(Vector4f start, Vector4f end, float width) {
+        float x = -start.getX();
+        float y = -start.getY();
+        float z = Math.abs(start.getZ());
+        if (z <= 0) {
+            x += end.getX();
+            y += end.getY();
+        } else if (z > 0) {
+            float ratio = end.getZ() / start.getZ();
+            x = end.getX() + x * ratio;
+            y = end.getY() + y * ratio;
+        }
+        if (start.getZ() > 0) {
+            x = -x;
+            y = -y;
+        }
+        float distance = DataHelper.distance(x, y);
+        if (distance > 0F) {
+            float normalize = width * 0.5F / (float) Math.sqrt(distance);
+            x *= normalize;
+            y *= normalize;
+        }
+        return new Vec2f(-y, x);
+    }
+
+    public static Vector4f midpoint(Vector4f a, Vector4f b) {
+        return new Vector4f((a.getX() + b.getX()) * 0.5F, (a.getY() + b.getY()) * 0.5F, (a.getZ() + b.getZ()) * 0.5F, (a.getW() + b.getW()) * 0.5F);
     }
 }
