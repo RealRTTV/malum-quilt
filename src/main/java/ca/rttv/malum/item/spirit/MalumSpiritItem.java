@@ -1,13 +1,17 @@
 package ca.rttv.malum.item.spirit;
 
 import ca.rttv.malum.item.interfaces.IFloatingGlowItem;
+import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
+import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
 import ca.rttv.malum.util.spirit.MalumSpiritType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.awt.*;
 
-public class MalumSpiritItem extends Item implements IFloatingGlowItem {
-    // , ItemParticleEmitter
+import static ca.rttv.malum.util.helper.SpiritHelper.spawnSpiritScreenParticles;
+
+public class MalumSpiritItem extends Item implements IFloatingGlowItem, ItemParticleEmitter {
     public final MalumSpiritType type;
 
     public MalumSpiritItem(Item.Settings settings, MalumSpiritType type) {
@@ -25,8 +29,8 @@ public class MalumSpiritItem extends Item implements IFloatingGlowItem {
         return type.endColor;
     }
 
-//    @Override
-//    public void particleTick(ItemStack stack, float x, float y, ScreenParticle.RenderOrder renderOrder) {
-//        spawnSpiritScreenParticles(type.color, type.endColor, stack, x, y, renderOrder);
-//    }
+    @Override
+    public void particleTick(ItemStack stack, float x, float y, ScreenParticle.RenderOrder renderOrder) {
+        spawnSpiritScreenParticles(type.color, type.endColor, stack, x, y, renderOrder);
+    }
 }

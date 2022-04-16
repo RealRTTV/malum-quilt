@@ -1,6 +1,7 @@
 package ca.rttv.malum.client.init;
 
 import ca.rttv.malum.client.particle.SimpleScreenParticleType;
+import ca.rttv.malum.mixin.FabricSpriteProviderImplAccessor;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.particle.screen.ScreenParticleEffect;
 import ca.rttv.malum.util.particle.screen.ScreenParticleType;
@@ -18,7 +19,7 @@ public class MalumScreenParticleRegistry {
     public static final ScreenParticleType<ScreenParticleEffect> TWINKLE = registerType(new SimpleScreenParticleType());
     public static final ScreenParticleType<ScreenParticleEffect> STAR = registerType(new SimpleScreenParticleType());
 
-    public static void registerParticleFactory() {
+    public static void registerParticleFactories() {
         registerProvider(WISP, new SimpleScreenParticleType.Factory(getSpriteSet(DataHelper.prefix("wisp"))));
         registerProvider(SMOKE, new SimpleScreenParticleType.Factory(getSpriteSet(DataHelper.prefix("smoke"))));
         registerProvider(SPARKLE, new SimpleScreenParticleType.Factory(getSpriteSet(DataHelper.prefix("sparkle"))));
@@ -36,6 +37,6 @@ public class MalumScreenParticleRegistry {
     }
 
     public static SpriteProvider getSpriteSet(Identifier resourceLocation) {
-        return MinecraftClient.getInstance().particleManager.spriteAwareFactories.get(resourceLocation);
+        return FabricSpriteProviderImplAccessor.FabricSpriteProviderImpl(MinecraftClient.getInstance().particleManager, MinecraftClient.getInstance().particleManager.spriteAwareFactories.get(resourceLocation));
     }
 }

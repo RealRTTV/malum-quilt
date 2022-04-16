@@ -2,14 +2,17 @@ package ca.rttv.malum.util.helper;
 
 import ca.rttv.malum.Malum;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
 import ca.rttv.malum.entity.spirit.SpiritItemEntity;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumEnchantments;
 import ca.rttv.malum.registry.MalumSoundRegistry;
 import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.particle.ParticleBuilders;
+import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumEntitySpiritData;
 import ca.rttv.malum.util.spirit.MalumSpiritType;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -221,37 +224,37 @@ public final class SpiritHelper {
 //                .repeat(world, x, y, z, 1);
 //    }
 
-//    public static void spawnSpiritScreenParticles(Color color, Color endColor, ItemStack stack, float pXPosition, float pYPosition, ScreenParticle.RenderOrder renderOrder) {
-//        final MinecraftClient client = MinecraftClient.getInstance();
-//        Random rand = client.world.getRandom();
-//        ParticleBuilders.create(ScreenParticleRegistry.TWINKLE)
-//                .setAlpha(0.07f, 0f)
-//                .setLifetime(10 + rand.nextInt(10))
-//                .setScale(0.4f + rand.nextFloat(), 0)
-//                .setColor(color, endColor)
-//                .setColorCurveMultiplier(2f)
-//                .randomOffset(0.05f)
-//                .randomMotion(0.05f, 0.05f)
-//                .overwriteRenderOrder(renderOrder)
-//                .centerOnStack(stack)
-//                .repeat(pXPosition, pYPosition, 1);
-//
-//        ParticleBuilders.create(ScreenParticleRegistry.WISP)
-//                .setAlpha(0.01f, 0f)
-//                .setLifetime(20 + rand.nextInt(8))
-//                .setSpin(nextFloat(rand, 0.2f, 0.4f))
-//                .setScale(0.6f + rand.nextFloat() * 0.4f, 0)
-//                .setColor(color, endColor)
-//                .setColorCurveMultiplier(1.25f)
-//                .randomOffset(0.1f)
-//                .randomMotion(0.4f, 0.4f)
-//                .overwriteRenderOrder(renderOrder)
-//                .centerOnStack(stack)
-//                .repeat(pXPosition, pYPosition, 1)
-//                .setLifetime(10 + rand.nextInt(2))
-//                .setSpin(nextFloat(rand, 0.05f, 0.1f))
-//                .setScale(0.8f + rand.nextFloat() * 0.4f, 0f)
-//                .randomMotion(0.01f, 0.01f)
-//                .repeat(pXPosition, pYPosition, 1);
-//    }
+    public static void spawnSpiritScreenParticles(Color color, Color endColor, ItemStack stack, float pXPosition, float pYPosition, ScreenParticle.RenderOrder renderOrder) {
+        final MinecraftClient client = MinecraftClient.getInstance();
+        Random rand = client.world.getRandom();
+        ParticleBuilders.create(MalumScreenParticleRegistry.TWINKLE)
+                .setAlpha(0.07f, 0f)
+                .setLifetime(10 + rand.nextInt(10))
+                .setScale(0.4f + rand.nextFloat(), 0)
+                .setColor(color, endColor)
+                .setColorCurveMultiplier(2f)
+                .randomOffset(0.05f)
+                .randomMotion(0.05f, 0.05f)
+                .overwriteRenderOrder(renderOrder)
+                .centerOnStack(stack)
+                .repeat(pXPosition, pYPosition, 1);
+
+        ParticleBuilders.create(MalumScreenParticleRegistry.WISP)
+                .setAlpha(0.01f, 0f)
+                .setLifetime(20 + rand.nextInt(8))
+                .setSpin(nextFloat(rand, 0.2f, 0.4f))
+                .setScale(0.6f + rand.nextFloat() * 0.4f, 0)
+                .setColor(color, endColor)
+                .setColorCurveMultiplier(1.25f)
+                .randomOffset(0.1f)
+                .randomMotion(0.4f, 0.4f)
+                .overwriteRenderOrder(renderOrder)
+                .centerOnStack(stack)
+                .repeat(pXPosition, pYPosition, 1)
+                .setLifetime(10 + rand.nextInt(2))
+                .setSpin(nextFloat(rand, 0.05f, 0.1f))
+                .setScale(0.8f + rand.nextFloat() * 0.4f, 0f)
+                .randomMotion(0.01f, 0.01f)
+                .repeat(pXPosition, pYPosition, 1);
+    }
 }

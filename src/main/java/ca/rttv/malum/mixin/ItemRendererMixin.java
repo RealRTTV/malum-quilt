@@ -1,6 +1,7 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.item.ScytheItem;
+import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
@@ -14,6 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemRenderer.class)
@@ -28,5 +30,9 @@ public abstract class ItemRendererMixin {
             BakedModel bakedModel2 = bakedModel.getOverrides().apply(bakedModel, stack, clientWorld, entity, seed);
             cir.setReturnValue(bakedModel2 == null ? this.models.getModelManager().getMissingModel() : bakedModel2);
         }
+    }
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/BufferBuilderStorage;getEntityVertexConsumers()Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;"), method = "renderGuiItemModel")
+    private void malum$itemParticleEmitter(ItemStack stack, int x, int y, BakedModel model, CallbackInfo ci) {
+        ScreenParticleHandler.renderItem(stack);
     }
 }

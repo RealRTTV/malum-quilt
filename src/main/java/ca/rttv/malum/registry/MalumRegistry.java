@@ -9,6 +9,9 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SavedNbtRecipe;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.screen.SpiritPouchScreenHandler;
+import ca.rttv.malum.util.handler.ScreenParticleHandler;
+import ca.rttv.malum.util.helper.DataHelper;
+import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
 import ca.rttv.malum.world.gen.feature.GradientTreeFeature;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import net.minecraft.block.AbstractBlock.Settings;
@@ -464,6 +467,15 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
     static SignType registerSignType(SignType signType) {
         SIGN_TYPES.add(signType);
         return signType;
+    }
+    static void registerParticleEmitters() {
+        List<Item> items = new ArrayList<>();
+        items.addAll(ITEMS.values());
+        DataHelper.takeAll(items, i -> i instanceof ItemParticleEmitter).forEach(i -> {
+                    ItemParticleEmitter emitter = (ItemParticleEmitter) i;
+                    ScreenParticleHandler.registerItemParticleEmitter(i, emitter::particleTick);
+                }
+        );
     }
 
     static void init() {

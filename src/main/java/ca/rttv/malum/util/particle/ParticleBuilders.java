@@ -1,7 +1,12 @@
 package ca.rttv.malum.util.particle;
 
+import ca.rttv.malum.util.handler.ScreenParticleHandler;
+import ca.rttv.malum.util.particle.screen.ScreenParticleEffect;
+import ca.rttv.malum.util.particle.screen.ScreenParticleType;
+import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.particle.world.WorldParticleEffect;
 import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -374,295 +379,298 @@ public class ParticleBuilders {
         }
     }
 
-//    public static ScreenParticleBuilder create(ScreenParticleType<?> type) {
-//        return new ScreenParticleBuilder(type);
-//    }
-//
-//    public static class ScreenParticleBuilder {
-//        static Random random = new Random();
-//
-//        ScreenParticleType<?> type;
-//        SimpleParticleEffect data;
-//        double vx = 0, vy = 0;
-//        double dx = 0, dy = 0;
-//        double maxXSpeed = 0, maxYSpeed = 0;
-//        double maxXDist = 0, maxYDist = 0;
-//
-//        protected ScreenParticleBuilder(ScreenParticleType<?> type) {
-//            this.type = type;
-//            this.data = new SimpleParticleEffect(type);
-//        }
-//        public ScreenParticleBuilder overwriteAnimator(SimpleParticleEffect.Animator animator) {
-//            data.animator = animator;
-//            return this;
-//        }
-//        public ScreenParticleBuilder overwriteRenderType(ParticleRenderType renderType) {
-//            data.renderType = renderType;
-//            return this;
-//        }
-//        public ScreenParticleBuilder overwriteRenderOrder(ScreenParticle.RenderOrder renderOrder) {
-//            data.renderOrder = renderOrder;
-//            return this;
-//        }
-//        public ScreenParticleBuilder centerOnStack(ItemStack stack) {
-//            data.stack = stack;
-//            return this;
-//        }
-//        public ScreenParticleBuilder centerOnStack(ItemStack stack, float xOffset, float yOffset) {
-//            data.stack = stack;
-//            data.xOffset = xOffset;
-//            data.yOffset = yOffset;
-//            return this;
-//        }
-//        public ScreenParticleBuilder setColorEasing(Easing easing) {
-//            data.colorCurveEasing = easing;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setColorCurveMultiplier(float colorCurveMultiplier) {
-//            data.colorCurveMultiplier = colorCurveMultiplier;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setColor(float r, float g, float b) {
-//            return setColor(r, g, b, data.alpha1, r, g, b, data.alpha2);
-//        }
-//
-//        public ScreenParticleBuilder setColor(float r, float g, float b, float a) {
-//            return setColor(r, g, b, a, r, g, b, a);
-//        }
-//
-//        public ScreenParticleBuilder setColor(float r, float g, float b, float a1, float a2) {
-//            return setColor(r, g, b, a1, r, g, b, a2);
-//        }
-//
-//        public ScreenParticleBuilder setColor(float r1, float g1, float b1, float r2, float g2, float b2) {
-//            return setColor(r1, g1, b1, data.alpha1, r2, g2, b2, data.alpha2);
-//        }
-//
-//        public ScreenParticleBuilder setColor(float r1, float g1, float b1, float r2, float g2, float b2, float a) {
-//            return setColor(r1, g1, b1, a, r2, g2, b2, a);
-//        }
-//
-//        public ScreenParticleBuilder setColor(float r1, float g1, float b1, float a1, float r2, float g2, float b2, float a2) {
-//            data.r1 = r1;
-//            data.g1 = g1;
-//            data.b1 = b1;
-//            data.alpha1 = a1;
-//            data.r2 = r2;
-//            data.g2 = g2;
-//            data.b2 = b2;
-//            data.alpha2 = a2;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setColor(Color c1, Color c2) {
-//            data.r1 = c1.getRed() / 255f;
-//            data.g1 = c1.getGreen() / 255f;
-//            data.b1 = c1.getBlue() / 255f;
-//            data.r2 = c2.getRed() / 255f;
-//            data.g2 = c2.getGreen() / 255f;
-//            data.b2 = c2.getBlue() / 255f;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setAlphaEasing(Easing startEasing, Easing endEasing) {
-//            data.alphaCurveStartEasing = startEasing;
-//            data.alphaCurveEndEasing = endEasing;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setAlphaEasing(Easing easing) {
-//            data.alphaCurveStartEasing = easing;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setAlphaCurveMultiplier(float alphaCurveMultiplier) {
-//            data.alphaCurveMultiplier = alphaCurveMultiplier;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setAlpha(float alpha) {
-//            return setAlpha(alpha, alpha);
-//        }
-//
-//        public ScreenParticleBuilder setAlpha(float alpha1, float alpha2) {
-//            return setAlpha(alpha1, alpha2, alpha2);
-//        }
-//
-//        public ScreenParticleBuilder setAlpha(float alpha1, float alpha2, float alpha3) {
-//            data.alpha1 = alpha1;
-//            data.alpha2 = alpha2;
-//            data.alpha3 = alpha3;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setScaleEasing(Easing startEasing, Easing endEasing) {
-//            data.scaleCurveStartEasing = startEasing;
-//            data.scaleCurveEndEasing = endEasing;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setScaleEasing(Easing easing) {
-//            data.scaleCurveStartEasing = easing;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setScaleCurveMultiplier(float scaleCurveMultiplier) {
-//            data.scaleCurveMultiplier = scaleCurveMultiplier;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setScale(float scale) {
-//            return setScale(scale, scale);
-//        }
-//
-//        public ScreenParticleBuilder setScale(float scale1, float scale2) {
-//            return setScale(scale1, scale2, scale2);
-//        }
-//
-//        public ScreenParticleBuilder setScale(float scale1, float scale2, float scale3) {
-//            data.scale1 = scale1;
-//            data.scale2 = scale2;
-//            data.scale3 = scale3;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder enableGravity() {
-//            data.gravity = true;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder disableGravity() {
-//            data.gravity = false;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder enableNoClip() {
-//            data.noClip = true;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder disableNoClip() {
-//            data.noClip = false;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setSpinEasing(Easing easing) {
-//            data.spinEasing = easing;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setSpinCurveMultiplier(float spinCurveMultiplier) {
-//            data.spinCurveMultiplier = spinCurveMultiplier;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setSpinOffset(float spinOffset) {
-//            data.spinOffset = spinOffset;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setSpin(float spin) {
-//            return setSpin(spin, spin);
-//        }
-//
-//        public ScreenParticleBuilder setSpin(float spin1, float spin2) {
-//            data.spin1 = spin1;
-//            data.spin2 = spin2;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setLifetime(int lifetime) {
-//            data.lifetime = lifetime;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setMotionCurveMultiplier(float motionCurveMultiplier) {
-//            data.motionCurveMultiplier = motionCurveMultiplier;
-//            return this;
-//        }
-//        public ScreenParticleBuilder randomMotion(double maxSpeed) {
-//            return randomMotion(maxSpeed, maxSpeed);
-//        }
-//
-//        public ScreenParticleBuilder randomMotion(double maxXSpeed, double maxYSpeed) {
-//            this.maxXSpeed = maxXSpeed;
-//            this.maxYSpeed = maxYSpeed;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder addMotion(double vx, double vy) {
-//            this.vx += vx;
-//            this.vy += vy;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setMotion(double vx, double vy) {
-//            this.vx = vx;
-//            this.vy = vy;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder setForcedMotion(Vector3f startingMotion, Vector3f endingMotion) {
-//            data.forcedMotion = true;
-//            data.startingMotion = startingMotion;
-//            data.endingMotion = endingMotion;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder disableForcedMotion() {
-//            data.forcedMotion = false;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder randomOffset(double maxDistance) {
-//            return randomOffset(maxDistance, maxDistance);
-//        }
-//
-//        public ScreenParticleBuilder randomOffset(double maxXDist, double maxYDist) {
-//            this.maxXDist = maxXDist;
-//            this.maxYDist = maxYDist;
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder spawnCircle(double x, double y, double distance, double currentCount, double totalCount) {
-//            double xSpeed = random.nextFloat() * maxXSpeed, ySpeed = random.nextFloat() * maxYSpeed;
-//            double theta = (Math.PI * 2) / totalCount;
-//            double finalAngle = (currentCount / totalCount) + (theta * currentCount);
-//            double dx2 = (distance * Math.cos(finalAngle));
-//            double dz2 = (distance * Math.sin(finalAngle));
-//
-//            Vector3d vector2f = new Vector3d(dx2, 0, dz2);
-//            this.vx = vector2f.x * xSpeed;
-//
-//            double yaw2 = random.nextFloat() * Math.PI * 2, pitch2 = random.nextFloat() * Math.PI - Math.PI / 2, xDist = random.nextFloat() * maxXDist, yDist = random.nextFloat() * maxYDist;
-//            this.dx = Math.sin(yaw2) * Math.cos(pitch2) * xDist;
-//            this.dy = Math.sin(pitch2) * yDist;
-//            ScreenParticleHandler.addParticle(data, x + dx + dx2, y + dy + dz2, vx, ySpeed);
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder spawn(double x, double y) {
-//            double yaw = random.nextFloat() * Math.PI * 2, pitch = random.nextFloat() * Math.PI - Math.PI / 2, xSpeed = random.nextFloat() * maxXSpeed, ySpeed = random.nextFloat() * maxYSpeed;
-//            this.vx += Math.sin(yaw) * Math.cos(pitch) * xSpeed;
-//            this.vy += Math.sin(pitch) * ySpeed;
-//            double yaw2 = random.nextFloat() * Math.PI * 2, pitch2 = random.nextFloat() * Math.PI - Math.PI / 2, xDist = random.nextFloat() * maxXDist, yDist = random.nextFloat() * maxYDist;
-//            this.dx = Math.sin(yaw2) * Math.cos(pitch2) * xDist;
-//            this.dy = Math.sin(pitch2) * yDist;
-//
-//            ScreenParticleHandler.addParticle(data, x + dx, y + dy, vx, vy);
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder repeat(double x, double y, int n) {
-//            for (int i = 0; i < n; i++) spawn(x, y);
-//            return this;
-//        }
-//
-//        public ScreenParticleBuilder repeatCircle(double x, double y, double distance, int times) {
-//            for (int i = 0; i < times; i++) spawnCircle(x, y, distance, i, times);
-//            return this;
-//        }
-//    }
+    public static ScreenParticleBuilder create(ScreenParticleType<?> type) {
+        return new ScreenParticleBuilder(type);
+    }
+
+    public static class ScreenParticleBuilder {
+        static Random random = new Random();
+
+        ScreenParticleType<?> type;
+        ScreenParticleEffect data;
+        double vx = 0, vy = 0;
+        double dx = 0, dy = 0;
+        double maxXSpeed = 0, maxYSpeed = 0;
+        double maxXDist = 0, maxYDist = 0;
+
+        protected ScreenParticleBuilder(ScreenParticleType<?> type) {
+            this.type = type;
+            this.data = new ScreenParticleEffect(type);
+        }
+        public ScreenParticleBuilder overwriteAnimator(SimpleParticleEffect.Animator animator) {
+            data.animator = animator;
+            return this;
+        }
+        public ScreenParticleBuilder overwriteRenderType(ParticleTextureSheet renderType) {
+            data.textureSheet = renderType;
+            return this;
+        }
+        public ScreenParticleBuilder overwriteRenderOrder(ScreenParticle.RenderOrder renderOrder) {
+            data.renderOrder = renderOrder;
+            return this;
+        }
+        public ScreenParticleBuilder centerOnStack(ItemStack stack) {
+            data.stack = stack;
+            return this;
+        }
+        public ScreenParticleBuilder centerOnStack(ItemStack stack, float xOffset, float yOffset) {
+            data.stack = stack;
+            data.xOffset = xOffset;
+            data.yOffset = yOffset;
+            return this;
+        }
+        public ScreenParticleBuilder setColorEasing(Easing easing) {
+            data.colorCurveEasing = easing;
+            return this;
+        }
+
+        public ScreenParticleBuilder setColorCurveMultiplier(float colorCurveMultiplier) {
+            data.colorCurveMultiplier = colorCurveMultiplier;
+            return this;
+        }
+
+        public ScreenParticleBuilder setColor(float r, float g, float b) {
+            return setColor(r, g, b, data.alpha1, r, g, b, data.alpha2);
+        }
+
+        public ScreenParticleBuilder setColor(float r, float g, float b, float a) {
+            return setColor(r, g, b, a, r, g, b, a);
+        }
+
+        public ScreenParticleBuilder setColor(float r, float g, float b, float a1, float a2) {
+            return setColor(r, g, b, a1, r, g, b, a2);
+        }
+
+        public ScreenParticleBuilder setColor(float r1, float g1, float b1, float r2, float g2, float b2) {
+            return setColor(r1, g1, b1, data.alpha1, r2, g2, b2, data.alpha2);
+        }
+
+        public ScreenParticleBuilder setColor(float r1, float g1, float b1, float r2, float g2, float b2, float a) {
+            return setColor(r1, g1, b1, a, r2, g2, b2, a);
+        }
+
+        public ScreenParticleBuilder setColor(float r1, float g1, float b1, float a1, float r2, float g2, float b2, float a2) {
+            data.r1 = r1;
+            data.g1 = g1;
+            data.b1 = b1;
+            data.alpha1 = a1;
+            data.r2 = r2;
+            data.g2 = g2;
+            data.b2 = b2;
+            data.alpha2 = a2;
+            return this;
+        }
+
+        public ScreenParticleBuilder setColor(Color c1, Color c2) {
+            data.r1 = c1.getRed() / 255f;
+            data.g1 = c1.getGreen() / 255f;
+            data.b1 = c1.getBlue() / 255f;
+            data.r2 = c2.getRed() / 255f;
+            data.g2 = c2.getGreen() / 255f;
+            data.b2 = c2.getBlue() / 255f;
+            return this;
+        }
+
+        public ScreenParticleBuilder setAlphaEasing(Easing startEasing, Easing endEasing) {
+            data.alphaCurveStartEasing = startEasing;
+            data.alphaCurveEndEasing = endEasing;
+            return this;
+        }
+
+        public ScreenParticleBuilder setAlphaEasing(Easing easing) {
+            data.alphaCurveStartEasing = easing;
+            return this;
+        }
+
+        public ScreenParticleBuilder setAlphaCurveMultiplier(float alphaCurveMultiplier) {
+            data.alphaCurveMultiplier = alphaCurveMultiplier;
+            return this;
+        }
+
+        public ScreenParticleBuilder setAlpha(float alpha) {
+            return setAlpha(alpha, alpha);
+        }
+
+        public ScreenParticleBuilder setAlpha(float alpha1, float alpha2) {
+            return setAlpha(alpha1, alpha2, alpha2);
+        }
+
+        public ScreenParticleBuilder setAlpha(float alpha1, float alpha2, float alpha3) {
+            data.alpha1 = alpha1;
+            data.alpha2 = alpha2;
+            data.alpha3 = alpha3;
+            return this;
+        }
+
+        public ScreenParticleBuilder setScaleEasing(Easing startEasing, Easing endEasing) {
+            data.scaleCurveStartEasing = startEasing;
+            data.scaleCurveEndEasing = endEasing;
+            return this;
+        }
+
+        public ScreenParticleBuilder setScaleEasing(Easing easing) {
+            data.scaleCurveStartEasing = easing;
+            return this;
+        }
+
+        public ScreenParticleBuilder setScaleCurveMultiplier(float scaleCurveMultiplier) {
+            data.scaleCurveMultiplier = scaleCurveMultiplier;
+            return this;
+        }
+
+        public ScreenParticleBuilder setScale(float scale) {
+            return setScale(scale, scale);
+        }
+
+        public ScreenParticleBuilder setScale(float scale1, float scale2) {
+            return setScale(scale1, scale2, scale2);
+        }
+
+        public ScreenParticleBuilder setScale(float scale1, float scale2, float scale3) {
+            data.scale1 = scale1;
+            data.scale2 = scale2;
+            data.scale3 = scale3;
+            return this;
+        }
+
+        public ScreenParticleBuilder enableGravity() {
+            data.gravity = true;
+            return this;
+        }
+
+        public ScreenParticleBuilder disableGravity() {
+            data.gravity = false;
+            return this;
+        }
+
+        public ScreenParticleBuilder enableNoClip() {
+            data.noClip = true;
+            return this;
+        }
+
+        public ScreenParticleBuilder disableNoClip() {
+            data.noClip = false;
+            return this;
+        }
+
+        public ScreenParticleBuilder setSpinEasing(Easing easing) {
+            data.spinEasing = easing;
+            return this;
+        }
+
+        public ScreenParticleBuilder setSpinCurveMultiplier(float spinCurveMultiplier) {
+            data.spinCurveMultiplier = spinCurveMultiplier;
+            return this;
+        }
+
+        public ScreenParticleBuilder setSpinOffset(float spinOffset) {
+            data.spinOffset = spinOffset;
+            return this;
+        }
+
+        public ScreenParticleBuilder setSpin(float spin) {
+            return setSpin(spin, spin);
+        }
+
+        public ScreenParticleBuilder setSpin(float spin1, float spin2) {
+            data.spin1 = spin1;
+            data.spin2 = spin2;
+            return this;
+        }
+
+        public ScreenParticleBuilder setLifetime(int lifetime) {
+            data.lifetime = lifetime;
+            return this;
+        }
+
+        public ScreenParticleBuilder setMotionCurveMultiplier(float motionCurveMultiplier) {
+            data.motionCurveMultiplier = motionCurveMultiplier;
+            return this;
+        }
+        public ScreenParticleBuilder randomMotion(double maxSpeed) {
+            return randomMotion(maxSpeed, maxSpeed);
+        }
+
+        public ScreenParticleBuilder randomMotion(double maxXSpeed, double maxYSpeed) {
+            this.maxXSpeed = maxXSpeed;
+            this.maxYSpeed = maxYSpeed;
+            return this;
+        }
+
+        public ScreenParticleBuilder addMotion(double vx, double vy) {
+            this.vx += vx;
+            this.vy += vy;
+            return this;
+        }
+
+        public ScreenParticleBuilder setMotion(double vx, double vy) {
+            this.vx = vx;
+            this.vy = vy;
+            return this;
+        }
+
+        public ScreenParticleBuilder setForcedMotion(Vec3f startingMotion, Vec3f endingMotion) {
+            data.forcedMotion = true;
+            data.startingMotion = startingMotion;
+            data.endingMotion = endingMotion;
+            return this;
+        }
+
+        public ScreenParticleBuilder disableForcedMotion() {
+            data.forcedMotion = false;
+            return this;
+        }
+
+        public ScreenParticleBuilder randomOffset(double maxDistance) {
+            return randomOffset(maxDistance, maxDistance);
+        }
+
+        public ScreenParticleBuilder randomOffset(double maxXDist, double maxYDist) {
+            this.maxXDist = maxXDist;
+            this.maxYDist = maxYDist;
+            return this;
+        }
+
+        public ScreenParticleBuilder spawnCircle(double x, double y, double distance, double currentCount, double totalCount) {
+            double xSpeed = random.nextFloat() * maxXSpeed, ySpeed = random.nextFloat() * maxYSpeed;
+            double theta = (Math.PI * 2) / totalCount;
+            double finalAngle = (currentCount / totalCount) + (theta * currentCount);
+            double dx2 = (distance * Math.cos(finalAngle));
+            double dz2 = (distance * Math.sin(finalAngle));
+
+            Vec3d vector2f = new Vec3d(dx2, 0, dz2);
+            this.vx = vector2f.x * xSpeed;
+
+            double yaw2 = random.nextFloat() * Math.PI * 2, pitch2 = random.nextFloat() * Math.PI - Math.PI / 2, xDist = random.nextFloat() * maxXDist, yDist = random.nextFloat() * maxYDist;
+            this.dx = Math.sin(yaw2) * Math.cos(pitch2) * xDist;
+            this.dy = Math.sin(pitch2) * yDist;
+            data.xOrigin = (float) x;
+            data.yOrigin = (float) y;
+            ScreenParticleHandler.addParticle(data, x + dx + dx2, y + dy + dz2, vx, ySpeed);
+            return this;
+        }
+
+        public ScreenParticleBuilder spawn(double x, double y) {
+            double yaw = random.nextFloat() * Math.PI * 2, pitch = random.nextFloat() * Math.PI - Math.PI / 2, xSpeed = random.nextFloat() * maxXSpeed, ySpeed = random.nextFloat() * maxYSpeed;
+            this.vx += Math.sin(yaw) * Math.cos(pitch) * xSpeed;
+            this.vy += Math.sin(pitch) * ySpeed;
+            double yaw2 = random.nextFloat() * Math.PI * 2, pitch2 = random.nextFloat() * Math.PI - Math.PI / 2, xDist = random.nextFloat() * maxXDist, yDist = random.nextFloat() * maxYDist;
+            this.dx = Math.sin(yaw2) * Math.cos(pitch2) * xDist;
+            this.dy = Math.sin(pitch2) * yDist;
+            data.xOrigin = (float) x;
+            data.yOrigin = (float) y;
+            ScreenParticleHandler.addParticle(data, x + dx, y + dy, vx, vy);
+            return this;
+        }
+
+        public ScreenParticleBuilder repeat(double x, double y, int n) {
+            for (int i = 0; i < n; i++) spawn(x, y);
+            return this;
+        }
+
+        public ScreenParticleBuilder repeatCircle(double x, double y, double distance, int times) {
+            for (int i = 0; i < times; i++) spawnCircle(x, y, distance, i, times);
+            return this;
+        }
+    }
 }

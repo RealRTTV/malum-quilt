@@ -58,9 +58,7 @@ public class ScreenParticleHandler {
                     Screen screen = minecraft.currentScreen;
                     if (screen != null) {
                         //TODO: REI
-                        //if (!JeiCompat.LOADED || !JeiCompat.LoadedOnly.isRecipesUi(screen)) {
-                        //    renderOrder = BEFORE_TOOLTIPS;
-                        //}
+                        renderOrder = BEFORE_TOOLTIPS;
                         if (renderingHotbar) {
                             renderOrder = BEFORE_UI;
                         }

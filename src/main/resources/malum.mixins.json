@@ -15,17 +15,22 @@
     "DefaultBiomeFeaturesMixin",
     "EnchantmentTargetMixin",
     "EntityModelLayersMixin",
+    "FabricSpriteProviderImplAccessor",
     "HandledScreensMixin",
     "ItemColorsMixin",
-    "ItemRendererMixin",
     "ItemStackMixin",
     "JsonEffectGlShaderMixin",
     "LivingEntityMixin",
+    "MinecraftClientMixin",
     "PlayerEntityMixin",
     "RenderLayersMixin",
     "TexturedRenderLayersMixin"
   ],
   "client": [
+    "HandledScreenMixin",
+    "ItemRendererMixin",
+    "ScreenMixin",
+    "InGameHudMixin",
     "AbstractFurnaceBlockEntityMixin",
     "GameRendererMixin",
     "ParticleManagerMixin"

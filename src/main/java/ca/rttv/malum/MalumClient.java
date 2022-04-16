@@ -1,6 +1,7 @@
 package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
 import ca.rttv.malum.client.model.SoulStainedSteelArmorModel;
 import ca.rttv.malum.client.model.SpiritHunterArmorModel;
 import ca.rttv.malum.client.render.CloakArmorRenderer;
@@ -39,8 +40,8 @@ import static ca.rttv.malum.registry.SpiritTypeRegistry.*;
 public class MalumClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        MalumParticleRegistry.registerFactories();
         RenderHandler.init();
+        MalumRegistry.registerParticleEmitters();
         EntityModelLayerRegistry.registerModelLayer(SpiritHunterArmorModel.LAYER, SpiritHunterArmorModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SoulStainedSteelArmorModel.LAYER, SoulStainedSteelArmorModel::getTexturedModelData);
         ArmorRenderer.register(new CloakArmorRenderer(DataHelper.prefix("textures/armor/spirit_hunter.png")), MalumRegistry.SPIRIT_HUNTER_CLOAK, MalumRegistry.SPIRIT_HUNTER_ROBE, MalumRegistry.SPIRIT_HUNTER_LEGGINGS, MalumRegistry.SPIRIT_HUNTER_BOOTS);
