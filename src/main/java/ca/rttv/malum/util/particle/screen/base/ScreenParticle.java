@@ -1,6 +1,5 @@
 package ca.rttv.malum.util.particle.screen.base;
 
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.world.ClientWorld;

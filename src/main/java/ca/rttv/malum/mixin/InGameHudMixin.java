@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public class InGameHudMixin {
+public abstract class InGameHudMixin {
     @Inject(at = @At("HEAD"), method = "renderHotbar")
     private void malum$renderHotbarStart(float l1, MatrixStack j1, CallbackInfo ci) {
         ScreenParticleHandler.renderingHotbar = true;

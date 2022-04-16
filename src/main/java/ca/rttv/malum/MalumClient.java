@@ -1,7 +1,5 @@
 package ca.rttv.malum;
 
-import ca.rttv.malum.client.init.MalumParticleRegistry;
-import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
 import ca.rttv.malum.client.model.SoulStainedSteelArmorModel;
 import ca.rttv.malum.client.model.SpiritHunterArmorModel;
 import ca.rttv.malum.client.render.CloakArmorRenderer;

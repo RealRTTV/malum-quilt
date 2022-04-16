@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_TOOLTIPS;
 
 @Mixin(HandledScreen.class)
-public class HandledScreenMixin {
+public abstract class HandledScreenMixin {
     @Inject(at = @At("RETURN"), method = "render")
     private void malum$beforeTooltipParticle(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         ScreenParticleHandler.renderParticles(BEFORE_TOOLTIPS);

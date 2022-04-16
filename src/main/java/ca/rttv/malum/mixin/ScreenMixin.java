@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_UI;
 
 @Mixin(Screen.class)
-public class ScreenMixin {
+public abstract class ScreenMixin {
     @Inject(at = @At("HEAD"), method = "renderBackground(Lnet/minecraft/client/util/math/MatrixStack;I)V")
     private void malum$beforeBackgroundParticle(MatrixStack pPoseStack, int pVOffset, CallbackInfo ci) {
         ScreenParticleHandler.renderParticles(BEFORE_UI);

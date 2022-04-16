@@ -2,9 +2,6 @@ package ca.rttv.malum.util.particle.screen;
 
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.ParticleType;
-
-import java.util.function.Supplier;
 
 public class ScreenParticleType<T extends ScreenParticleEffect> {
 
