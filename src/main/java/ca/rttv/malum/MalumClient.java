@@ -1,8 +1,10 @@
 package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.client.model.SoulStainedSteelArmorModel;
 import ca.rttv.malum.client.model.SpiritHunterArmorModel;
-import ca.rttv.malum.client.render.MalumArmorRenderer;
+import ca.rttv.malum.client.render.CloakArmorRenderer;
+import ca.rttv.malum.client.render.SteelArmorRenderer;
 import ca.rttv.malum.client.render.entity.FloatingItemEntityRenderer;
 import ca.rttv.malum.client.render.entity.ScytheBoomerangEntityRenderer;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
@@ -40,7 +42,9 @@ public class MalumClient implements ClientModInitializer {
         MalumParticleRegistry.registerFactories();
         RenderHandler.init();
         EntityModelLayerRegistry.registerModelLayer(SpiritHunterArmorModel.LAYER, SpiritHunterArmorModel::getTexturedModelData);
-        ArmorRenderer.register(new MalumArmorRenderer(DataHelper.prefix("textures/armor/spirit_hunter.png")), MalumRegistry.SPIRIT_HUNTER_CLOAK, MalumRegistry.SPIRIT_HUNTER_ROBE, MalumRegistry.SPIRIT_HUNTER_LEGGINGS, MalumRegistry.SPIRIT_HUNTER_BOOTS);
+        EntityModelLayerRegistry.registerModelLayer(SoulStainedSteelArmorModel.LAYER, SoulStainedSteelArmorModel::getTexturedModelData);
+        ArmorRenderer.register(new CloakArmorRenderer(DataHelper.prefix("textures/armor/spirit_hunter.png")), MalumRegistry.SPIRIT_HUNTER_CLOAK, MalumRegistry.SPIRIT_HUNTER_ROBE, MalumRegistry.SPIRIT_HUNTER_LEGGINGS, MalumRegistry.SPIRIT_HUNTER_BOOTS);
+        ArmorRenderer.register(new SteelArmorRenderer(DataHelper.prefix("textures/armor/soul_stained_steel.png")), MalumRegistry.SOUL_STAINED_STEEL_HELMET, MalumRegistry.SOUL_STAINED_STEEL_CHESTPLATE, MalumRegistry.SOUL_STAINED_STEEL_LEGGINGS, MalumRegistry.SOUL_STAINED_STEEL_BOOTS);
         EntityRendererRegistry.register(MalumEntityRegistry.SCYTHE_BOOMERANG, ScytheBoomerangEntityRenderer::new);
         EntityRendererRegistry.register(MalumEntityRegistry.NATURAL_SPIRIT, FloatingItemEntityRenderer::new);
 

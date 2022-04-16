@@ -10,6 +10,7 @@
     "BlockEntityRendererFactoriesMixin",
     "BlockEntityTypeMixin",
     "BoatEntityRendererMixin",
+    "ClientRecipeBookMixin",
     "CoreShaderMixin",
     "DefaultBiomeFeaturesMixin",
     "EnchantmentTargetMixin",
@@ -22,8 +23,7 @@
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "RenderLayersMixin",
-    "TexturedRenderLayersMixin",
-    "ToolMaterialsMixin"
+    "TexturedRenderLayersMixin"
   ],
   "client": [
     "AbstractFurnaceBlockEntityMixin",

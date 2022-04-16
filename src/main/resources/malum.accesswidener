@@ -17,6 +17,15 @@ accessible      field     net/minecraft/client/render/RenderLayer$MultiPhasePara
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhaseParameters             texture                      Lnet/minecraft/client/render/RenderPhase$TextureBase;
 accessible      field     net/minecraft/inventory/SimpleInventory                                  stacks                       Lnet/minecraft/util/collection/DefaultedList;
 accessible      field     net/minecraft/util/collection/DefaultedList                              delegate                     Ljava/util/List;
+accessible      field     net/minecraft/item/SwordItem                                             attackDamage                 F
+mutable         field     net/minecraft/item/SwordItem                                             attackDamage                 F
+accessible      field     net/minecraft/item/SwordItem                                             attributeModifiers           Lcom/google/common/collect/Multimap;
+mutable         field     net/minecraft/item/SwordItem                                             attributeModifiers           Lcom/google/common/collect/Multimap;
+accessible      field     net/minecraft/item/ArmorItem                                             MODIFIERS                    [Ljava/util/UUID;
+accessible      field     net/minecraft/item/ArmorItem                                             attributeModifiers           Lcom/google/common/collect/Multimap;
+mutable         field     net/minecraft/item/ArmorItem                                             attributeModifiers           Lcom/google/common/collect/Multimap;
+accessible      field     net/minecraft/entity/LivingEntity                                        lastDamageTaken              F
+accessible      field     net/minecraft/item/Item                                                  ATTACK_DAMAGE_MODIFIER_ID    Ljava/util/UUID;
 
 accessible      method    net/minecraft/client/particle/ParticleManager                            registerFactory              (Lnet/minecraft/particle/ParticleType;Lnet/minecraft/client/particle/ParticleFactory;)V
 accessible      method    net/minecraft/enchantment/EnchantmentHelper                              forEachEnchantment           (Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Lnet/minecraft/item/ItemStack;)V

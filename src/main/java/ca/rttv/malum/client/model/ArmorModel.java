@@ -9,7 +9,7 @@ import net.minecraft.entity.LivingEntity;
 
 public class ArmorModel extends BipedEntityModel<LivingEntity> {
     public EquipmentSlot slot;
-    public final ModelPart root, hat, body, leftArm, rightArm, leggings, leftLegging, rightLegging, leftFoot, rightFoot;
+    public final ModelPart root, hat, body, leftArm, rightArm, leggings, leftLegging, rightLegging;
 
     public ArmorModel(ModelPart root) {
         super(root, RenderLayer::getArmorCutoutNoCull);
@@ -18,11 +18,9 @@ public class ArmorModel extends BipedEntityModel<LivingEntity> {
         this.hat = head.getChild("helmet");
         this.body = root.getChild(EntityModelPartNames.BODY);
         this.leggings = root.getChild(EntityModelPartNames.BODY);
-        this.leftArm = root.getChild(EntityModelPartNames.LEFT_ARM);;
+        this.leftArm = root.getChild(EntityModelPartNames.LEFT_ARM);
         this.rightArm = root.getChild(EntityModelPartNames.RIGHT_ARM);
         this.leftLegging = root.getChild(EntityModelPartNames.LEFT_LEG);
         this.rightLegging = root.getChild(EntityModelPartNames.RIGHT_LEG);
-        this.leftFoot = root.getChild(EntityModelPartNames.LEFT_LEG);
-        this.rightFoot = root.getChild(EntityModelPartNames.RIGHT_LEG);
     }
 }

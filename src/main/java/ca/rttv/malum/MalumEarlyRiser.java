@@ -5,7 +5,6 @@ import com.chocohead.mm.api.ClassTinkerers;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.MappingResolver;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvents;
 
@@ -36,7 +35,11 @@ public class MalumEarlyRiser implements Runnable {
                 .addEnumSubclass(
                         "SOUL_CLOAK",
                      "ca.rttv.malum.item.SoulCloakArmorMaterial",
-                              () -> (new Object[]{"soul_cloak", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, (Supplier<Ingredient>) () -> Ingredient.ofItems(Items.LEATHER)})
+                              () -> (new Object[]{"soul_cloak", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f, (Supplier<Ingredient>) () -> Ingredient.ofItems(SPIRIT_FABRIC)})
+                ).addEnumSubclass(
+                        "SOUL_STAINED_STEEL",
+                     "ca.rttv.malum.item.SoulStainedSteelArmorMaterial",
+                              () -> (new Object[]{"soul_stained_steel", 22, new int[]{2, 6, 7, 3}, 13, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f, (Supplier<Ingredient>) () -> Ingredient.ofItems(SOUL_STAINED_STEEL_INGOT)})
                 ).build();
 
         // toolMaterials

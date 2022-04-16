@@ -3,7 +3,6 @@ package ca.rttv.malum.block.entity;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.helper.DataHelper;
-import ca.rttv.malum.util.helper.RenderHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.spirit.MalumSpiritType;

@@ -7,15 +7,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
+import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_PROFICIENCY;
 import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
 
 public class MagicAxeItem extends AxeItem {
@@ -39,9 +38,18 @@ public class MagicAxeItem extends AxeItem {
         );
         builder.put(
                 MAGIC_DAMAGE,
-                new EntityAttributeModifier(MAGIC_DAMAGE_MODIFIER_ID, "Weapon modifier", this.getAttackDamage() - magic, EntityAttributeModifier.Operation.ADDITION)
+                new EntityAttributeModifier(MAGIC_DAMAGE_MODIFIER_ID, "Weapon modifier", magic, EntityAttributeModifier.Operation.ADDITION)
         );
         magicAttributeModifiers = builder.build();
+    }
+
+    @Override
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        int lastDamageTaken = (int) target.lastDamageTaken;
+        target.lastDamageTaken = 0;
+        target.damage(DamageSource.MAGIC, (float) (attacker.getAttributeValue(MAGIC_DAMAGE) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
+        target.lastDamageTaken += lastDamageTaken;
+        return super.postHit(stack, target, attacker);
     }
 
     @Override

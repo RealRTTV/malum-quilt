@@ -16,12 +16,11 @@ public class SpiritJarRenderer implements BlockEntityRenderer<SpiritJarBlockEnti
     public void render(SpiritJarBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         World world = MinecraftClient.getInstance().world;
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-        if (blockEntity.getHeldItem() != null)
-        {
+        if (blockEntity.getHeldItem() != null && world != null) {
             matrices.push();
             double y =  0.5f + Math.sin(world.getTime() / 20f) * 0.2f;
             matrices.translate(0.5f,y,0.5f);
-            matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(((world.getTime() ) + tickDelta) * 3));
+            matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion((world.getTime() + tickDelta) * 3));
             matrices.scale(0.6f, 0.6f, 0.6f);
             itemRenderer.renderItem(blockEntity.getHeldItem(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
             matrices.pop();

@@ -1,7 +1,11 @@
 package ca.rttv.malum.item;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -12,9 +16,29 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 
+import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
+import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
+
 public class ScytheItem extends SwordItem {
-    public ScytheItem(ToolMaterial material, int bonusMaterialDamage, float attackSpeed, Settings settings) {
-        super(material, bonusMaterialDamage, attackSpeed, settings);
+    public ScytheItem(ToolMaterial material, float damage, float speed, float magic, Settings settings) {
+        super(material, (int) damage, speed, settings);
+        this.attackDamage = damage + material.getAttackDamage();
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(
+                EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", this.attackDamage, EntityAttributeModifier.Operation.ADDITION)
+        );
+        builder.put(
+                EntityAttributes.GENERIC_ATTACK_SPEED,
+                new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", speed, EntityAttributeModifier.Operation.ADDITION)
+        );
+        if (magic > 0.0f) {
+            builder.put(
+                    MAGIC_DAMAGE,
+                    new EntityAttributeModifier(MAGIC_DAMAGE_MODIFIER_ID, "Weapon modifier", magic, EntityAttributeModifier.Operation.ADDITION)
+            );
+        }
+        this.attributeModifiers = builder.build();
     }
 
     @Override
@@ -23,7 +47,7 @@ public class ScytheItem extends SwordItem {
             SoundEvent sound;
 //            if (ItemHelper.hasCurioEquipped(attacker, ItemRegistry.NECKLACE_OF_THE_NARROW_EDGE)) {
 //                spawnSweepParticles((PlayerEntity) attacker, ParticleRegistry.SCYTHE_CUT_ATTACK_PARTICLE.get());
-//                sound = MalumSoundRegistry.SCYTHE_CUT.get();
+//                sound = SCYTHE_CUT;
 //            } else {
                 spawnSweepParticles((PlayerEntity) attacker, MalumParticleRegistry.SCYTHE_SWEEP_ATTACK_PARTICLE);
                 sound = SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP;

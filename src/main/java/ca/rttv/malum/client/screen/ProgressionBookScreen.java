@@ -262,27 +262,27 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new TextPage("soul_stained_steel_b"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_stained_steel_ingot")))
                 .addPage(CraftingBookPage.resonatorPage(STAINED_SPIRIT_RESONATOR, QUARTZ, SOUL_STAINED_STEEL_INGOT, RUNEWOOD_PLANKS.asItem()))
-//                .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_PICKAXE, SOUL_STAINED_STEEL_INGOT))
-//                .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_AXE, SOUL_STAINED_STEEL_INGOT))
-//                .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_HOE, SOUL_STAINED_STEEL_INGOT))
-//                .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_SHOVEL, SOUL_STAINED_STEEL_INGOT))
+                .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_PICKAXE, SOUL_STAINED_STEEL_INGOT))
+                .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_AXE, SOUL_STAINED_STEEL_INGOT))
+                .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_HOE, SOUL_STAINED_STEEL_INGOT))
+                .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_SHOVEL, SOUL_STAINED_STEEL_INGOT))
                 .addPage(CraftingBookPage.toolPage(SOUL_STAINED_STEEL_SWORD, SOUL_STAINED_STEEL_INGOT))
 //                .addModCompatPage(new CraftingBookPage(SOUL_STAINED_STEEL_KNIFE, EMPTY, EMPTY, EMPTY, EMPTY, SOUL_STAINED_STEEL_INGOT, EMPTY, STICK), "farmersdelight")
         );
-/*
+
         entries.add(new BookEntry(
-                "soul_stained_gear", SOUL_STAINED_STEEL_SCYTHE.get(), -4, 5)
+                "soul_stained_gear", SOUL_STAINED_STEEL_SCYTHE, -4, 5)
                 .addPage(new HeadlineTextPage("soul_stained_scythe", "soul_stained_scythe"))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_STAINED_STEEL_SCYTHE))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_stained_steel_scythe")))
                 .addPage(new HeadlineTextPage("soul_stained_armor", "soul_stained_armor_a"))
                 .addPage(new TextPage("soul_stained_armor_b"))
                 .addPage(new TextPage("soul_stained_armor_c"))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_STAINED_STEEL_HELMET))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_STAINED_STEEL_CHESTPLATE))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_STAINED_STEEL_LEGGINGS))
-                .addPage(SpiritInfusionPage.fromOutput(SOUL_STAINED_STEEL_BOOTS))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_stained_steel_helmet")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_stained_steel_chestplate")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_stained_steel_leggings")))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_stained_steel_boots")))
         );
-
+/*
         entries.add(new BookEntry(
                 "spirit_trinkets", ORNATE_RING.get(), -4, 7)
                 .addPage(new HeadlineTextPage("spirit_trinkets", "spirit_trinkets_a"))
@@ -505,15 +505,6 @@ public class ProgressionBookScreen extends Screen {
         }
     }
 
-    public static void renderItemWithTagTooltip(MatrixStack matrices, ItemStack stack, int posX, int posY, int mouseX, int mouseY, Text tag) {
-        final MinecraftClient client = MinecraftClient.getInstance();
-        client.getItemRenderer().renderInGuiWithOverrides(stack, posX, posY);
-        client.getItemRenderer().renderGuiItemOverlay(screen.textRenderer, stack, posX, posY, null);
-        if (isHovering(mouseX, mouseY, posX, posY, 16, 16)) {
-            screen.renderTooltip(matrices, List.of(new TranslatableText(stack.getTranslationKey()), tag), mouseX, mouseY);
-        }
-    }
-
     public static void renderWrappingText(MatrixStack matrices, String text, int x, int y, int w) {
         final MinecraftClient client = MinecraftClient.getInstance();
         TextRenderer textRenderer = client.textRenderer;
@@ -539,22 +530,9 @@ public class ProgressionBookScreen extends Screen {
         }
     }
 
-    public static void renderText(MatrixStack stack, String text, int x, int y) {
-        renderText(stack, new TranslatableText(text), x, y, glow(0));
-    }
-
     public static void renderText(MatrixStack stack, Text text, int x, int y) {
         String str = text.getString();
         renderRawText(stack, str, x, y, glow(0));
-    }
-
-    public static void renderText(MatrixStack stack, String text, int x, int y, float glow) {
-        renderText(stack, new TranslatableText(text), x, y, glow);
-    }
-
-    public static void renderText(MatrixStack stack, Text text, int x, int y, float glow) {
-        String str = text.getString();
-        renderRawText(stack, str, x, y, glow);
     }
 
     private static void renderRawText(MatrixStack matrices, String text, int x, int y, float glow) {
@@ -574,6 +552,7 @@ public class ProgressionBookScreen extends Screen {
 
     public static float glow(float offset) {
         final MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player == null) return 0.0f;
         return MathHelper.sin(offset + client.player.world.getTime() / 40f) / 2f + 0.5f;
     }
 
@@ -592,6 +571,7 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public void setupObjects() {
+        if (client == null) return;
         objects = new ArrayList<>();
         this.width = client.getWindow().getScaledWidth();
         this.height = client.getWindow().getScaledHeight();
@@ -608,6 +588,7 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public void faceObject(BookObject object) {
+        if (client == null) return;
         this.width = client.getWindow().getScaledWidth();
         this.height = client.getWindow().getScaledHeight();
         int guiLeft = (width - bookWidth) / 2;
@@ -675,7 +656,8 @@ public class ProgressionBookScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == this.client.options.inventoryKey.getDefaultKey().getKeyCode()) {
+        if (client == null) return false;
+        if (keyCode == client.options.inventoryKey.getDefaultKey().getKeyCode()) {
             onClose();
             return true;
         }
@@ -719,6 +701,7 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public void cut() {
+        if (client == null) return;
         int scale = (int) client.getWindow().getScaleFactor();
         int guiLeft = (width - bookWidth) / 2;
         int guiTop = (height - bookHeight) / 2;
@@ -728,6 +711,7 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public void playSound() {
+        if (client == null || client.player == null) return;
         PlayerEntity playerEntity = client.player;
         playerEntity.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.PLAYERS, 1.0f, 1.0f);
     }

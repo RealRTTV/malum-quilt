@@ -22,7 +22,7 @@ public class ItemStandRenderer implements BlockEntityRenderer<ItemStandBlockEnti
         World world = client.world;
         ItemRenderer itemRenderer = client.getItemRenderer();
         ItemStack stack = entity.getHeldItem();
-        if (!stack.isEmpty()) {
+        if (!stack.isEmpty() && world != null) {
             matrices.push();
             Vec3f offset = new Vec3f(entity.itemOffset());
             if (stack.getItem() instanceof MalumSpiritItem) {
@@ -30,7 +30,7 @@ public class ItemStandRenderer implements BlockEntityRenderer<ItemStandBlockEnti
                 matrices.translate(0, y, 0);
             }
             matrices.translate(offset.getX(), offset.getY(), offset.getZ());
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() )* 3 + tickDelta));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3));
             matrices.scale(0.6f, 0.6f, 0.6f);
             itemRenderer.renderItem(stack, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
             matrices.pop();
