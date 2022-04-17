@@ -188,45 +188,44 @@ public final class SpiritHelper {
                 .repeat(world, x, y, z, 1);
     }
 
-//    public static void spawnSoulParticles(World world, double x, double y, double z, Color color, Color endColor) {
-//        spawnSoulParticles(world, x, y, z, 1, 1, Vec3d.ZERO, color, endColor);
-//    }
+    public static void spawnSoulParticles(World world, double x, double y, double z, Color color, Color endColor) {
+        spawnSoulParticles(world, x, y, z, 1, 1, Vec3d.ZERO, color, endColor);
+    }
 
-//    public static void spawnSoulParticles(World world, double x, double y, double z, float alphaMultiplier, float scaleMultiplier, Vec3d extraVelocity, Color color, Color endColor) {
-//        Random rand = world.getRandom();
-//        ParticleBuilders.create(ParticleRegistry.WISP_PARTICLE)
-//                .setAlpha(0.25f * alphaMultiplier, 0)
-//                .setLifetime(8 + rand.nextInt(5))
-//                .setScale((0.3f + rand.nextFloat() * 0.2f) * scaleMultiplier, 0)
-//                .setColor(color, endColor)
-//                .randomOffset(0.05f)
-//                .enableNoClip()
-//                .addMotion(extraVelocity.x, extraVelocity.y, extraVelocity.z)
-//                .randomMotion(0.01f * scaleMultiplier, 0.01f * scaleMultiplier)
-//                .repeat(world, x, y, z, 1);
-//
-//        ParticleBuilders.create(ParticleRegistry.SMOKE_PARTICLE)
-//                .setAlpha(0.1f * alphaMultiplier, 0f)
-//                .setLifetime(20 + rand.nextInt(10))
-//                .setSpin(nextFloat(rand, 0.05f, 0.4f))
-//                .setScale((0.2f + rand.nextFloat() * 0.1f) * scaleMultiplier, 0.1f * scaleMultiplier)
-//                .setColor(color, endColor)
-//                .randomOffset(0.1f)
-//                .enableNoClip()
-//                .addMotion(extraVelocity.x, extraVelocity.y, extraVelocity.z)
-//                .randomMotion(0.04f * scaleMultiplier, 0.04f * scaleMultiplier)
-//                .repeat(world, x, y, z, 1)
-//                .setAlpha(0.12f * alphaMultiplier, 0f)
-//                .setLifetime(10 + rand.nextInt(5))
-//                .setSpin(nextFloat(rand, 0.1f, 0.5f))
-//                .setScale((0.15f + rand.nextFloat() * 0.1f) * scaleMultiplier, 0.1f * scaleMultiplier)
-//                .randomMotion(0.03f * scaleMultiplier, 0.03f * scaleMultiplier)
-//                .repeat(world, x, y, z, 1);
-//    }
+    public static void spawnSoulParticles(World world, double x, double y, double z, float alphaMultiplier, float scaleMultiplier, Vec3d extraVelocity, Color color, Color endColor) {
+        Random rand = world.getRandom();
+        ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                .setAlpha(0.25f * alphaMultiplier, 0)
+                .setLifetime(8 + rand.nextInt(5))
+                .setScale((0.3f + rand.nextFloat() * 0.2f) * scaleMultiplier, 0)
+                .setColor(color, endColor)
+                .randomOffset(0.05f)
+                .enableNoClip()
+                .addMotion(extraVelocity.x, extraVelocity.y, extraVelocity.z)
+                .randomMotion(0.01f * scaleMultiplier, 0.01f * scaleMultiplier)
+                .repeat(world, x, y, z, 1);
+
+        ParticleBuilders.create(MalumParticleRegistry.SMOKE_PARTICLE)
+                .setAlpha(0.1f * alphaMultiplier, 0f)
+                .setLifetime(20 + rand.nextInt(10))
+                .setSpin(nextFloat(rand, 0.05f, 0.4f))
+                .setScale((0.2f + rand.nextFloat() * 0.1f) * scaleMultiplier, 0.1f * scaleMultiplier)
+                .setColor(color, endColor)
+                .randomOffset(0.1f)
+                .enableNoClip()
+                .addMotion(extraVelocity.x, extraVelocity.y, extraVelocity.z)
+                .randomMotion(0.04f * scaleMultiplier, 0.04f * scaleMultiplier)
+                .repeat(world, x, y, z, 1)
+                .setAlpha(0.12f * alphaMultiplier, 0f)
+                .setLifetime(10 + rand.nextInt(5))
+                .setSpin(nextFloat(rand, 0.1f, 0.5f))
+                .setScale((0.15f + rand.nextFloat() * 0.1f) * scaleMultiplier, 0.1f * scaleMultiplier)
+                .randomMotion(0.03f * scaleMultiplier, 0.03f * scaleMultiplier)
+                .repeat(world, x, y, z, 1);
+    }
 
     public static void spawnSpiritScreenParticles(Color color, Color endColor, ItemStack stack, float pXPosition, float pYPosition, ScreenParticle.RenderOrder renderOrder) {
-        final MinecraftClient client = MinecraftClient.getInstance();
-        Random rand = client.world.getRandom();
+        Random rand = MinecraftClient.getInstance().world.getRandom();
         ParticleBuilders.create(MalumScreenParticleRegistry.TWINKLE)
                 .setAlpha(0.07f, 0f)
                 .setLifetime(10 + rand.nextInt(10))
