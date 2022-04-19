@@ -1,4 +1,4 @@
-package ca.rttv.malum.item.interfaces;
+package ca.rttv.malum.item;
 
 public interface ISoulContainerItem {
 //    TypedActionResult<ItemStack> interactWithSoul(PlayerEntity player, Hand hand, SoulEntity soul);

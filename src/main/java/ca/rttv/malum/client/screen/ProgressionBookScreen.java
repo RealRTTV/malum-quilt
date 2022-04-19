@@ -23,7 +23,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Main.MODID;
 import static ca.rttv.malum.registry.MalumRegistry.*;
 import static net.minecraft.item.Items.*;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
@@ -282,69 +282,69 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_stained_steel_leggings")))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soul_stained_steel_boots")))
         );
-/*
+
         entries.add(new BookEntry(
-                "spirit_trinkets", ORNATE_RING.get(), -4, 7)
+                "spirit_trinkets", ORNATE_RING, -4, 7)
                 .addPage(new HeadlineTextPage("spirit_trinkets", "spirit_trinkets_a"))
                 .addPage(new TextPage("spirit_trinkets_b"))
-                .addPage(CraftingBookPage.ringPage(GILDED_RING.get(), LEATHER, HALLOWED_GOLD_INGOT))
-                .addPage(new CraftingBookPage(GILDED_BELT.get(), LEATHER, LEATHER, LEATHER, HALLOWED_GOLD_INGOT.get(), PROCESSED_SOULSTONE.get(), HALLOWED_GOLD_INGOT.get(), EMPTY, HALLOWED_GOLD_INGOT.get(), EMPTY))
-                .addPage(CraftingBookPage.ringPage(ORNATE_RING.get(), LEATHER, SOUL_STAINED_STEEL_INGOT))
-                .addPage(new CraftingBookPage(ORNATE_NECKLACE.get(), EMPTY, STRING, EMPTY, STRING, EMPTY, STRING, EMPTY, SOUL_STAINED_STEEL_INGOT.get(), EMPTY))
+                .addPage(CraftingBookPage.ringPage(GILDED_RING, LEATHER, HALLOWED_GOLD_INGOT))
+                .addPage(new CraftingBookPage(GILDED_BELT, LEATHER, LEATHER, LEATHER, HALLOWED_GOLD_INGOT, PROCESSED_SOULSTONE, HALLOWED_GOLD_INGOT, EMPTY, HALLOWED_GOLD_INGOT, EMPTY))
+                .addPage(CraftingBookPage.ringPage(ORNATE_RING, LEATHER, SOUL_STAINED_STEEL_INGOT))
+                .addPage(new CraftingBookPage(ORNATE_NECKLACE, EMPTY, STRING, EMPTY, STRING, EMPTY, STRING, EMPTY, SOUL_STAINED_STEEL_INGOT, EMPTY))
         );
 
         entries.add(new BookEntry(
-                "soul_hunter_trinkets", RING_OF_ARCANE_REACH.get(), -5, 6)
+                "soul_hunter_trinkets", RING_OF_ARCANE_REACH, -5, 6)
                 .addPage(new HeadlineTextPage("arcane_reach", "arcane_reach"))
-                .addPage(SpiritInfusionPage.fromOutput(RING_OF_ARCANE_REACH))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/ring_of_arcane_reach")))
                 .addPage(new HeadlineTextPage("arcane_spoil", "arcane_spoil"))
-                .addPage(SpiritInfusionPage.fromOutput(RING_OF_ARCANE_SPOIL))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/ring_of_arcane_spoil")))
         );
 
         entries.add(new BookEntry(
-                "ring_of_prowess", RING_OF_PROWESS.get(), -7, 6)
+                "ring_of_prowess", RING_OF_PROWESS, -7, 6)
                 .addPage(new HeadlineTextPage("ring_of_prowess", "ring_of_prowess_a"))
                 .addPage(new TextPage("ring_of_prowess_b"))
-                .addPage(SpiritInfusionPage.fromOutput(RING_OF_PROWESS))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/ring_of_prowess")))
         );
 
         entries.add(new BookEntry(
-                "ring_of_wicked_intent", RING_OF_WICKED_INTENT.get(), -7, 8)
+                "ring_of_wicked_intent", RING_OF_WICKED_INTENT, -7, 8)
                 .addPage(new HeadlineTextPage("ring_of_wicked_intent", "ring_of_wicked_intent"))
-                .addPage(SpiritInfusionPage.fromOutput(RING_OF_WICKED_INTENT))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/ring_of_wicked_intent")))
         );
 
         entries.add(new BookEntry(
-                "ring_of_curative_talent", RING_OF_CURATIVE_TALENT.get(), -7, 4)
+                "ring_of_curative_talent", RING_OF_CURATIVE_TALENT, -7, 4)
                 .addPage(new HeadlineTextPage("ring_of_curative_talent", "ring_of_curative_talent"))
-                .addPage(SpiritInfusionPage.fromOutput(RING_OF_CURATIVE_TALENT))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/ring_of_curative_talent")))
         );
 
         entries.add(new BookEntry(
-                "necklace_of_the_mystic_mirror", NECKLACE_OF_THE_MYSTIC_MIRROR.get(), -6, 5)
+                "necklace_of_the_mystic_mirror", NECKLACE_OF_THE_MYSTIC_MIRROR, -6, 5)
                 .addPage(new HeadlineTextPage("necklace_of_the_mystic_mirror", "necklace_of_the_mystic_mirror"))
-                .addPage(SpiritInfusionPage.fromOutput(NECKLACE_OF_THE_MYSTIC_MIRROR))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/necklace_of_the_mystic_mirror")))
         );
 
         entries.add(new BookEntry(
-                "necklace_of_the_narrow_edge", NECKLACE_OF_THE_NARROW_EDGE.get(), -8, 7)
+                "necklace_of_the_narrow_edge", NECKLACE_OF_THE_NARROW_EDGE, -8, 7)
                 .addPage(new HeadlineTextPage("necklace_of_the_narrow_edge", "necklace_of_the_narrow_edge"))
-                .addPage(SpiritInfusionPage.fromOutput(NECKLACE_OF_THE_NARROW_EDGE))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/necklace_of_the_narrow_edge")))
         );
 
         entries.add(new BookEntry(
-                "warded_belt", WARDED_BELT.get(), -9, 5)
+                "warded_belt", WARDED_BELT, -9, 5)
                 .addPage(new HeadlineTextPage("warded_belt", "warded_belt"))
-                .addPage(SpiritInfusionPage.fromOutput(WARDED_BELT))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/warded_belt")))
         );
 
         entries.add(new BookEntry(
-                "mirror_magic", SPECTRAL_LENS.get(), -6, 10)
+                "mirror_magic", SPECTRAL_LENS, -6, 10)
                 .setObjectSupplier(ImportantEntryObject::new)
                 .addPage(new HeadlineTextPage("mirror_magic", "mirror_magic"))
-                .addPage(SpiritInfusionPage.fromOutput(SPECTRAL_LENS))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/spectral_lens")))
         );
-
+/*
         entries.add(new BookEntry(
                 "voodoo_magic", POPPET.get(), 6, 10)
                 .setObjectSupplier(ImportantEntryObject::new)

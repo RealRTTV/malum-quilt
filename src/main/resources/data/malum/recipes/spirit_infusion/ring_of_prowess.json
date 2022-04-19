@@ -14,11 +14,11 @@
       "count": 2
     },
     {
-      "tag": "forge:gems/lapis",
+      "item": "minecraft:lapis_lazuli",
       "count": 4
     },
     {
-      "tag": "forge:gems/emerald",
+      "item": "minecraft:emerald",
       "count": 2
     }
   ],

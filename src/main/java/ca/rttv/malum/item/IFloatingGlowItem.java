@@ -1,4 +1,4 @@
-package ca.rttv.malum.item.interfaces;
+package ca.rttv.malum.item;
 
 import java.awt.*;
 

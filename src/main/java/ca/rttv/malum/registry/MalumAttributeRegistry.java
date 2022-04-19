@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Main.MODID;
 
 @SuppressWarnings("unused")
 public interface MalumAttributeRegistry {
@@ -29,7 +29,7 @@ public interface MalumAttributeRegistry {
     EntityAttribute SOUL_WARD_STRENGTH = create("soul_ward_strength", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_strength", 1D, 0.0D, 2048.0D).setTracked(true));
     EntityAttribute SOUL_WARD_RECOVERY_SPEED = create("soul_ward_recovery_speed", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_recovery_speed", 0D, 0.0D, 2048.0D).setTracked(true));
     EntityAttribute SOUL_WARD_DAMAGE_PENALTY = create("soul_ward_damage_penalty", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_damage_penalty", 3D, 0.0D, 2048.0D).setTracked(true));
-    EntityAttribute SOUL_WARD_CAP = create("soul_ward_capacity", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_capacity", 0D, 0.0D, 2048.0D).setTracked(true));
+    EntityAttribute SOUL_WARD_CAP = create("soul_ward_capacity", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_capacity", 0D, 0.0D, 2048.0D).setTracked(true)); // todo: make this render and ill do the rest of the work @arathain (since it has wavy shit)
 
     private static <T extends EntityAttribute> EntityAttribute create(String id, EntityAttribute attribute) {
         ATTRIBUTES.put(new Identifier(MODID, id), attribute);

@@ -13,7 +13,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Main.MODID;
 import static net.minecraft.util.math.MathHelper.sqrt;
 
 public final class DataHelper {

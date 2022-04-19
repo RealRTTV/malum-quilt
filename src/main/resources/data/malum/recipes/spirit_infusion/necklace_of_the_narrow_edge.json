@@ -14,11 +14,11 @@
       "count": 1
     },
     {
-      "tag": "forge:storage_blocks/iron",
+      "item": "minecraft:iron_block",
       "count": 1
     },
     {
-      "tag": "forge:ingots/iron",
+      "item": "minecraft:iron_ingot",
       "count": 2
     }
   ],

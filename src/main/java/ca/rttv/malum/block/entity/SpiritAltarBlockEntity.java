@@ -195,6 +195,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 if (entry.isValidItem(extraItem)) {
                     found = true;
                     // we don't remove the entry since it can cause errors with tags accepting the "wrong" item, thus it can be used twice
+                    // todo: make a config option for the removal
                     break;
                 }
             }

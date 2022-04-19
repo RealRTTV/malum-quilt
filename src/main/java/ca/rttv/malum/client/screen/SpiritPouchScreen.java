@@ -9,7 +9,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Main.MODID;
 
 public class SpiritPouchScreen extends HandledScreen<SpiritPouchScreenHandler> {
     public static final Identifier TEXTURE = new Identifier(MODID, "textures/gui/spirit_pouch.png");

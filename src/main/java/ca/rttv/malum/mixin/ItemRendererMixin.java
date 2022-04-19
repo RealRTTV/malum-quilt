@@ -31,6 +31,7 @@ public abstract class ItemRendererMixin {
             cir.setReturnValue(bakedModel2 == null ? this.models.getModelManager().getMissingModel() : bakedModel2);
         }
     }
+
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/BufferBuilderStorage;getEntityVertexConsumers()Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;"), method = "renderGuiItemModel")
     private void malum$itemParticleEmitter(ItemStack stack, int x, int y, BakedModel model, CallbackInfo ci) {
         ScreenParticleHandler.renderItem(stack);

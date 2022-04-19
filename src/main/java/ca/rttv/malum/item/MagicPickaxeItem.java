@@ -1,7 +1,9 @@
 package ca.rttv.malum.item;
 
+import ca.rttv.malum.duck.MysticMirrorDuck;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -43,6 +45,13 @@ public class MagicPickaxeItem extends PickaxeItem {
         target.lastDamageTaken = 0;
         target.damage(DamageSource.MAGIC, (float) (attacker.getAttributeValue(MAGIC_DAMAGE) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
         target.lastDamageTaken += lastDamageTaken;
+        if (((MysticMirrorDuck) attacker).tryUseMysticMirror()) {
+            TrinketsApi.getTrinketComponent(attacker).orElseThrow().forEach((slot, trinket) -> {
+                if (trinket.getItem() instanceof SpiritCollectActivity spiritCollectActivity) {
+                    spiritCollectActivity.collect(stack, attacker, slot, trinket);
+                }
+            });
+        }
         return super.postHit(stack, target, attacker);
     }
 

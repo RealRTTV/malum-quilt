@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
-public class MalumEarlyRiser implements Runnable {
+public final class EarlyRiser implements Runnable {
     @Override
     public void run() {
         MappingResolver remapper = FabricLoader.getInstance().getMappingResolver();
@@ -20,6 +20,7 @@ public class MalumEarlyRiser implements Runnable {
         String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
         String armorMaterialsTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1740");
         String toolMaterialsTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1834");
+        String testTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1799");
         String boatParam1 = "L" + remapper.mapClassName("intermediary", "net.minecraft.class_2248") + ";";
         String armorParam5 = "L" + remapper.mapClassName("intermediary", "net.minecraft.class_3414") + ";";
         ClassTinkerers.enumBuilder(type, boatParam1, String.class).addEnum("RUNEWOOD", () -> new Object[]{RUNEWOOD_PLANKS, "runewood"}).build();

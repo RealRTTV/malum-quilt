@@ -8,7 +8,7 @@
   "authors": [
     "RTTV",
     "arathain",
-    "SammySemicolon"
+    "SammySemicolon (original author)"
   ],
   "contact": {
     "homepage": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -21,16 +21,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ca.rttv.malum.Malum"
+      "ca.rttv.malum.Main"
     ],
     "cardinal-components-entity": [
       "ca.rttv.malum.component.MalumComponents"
     ],
     "mm:early_risers":[
-      "ca.rttv.malum.MalumEarlyRiser"
+      "ca.rttv.malum.EarlyRiser"
     ],
     "client": [
-      "ca.rttv.malum.MalumClient"
+      "ca.rttv.malum.ClientMain"
     ]
   },
   "mixins": [

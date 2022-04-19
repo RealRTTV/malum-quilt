@@ -28,5 +28,4 @@ public abstract class BookPage {
     public void renderBackgroundRight(MinecraftClient client, MatrixStack matrices, int guiLeft, int guiTop, int mouseX, int mouseY, float tickDelta) {
         ProgressionBookScreen.renderTexture(TEXTURE, matrices, guiLeft + 147, guiTop, 147, 1, 146, 189, 512, 512);
     }
-
 }

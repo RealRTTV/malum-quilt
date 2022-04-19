@@ -4,10 +4,12 @@ import ca.rttv.malum.component.MalumComponents;
 import ca.rttv.malum.component.SpiritLivingEntityComponent;
 import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.entity.boomerang.ScytheBoomerangEntity;
+import ca.rttv.malum.item.SpiritCollectActivity;
 import ca.rttv.malum.item.SpiritPouchItem;
 import ca.rttv.malum.registry.MalumTags;
 import ca.rttv.malum.util.helper.ItemHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,9 +37,6 @@ public class SpiritHarvestHandler {
                 MalumComponents.SPIRIT_COMPONENT.get(target).exposedSoul = 200;
             }
         }
-//        if (source.getSource() != null && source.getSource().getTags().contains("malum:soul_arrow")) {
-//            MalumComponents.SPIRIT_COMPONENT.get(target).setExposedSoul(200);
-//        }
     }
 
     public static void shatterSoul(DamageSource source, LivingEntity target) {
@@ -49,17 +48,15 @@ public class SpiritHarvestHandler {
             attacker = target.getAttacker();
         }
         if (attacker != null) {
-            LivingEntity finalAttacker = attacker;
             ItemStack stack = attacker.getMainHandStack();
             if (source.getSource() instanceof ScytheBoomerangEntity scytheBoomerang) {
                 stack = scytheBoomerang.scythe;
             }
             if (!(target instanceof PlayerEntity)) {
-                ItemStack finalStack = stack;
-              //  if (!source.getMsgId().equals(DamageSourceRegistry.VOODOO_NO_SHATTER.getMsgId())) {
+                //  if (!source.getMsgId().equals(DamageSourceRegistry.VOODOO_NO_SHATTER.getMsgId())) {
                 SpiritLivingEntityComponent component = MalumComponents.SPIRIT_COMPONENT.get(target);
                 if (component.exposedSoul > 0 && !component.isSoulless() && (!CommonConfig.SOULLESS_SPAWNERS || (CommonConfig.SOULLESS_SPAWNERS && !component.isSpawnerSpawned()))) {
-                    SpiritHelper.createSpiritsFromWeapon(target, finalAttacker, finalStack);
+                    SpiritHelper.createSpiritsFromWeapon(target, attacker, stack);
                     component.setSoulless(true);
                 }
                // }
@@ -69,11 +66,11 @@ public class SpiritHarvestHandler {
 
     public static void pickupSpirit(ItemStack stack, LivingEntity collector) {
         if (collector instanceof PlayerEntity playerEntity) {
-//            ItemHelper.getEventResponders(collector).forEach(s -> {
-//                if (s.getItem() instanceof IEventResponderItem eventItem) {
-//                    eventItem.pickupSpirit(collector, stack, true);
-//                }
-//            });
+            TrinketsApi.getTrinketComponent(playerEntity).orElseThrow().forEach((slot, trinket) -> {
+                if (trinket.getItem() instanceof SpiritCollectActivity spiritCollectActivity) {
+                    spiritCollectActivity.collect(stack, playerEntity, slot, trinket);
+                }
+            });
             for (DefaultedList<ItemStack> playerInventory : playerEntity.getInventory().combinedInventory) {
                 for (ItemStack item : playerInventory) {
                     if (item.getItem() instanceof SpiritPouchItem) {

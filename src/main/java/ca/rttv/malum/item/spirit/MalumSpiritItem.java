@@ -1,6 +1,6 @@
 package ca.rttv.malum.item.spirit;
 
-import ca.rttv.malum.item.interfaces.IFloatingGlowItem;
+import ca.rttv.malum.item.IFloatingGlowItem;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
 import ca.rttv.malum.util.spirit.MalumSpiritType;

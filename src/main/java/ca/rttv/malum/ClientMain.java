@@ -24,7 +24,7 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Main.MODID;
 import static ca.rttv.malum.registry.MalumRegistry.AERIAL_SPIRIT;
 import static ca.rttv.malum.registry.MalumRegistry.AQUEOUS_SPIRIT;
 import static ca.rttv.malum.registry.MalumRegistry.ARCANE_SPIRIT;
@@ -35,7 +35,7 @@ import static ca.rttv.malum.registry.MalumRegistry.SACRED_SPIRIT;
 import static ca.rttv.malum.registry.MalumRegistry.WICKED_SPIRIT;
 import static ca.rttv.malum.registry.SpiritTypeRegistry.*;
 
-public class MalumClient implements ClientModInitializer {
+public final class ClientMain implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         RenderHandler.init();

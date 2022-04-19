@@ -6,7 +6,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.util.Identifier;
 
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Main.MODID;
 
 public class SoulStainedSteelArmorModel extends ArmorModel {
     public static final EntityModelLayer LAYER = new EntityModelLayer(new Identifier(MODID, "textures/armor/soul_stained_steel"), "main");

@@ -1,6 +1,6 @@
 package ca.rttv.malum.entity;
 
-import ca.rttv.malum.item.interfaces.IFloatingGlowItem;
+import ca.rttv.malum.item.IFloatingGlowItem;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;

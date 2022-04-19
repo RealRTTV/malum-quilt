@@ -12,9 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Main.MODID;
 
 public class SpiritInfusionPage extends BookPage {
+    public static final int[] UOFFSET = {360, 393, 393, 360, 327, 294, 294, 327};
+    public static final int[] VOFFSET = {  1,   1,  53,  34,   1,   1, 129, 110};
     private final SpiritInfusionRecipe recipe;
 
     public SpiritInfusionPage(Predicate<SpiritInfusionRecipe> predicate) {
@@ -34,14 +36,6 @@ public class SpiritInfusionPage extends BookPage {
 
     public static SpiritInfusionPage fromId(Identifier id) {
         return new SpiritInfusionPage(recipe -> recipe.getId().equals(id));
-    }
-
-    public static int[] uOffset() {
-        return new int[]{360, 393, 393, 360, 327, 294, 294, 327};
-    }
-
-    public static int[] vOffset() {
-        return new int[]{1, 1, 53, 34, 1, 1, 129, 110};
     }
 
     @Override
@@ -94,8 +88,8 @@ public class SpiritInfusionPage extends BookPage {
         int textureHeight = 32 + index * 19;
         int offset = (int) (6.5f * index);
         top -= offset;
-        int uOffset = uOffset()[index];
-        int vOffset = vOffset()[index];
+        int uOffset = UOFFSET[index];
+        int vOffset = VOFFSET[index];
         ProgressionBookScreen.renderTexture(TEXTURE, matrices, left, top, uOffset, vOffset, 32, textureHeight, 512, 512);
 
         for (int i = 0; i < extraItems.size(); i++) {

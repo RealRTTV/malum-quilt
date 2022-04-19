@@ -1,6 +1,6 @@
 package ca.rttv.malum.util.listener;
 
-import ca.rttv.malum.Malum;
+import ca.rttv.malum.Main;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import ca.rttv.malum.util.spirit.MalumEntitySpiritData;
 import com.google.gson.*;
@@ -34,11 +34,11 @@ public class SpiritDataReloadListener extends JsonDataLoader {
                 continue;
             }
             if (!object.has("primary_type")) {
-                Malum.LOGGER.info("entity with registry name: " + name + " lacks a primary type. Skipping file.");
+                Main.LOGGER.info("entity with registry name: " + name + " lacks a primary type. Skipping file.");
                 continue;
             }
             if (SPIRIT_DATA.containsKey(identifier)) {
-                Malum.LOGGER.info("entity with registry name: " + name + " already has spirit data associated with it. Overwriting.");
+                Main.LOGGER.info("entity with registry name: " + name + " already has spirit data associated with it. Overwriting.");
             }
             String primaryType = object.getAsJsonPrimitive("primary_type").getAsString();
             JsonArray array = object.getAsJsonArray("spirits");

@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -17,6 +18,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
+import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_PROFICIENCY;
 import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
 
 public class ScytheItem extends SwordItem {
@@ -43,7 +45,7 @@ public class ScytheItem extends SwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if(attacker instanceof PlayerEntity) {
+        if (attacker instanceof PlayerEntity) {
             SoundEvent sound;
 //            if (ItemHelper.hasCurioEquipped(attacker, ItemRegistry.NECKLACE_OF_THE_NARROW_EDGE)) {
 //                spawnSweepParticles((PlayerEntity) attacker, ParticleRegistry.SCYTHE_CUT_ATTACK_PARTICLE.get());
@@ -54,6 +56,10 @@ public class ScytheItem extends SwordItem {
 //            }
             attacker.world.playSound(null, target.getX(), target.getY(), target.getZ(), sound, attacker.getSoundCategory(), 1, 1);
         }
+        int lastDamageTaken = (int) target.lastDamageTaken;
+        target.lastDamageTaken = 0;
+        target.damage(DamageSource.MAGIC, (float) (attacker.getAttributeValue(MAGIC_DAMAGE) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
+        target.lastDamageTaken += lastDamageTaken;
         return super.postHit(stack, target, attacker);
     }
     public void spawnSweepParticles(PlayerEntity player, DefaultParticleType type) {

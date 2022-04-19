@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import java.awt.*;
 import java.util.function.Supplier;
 
-import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.Main.MODID;
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
 public class MalumSpiritType {
