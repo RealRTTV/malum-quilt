@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static ca.rttv.malum.Main.MODID;
+import static ca.rttv.malum.Malum.MODID;
 
 public class SpiritInfusionPage extends BookPage {
     public static final int[] UOFFSET = {360, 393, 393, 360, 327, 294, 294, 327};

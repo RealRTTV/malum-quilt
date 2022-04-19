@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
-public final class EarlyRiser implements Runnable {
+public final class MalumEarlyRiser implements Runnable {
     @Override
     public void run() {
         MappingResolver remapper = FabricLoader.getInstance().getMappingResolver();

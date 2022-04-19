@@ -1,6 +1,6 @@
 package ca.rttv.malum.util;
 
-import ca.rttv.malum.Main;
+import ca.rttv.malum.Malum;
 import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
 import com.mojang.datafixers.util.Pair;
@@ -48,7 +48,7 @@ public class RenderLayers extends RenderPhase {
      */
     public static RenderLayer createGenericRenderLayer(String name, VertexFormat format, VertexFormat.DrawMode mode, Shader shader, Transparency transparency, Identifier texture) {
         RenderLayer type = RenderLayer.of(
-                Main.MODID + ":" + name, format, mode, 256, false, false, RenderLayer.MultiPhaseParameters.builder()
+                Malum.MODID + ":" + name, format, mode, 256, false, false, RenderLayer.MultiPhaseParameters.builder()
                         .shader(shader)
                         .writeMaskState(new WriteMaskState(true, true))
                         .lightmap(new Lightmap(false))

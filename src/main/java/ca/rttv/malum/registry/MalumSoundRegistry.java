@@ -1,6 +1,6 @@
 package ca.rttv.malum.registry;
 
-import ca.rttv.malum.Main;
+import ca.rttv.malum.Malum;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -93,7 +93,7 @@ public interface MalumSoundRegistry {
     SoundEvent SUSPICIOUS_SOUND = create("suspicious_sound");
 
     static SoundEvent create(String name) {
-        Identifier id = new Identifier(Main.MODID, name);
+        Identifier id = new Identifier(Malum.MODID, name);
         SoundEvent soundEvent = new SoundEvent(id);
         SOUND_EVENTS.put(id, soundEvent);
         return soundEvent;

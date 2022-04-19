@@ -46,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-import static ca.rttv.malum.Main.*;
+import static ca.rttv.malum.Malum.*;
 import static ca.rttv.malum.registry.MalumArmorMaterials.SOUL_CLOAK;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
 import static ca.rttv.malum.registry.MalumSoundRegistry.*;

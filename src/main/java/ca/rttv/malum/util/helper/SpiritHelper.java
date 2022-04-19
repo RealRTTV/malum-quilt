@@ -1,6 +1,6 @@
 package ca.rttv.malum.util.helper;
 
-import ca.rttv.malum.Main;
+import ca.rttv.malum.Malum;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
 import ca.rttv.malum.entity.spirit.SpiritItemEntity;
@@ -81,9 +81,9 @@ public final class SpiritHelper {
                         position.x,
                         position.y,
                         position.z,
-                        nextFloat(Main.RANDOM, -speed, speed),
-                        nextFloat(Main.RANDOM, 0.015f, 0.05f),
-                        nextFloat(Main.RANDOM, -speed, speed));
+                        nextFloat(Malum.RANDOM, -speed, speed),
+                        nextFloat(Malum.RANDOM, 0.015f, 0.05f),
+                        nextFloat(Malum.RANDOM, -speed, speed));
                 world.spawnEntity(entity);
             }
         }

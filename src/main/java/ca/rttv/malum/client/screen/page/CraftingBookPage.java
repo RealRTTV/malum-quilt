@@ -6,7 +6,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 
-import static ca.rttv.malum.Main.MODID;
+import static ca.rttv.malum.Malum.MODID;
 
 public class CraftingBookPage extends BookPage {
     private final ItemStack outputStack;

@@ -17,7 +17,7 @@ import java.util.Random;
 
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
-public final class Main implements ModInitializer {
+public final class Malum implements ModInitializer {
     public static final Random RANDOM = new Random();
     public static final String MODID = "malum"; // 1 character faster than MOD_ID!
     public static final Logger LOGGER = LogManager.getLogger(MODID);

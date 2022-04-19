@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 
-import static ca.rttv.malum.Main.MODID;
+import static ca.rttv.malum.Malum.MODID;
 
 public class SmeltingBookPage extends BookPage {
     private final ItemStack inputStack;

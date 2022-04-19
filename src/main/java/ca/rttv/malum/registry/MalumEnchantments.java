@@ -12,7 +12,7 @@ import net.minecraft.util.registry.Registry;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static ca.rttv.malum.Main.MODID;
+import static ca.rttv.malum.Malum.MODID;
 
 public interface MalumEnchantments {
      Map<Identifier, Enchantment> ENCHANTMENTS = new LinkedHashMap<>();

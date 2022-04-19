@@ -21,16 +21,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ca.rttv.malum.Main"
+      "ca.rttv.malum.Malum"
     ],
     "cardinal-components-entity": [
       "ca.rttv.malum.component.MalumComponents"
     ],
     "mm:early_risers":[
-      "ca.rttv.malum.EarlyRiser"
+      "ca.rttv.malum.MalumEarlyRiser"
     ],
     "client": [
-      "ca.rttv.malum.ClientMain"
+      "ca.rttv.malum.MalumClient"
     ]
   },
   "mixins": [

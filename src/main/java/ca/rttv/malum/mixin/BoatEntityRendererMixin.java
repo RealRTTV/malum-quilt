@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static ca.rttv.malum.Main.MODID;
+import static ca.rttv.malum.Malum.MODID;
 
 @Mixin(BoatEntityRenderer.class)
 public abstract class BoatEntityRendererMixin {
