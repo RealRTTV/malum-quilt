@@ -45,7 +45,8 @@
   },
   "custom": {
     "cardinal-components": [
-      "malum:spirit"
+      "malum:spirit",
+      "malum:player"
     ]
   }
 }
