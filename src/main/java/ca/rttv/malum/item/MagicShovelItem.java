@@ -1,6 +1,5 @@
 package ca.rttv.malum.item;
 
-import ca.rttv.malum.duck.MysticMirrorDuck;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import dev.emi.trinkets.api.TrinketsApi;
@@ -17,6 +16,7 @@ import net.minecraft.item.ToolMaterial;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_PROFICIENCY;
 import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
+import static ca.rttv.malum.registry.MalumRegistry.NECKLACE_OF_THE_MYSTIC_MIRROR;
 
 public class MagicShovelItem extends ShovelItem {
     private final Multimap<EntityAttribute, EntityAttributeModifier> magicAttributeModifiers;
@@ -45,7 +45,7 @@ public class MagicShovelItem extends ShovelItem {
         target.lastDamageTaken = 0;
         target.damage(DamageSource.MAGIC, (float) (attacker.getAttributeValue(MAGIC_DAMAGE) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
         target.lastDamageTaken += lastDamageTaken;
-        if (((MysticMirrorDuck) attacker).tryUseMysticMirror()) {
+        if ((TrinketsApi.getTrinketComponent(attacker).orElseThrow().isEquipped(NECKLACE_OF_THE_MYSTIC_MIRROR))) {
             TrinketsApi.getTrinketComponent(attacker).orElseThrow().forEach((slot, trinket) -> {
                 if (trinket.getItem() instanceof SpiritCollectActivity spiritCollectActivity) {
                     spiritCollectActivity.collect(stack, attacker, slot, trinket);

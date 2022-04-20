@@ -5,6 +5,7 @@ import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.component.MalumComponents;
 import ca.rttv.malum.component.MalumPlayerComponent;
 import ca.rttv.malum.config.CommonConfig;
+import ca.rttv.malum.duck.SoulWardDuck;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
@@ -17,6 +18,8 @@ import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumSpiritAffinity;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.Shader;
@@ -33,8 +36,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vector4f;
 
-public class ArcaneAffinity extends MalumSpiritAffinity {
-    public ArcaneAffinity() {
+public class SoulWard extends MalumSpiritAffinity {
+    public SoulWard() {
         super(SpiritTypeRegistry.ARCANE_SPIRIT);
     }
 // TODO: this
@@ -66,16 +69,16 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                 MalumPlayerComponent component = MalumComponents.PLAYER_COMPONENT.get(player);
                     EntityAttributeInstance instance = player.getAttributeInstance(MalumAttributeRegistry.SOUL_WARD_SHATTER_COOLDOWN);
                     if (instance != null) {
-                        component.soulWardProgress = (float) (CommonConfig.SOUL_WARD_RATE * 6 * Math.exp(-0.15 * instance.getValue()));
-                        if (component.soulWard > 0) {
-                            float multiplier = source.isMagic() ? CommonConfig.SOUL_WARD_MAGIC.get().floatValue() : CommonConfig.SOUL_WARD_PHYSICAL.get().floatValue();
+                        soulWardProgress = (float) (CommonConfig.SOUL_WARD_RATE * 6 * Math.exp(-0.15 * instance.getValue()));
+                        if (soulWard > 0) {
+                            float multiplier = source.isMagic() ? CommonConfig.SOUL_WARD_MAGIC.floatValue() : CommonConfig.SOUL_WARD_PHYSICAL.floatValue();
                             float result = amount * multiplier;
                             float absorbed = amount - result;
                             double strength = player.getAttributeValue(MalumAttributeRegistry.SOUL_WARD_STRENGTH);
                             if (strength != 0) {
-                                component.soulWard = (float) Math.max(0, component.soulWard - (absorbed / strength));
+                                soulWard = (float) Math.max(0, soulWard - (absorbed / strength));
                             } else {
-                                component.soulWard = 0;
+                                soulWard = 0;
                             }
 
                             player.world.playSound(null, player.getBlockPos(), MalumSoundRegistry.SOUL_WARD_HIT, SoundCategory.PLAYERS, 1, MathHelper.nextFloat(player.getRandom(), 1.5f, 2f));
@@ -101,15 +104,16 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
         return (int) (CommonConfig.SOUL_WARD_RATE * Math.exp(-0.15 * player.getAttributeValue(MalumAttributeRegistry.SOUL_WARD_RECOVERY_SPEED)));
     }
 
-    public static class ClientOnly {
+    @Environment(EnvType.CLIENT)
+    public static class Client {
         private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/icons.png");
 
         public static void renderSoulWard(MatrixStack matrices, Window window) {
-            MinecraftClient minecraft = MinecraftClient.getInstance();
-            ClientPlayerEntity player = minecraft.player;
+            final MinecraftClient client = MinecraftClient.getInstance();
+            ClientPlayerEntity player = client.player;
             if (!player.isCreative() && !player.isSpectator()) {
-                MalumPlayerComponent component = MalumComponents.PLAYER_COMPONENT.get(player);
-                    if (component.soulWard > 0) {
+                float soulWard = ((SoulWardDuck) player).getSoulWard();
+                    if (soulWard > 0) {
                         float absorb = MathHelper.ceil(player.getAbsorptionAmount());
                         float maxHealth = (float) player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).getValue();
                         float armor = (float) player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).getValue();
@@ -134,11 +138,11 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                         shader.getUniformOrDefault("XFrequency").set(15f);
                         shader.getUniformOrDefault("Speed").set(550f);
                         shader.getUniformOrDefault("Intensity").set(600f);
-                        for (int i = 0; i < Math.ceil(component.soulWard / 3f); i++) {
+                        for (int i = 0; i < Math.ceil(soulWard / 3f); i++) {
                             int row = (int) (Math.ceil(i) / 10f);
                             int x = left + i % 10 * 8;
                             int y = top - row * 4 + rowHeight * 2 - 15;
-                            int progress = Math.min(3, (int) component.soulWard - i * 3);
+                            int progress = Math.min(3, (int) soulWard - i * 3);
                             int xTextureOffset = 1 + (3 - progress) * 15;
 
                             shader.getUniformOrDefault("UVCoordinates").set(new Vector4f(xTextureOffset / 256f, (xTextureOffset + 12) / 256f, 16 / 256f, 28 / 256f));

@@ -6,6 +6,7 @@ public class MalumSpiritAffinity {
     public MalumSpiritAffinity(MalumSpiritType type) {
         this.identifier = type.identifier + "_affinity";
     }
+
     public MalumSpiritAffinity(String identifier) {
         this.identifier = identifier;
     }
