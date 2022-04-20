@@ -1,7 +1,7 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
-import ca.rttv.malum.util.spirit.spiritaffinity.SoulWard;
+import ca.rttv.malum.util.spirit.spiritaffinity.ArcaneAffinity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
@@ -23,7 +23,7 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderStatusBars(Lnet/minecraft/client/util/math/MatrixStack;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V"))
     private void renderArmorOverlay(MatrixStack matrices, CallbackInfo info) {
-        SoulWard.Client.renderSoulWard(matrices, this.client.getWindow());
+        ArcaneAffinity.Client.renderSoulWard(matrices, this.client.getWindow());
     }
 
     @Inject(at = @At("RETURN"), method = "renderHotbar")

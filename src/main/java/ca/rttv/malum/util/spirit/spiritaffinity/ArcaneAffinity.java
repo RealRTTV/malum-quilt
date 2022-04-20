@@ -5,14 +5,11 @@ import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.component.MalumComponents;
 import ca.rttv.malum.component.MalumPlayerComponent;
 import ca.rttv.malum.config.CommonConfig;
-import ca.rttv.malum.duck.SoulWardDuck;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
-import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
 import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
-import ca.rttv.malum.util.helper.ItemHelper;
 import ca.rttv.malum.util.helper.RenderHelper;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
@@ -29,75 +26,73 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vector4f;
 
-public class SoulWard extends MalumSpiritAffinity {
-    public SoulWard() {
+public class ArcaneAffinity extends MalumSpiritAffinity {
+    public ArcaneAffinity() {
         super(SpiritTypeRegistry.ARCANE_SPIRIT);
     }
-// TODO: this
-//
-//    public static void recoverSoulWard(PlayerEntity player) {
-//        PlayerDataCapability.getCapability(player).ifPresent(c -> {
-//            AttributeInstance cap = player.getAttribute(AttributeRegistry.SOUL_WARD_CAP.get());
-//            if (cap != null) {
-//                if (c.soulWard < cap.getValue() && c.soulWardProgress <= 0) {
-//                    c.soulWard++;
-//                    if (player.level.isClientSide && !player.isCreative()) {
-//                        player.playSound(c.soulWard >= cap.getValue() ? SoundRegistry.SOUL_WARD_CHARGE.get() : SoundRegistry.SOUL_WARD_GROW.get(), 1, Mth.nextFloat(player.getRandom(), 0.6f, 1.4f));
-//                    }
-//                    c.soulWardProgress = getSoulWardCooldown(player);
-//                } else {
-//                    c.soulWardProgress--;
-//                }
-//                if (c.soulWard > cap.getValue()) {
-//                    c.soulWard = (float) cap.getValue();
-//                }
-//            }
-//        });
-//    }
 
-    //use this in a ModifyVariable for the damage
-    public static void consumeSoulWard(LivingEntity entity, DamageSource source, float amount) {
+    public static void recoverSoulWard(PlayerEntity player) {
+        MalumPlayerComponent component = MalumComponents.PLAYER_COMPONENT.get(player);
+        EntityAttributeInstance cap = player.getAttributeInstance(MalumAttributeRegistry.SOUL_WARD_CAP);
+        if (cap != null) {
+            if (component.soulWard < cap.getValue() && component.soulWardProgress <= 0) {
+                component.soulWard++;
+                if (player.world.isClient && !player.isCreative()) {
+                    player.playSound(component.soulWard >= cap.getValue() ? MalumSoundRegistry.SOUL_WARD_CHARGE : MalumSoundRegistry.SOUL_WARD_GROW, 1, MathHelper.nextFloat(player.getRandom(), 0.6f, 1.4f));
+                }
+                component.soulWardProgress = getSoulWardCooldown(player);
+            } else {
+                component.soulWardProgress--;
+            }
+            if (component.soulWard > cap.getValue()) {
+                component.soulWard = (float) cap.getValue();
+            }
+        }
+    }
+
+    public static float consumeSoulWard(LivingEntity entity, DamageSource source, float amount) {
         if (entity instanceof PlayerEntity player) {
             if (!player.world.isClient) {
                 MalumPlayerComponent component = MalumComponents.PLAYER_COMPONENT.get(player);
-                    EntityAttributeInstance instance = player.getAttributeInstance(MalumAttributeRegistry.SOUL_WARD_SHATTER_COOLDOWN);
-                    if (instance != null) {
-                        soulWardProgress = (float) (CommonConfig.SOUL_WARD_RATE * 6 * Math.exp(-0.15 * instance.getValue()));
-                        if (soulWard > 0) {
-                            float multiplier = source.isMagic() ? CommonConfig.SOUL_WARD_MAGIC.floatValue() : CommonConfig.SOUL_WARD_PHYSICAL.floatValue();
-                            float result = amount * multiplier;
-                            float absorbed = amount - result;
-                            double strength = player.getAttributeValue(MalumAttributeRegistry.SOUL_WARD_STRENGTH);
-                            if (strength != 0) {
-                                soulWard = (float) Math.max(0, soulWard - (absorbed / strength));
-                            } else {
-                                soulWard = 0;
-                            }
-
-                            player.world.playSound(null, player.getBlockPos(), MalumSoundRegistry.SOUL_WARD_HIT, SoundCategory.PLAYERS, 1, MathHelper.nextFloat(player.getRandom(), 1.5f, 2f));
-                            setAmount(result);
-                            if (source.getAttacker() != null) {
-                                if (ItemHelper.hasTrinket(player, MalumRegistry.MAGEBANE_BELT)) {
-                                    if (source instanceof EntityDamageSource entityDamageSource) {
-                                        if (entityDamageSource.isThorns()) {
-                                            return;
-                                        }
-                                    }
-                                    source.getAttacker().damage(DamageSourceRegistry.causeMagebaneDamage(player), absorbed + 2);
-                                }
-                            }
-                            MalumComponents.PLAYER_COMPONENT.sync(player);
+                EntityAttributeInstance instance = player.getAttributeInstance(MalumAttributeRegistry.SOUL_WARD_SHATTER_COOLDOWN);
+                if (instance != null) {
+                    component.soulWardProgress = (float) (CommonConfig.SOUL_WARD_RATE * 6 * Math.exp(-0.15 * instance.getValue()));
+                    if (component.soulWard > 0) {
+                        float multiplier = source.isMagic() ? CommonConfig.SOUL_WARD_MAGIC : CommonConfig.SOUL_WARD_PHYSICAL;
+                        float result = amount * multiplier;
+                        float absorbed = amount - result;
+                        double strength = player.getAttributeValue(MalumAttributeRegistry.SOUL_WARD_STRENGTH);
+                        if (strength != 0) {
+                            component.soulWard = (float) Math.max(0, component.soulWard - (absorbed / strength));
+                        } else {
+                            component.soulWard = 0;
                         }
+
+                        player.world.playSound(null, player.getBlockPos(), MalumSoundRegistry.SOUL_WARD_HIT, SoundCategory.PLAYERS, 1, MathHelper.nextFloat(player.getRandom(), 1.5f, 2f));
+
+                        if (source.getAttacker() != null) {
+//                            if (ItemHelper.hasTrinket(player, MalumRegistry.MAGEBANE_BELT)) {
+//                                if (!(source instanceof EntityDamageSource entityDamageSource) || (!entityDamageSource.isThorns())) {
+//                                    source.getAttacker().damage(MalumDamageSourceRegistry.causeMagebaneDamage(player), absorbed + 2);
+//                                }
+//                            }
+                        }
+                        MalumComponents.PLAYER_COMPONENT.sync(player);
+                        System.out.println("balls");
+                        return result;
                     }
+                }
             }
+
         }
+        System.out.println(":skull:");
+        return amount;
     }
 
     public static int getSoulWardCooldown(PlayerEntity player) {
@@ -112,14 +107,14 @@ public class SoulWard extends MalumSpiritAffinity {
             final MinecraftClient client = MinecraftClient.getInstance();
             ClientPlayerEntity player = client.player;
             if (!player.isCreative() && !player.isSpectator()) {
-                float soulWard = ((SoulWardDuck) player).getSoulWard();
+                float soulWard = MalumComponents.PLAYER_COMPONENT.get(player).soulWard;
                     if (soulWard > 0) {
                         float absorb = MathHelper.ceil(player.getAbsorptionAmount());
                         float maxHealth = (float) player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).getValue();
                         float armor = (float) player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).getValue();
 
                         int left = window.getScaledWidth() / 2 - 91;
-                        int top = window.getScaledHeight() - 39;
+                        int top = window.getScaledHeight() - 59;
 
                         if (armor == 0) {
                             top += 4;

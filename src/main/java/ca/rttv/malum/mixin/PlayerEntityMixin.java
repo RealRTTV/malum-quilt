@@ -1,6 +1,7 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.item.ScytheItem;
+import ca.rttv.malum.util.spirit.spiritaffinity.ArcaneAffinity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -30,6 +31,15 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        return super.damage(source, ArcaneAffinity.consumeSoulWard((LivingEntity) (Object)this, source, amount));
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void malum$tick(CallbackInfo ci) {
+        ArcaneAffinity.recoverSoulWard((PlayerEntity)(Object) this);
+    }
     @SuppressWarnings("InvalidInjectorMethodSignature")
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void attack(Entity target, CallbackInfo ci, float f, float g, boolean bl, boolean bl2, int i, boolean bl3, boolean bl4, double d) {
