@@ -15,6 +15,6 @@ public class MalumComponents implements EntityComponentInitializer {
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.beginRegistration(LivingEntity.class, SPIRIT_COMPONENT).respawnStrategy(RespawnCopyStrategy.ALWAYS_COPY).end(SpiritLivingEntityComponent::new);
-        registry.registerForPlayers(PLAYER_COMPONENT, MalumPlayerComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.beginRegistration(LivingEntity.class, PLAYER_COMPONENT).respawnStrategy(RespawnCopyStrategy.ALWAYS_COPY).end(MalumPlayerComponent::new);
     }
 }
