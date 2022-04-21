@@ -102,7 +102,6 @@ public record SpiritInfusionRecipe(Identifier id, String group,
                     for (IngredientWithCount.Entry entry : entries) {
                         if (entry.getStacks().stream().anyMatch(stack -> stack.getItem() == displayBlock.getHeldItem().getItem())) {
                             int amountToRemove = Math.min(entry.getCount(), displayBlock.getHeldItem().getCount());
-                            System.out.println(amountToRemove + " " + entry.getCount() + " " + displayBlock.getHeldItem().getCount());
                             entry.decrement(amountToRemove);
                             displayBlock.getHeldItem().decrement(amountToRemove);
                             displayBlock.notifyListeners();

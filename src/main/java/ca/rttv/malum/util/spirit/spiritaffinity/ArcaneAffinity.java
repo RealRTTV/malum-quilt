@@ -6,10 +6,12 @@ import ca.rttv.malum.component.MalumComponents;
 import ca.rttv.malum.component.MalumPlayerComponent;
 import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
+import ca.rttv.malum.registry.MalumDamageSourceRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
 import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
+import ca.rttv.malum.util.helper.ItemHelper;
 import ca.rttv.malum.util.helper.RenderHelper;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
@@ -26,11 +28,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vector4f;
+
+import static ca.rttv.malum.registry.MalumRegistry.MAGEBANE_BELT;
 
 public class ArcaneAffinity extends MalumSpiritAffinity {
     public ArcaneAffinity() {
@@ -77,21 +82,19 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                         player.world.playSound(null, player.getBlockPos(), MalumSoundRegistry.SOUL_WARD_HIT, SoundCategory.PLAYERS, 1, MathHelper.nextFloat(player.getRandom(), 1.5f, 2f));
 
                         if (source.getAttacker() != null) {
-//                            if (ItemHelper.hasTrinket(player, MalumRegistry.MAGEBANE_BELT)) {
-//                                if (!(source instanceof EntityDamageSource entityDamageSource) || (!entityDamageSource.isThorns())) {
-//                                    source.getAttacker().damage(MalumDamageSourceRegistry.causeMagebaneDamage(player), absorbed + 2);
-//                                }
-//                            }
+                            if (ItemHelper.hasTrinket(player, MAGEBANE_BELT)) {
+                                if (!(source instanceof EntityDamageSource entityDamageSource) || (!entityDamageSource.isThorns())) {
+                                    source.getAttacker().damage(MalumDamageSourceRegistry.causeMagebaneDamage(player), absorbed + 2);
+                                }
+                            }
                         }
                         MalumComponents.PLAYER_COMPONENT.sync(player);
-                        System.out.println("balls");
                         return result;
                     }
                 }
             }
 
         }
-        System.out.println(":skull:");
         return amount;
     }
 

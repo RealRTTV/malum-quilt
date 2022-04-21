@@ -1,7 +1,6 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.util.handler.SpiritHarvestHandler;
-import ca.rttv.malum.util.spirit.spiritaffinity.ArcaneAffinity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -51,7 +50,6 @@ public abstract class LivingEntityMixin extends Entity {
     private float applyEnchantmentsToDamage(float value, DamageSource source, float amount) {
         if (source == DamageSource.MAGIC) {
             float multiplier = 1.0f - (float) Math.max(((1 - (0.5 * (1 / (0.6 * ((LivingEntity) (Object) this).getAttributeValue(MAGIC_RESISTANCE))))) * 0.6), 0);
-            System.out.println(value * multiplier);
             return value * multiplier;
         }
         return value;

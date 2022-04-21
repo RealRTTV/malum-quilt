@@ -39,7 +39,6 @@ public class SavedNbtRecipe extends ShapedRecipe {
 
         ItemStack output = this.getOutput().copy();
         output.setNbt(savedItem.getNbt());
-        System.out.println(savedItem);
         return savedItem.isEmpty() ? ItemStack.EMPTY : output;
     }
 

@@ -33,7 +33,6 @@ public class EtherTorchBlock extends AbstractEtherBlock implements Waterloggable
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         if (direction == Direction.DOWN && !this.canPlaceAt(state, world, pos)) {
-            System.out.println(world);
             this.onBreak(((World) world), pos, state, null);
             return Blocks.AIR.getDefaultState();
         }
