@@ -40,6 +40,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     private void malum$tick(CallbackInfo ci) {
         ArcaneAffinity.recoverSoulWard((PlayerEntity)(Object) this);
     }
+
     @SuppressWarnings("InvalidInjectorMethodSignature")
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void attack(Entity target, CallbackInfo ci, float f, float g, boolean bl, boolean bl2, int i, boolean bl3, boolean bl4, double d) {

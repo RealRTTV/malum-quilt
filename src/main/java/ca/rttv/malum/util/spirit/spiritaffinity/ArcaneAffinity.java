@@ -104,7 +104,7 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
 
     @Environment(EnvType.CLIENT)
     public static class Client {
-        private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/icons.png");
+        private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/soul_ward/default.png");
 
         public static void renderSoulWard(MatrixStack matrices, Window window) {
             final MinecraftClient client = MinecraftClient.getInstance();
@@ -135,7 +135,7 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                         shader.getUniformOrDefault("YFrequency").set(15f);
                         shader.getUniformOrDefault("XFrequency").set(15f);
                         shader.getUniformOrDefault("Speed").set(550f);
-                        shader.getUniformOrDefault("Intensity").set(600f);
+                        shader.getUniformOrDefault("Intensity").set(150f);
                         for (int i = 0; i < Math.ceil(soulWard / 3f); i++) {
                             int row = (int) (Math.ceil(i) / 10f);
                             int x = left + i % 10 * 8;
@@ -143,10 +143,10 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                             int progress = Math.min(3, (int) soulWard - i * 3);
                             int xTextureOffset = 1 + (3 - progress) * 15;
 
-                            shader.getUniformOrDefault("UVCoordinates").set(new Vector4f(xTextureOffset / 256f, (xTextureOffset + 12) / 256f, 16 / 256f, 28 / 256f));
+                            shader.getUniformOrDefault("UVCoordinates").set(new Vector4f(xTextureOffset / 45f, (xTextureOffset + 12) / 45f, 1 / 45f, 13 / 45f));
                             shader.getUniformOrDefault("TimeOffset").set(i * 150f);
 
-                            RenderHelper.blit(matrices, MalumShaderRegistry.DISTORTED_TEXTURE, x - 2, y - 2, 13, 13, 1, 1, 1, 1, xTextureOffset, 16, 256f);
+                            RenderHelper.blit(matrices, MalumShaderRegistry.DISTORTED_TEXTURE, x - 2, y - 2, 13, 13, 1, 1, 1, 1, xTextureOffset, 1, 45f);
 
                             if (ScreenParticleHandler.canSpawnParticles) {
                                 ParticleBuilders.create(MalumScreenParticleRegistry.WISP)
