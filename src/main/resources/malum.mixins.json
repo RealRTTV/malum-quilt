@@ -27,13 +27,13 @@
     "TexturedRenderLayersMixin"
   ],
   "client": [
-    "HandledScreenMixin",
-    "ItemRendererMixin",
-    "ScreenMixin",
-    "InGameHudMixin",
     "AbstractFurnaceBlockEntityMixin",
     "GameRendererMixin",
-    "ParticleManagerMixin"
+    "HandledScreenMixin",
+    "InGameHudMixin",
+    "ItemRendererMixin",
+    "ParticleManagerMixin",
+    "ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

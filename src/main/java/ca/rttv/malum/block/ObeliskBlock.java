@@ -57,6 +57,17 @@ public class ObeliskBlock extends Block implements Waterloggable {
     }
 
     @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+        Direction direction = Direction.fromVector(pos.subtract(fromPos));
+        if (!world.isAir(fromPos)) {
+            return;
+        }
+        if (direction.getAxis() == Direction.Axis.Y) {
+            world.breakBlock(pos, false);
+        }
+    }
+
+    @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         DoubleBlockHalf doubleBlockHalf = state.get(HALF);
         if (state.get(WATERLOGGED)) {
@@ -80,17 +91,6 @@ public class ObeliskBlock extends Block implements Waterloggable {
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState().with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
-    }
-
-    @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!world.isClient) {
-            if (!player.isCreative()) {
-                dropStacks(state, world, pos, null, player, player.getMainHandStack());
-            }
-        }
-
-        super.onBreak(world, pos, state, player);
     }
 
     @Override
