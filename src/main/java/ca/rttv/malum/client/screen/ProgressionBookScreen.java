@@ -344,22 +344,22 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new HeadlineTextPage("mirror_magic", "mirror_magic"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/spectral_lens")))
         );
-/*
+
         entries.add(new BookEntry(
-                "voodoo_magic", POPPET.get(), 6, 10)
+                "voodoo_magic", POPPET, 6, 10)
                 .setObjectSupplier(ImportantEntryObject::new)
                 .addPage(new HeadlineTextPage("voodoo_magic", "voodoo_magic"))
-                .addPage(SpiritInfusionPage.fromOutput(POPPET))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/poppet")))
         );
 
         entries.add(new BookEntry(
-                "altar_acceleration", RUNEWOOD_OBELISK.get(), -1, 8)
+                "altar_acceleration", RUNEWOOD_OBELISK.asItem(), -1, 8)
                 .addPage(new HeadlineTextPage("runewood_obelisk", "runewood_obelisk"))
-                .addPage(SpiritInfusionPage.fromOutput(RUNEWOOD_OBELISK))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/runewood_obelisk")))
                 .addPage(new HeadlineTextPage("brilliant_obelisk", "brilliant_obelisk"))
-                .addPage(SpiritInfusionPage.fromOutput(BRILLIANT_OBELISK))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/brilliant_obelisk")))
         );
-
+/*
         entries.add(new BookEntry(
                 "totem_magic", RUNEWOOD_TOTEM_BASE.get(), 0, 9)
                 .setObjectSupplier(ImportantEntryObject::new)

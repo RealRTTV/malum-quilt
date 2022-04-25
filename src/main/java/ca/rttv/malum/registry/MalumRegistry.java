@@ -177,8 +177,11 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Block SPIRIT_ALTAR                               = registerBlockItem        ("spirit_altar",                              new SpiritAltarBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)), MALUM);
                                              Block SPIRIT_JAR                                 = registerBlockItem        ("spirit_jar",                                new SpiritJarBlock(Settings.of(Material.GLASS, MapColor.BLUE)), MALUM);
     // soul vial
-    // runewood obelisk
-    // brilliant obelisk
+
+                                             Block RUNEWOOD_OBELISK                           = registerBlock            ("runewood_obelisk",                          new ObeliskBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)));
+                                              Item RUNEWOOD_OBELISK_ITEM                      = registerItem             ("runewood_obelisk",                          new TallBlockItem(RUNEWOOD_OBELISK, new Item.Settings().group(MALUM)));
+                                             Block BRILLIANT_OBELISK                          = registerBlock            ("brilliant_obelisk",                         new ObeliskBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)));
+                                              Item BRILLIANT_OBELISK_ITEM                     = registerItem             ("brilliant_obelisk",                         new TallBlockItem(BRILLIANT_OBELISK, new Item.Settings().group(MALUM)));
     // spirit crucible
     // runewood totem base
     // soulwood totem base
@@ -187,7 +190,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                               Item HEX_ASH                                    = registerItem             ("hex_ash",                                   new Item(new Item.Settings().group(MALUM)));
                                               Item SPIRIT_FABRIC                              = registerItem             ("spirit_fabric",                             new Item(new Item.Settings().group(MALUM)));
                                               Item SPECTRAL_LENS                              = registerItem             ("spectral_lens",                             new Item(new Item.Settings().group(MALUM)));
-    // poppet
+                                              Item POPPET                                     = registerItem             ("poppet",                                    new Item(new Item.Settings().group(MALUM)));
                                               Item HALLOWED_GOLD_INGOT                        = registerItem             ("hallowed_gold_ingot",                       new Item(new Item.Settings().group(MALUM)));
                                               Item HALLOWED_GOLD_NUGGET                       = registerItem             ("hallowed_gold_nugget",                      new Item(new Item.Settings().group(MALUM)));
                                              Block BLOCK_OF_HALLOWED_GOLD                     = registerBlockItem        ("block_of_hallowed_gold",                    new Block(Settings.of(Material.METAL, MapColor.YELLOW)), MALUM);

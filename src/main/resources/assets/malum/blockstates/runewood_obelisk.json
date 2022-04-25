@@ -1,10 +1,16 @@
 {
   "variants": {
-    "waterlogged=false": {
+    "waterlogged=false,half=lower": {
       "model": "malum:block/runewood_obelisk_child"
     },
-    "waterlogged=true": {
+    "waterlogged=true,half=lower": {
       "model": "malum:block/runewood_obelisk_child"
+    },
+    "waterlogged=false,half=upper": {
+      "model": "malum:block/runewood_obelisk_component_child"
+    },
+    "waterlogged=true,half=upper": {
+      "model": "malum:block/runewood_obelisk_component_child"
     }
   }
 }
