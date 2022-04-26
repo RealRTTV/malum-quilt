@@ -22,6 +22,7 @@ public interface IAltarAccelerator {
 
     }
 
-    record AltarAcceleratorType(int maximumEntries, String type) {
+    record AltarAcceleratorType(int acceleration, String type) {
+
     }
 }

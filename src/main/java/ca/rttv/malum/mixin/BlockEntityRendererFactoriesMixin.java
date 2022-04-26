@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
 @Mixin(BlockEntityRendererFactories.class)
-public abstract class BlockEntityRendererFactoriesMixin {
+public final class BlockEntityRendererFactoriesMixin {
     @Shadow
     private static <T extends BlockEntity> void register(BlockEntityType<? extends T> type, BlockEntityRendererFactory<T> factory) {}
 

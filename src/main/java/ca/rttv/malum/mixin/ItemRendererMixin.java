@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemRenderer.class)
-public abstract class ItemRendererMixin {
+public final class ItemRendererMixin {
     @Shadow @Final private ItemModels models;
 
     @Inject(method = "getHeldItemModel", at = @At("HEAD"), cancellable = true)

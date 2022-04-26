@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(JsonEffectGlShader.class)
-public abstract class JsonEffectGlShaderMixin {
+public final class JsonEffectGlShaderMixin {
     /**
      * Fix identifier creation to allow different namespaces
      *

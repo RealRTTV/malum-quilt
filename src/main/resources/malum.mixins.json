@@ -4,36 +4,38 @@
   "package": "ca.rttv.malum.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "AbstractFurnaceBlockEntityMixin",
     "ArmorMaterialsMixin",
     "AxeItemMixin",
+    "BlockEntityTypeMixin",
+    "DefaultBiomeFeaturesMixin",
+    "EnchantingTableBlockMixin",
+    "EnchantmentScreenHandlerMixin",
+    "ItemStackMixin",
+    "LivingEntityMixin",
+    "PlayerEntityMixin"
+  ],
+  "client": [
     "BlockColorsMixin",
     "BlockEntityRendererFactoriesMixin",
-    "BlockEntityTypeMixin",
     "BoatEntityRendererMixin",
     "ClientRecipeBookMixin",
     "CoreShaderMixin",
-    "DefaultBiomeFeaturesMixin",
     "EnchantmentTargetMixin",
     "EntityModelLayersMixin",
     "FabricSpriteProviderImplAccessor",
-    "HandledScreensMixin",
-    "ItemColorsMixin",
-    "ItemStackMixin",
-    "JsonEffectGlShaderMixin",
-    "LivingEntityMixin",
-    "MinecraftClientMixin",
-    "PlayerEntityMixin",
-    "RenderLayersMixin",
-    "TexturedRenderLayersMixin"
-  ],
-  "client": [
-    "AbstractFurnaceBlockEntityMixin",
     "GameRendererMixin",
     "HandledScreenMixin",
+    "HandledScreensMixin",
     "InGameHudMixin",
+    "ItemColorsMixin",
     "ItemRendererMixin",
+    "JsonEffectGlShaderMixin",
+    "MinecraftClientMixin",
     "ParticleManagerMixin",
-    "ScreenMixin"
+    "RenderLayersMixin",
+    "ScreenMixin",
+    "TexturedRenderLayersMixin"
   ],
   "injectors": {
     "defaultRequire": 1

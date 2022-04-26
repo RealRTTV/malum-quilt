@@ -1,5 +1,6 @@
 package ca.rttv.malum.block.entity;
 
+import ca.rttv.malum.block.ObeliskBlock;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.IngredientWithCount;
@@ -13,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -46,8 +48,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public int progress;
     public int spinUp;
 
-    public ArrayList<BlockPos> acceleratorPositions = new ArrayList<>();
-    public ArrayList<IAltarAccelerator> accelerators = new ArrayList<>();
+    public LinkedHashMap<BlockPos, IAltarAccelerator> accelerators = new LinkedHashMap<>();
     public float spiritAmount;
     public float spiritSpin;
 
@@ -70,18 +71,12 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         spiritAmount = Math.max(1, MathHelper.lerp(0.1f, spiritAmount, getSpiritCount(spiritSlots)));
-        if (recipe != null && this.hasExtraItems(state, world, pos, this.getExtraItems(state, world, pos), recipe)) {
+        if (recipe != null && this.hasExtraItems(state, world, pos, this.getExtraItemsAndCacheAccelerators(state, world, pos), recipe)) {
             if (spinUp < 10) {
                 spinUp++;
                 this.notifyListeners();
             }
                 progress++;
-                if (world.getTime() % 20L == 0) {
-                    boolean canAccelerate = accelerators.stream().allMatch(IAltarAccelerator::canAccelerate);
-                    if (!canAccelerate) {
-//                        recalibrateAccelerators();
-                    }
-                }
                 int progressCap = (int) (300 * Math.exp(-0.15 * speed));
                 if (progress >= progressCap) {
                     recipe.craft(this);
@@ -103,7 +98,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         Vec3d itemPos = itemPos(this);
         for (int i = 0; i < spiritSlots.size(); i++) {
             ItemStack item = spiritSlots.get(i);
-            for (IAltarAccelerator accelerator : accelerators) {
+            for (IAltarAccelerator accelerator : accelerators.values()) {
                 if (accelerator != null) {
                     accelerator.addParticles(pos, itemPos);
                 }
@@ -119,7 +114,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 if (recipe != null && !recipe.isEmpty()) {
                     Vec3d velocity = new Vec3d(x, y, z).subtract(itemPos).normalize().multiply(-0.03f);
                     float alpha = 0.07f /* / spiritSlots. */;
-                    for (IAltarAccelerator accelerator : accelerators) {
+                    for (IAltarAccelerator accelerator : accelerators.values()) {
                         if (accelerator != null) {
                             accelerator.addParticles(color, endColor, alpha, pos, itemPos);
                         }
@@ -235,11 +230,13 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         this.notifyListeners();
     }
 
-    public List<ItemStack> getExtraItems(BlockState state, World world, BlockPos pos) {
-        // id have to use a map cause i don't think theres an @Override to equals on itemstack thus memory location equals
+    public List<ItemStack> getExtraItemsAndCacheAccelerators(BlockState state, World world, BlockPos pos) {
+        // id have to use a map because I don't think there's an @Override to equals on itemstack thus memory location equals
+        accelerators.clear();
+        speed = 0;
         Map<Item, Integer> map = new LinkedHashMap<>();
-        BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPosition -> {
-            if (world.getBlockEntity(reagentPosition) instanceof AbstractItemDisplayBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
+        BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
+            if (world.getBlockEntity(possiblePos) instanceof AbstractItemDisplayBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
                 Item key = displayBlock.getHeldItem().getItem();
                 Integer value = displayBlock.getHeldItem().getCount();
                 if (!map.containsKey(key)) {
@@ -247,8 +244,14 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 } else {
                     map.put(key, value + map.get(key));
                 }
+            } else if (world.getBlockState(possiblePos).getBlock() instanceof IAltarAccelerator accelerator) {
+                if (!world.getBlockState(possiblePos).contains(ObeliskBlock.HALF) || world.getBlockState(possiblePos).get(ObeliskBlock.HALF) == DoubleBlockHalf.LOWER) {
+                    accelerators.put(possiblePos, accelerator);
+                }
             }
         });
+        accelerators.forEach((accPos, accelerator) -> speed += accelerator.getAcceleration());
+        speed = speed > 4 ? 4 : speed;
         ArrayList<ItemStack> stacks = new ArrayList<>();
         map.forEach((item, count) -> stacks.add(new ItemStack(item, count)));
         return stacks;
@@ -358,14 +361,12 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         spinUp = nbt.getInt("spinUp");
         speed = nbt.getFloat("speed");
 
-        acceleratorPositions.clear();
         accelerators.clear();
         int amount = nbt.getInt("acceleratorAmount");
         for (int i = 0; i < amount; i++) {
-            BlockPos pos = BlockHelper.loadBlockPos(nbt, "" + i);
+            BlockPos pos = BlockHelper.loadBlockPos(nbt, String.valueOf(i));
             if (world != null && world.getBlockEntity(pos) instanceof IAltarAccelerator accelerator) {
-                acceleratorPositions.add(pos);
-                accelerators.add(accelerator);
+                accelerators.put(pos, accelerator);
             }
         }
 
@@ -381,13 +382,11 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         nbt.putInt("spinUp", spinUp);
         nbt.putFloat("speed", speed);
         nbt.putFloat("spiritAmount", spiritAmount);
-
-        if (!acceleratorPositions.isEmpty())
-        {
-            nbt.putInt("acceleratorAmount", acceleratorPositions.size());
-            for (int i = 0; i < acceleratorPositions.size(); i++)
-            {
-                BlockHelper.saveBlockPos(nbt, acceleratorPositions.get(i), "" + i);
+        // maybe unnecessary
+        if (!accelerators.isEmpty()) {
+            nbt.putInt("acceleratorAmount", accelerators.size());
+            for (int i = 0; i < accelerators.size(); i++) {
+                BlockHelper.saveBlockPos(nbt, accelerators.keySet().stream().toList().get(i), String.valueOf(i));
             }
         }
         Inventories.writeNbt(nbt, this.heldItem);

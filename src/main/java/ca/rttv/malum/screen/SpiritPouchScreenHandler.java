@@ -17,13 +17,11 @@ import org.jetbrains.annotations.Nullable;
 import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_POUCH_SCREEN_HANDLER;
 
 public class SpiritPouchScreenHandler extends ScreenHandler {
-    private final PlayerInventory playerInventory;
     private final Inventory inventory;
     private final ItemStack stack;
 
     public SpiritPouchScreenHandler(@Nullable ScreenHandlerType<?> screenHandlerType, int syncId, PlayerInventory playerInventory, Inventory inventory, ItemStack stack) {
         super(screenHandlerType, syncId);
-        this.playerInventory = playerInventory;
         this.inventory = inventory;
         this.stack = stack;
 

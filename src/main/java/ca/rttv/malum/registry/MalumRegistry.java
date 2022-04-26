@@ -50,6 +50,7 @@ import static ca.rttv.malum.Malum.*;
 import static ca.rttv.malum.registry.MalumArmorMaterials.SOUL_CLOAK;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
 import static ca.rttv.malum.registry.MalumSoundRegistry.*;
+import static ca.rttv.malum.util.block.entity.IAltarAccelerator.AltarAcceleratorType;
 import static net.minecraft.item.ItemGroup.BUILDING_BLOCKS;
 import static net.minecraft.item.ItemGroup.MISC;
 import static net.minecraft.sound.BlockSoundGroup.*;
@@ -178,9 +179,9 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Block SPIRIT_JAR                                 = registerBlockItem        ("spirit_jar",                                new SpiritJarBlock(Settings.of(Material.GLASS, MapColor.BLUE)), MALUM);
     // soul vial
 
-                                             Block RUNEWOOD_OBELISK                           = registerBlock            ("runewood_obelisk",                          new ObeliskBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)));
+                                             Block RUNEWOOD_OBELISK                           = registerBlock            ("runewood_obelisk",                          new ObeliskBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)){public AltarAcceleratorType getAcceleratorType(){return RUNEWOOD_ACCELERATOR_TYPE;}});
                                               Item RUNEWOOD_OBELISK_ITEM                      = registerItem             ("runewood_obelisk",                          new TallBlockItem(RUNEWOOD_OBELISK, new Item.Settings().group(MALUM)));
-                                             Block BRILLIANT_OBELISK                          = registerBlock            ("brilliant_obelisk",                         new ObeliskBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)));
+                                             Block BRILLIANT_OBELISK                          = registerBlock            ("brilliant_obelisk",                         new ObeliskBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)){public AltarAcceleratorType getAcceleratorType(){return BRILLIANT_ACCELERATOR_TYPE;}});
                                               Item BRILLIANT_OBELISK_ITEM                     = registerItem             ("brilliant_obelisk",                         new TallBlockItem(BRILLIANT_OBELISK, new Item.Settings().group(MALUM)));
     // spirit crucible
     // runewood totem base
@@ -412,6 +413,13 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
 
            ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER          = registerScreenHandler      ("spirit_pouch",        SpiritPouchScreenHandler::new);
 
+                                  AltarAcceleratorType RUNEWOOD_ACCELERATOR_TYPE            = registerAcceleratorType    ("runewood", 1);
+                                 AltarAcceleratorType BRILLIANT_ACCELERATOR_TYPE            = registerAcceleratorType    ("brilliant", 0);
+
+    static AltarAcceleratorType registerAcceleratorType(String name, int acceleration) {
+        return new AltarAcceleratorType(acceleration, name);
+    }
+
     static <T extends ScreenHandler> ScreenHandlerType<T> registerScreenHandler(String id, ScreenHandlerType.Factory<T> factory) {
         ScreenHandlerType<T> screenHandlerType = new ScreenHandlerType<>(factory);
         SCREEN_HANDLERS.put(new Identifier(MODID, id), screenHandlerType);
@@ -493,7 +501,6 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                RECIPE_TYPES.forEach((id, type)        ->   Registry.register(Registry.RECIPE_TYPE,       id, type        ));
           RECIPE_SERIALIZER.forEach((id, serializer)  ->   Registry.register(Registry.RECIPE_SERIALIZER, id, serializer  ));
             SCREEN_HANDLERS.forEach((id, handler)     ->   Registry.register(Registry.SCREEN_HANDLER,    id, handler     ));
-//          ENTITY_ATTRIBUTES.forEach((id, attribute)   ->   Registry.register(Registry.ATTRIBUTE,         id, attribute   ));
                  SIGN_TYPES.forEach(                       SignType::register                                             );
           MalumEnchantments.init();
          MalumSoundRegistry.init();

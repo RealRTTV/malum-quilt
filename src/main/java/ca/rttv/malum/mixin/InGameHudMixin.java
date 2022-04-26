@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public abstract class InGameHudMixin {
+public final class InGameHudMixin {
     @Shadow @Final private MinecraftClient client;
 
     @Inject(at = @At("HEAD"), method = "renderHotbar")

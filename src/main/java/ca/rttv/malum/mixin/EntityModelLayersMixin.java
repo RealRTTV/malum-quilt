@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static ca.rttv.malum.Malum.MODID;
 
 @Mixin(EntityModelLayers.class)
-public abstract class EntityModelLayersMixin {
+public final class EntityModelLayersMixin {
     @Inject(method = "create", at = @At("HEAD"), cancellable = true)
     private static void changeSignNamespace(String id, String layer, CallbackInfoReturnable<EntityModelLayer> cir) {
         if (id.equals("sign/runewood") || id.equals("sign/soulwood")) {

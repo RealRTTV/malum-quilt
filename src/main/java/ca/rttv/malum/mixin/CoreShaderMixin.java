@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Shader.class)
-public abstract class CoreShaderMixin  {
+public final class CoreShaderMixin  {
 
     @Redirect(method = "<init>", at = @At(value = "NEW", target = "net/minecraft/util/Identifier", ordinal = 0))
     private Identifier fixId(String arg, ResourceFactory factory, String name, VertexFormat format) {

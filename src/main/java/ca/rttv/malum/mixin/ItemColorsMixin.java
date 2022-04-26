@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
 @Mixin(ItemColors.class)
-public abstract class ItemColorsMixin {
+public final class ItemColorsMixin {
     @Inject(method = "create", at = @At(value = "RETURN", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void create(BlockColors blockColors, CallbackInfoReturnable<ItemColors> cir, ItemColors itemColors) {
         itemColors.register((stack, tintIndex) -> {

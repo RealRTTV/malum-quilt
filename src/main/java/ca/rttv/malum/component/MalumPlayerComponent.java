@@ -4,7 +4,6 @@ import ca.rttv.malum.registry.SpiritAffinityRegistry;
 import ca.rttv.malum.util.spirit.MalumSpiritAffinity;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.UUID;

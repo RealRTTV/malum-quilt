@@ -1,10 +1,10 @@
 package ca.rttv.malum.block;
 
+import ca.rttv.malum.util.block.entity.IAltarAccelerator;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -24,9 +24,15 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class ObeliskBlock extends Block implements Waterloggable {
+public abstract class ObeliskBlock extends Block implements Waterloggable, IAltarAccelerator {
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+
+    @Override
+    public float getAcceleration() {
+        return this.getAcceleratorType().acceleration();
+    }
+
     public static final VoxelShape LOWER = VoxelShapes.union(Block.createCuboidShape(0.0d, 0.0d, 0.0d, 6.0d, 5.0d, 6.0d),
                                                              Block.createCuboidShape(10.0d, 0.0d, 10.0d, 16.0d, 5.0d, 16.0d),
                                                              Block.createCuboidShape(10.0d, 0.0d, 0.0d, 16.0d, 5.0d, 6.0d),
