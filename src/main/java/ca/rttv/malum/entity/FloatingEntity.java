@@ -1,6 +1,6 @@
 package ca.rttv.malum.entity;
 
-import ca.rttv.malum.registry.SpiritTypeRegistry;
+import ca.rttv.malum.util.spirit.MalumSpiritType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -29,8 +29,8 @@ public class FloatingEntity extends Entity {
     protected static final TrackedData<Integer> DATA_END_COLOR = DataTracker.registerData(FloatingEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public final float hoverStart;
     public final ArrayList<Vec3d> pastPositions = new ArrayList<>();
-    public Color color = SpiritTypeRegistry.SACRED_SPIRIT_COLOR;
-    public Color endColor = SpiritTypeRegistry.SACRED_SPIRIT.endColor;
+    public Color color = MalumSpiritType.SACRED_SPIRIT.color;
+    public Color endColor = MalumSpiritType.SACRED_SPIRIT.endColor;
     public int maxAge;
     public int age;
     public float moveTime;
@@ -45,8 +45,8 @@ public class FloatingEntity extends Entity {
 
     @Override
     protected void initDataTracker() {
-        this.getDataTracker().startTracking(DATA_COLOR, SpiritTypeRegistry.SACRED_SPIRIT_COLOR.getRGB());
-        this.getDataTracker().startTracking(DATA_END_COLOR, SpiritTypeRegistry.SACRED_SPIRIT.endColor.getRGB());
+        this.getDataTracker().startTracking(DATA_COLOR, MalumSpiritType.SACRED_SPIRIT.color.getRGB());
+        this.getDataTracker().startTracking(DATA_END_COLOR, MalumSpiritType.SACRED_SPIRIT.endColor.getRGB());
     }
 
     @Override

@@ -8,7 +8,6 @@ import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumDamageSourceRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
-import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.ItemHelper;
@@ -36,10 +35,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vector4f;
 
 import static ca.rttv.malum.registry.MalumRegistry.MAGEBANE_BELT;
+import static ca.rttv.malum.util.spirit.MalumSpiritType.ARCANE_SPIRIT;
 
 public class ArcaneAffinity extends MalumSpiritAffinity {
     public ArcaneAffinity() {
-        super(SpiritTypeRegistry.ARCANE_SPIRIT);
+        super(ARCANE_SPIRIT);
     }
 
     public static void recoverSoulWard(PlayerEntity player) {
@@ -151,7 +151,7 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                             if (ScreenParticleHandler.canSpawnParticles) {
                                 ParticleBuilders.create(MalumScreenParticleRegistry.WISP)
                                         .setLifetime(20)
-                                        .setColor(SpiritTypeRegistry.ARCANE_SPIRIT_COLOR, SpiritTypeRegistry.ARCANE_SPIRIT.endColor)
+                                        .setColor(ARCANE_SPIRIT.color, ARCANE_SPIRIT.endColor)
                                         .setAlphaCurveMultiplier(0.75f)
                                         .setScale(0.2f*progress, 0f)
                                         .setAlpha(0.05f, 0)

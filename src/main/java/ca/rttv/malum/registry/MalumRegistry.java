@@ -9,9 +9,11 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.SavedNbtRecipe;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.screen.SpiritPouchScreenHandler;
+import ca.rttv.malum.util.Rite;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
+import ca.rttv.malum.util.spirit.MalumSpiritType;
 import ca.rttv.malum.world.gen.feature.GradientTreeFeature;
 import dev.emi.trinkets.api.TrinketItem;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
@@ -37,6 +39,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.SignType;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.decorator.HeightRangePlacementModifier;
 import net.minecraft.world.gen.feature.*;
@@ -71,6 +74,10 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
     Map<Identifier, ConfiguredFeature<? extends FeatureConfig, ?>> CONFIGURED_FEATURES = new LinkedHashMap<>();
        Map<Identifier, ScreenHandlerType<? extends ScreenHandler>> SCREEN_HANDLERS     = new LinkedHashMap<>();
                                   Map<Identifier, EntityAttribute> ENTITY_ATTRIBUTES   = new LinkedHashMap<>();
+
+    // rite registry
+                       RegistryKey<Registry<Rite>> RITE_KEY                                   = RegistryKey.ofRegistry(new Identifier(MODID, "rite"));
+                                    Registry<Rite> RITE                                       = Registry.registerSimple(RITE_KEY, registry -> RiteRegistry.SACRED_RITE);
 
     // uuids
                                               UUID MAGIC_DAMAGE_MODIFIER_ID                   = UUID.fromString          ("763FFDF7-B4CA-4802-BD58-9FD9B9D76622");
@@ -184,8 +191,10 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Block BRILLIANT_OBELISK                          = registerBlock            ("brilliant_obelisk",                         new ObeliskBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)){public AltarAcceleratorType getAcceleratorType(){return BRILLIANT_ACCELERATOR_TYPE;}});
                                               Item BRILLIANT_OBELISK_ITEM                     = registerItem             ("brilliant_obelisk",                         new TallBlockItem(BRILLIANT_OBELISK, new Item.Settings().group(MALUM)));
     // spirit crucible
-    // runewood totem base
-    // soulwood totem base
+                                             Block RUNEWOOD_TOTEM_POLE                        = registerBlock            ("runewood_totem_pole",                       new TotemPoleBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)));
+                                             Block SOULWOOD_TOTEM_POLE                        = registerBlock            ("soulwood_totem_pole",                       new TotemPoleBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)));
+                                             Block RUNEWOOD_TOTEM_BASE                        = registerBlockItem        ("runewood_totem_base",                       new TotemBaseBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)), MALUM);
+                                             Block SOULWOOD_TOTEM_BASE                        = registerBlockItem        ("soulwood_totem_base",                       new TotemBaseBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(WOOD).strength(2.0f)), MALUM);
     // soulwood plinth
     // soulwood fusion plate
                                               Item HEX_ASH                                    = registerItem             ("hex_ash",                                   new Item(new Item.Settings().group(MALUM)));
@@ -351,14 +360,14 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                             Block TWISTED_ROCK_ITEM_PEDESTAL                = registerBlockItem          ("twisted_rock_item_pedestal",                new StoneItemPedestalBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
 
     // items & blocks, sorted [Main: Spirits]
-                                             Item SACRED_SPIRIT                             = registerItem               ("sacred_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.SACRED_SPIRIT));
-                                             Item WICKED_SPIRIT                             = registerItem               ("wicked_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.WICKED_SPIRIT));
-                                             Item ARCANE_SPIRIT                             = registerItem               ("arcane_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.ARCANE_SPIRIT));
-                                             Item ELDRITCH_SPIRIT                           = registerItem               ("eldritch_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.ELDRITCH_SPIRIT));
-                                             Item EARTHEN_SPIRIT                            = registerItem               ("earthen_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.EARTHEN_SPIRIT));
-                                             Item INFERNAL_SPIRIT                           = registerItem               ("infernal_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.INFERNAL_SPIRIT));
-                                             Item AERIAL_SPIRIT                             = registerItem               ("aerial_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.AERIAL_SPIRIT));
-                                             Item AQUEOUS_SPIRIT                            = registerItem               ("aqueous_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritTypeRegistry.AQUEOUS_SPIRIT));
+                                             Item SACRED_SPIRIT                             = registerItem               ("sacred_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.SACRED_SPIRIT));
+                                             Item WICKED_SPIRIT                             = registerItem               ("wicked_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.WICKED_SPIRIT));
+                                             Item ARCANE_SPIRIT                             = registerItem               ("arcane_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.ARCANE_SPIRIT));
+                                             Item ELDRITCH_SPIRIT                           = registerItem               ("eldritch_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.ELDRITCH_SPIRIT));
+                                             Item EARTHEN_SPIRIT                            = registerItem               ("earthen_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.EARTHEN_SPIRIT));
+                                             Item INFERNAL_SPIRIT                           = registerItem               ("infernal_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.INFERNAL_SPIRIT));
+                                             Item AERIAL_SPIRIT                             = registerItem               ("aerial_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.AERIAL_SPIRIT));
+                                             Item AQUEOUS_SPIRIT                            = registerItem               ("aqueous_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.AQUEOUS_SPIRIT));
     // items & blocks, sorted [Building Blocks]
                                             Block BLOCK_OF_ARCANE_CHARCOAL                  = registerBlockItem          ("block_of_arcane_charcoal",                  new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 6.0f).sounds(BLOCK_ARCANE_CHARCOAL_SOUNDS)), BUILDING_BLOCKS);
                                             Block BLAZING_QUARTZ_ORE                        = registerBlockItem          ("blazing_quartz_ore",                        new Block(Settings.of(Material.STONE, MapColor.DARK_RED).strength(3.0f, 3.0f).sounds(BLOCK_BLAZING_QUARTZ_ORE_SOUNDS)), BUILDING_BLOCKS);
@@ -376,9 +385,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                              Item BLAZING_QUARTZ_FRAGMENT                   = registerItem               ("blazing_quartz_fragment",                   new Item(new Item.Settings().group(MISC)));
                                              Item CLUSTER_OF_BRILLIANCE                     = registerItem               ("cluster_of_brilliance",                     new Item(new Item.Settings().group(MISC)));
                                              Item CHUNK_OF_BRILLIANCE                       = registerItem               ("chunk_of_brilliance",                       new Item(new Item.Settings().group(MISC)));
-
     // the device
-
                                              Block THE_DEVICE                               = registerBlockItem          ("the_device",                                new TheDevice(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), null);
     // block entities
             BlockEntityType<ItemStandBlockEntity> ITEM_STAND_BLOCK_ENTITY                   = registerBlockEntity        ("item_stand",                                BlockEntityType.Builder.create(ItemStandBlockEntity::new, RUNEWOOD_ITEM_STAND, SOULWOOD_ITEM_STAND, TAINTED_ROCK_ITEM_STAND, TWISTED_ROCK_ITEM_STAND).build(null));
@@ -386,6 +393,8 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
           BlockEntityType<SpiritAltarBlockEntity> SPIRIT_ALTAR_BLOCK_ENTITY                 = registerBlockEntity        ("spirit_altar",                              BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
                 BlockEntityType<EtherBlockEntity> ETHER_BLOCK_ENTITY                        = registerBlockEntity        ("ether",                                     BlockEntityType.Builder.create(EtherBlockEntity::new, ETHER, ETHER_TORCH, WALL_ETHER_TORCH, TAINTED_ETHER_BRAZIER, TWISTED_ETHER_BRAZIER, IRIDESCENT_ETHER, IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, TAINTED_IRIDESCENT_ETHER_BRAZIER, TWISTED_IRIDESCENT_ETHER_BRAZIER).build(null));
             BlockEntityType<SpiritJarBlockEntity> SPIRIT_JAR_BLOCK_ENTITY                   = registerBlockEntity        ("spirit_jar",                                BlockEntityType.Builder.create(SpiritJarBlockEntity::new, SPIRIT_JAR).build(null));
+            BlockEntityType<TotemBaseBlockEntity> TOTEM_BASE_BLOCK_ENTITY                   = registerBlockEntity        ("totem_base",                                BlockEntityType.Builder.create(TotemBaseBlockEntity::new, RUNEWOOD_TOTEM_BASE).build(null));
+            BlockEntityType<TotemPoleBlockEntity> TOTEM_POLE_BLOCK_ENTITY                   = registerBlockEntity        ("totem_pole",                                BlockEntityType.Builder.create(TotemPoleBlockEntity::new, RUNEWOOD_TOTEM_POLE).build(null));
 
                  RecipeType<SpiritInfusionRecipe> SPIRIT_INFUSION                           = registerRecipeType         ("spirit_infusion",                           new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
            RecipeSerializer<SpiritInfusionRecipe> SPIRIT_INFUSION_SERIALIZER                = registerRecipeSerializer   ("spirit_infusion",                           new SpiritInfusionRecipe.Serializer<>(SpiritInfusionRecipe::new));

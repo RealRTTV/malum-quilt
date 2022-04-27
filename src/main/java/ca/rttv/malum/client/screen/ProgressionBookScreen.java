@@ -359,16 +359,16 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new HeadlineTextPage("brilliant_obelisk", "brilliant_obelisk"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/brilliant_obelisk")))
         );
-/*
+
         entries.add(new BookEntry(
-                "totem_magic", RUNEWOOD_TOTEM_BASE.get(), 0, 9)
+                "totem_magic", RUNEWOOD_TOTEM_BASE.asItem(), 0, 9)
                 .setObjectSupplier(ImportantEntryObject::new)
                 .addPage(new HeadlineTextPage("totem_magic", "totem_magic_a"))
                 .addPage(new TextPage("totem_magic_b"))
                 .addPage(new TextPage("totem_magic_c"))
-                .addPage(SpiritInfusionPage.fromOutput(RUNEWOOD_TOTEM_BASE))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "runewood_totem_base")))
         );
-
+/*
         entries.add(new BookEntry(
                 "arcane_rite", ARCANE_SPIRIT.get(), 0, 11)
                 .addPage(new HeadlineTextPage("totem_corruption", "totem_corruption_a"))

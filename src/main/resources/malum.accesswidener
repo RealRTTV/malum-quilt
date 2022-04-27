@@ -5,6 +5,7 @@ accessible      class     net/minecraft/block/entity/BlockEntityType$BlockEntity
 accessible      class     net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible      class     net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider
 extendable      class     net/minecraft/enchantment/EnchantmentTarget
+accessible      class     net/minecraft/util/registry/Registry$RegistryBootstrap
 
 accessible      field     net/minecraft/client/particle/ParticleManager                            spriteAwareFactories         Ljava/util/Map;
 accessible      field     net/minecraft/util/math/Matrix4f                                         a03                          F
@@ -51,3 +52,4 @@ accessible      method    net/minecraft/recipe/ShapedRecipe                     
 accessible      method    net/minecraft/recipe/ShapedRecipe                                        getPattern                   (Lcom/google/gson/JsonArray;)[Ljava/lang/String;
 accessible      method    net/minecraft/recipe/ShapedRecipe                                        createPatternMatrix          ([Ljava/lang/String;Ljava/util/Map;II)Lnet/minecraft/util/collection/DefaultedList;
 accessible      method    net/minecraft/block/TallPlantBlock                                       onBreakInCreative            (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/player/PlayerEntity;)V
+accessible      method    net/minecraft/util/registry/Registry                                     registerSimple               (Lnet/minecraft/util/registry/RegistryKey;Lnet/minecraft/util/registry/Registry$RegistryBootstrap;)Lnet/minecraft/util/registry/Registry;

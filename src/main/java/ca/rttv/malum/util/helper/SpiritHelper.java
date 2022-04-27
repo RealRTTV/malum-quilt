@@ -92,9 +92,9 @@ public final class SpiritHelper {
 
 
     public static MalumSpiritType getSpiritType(String spirit) {
-        Optional<MalumSpiritType> type = SpiritTypeRegistry.SPIRITS.stream().filter(s -> s.identifier.equals(spirit)).findFirst();
+        Optional<MalumSpiritType> type = SpiritTypeRegistry.SPIRITS.stream().filter(s -> s.id.equals(spirit)).findFirst();
         if (type.isEmpty()) {
-            return SpiritTypeRegistry.ELDRITCH_SPIRIT;
+            return MalumSpiritType.ELDRITCH_SPIRIT;
         }
         return type.get();
     }

@@ -17,9 +17,11 @@ public final class BlockEntityRendererFactoriesMixin {
 
     static {
         register(ITEM_PEDESTAL_BLOCK_ENTITY, rendererDispatcher -> new ItemPedestalRenderer());
-        register(ITEM_STAND_BLOCK_ENTITY, rendererDispatcherIn -> new ItemStandRenderer());
-        register(SPIRIT_ALTAR_BLOCK_ENTITY, rendererDispatcherIn -> new SpiritAltarRenderer());
-        register(ETHER_BLOCK_ENTITY, rendererDispatcherIn -> new EtherRenderer());
-        register(SPIRIT_JAR_BLOCK_ENTITY, rendererDispatcherIn -> new SpiritJarRenderer());
+        register(ITEM_STAND_BLOCK_ENTITY, renderer -> new ItemStandRenderer());
+        register(SPIRIT_ALTAR_BLOCK_ENTITY, renderer -> new SpiritAltarRenderer());
+        register(ETHER_BLOCK_ENTITY, renderer -> new EtherRenderer());
+        register(SPIRIT_JAR_BLOCK_ENTITY, renderer -> new SpiritJarRenderer());
+        register(TOTEM_BASE_BLOCK_ENTITY, renderer -> new TotemBaseRenderer());
+        register(TOTEM_POLE_BLOCK_ENTITY, renderer -> new TotemPoleRenderer());
     }
 }

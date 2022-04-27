@@ -1,6 +1,5 @@
 package ca.rttv.malum.util.spirit;
 
-import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
@@ -10,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class MalumEntitySpiritData {
     public static final String SOUL_DATA = "soul_data";
-    public static final MalumEntitySpiritData EMPTY = new MalumEntitySpiritData(SpiritTypeRegistry.SACRED_SPIRIT, new ArrayList<>());
+    public static final MalumEntitySpiritData EMPTY = new MalumEntitySpiritData(MalumSpiritType.SACRED_SPIRIT, new ArrayList<>());
     public final MalumSpiritType primaryType;
     public final int totalCount;
     public final ArrayList<SpiritDataEntry> dataEntries;
@@ -31,7 +30,7 @@ public class MalumEntitySpiritData {
 
     public NbtCompound writeNbt() {
         NbtCompound tag = new NbtCompound();
-        tag.putString("primaryType", primaryType.identifier);
+        tag.putString("primaryType", primaryType.id);
         tag.putInt("dataAmount", dataEntries.size());
         for (int i = 0; i < dataEntries.size(); i++) {
             NbtCompound dataTag = dataEntries.get(i).save(new NbtCompound());
@@ -63,7 +62,7 @@ public class MalumEntitySpiritData {
         }
 
         public NbtCompound save(NbtCompound tag) {
-            tag.putString("type", type.identifier);
+            tag.putString("type", type.id);
             tag.putInt("count", count);
             return tag;
         }
