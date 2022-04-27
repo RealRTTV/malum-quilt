@@ -1,6 +1,7 @@
 package ca.rttv.malum.client.screen;
 
 import ca.rttv.malum.client.screen.page.*;
+import ca.rttv.malum.registry.RiteRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -368,65 +369,65 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new TextPage("totem_magic_c"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "runewood_totem_base")))
         );
-/*
+
         entries.add(new BookEntry(
-                "arcane_rite", ARCANE_SPIRIT.get(), 0, 11)
+                "arcane_rite", ARCANE_SPIRIT, 0, 11)
                 .addPage(new HeadlineTextPage("totem_corruption", "totem_corruption_a"))
                 .addPage(new TextPage("totem_corruption_b"))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "arcane_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.ARCANE_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.ARCANE_RITE))
                 .addPage(new TextPage("totem_corruption_c"))
-                .addPage(SpiritInfusionPage.fromOutput(SOULWOOD_TOTEM_BASE))
+                .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soulwood_totem_base")))
         );
 
         entries.add(new BookEntry(
-                "sacred_rite", SACRED_SPIRIT.get(), -2, 11)
+                "sacred_rite", SACRED_SPIRIT, -2, 11)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "sacred_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.SACRED_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.SACRED_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_sacred_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.ELDRITCH_SACRED_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_SACRED_RITE))
         );
 
         entries.add(new BookEntry(
-                "wicked_rite", WICKED_SPIRIT.get(), 2, 11)
+                "wicked_rite", WICKED_SPIRIT, 2, 11)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "wicked_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.WICKED_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.WICKED_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_wicked_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.ELDRITCH_WICKED_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_WICKED_RITE))
         );
 
         entries.add(new BookEntry(
-                "earthen_rite", EARTHEN_SPIRIT.get(), -1, 12)
+                "earthen_rite", EARTHEN_SPIRIT, -1, 12)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "earthen_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.EARTHEN_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.EARTHEN_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_earthen_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.ELDRITCH_EARTHEN_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_EARTHEN_RITE))
         );
 
         entries.add(new BookEntry(
-                "infernal_rite", INFERNAL_SPIRIT.get(), 1, 12)
+                "infernal_rite", INFERNAL_SPIRIT, 1, 12)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "infernal_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.INFERNAL_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.INFERNAL_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_infernal_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.ELDRITCH_INFERNAL_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_INFERNAL_RITE))
         );
 
         entries.add(new BookEntry(
-                "aerial_rite", AERIAL_SPIRIT.get(), -1, 10)
+                "aerial_rite", AERIAL_SPIRIT, -1, 10)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "aerial_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.AERIAL_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.AERIAL_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_aerial_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.ELDRITCH_AERIAL_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_AERIAL_RITE))
         );
 
         entries.add(new BookEntry(
-                "aqueous_rite", AQUEOUS_SPIRIT.get(), 1, 10)
+                "aqueous_rite", AQUEOUS_SPIRIT, 1, 10)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "aqueous_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.AQUEOUS_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.AQUEOUS_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_aqueous_rite"))
-                .addPage(new SpiritRitePage(SpiritRiteRegistry.ELDRITCH_AQUEOUS_RITE))
+                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_AQUEOUS_RITE))
         );
-
+/*
         entries.add(new BookEntry(
                 "soulwood", SOULWOOD_SAPLING.get(), 0, 13)
                 .addPage(new HeadlineTextPage("soulwood", "soulwood_a"))

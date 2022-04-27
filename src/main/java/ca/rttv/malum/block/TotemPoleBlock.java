@@ -6,6 +6,8 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.spirit.SpiritTypeProperty;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -36,7 +38,7 @@ public class TotemPoleBlock extends BlockWithEntity {
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.playSound(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS, 1.0f, 1.0f); // todo, proper noise
         TotemPoleBlockEntity blockEntity = (TotemPoleBlockEntity) world.getBlockEntity(pos);
-        if (blockEntity == null) {
+        if (blockEntity == null || blockEntity.list == null) {
             return;
         }
 
@@ -59,6 +61,7 @@ public class TotemPoleBlock extends BlockWithEntity {
                     continue;
                 }
                 totemBaseBlockEntity.rite = TotemBaseBlockEntity.RITES.get(blockEntity.list.hashCode());
+                totemBaseBlockEntity.tick = 0;
                 // todo, play sound
                 break;
             }
@@ -68,6 +71,23 @@ public class TotemPoleBlock extends BlockWithEntity {
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(MalumSpiritItem.POLE_BLOCKS.inverse().get(state.getBlock()));
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockPos down = pos.down();
+        BlockState downState = world.getBlockState(down);
+        while (down.getY() >= world.getBottomY()) {
+            if (downState.getBlock() instanceof TotemBaseBlock) {
+                //noinspection ConstantConditions
+                ((TotemBaseBlockEntity) world.getBlockEntity(down)).onUse(state, world, pos, null, null, null);
+                super.onBreak(world, pos, state, player);
+                return;
+            }
+            down = down.down();
+            downState = world.getBlockState(down);
+        }
+        super.onBreak(world, pos, state, player);
     }
 
     @Nullable

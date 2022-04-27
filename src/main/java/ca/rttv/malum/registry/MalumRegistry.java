@@ -6,10 +6,11 @@ import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.block.sapling.SoulwoodSaplingGenerator;
 import ca.rttv.malum.item.*;
 import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.recipe.BlockTransmutationRecipe;
 import ca.rttv.malum.recipe.SavedNbtRecipe;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.screen.SpiritPouchScreenHandler;
-import ca.rttv.malum.util.Rite;
+import ca.rttv.malum.rite.Rite;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
@@ -393,13 +394,15 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
           BlockEntityType<SpiritAltarBlockEntity> SPIRIT_ALTAR_BLOCK_ENTITY                 = registerBlockEntity        ("spirit_altar",                              BlockEntityType.Builder.create(SpiritAltarBlockEntity::new, SPIRIT_ALTAR).build(null));
                 BlockEntityType<EtherBlockEntity> ETHER_BLOCK_ENTITY                        = registerBlockEntity        ("ether",                                     BlockEntityType.Builder.create(EtherBlockEntity::new, ETHER, ETHER_TORCH, WALL_ETHER_TORCH, TAINTED_ETHER_BRAZIER, TWISTED_ETHER_BRAZIER, IRIDESCENT_ETHER, IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, TAINTED_IRIDESCENT_ETHER_BRAZIER, TWISTED_IRIDESCENT_ETHER_BRAZIER).build(null));
             BlockEntityType<SpiritJarBlockEntity> SPIRIT_JAR_BLOCK_ENTITY                   = registerBlockEntity        ("spirit_jar",                                BlockEntityType.Builder.create(SpiritJarBlockEntity::new, SPIRIT_JAR).build(null));
-            BlockEntityType<TotemBaseBlockEntity> TOTEM_BASE_BLOCK_ENTITY                   = registerBlockEntity        ("totem_base",                                BlockEntityType.Builder.create(TotemBaseBlockEntity::new, RUNEWOOD_TOTEM_BASE).build(null));
-            BlockEntityType<TotemPoleBlockEntity> TOTEM_POLE_BLOCK_ENTITY                   = registerBlockEntity        ("totem_pole",                                BlockEntityType.Builder.create(TotemPoleBlockEntity::new, RUNEWOOD_TOTEM_POLE).build(null));
+            BlockEntityType<TotemBaseBlockEntity> TOTEM_BASE_BLOCK_ENTITY                   = registerBlockEntity        ("totem_base",                                BlockEntityType.Builder.create(TotemBaseBlockEntity::new, RUNEWOOD_TOTEM_BASE, SOULWOOD_TOTEM_BASE).build(null));
+            BlockEntityType<TotemPoleBlockEntity> TOTEM_POLE_BLOCK_ENTITY                   = registerBlockEntity        ("totem_pole",                                BlockEntityType.Builder.create(TotemPoleBlockEntity::new, RUNEWOOD_TOTEM_POLE, SOULWOOD_TOTEM_POLE).build(null));
 
                  RecipeType<SpiritInfusionRecipe> SPIRIT_INFUSION                           = registerRecipeType         ("spirit_infusion",                           new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
            RecipeSerializer<SpiritInfusionRecipe> SPIRIT_INFUSION_SERIALIZER                = registerRecipeSerializer   ("spirit_infusion",                           new SpiritInfusionRecipe.Serializer<>(SpiritInfusionRecipe::new));
                        RecipeType<SavedNbtRecipe> SAVED_NBT_RECIPE                          = registerRecipeType         ("nbt_carry",                                 new RecipeType<>() { public String toString() { return "nbt_carry"; } });
                  RecipeSerializer<SavedNbtRecipe> SAVED_NBT_RECIPE_SERIALIZER               = registerRecipeSerializer   ("nbt_carry",                                 new SavedNbtRecipe.Serializer());
+             RecipeType<BlockTransmutationRecipe> BLOCK_TRANSMUTATION                       = registerRecipeType         ("block_transmutation",                       new RecipeType<>() { public String toString() { return "block_transmutation"; } });
+       RecipeSerializer<BlockTransmutationRecipe> BLOCK_TRANSMUTATION_SERIALIZER            = registerRecipeSerializer   ("block_transmutation",                       new BlockTransmutationRecipe.Serializer<>(BlockTransmutationRecipe::new));
 
                     Feature<DefaultFeatureConfig> RUNEWOOD_TREE_FEATURE                     = registerFeature            ("runewood_tree",                             new GradientTreeFeature(EXPOSED_RUNEWOOD_LOG, RUNEWOOD_LEAVES, RUNEWOOD_LOG, RUNEWOOD_SAPLING));
                     Feature<DefaultFeatureConfig> SOULWOOD_TREE_FEATURE                     = registerFeature            ("soulwood_tree",                             new GradientTreeFeature(EXPOSED_SOULWOOD_LOG, SOULWOOD_LEAVES, SOULWOOD_LOG, SOULWOOD_SAPLING));
