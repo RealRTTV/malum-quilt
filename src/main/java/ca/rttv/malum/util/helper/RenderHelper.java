@@ -257,6 +257,23 @@ public final class RenderHelper {
             matrices.translate(start.x, start.y, start.z);
             return this;
         }
+        public VertexBuilder renderQuad(VertexConsumer vertexConsumer, MatrixStack stack, Vec3f[] positions, float size) {
+            return renderQuad(vertexConsumer, stack, positions, size, size);
+        }
+
+        public VertexBuilder renderQuad(VertexConsumer vertexConsumer, MatrixStack stack, Vec3f[] positions, float width, float height) {
+            Matrix4f last = stack.peek().getModel();
+            stack.translate(xOffset, yOffset, zOffset);
+            for (Vec3f position : positions) {
+                position.multiplyComponentwise(width, height, width);
+            }
+            vertexPosColorUVLight(vertexConsumer, last, positions[0].getX(), positions[0].getY(), positions[0].getZ(), r, g, b, a, u0, v1, light);
+            vertexPosColorUVLight(vertexConsumer, last, positions[1].getX(), positions[1].getY(), positions[1].getZ(), r, g, b, a, u1, v1, light);
+            vertexPosColorUVLight(vertexConsumer, last, positions[2].getX(), positions[2].getY(), positions[2].getZ(), r, g, b, a, u1, v0, light);
+            vertexPosColorUVLight(vertexConsumer, last, positions[3].getX(), positions[3].getY(), positions[3].getZ(), r, g, b, a, u0, v0, light);
+            stack.translate(-xOffset, -yOffset, -zOffset);
+            return this;
+        }
 
         public VertexBuilder renderQuad(VertexConsumer vertexConsumer, MatrixStack matrices, float size) {
             return renderQuad(vertexConsumer, matrices, size, size);

@@ -6,6 +6,8 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.spirit.SpiritTypeProperty;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -20,6 +22,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
+
+import static ca.rttv.malum.registry.MalumRegistry.TOTEM_POLE_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public class TotemPoleBlock extends BlockWithEntity {
@@ -103,5 +107,10 @@ public class TotemPoleBlock extends BlockWithEntity {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING, SPIRIT_TYPE);
+    }
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, TOTEM_POLE_BLOCK_ENTITY, (world1, pos, state1, blockEntity) -> blockEntity.tick());
     }
 }
