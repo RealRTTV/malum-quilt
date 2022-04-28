@@ -25,7 +25,7 @@ public class ArcaneRite extends Rite {
     }
 
     @Override
-    public void onUse(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
         //noinspection ConstantConditions
         Rite rite = ((TotemBaseBlockEntity) world.getBlockEntity(pos)).rite;
         world.setBlockState(pos, SOULWOOD_TOTEM_BASE.getDefaultState());
@@ -41,7 +41,7 @@ public class ArcaneRite extends Rite {
     }
 
     @Override
-    public void onCorruptUse(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
         if (tick % 60 != 0) {
             return;
         }

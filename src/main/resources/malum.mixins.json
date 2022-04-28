@@ -13,12 +13,16 @@
     "EnchantmentScreenHandlerMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "PointedDripstoneBlockMixin",
+    "SeverPlayerInteractionManagerMixin",
+    "StatusEffectMixin"
   ],
   "client": [
     "BlockColorsMixin",
     "BlockEntityRendererFactoriesMixin",
     "BoatEntityRendererMixin",
+    "ClientPlayerInteractionManagerMixin",
     "ClientRecipeBookMixin",
     "CoreShaderMixin",
     "EnchantmentTargetMixin",

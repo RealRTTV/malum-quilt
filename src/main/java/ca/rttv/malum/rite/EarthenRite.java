@@ -13,12 +13,12 @@ public class EarthenRite extends Rite {
     }
 
     @Override
-    public void onUse(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
 
     }
 
     @Override
-    public void onCorruptUse(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
 
     }
 }

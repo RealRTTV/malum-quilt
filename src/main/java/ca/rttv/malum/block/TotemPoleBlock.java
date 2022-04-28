@@ -6,7 +6,6 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.util.spirit.SpiritTypeProperty;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;

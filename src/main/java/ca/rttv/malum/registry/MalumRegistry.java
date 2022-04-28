@@ -9,8 +9,8 @@ import ca.rttv.malum.item.spirit.MalumSpiritItem;
 import ca.rttv.malum.recipe.BlockTransmutationRecipe;
 import ca.rttv.malum.recipe.SavedNbtRecipe;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
-import ca.rttv.malum.screen.SpiritPouchScreenHandler;
 import ca.rttv.malum.rite.Rite;
+import ca.rttv.malum.screen.SpiritPouchScreenHandler;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
@@ -26,7 +26,9 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Recipe;
@@ -74,7 +76,8 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                                ArrayList<SignType> SIGN_TYPES          = new ArrayList<>();
     Map<Identifier, ConfiguredFeature<? extends FeatureConfig, ?>> CONFIGURED_FEATURES = new LinkedHashMap<>();
        Map<Identifier, ScreenHandlerType<? extends ScreenHandler>> SCREEN_HANDLERS     = new LinkedHashMap<>();
-                                  Map<Identifier, EntityAttribute> ENTITY_ATTRIBUTES   = new LinkedHashMap<>();
+                        Map<Identifier, ? extends EntityAttribute> ENTITY_ATTRIBUTES   = new LinkedHashMap<>();
+                                     Map<Identifier, StatusEffect> STATUS_EFFECTS      = new LinkedHashMap<>();
 
     // rite registry
                        RegistryKey<Registry<Rite>> RITE_KEY                                   = RegistryKey.ofRegistry(new Identifier(MODID, "rite"));
@@ -407,29 +410,38 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                     Feature<DefaultFeatureConfig> RUNEWOOD_TREE_FEATURE                     = registerFeature            ("runewood_tree",                             new GradientTreeFeature(EXPOSED_RUNEWOOD_LOG, RUNEWOOD_LEAVES, RUNEWOOD_LOG, RUNEWOOD_SAPLING));
                     Feature<DefaultFeatureConfig> SOULWOOD_TREE_FEATURE                     = registerFeature            ("soulwood_tree",                             new GradientTreeFeature(EXPOSED_SOULWOOD_LOG, SOULWOOD_LEAVES, SOULWOOD_LOG, SOULWOOD_SAPLING));
 
-                    List<OreFeatureConfig.Target> SOULSTONE_ORE_TARGETS                     = List.of                    (OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()),
-                                                                                                                          OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
-                    List<OreFeatureConfig.Target> BRILLIANCE_ORE_TARGETS                    = List.of                    (OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, BRILLIANT_STONE.getDefaultState()),
-                                                                                                                          OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, BRILLIANT_DEEPSLATE.getDefaultState()));
-    Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE     = registerConfiguredFeature  ("runewood_tree",       RUNEWOOD_TREE_FEATURE);
-    Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_SOULWOOD_TREE_FEATURE     = registerConfiguredFeature  ("soulwood_tree",       SOULWOOD_TREE_FEATURE);
+                    List<OreFeatureConfig.Target> SOULSTONE_ORE_TARGETS                     = List.of                    (OreFeatureConfig.createTarget(              STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()),
+                                                                                                                          OreFeatureConfig.createTarget(              DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
+                    List<OreFeatureConfig.Target> BRILLIANCE_ORE_TARGETS                    = List.of                    (OreFeatureConfig.createTarget(              STONE_ORE_REPLACEABLES, BRILLIANT_STONE.getDefaultState()),
+                                                                                                                          OreFeatureConfig.createTarget(              DEEPSLATE_ORE_REPLACEABLES, BRILLIANT_DEEPSLATE.getDefaultState()));
+    Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE     = registerConfiguredFeature  ("runewood_tree",                            RUNEWOOD_TREE_FEATURE);
+    Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_SOULWOOD_TREE_FEATURE     = registerConfiguredFeature  ("soulwood_tree",                            SOULWOOD_TREE_FEATURE);
 
-        Holder<ConfiguredFeature<OreFeatureConfig, ?>> LOWER_ORE_SOULSTONE_CONFIGURED       = registerConfiguredFeature  ("lower_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 12)); // i == maxSize
-                                 Holder<PlacedFeature> LOWER_ORE_SOULSTONE_PLACED           = registerPlacedFeature      ("lower_ore_soulstone", LOWER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(8, HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(30)))); // bottom of world and y 30, count == spawn count
+        Holder<ConfiguredFeature<OreFeatureConfig, ?>> LOWER_ORE_SOULSTONE_CONFIGURED       = registerConfiguredFeature  ("lower_ore_soulstone",                      Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 12)); // i == maxSize
+                                 Holder<PlacedFeature> LOWER_ORE_SOULSTONE_PLACED           = registerPlacedFeature      ("lower_ore_soulstone",                      LOWER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(8, HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(30)))); // bottom of world and y 30, count == spawn count
 
-        Holder<ConfiguredFeature<OreFeatureConfig, ?>> UPPER_ORE_SOULSTONE_CONFIGURED       = registerConfiguredFeature  ("upper_ore_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 6)); // i == maxSize
-                                 Holder<PlacedFeature> UPPER_ORE_SOULSTONE_PLACED           = registerPlacedFeature      ("upper_ore_soulstone", UPPER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(5, HeightRangePlacementModifier.createUniform(YOffset.fixed(60), YOffset.fixed(100)))); // y 60 to y 100, count == spawn count
+        Holder<ConfiguredFeature<OreFeatureConfig, ?>> UPPER_ORE_SOULSTONE_CONFIGURED       = registerConfiguredFeature  ("upper_ore_soulstone",                      Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, 6)); // i == maxSize
+                                 Holder<PlacedFeature> UPPER_ORE_SOULSTONE_PLACED           = registerPlacedFeature      ("upper_ore_soulstone",                      UPPER_ORE_SOULSTONE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(5, HeightRangePlacementModifier.createUniform(YOffset.fixed(60), YOffset.fixed(100)))); // y 60 to y 100, count == spawn count
 
-        Holder<ConfiguredFeature<OreFeatureConfig, ?>> ORE_BRILLIANCE_CONFIGURED            = registerConfiguredFeature  ("ore_brilliance",      Feature.ORE, new OreFeatureConfig(BRILLIANCE_ORE_TARGETS, 2)); // i == maxSize
-                                 Holder<PlacedFeature> ORE_BRILLIANCE_PLACED                = registerPlacedFeature      ("ore_brilliance",      ORE_BRILLIANCE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(4, HeightRangePlacementModifier.createUniform(YOffset.fixed(-80), YOffset.fixed(40)))); // y -80 and y 40, count == spawn count
+        Holder<ConfiguredFeature<OreFeatureConfig, ?>> ORE_BRILLIANCE_CONFIGURED            = registerConfiguredFeature  ("ore_brilliance",                           Feature.ORE, new OreFeatureConfig(BRILLIANCE_ORE_TARGETS, 2)); // i == maxSize
+                                 Holder<PlacedFeature> ORE_BRILLIANCE_PLACED                = registerPlacedFeature      ("ore_brilliance",                           ORE_BRILLIANCE_CONFIGURED, OrePlacedFeatures.commonOrePlacementModifiers(4, HeightRangePlacementModifier.createUniform(YOffset.fixed(-80), YOffset.fixed(40)))); // y -80 and y 40, count == spawn count
 
-           ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER          = registerScreenHandler      ("spirit_pouch",        SpiritPouchScreenHandler::new);
+           ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER          = registerScreenHandler      ("spirit_pouch",                             SpiritPouchScreenHandler::new);
 
-                                  AltarAcceleratorType RUNEWOOD_ACCELERATOR_TYPE            = registerAcceleratorType    ("runewood", 1);
-                                 AltarAcceleratorType BRILLIANT_ACCELERATOR_TYPE            = registerAcceleratorType    ("brilliant", 0);
+                                  AltarAcceleratorType RUNEWOOD_ACCELERATOR_TYPE            = registerAcceleratorType    ("runewood",                       1);
+                                  AltarAcceleratorType BRILLIANT_ACCELERATOR_TYPE           = registerAcceleratorType    ("brilliant",                      0);
 
-    static AltarAcceleratorType registerAcceleratorType(String name, int acceleration) {
-        return new AltarAcceleratorType(acceleration, name);
+                                          StatusEffect AERIAL_AURA                          = registerStatusEffect       ("aerial_aura",                               new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.AERIAL_SPIRIT.color.getRGB()).addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "E3F9C028-D6CC-4CF2-86A6-D5B5EFD86BE6", 0.2d, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+                                          StatusEffect CORRUPTED_AERIAL_AURA                = registerStatusEffect       ("corrupted_aerial_aura",                     new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.AERIAL_SPIRIT.color.getRGB()));
+                                          StatusEffect AQUEOUS_AURA                         = registerStatusEffect       ("aqueous_aura",                              new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.AQUEOUS_SPIRIT.color.getRGB()));
+                                          StatusEffect SACRED_AURA                          = registerStatusEffect       ("sacred_aura",                               new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.SACRED_SPIRIT.color.getRGB()));
+
+    static <T extends StatusEffect> StatusEffect registerStatusEffect(String id, T effect) {
+        STATUS_EFFECTS.put(new Identifier(MODID, id), effect);
+        return effect;
+    }
+    static AltarAcceleratorType registerAcceleratorType(String id, int acceleration) {
+        return new AltarAcceleratorType(acceleration, id);
     }
 
     static <T extends ScreenHandler> ScreenHandlerType<T> registerScreenHandler(String id, ScreenHandlerType.Factory<T> factory) {
@@ -513,6 +525,7 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                RECIPE_TYPES.forEach((id, type)        ->   Registry.register(Registry.RECIPE_TYPE,       id, type        ));
           RECIPE_SERIALIZER.forEach((id, serializer)  ->   Registry.register(Registry.RECIPE_SERIALIZER, id, serializer  ));
             SCREEN_HANDLERS.forEach((id, handler)     ->   Registry.register(Registry.SCREEN_HANDLER,    id, handler     ));
+             STATUS_EFFECTS.forEach((id, effect)      ->   Registry.register(Registry.STATUS_EFFECT,     id, effect      ));
                  SIGN_TYPES.forEach(                       SignType::register                                             );
           MalumEnchantments.init();
          MalumSoundRegistry.init();

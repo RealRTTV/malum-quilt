@@ -96,9 +96,9 @@ public class TotemBaseBlockEntity extends BlockEntity {
         tick++;
 
         if (isCorrupt()) {
-            rite.onCorruptUse(state, world, pos, random, tick);
+            rite.onCorruptTick(state, world, pos, random, tick);
         } else {
-            rite.onUse(state, world, pos, random, tick);
+            rite.onTick(state, world, pos, random, tick);
         }
     }
 }

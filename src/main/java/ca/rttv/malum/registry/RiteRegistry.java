@@ -22,7 +22,7 @@ public interface RiteRegistry {
     Rite AQUEOUS_RITE            = register("aqueous_rite", new AqueousRite(ARCANE_SPIRIT, AQUEOUS_SPIRIT, AQUEOUS_SPIRIT));
     Rite ELDRITCH_AQUEOUS_RITE   = register("eldritch_aqueous_rite", new EldritchAqueousRite(ELDRITCH_SPIRIT, ARCANE_SPIRIT, AQUEOUS_SPIRIT, AQUEOUS_SPIRIT));
 
-    static Rite register(String id, Rite rite) {
+    static <T extends Rite> T register(String id, T rite) {
         return Registry.register(RITE, new Identifier(MODID, id), rite);
     }
 }

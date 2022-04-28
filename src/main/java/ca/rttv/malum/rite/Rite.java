@@ -21,9 +21,9 @@ public abstract class Rite {
         return list.hashCode();
     }
 
-    public abstract void onUse(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick);
+    public abstract void onTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick);
 
-    public abstract void onCorruptUse(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick);
+    public abstract void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick);
 
     public Item[] items() {
         return items;
