@@ -104,12 +104,12 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
 
     @Environment(EnvType.CLIENT)
     public static class Client {
-        private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/soul_ward/default.png");
+        private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/soul_ward/trans_pride.png");
 
         public static void renderSoulWard(MatrixStack matrices, Window window) {
             final MinecraftClient client = MinecraftClient.getInstance();
             ClientPlayerEntity player = client.player;
-            if (!player.isCreative() && !player.isSpectator()) {
+            if (player != null && !player.isCreative() && !player.isSpectator()) {
                 float soulWard = MalumComponents.PLAYER_COMPONENT.get(player).soulWard;
                     if (soulWard > 0) {
                         float absorb = MathHelper.ceil(player.getAbsorptionAmount());

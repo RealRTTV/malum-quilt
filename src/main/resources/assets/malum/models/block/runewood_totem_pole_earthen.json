@@ -3,6 +3,7 @@
   "textures": {
     "side": "malum:block/runewood_log",
     "top": "malum:block/runewood_log_top",
-    "front": "malum:block/totem/earthen_runewood_cutout"
+    "front": "malum:block/totem/earthen_runewood_cutout",
+    "glow": "malum:block/totem/earthen_glow"
   }
 }

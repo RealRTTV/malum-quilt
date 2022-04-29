@@ -24,6 +24,7 @@ import java.util.HashMap;
 
 import static ca.rttv.malum.util.helper.RenderHelper.FULL_BRIGHT;
 
+@SuppressWarnings("deprecation")
 public class TotemPoleRenderer implements BlockEntityRenderer<TotemPoleBlockEntity> {
     public static HashMap<MalumSpiritType, SpriteIdentifier> overlayHashmap = new HashMap<>();
 
@@ -39,26 +40,26 @@ public class TotemPoleRenderer implements BlockEntityRenderer<TotemPoleBlockEnti
         if (entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE) == null) {
             return;
         }
-        renderQuad(overlayHashmap.get(entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit), entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.color, entity.currentColor/20f, direction, matrices);
 
+        renderQuad(overlayHashmap.get(entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit), entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.color, (entity.currentColor + tickDelta) / 20f, direction, matrices);
     }
 
-    public void renderQuad(SpriteIdentifier SpriteIdentifier, Color color, float alpha, Direction direction, MatrixStack poseStack) {
-        Sprite sprite = SpriteIdentifier.getSprite();
+    public void renderQuad(SpriteIdentifier spriteId, Color color, float alpha, Direction direction, MatrixStack matrices) {
+        Sprite sprite = spriteId.getSprite();
         VertexConsumer consumer = RenderHandler.DELAYED_RENDER.getBuffer(RenderLayers.ADDITIVE_BLOCK);
 
         Vec3f[] positions = new Vec3f[]{new Vec3f(0, 0, 2.01f), new Vec3f(2, 0, 2.01f), new Vec3f(2, 2, 2.01f), new Vec3f(0, 2, 2.01f)};
 
-        poseStack.push();
-        poseStack.translate(0.5f, 0.5f, 0.5f);
-        poseStack.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion(direction.asRotation()));
-        poseStack.translate(-0.5f, -0.5f, -0.5f);
+        matrices.push();
+        matrices.translate(0.5f, 0.5f, 0.5f);
+        matrices.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion(direction.asRotation()));
+        matrices.translate(-0.5f, -0.5f, -0.5f);
         RenderHelper.create()
                 .setColor(color, alpha)
                 .setLight(FULL_BRIGHT)
                 .setUV(sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV())
-                .renderQuad(consumer, poseStack, positions, 0.5f);
-        poseStack.pop();
+                .renderQuad(consumer, matrices, positions, 0.5f);
+        matrices.pop();
     }
 
     public float rotation(Direction direction) {

@@ -52,6 +52,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public float spiritAmount;
     public float spiritSpin;
 
+    @Nullable
     public SpiritInfusionRecipe recipe;
     public final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
     public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(9, ItemStack.EMPTY);

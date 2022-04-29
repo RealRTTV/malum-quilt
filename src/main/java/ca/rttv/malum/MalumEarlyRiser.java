@@ -16,13 +16,12 @@ public final class MalumEarlyRiser implements Runnable {
     @Override
     public void run() {
         MappingResolver remapper = FabricLoader.getInstance().getMappingResolver();
-        String type = remapper.mapClassName("intermediary", "net.minecraft.class_1690$class_1692");
-        String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
-        String armorMaterialsTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1740");
-        String toolMaterialsTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1834");
-        String testTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1799");
-        String boatParam1 = "L" + remapper.mapClassName("intermediary", "net.minecraft.class_2248") + ";";
-        String armorParam5 = "L" + remapper.mapClassName("intermediary", "net.minecraft.class_3414") + ";";
+        final String type = remapper.mapClassName("intermediary", "net.minecraft.class_1690$class_1692");
+        final String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
+        final String armorMaterialsTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1740");
+        final String toolMaterialsTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1834");
+        final String boatParam1 = "L" + remapper.mapClassName("intermediary", "net.minecraft.class_2248") + ";";
+        final String armorParam5 = "L" + remapper.mapClassName("intermediary", "net.minecraft.class_3414") + ";";
         ClassTinkerers.enumBuilder(type, boatParam1, String.class).addEnum("RUNEWOOD", () -> new Object[]{RUNEWOOD_PLANKS, "runewood"}).build();
         ClassTinkerers.enumBuilder(type, boatParam1, String.class).addEnum("SOULWOOD", () -> new Object[]{SOULWOOD_PLANKS, "soulwood"}).build();
 
