@@ -19,7 +19,6 @@ import static ca.rttv.malum.registry.MalumRegistry.TOTEM_POLE_BLOCK_ENTITY;
 
 public class TotemPoleBlockEntity extends BlockEntity {
     public List<Item> list;
-    public int desiredColor;
     public int currentColor;
 
     public TotemPoleBlockEntity(BlockPos pos, BlockState state) {
@@ -28,37 +27,35 @@ public class TotemPoleBlockEntity extends BlockEntity {
 
     public TotemPoleBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        currentColor = 0;
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-        nbt.putInt("desiredColor", desiredColor);
-        nbt.putInt("currentColor", currentColor);
-        super.writeNbt(nbt);
+        nbt.putInt("CurrentColor", currentColor);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+        currentColor = nbt.getInt("CurrentColor");
     }
 
-
     public void tick() {
-        if (currentColor > desiredColor) {
+        if (currentColor > 10) {
             currentColor--;
         }
-        if (currentColor < desiredColor) {
+        if (currentColor < 10) {
             currentColor++;
         }
-        if (world.isClient) {
-            if (getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit != null && desiredColor != 0) {
-                passiveParticles();
+        if (world != null && world.isClient) {
+            if (this.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit != null) {
+                this.passiveParticles();
             }
         }
     }
     public void passiveParticles() {
-        Color color = getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.color;
-        Color endColor = getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.endColor;
+        Color color = this.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.color;
+        Color endColor = this.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.endColor;
         ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
                 .setAlpha(0.06f, 0f)
                 .setLifetime(5)

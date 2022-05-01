@@ -65,7 +65,7 @@ public class TotemPoleBlock extends BlockWithEntity {
                 }
                 totemBaseBlockEntity.rite = TotemBaseBlockEntity.RITES.get(blockEntity.list.hashCode());
                 totemBaseBlockEntity.tick = 0;
-                // todo, play sound
+                world.playSound(null, down, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f); // todo, proper noise
                 break;
             }
         }
@@ -83,7 +83,7 @@ public class TotemPoleBlock extends BlockWithEntity {
         while (down.getY() >= world.getBottomY()) {
             if (downState.getBlock() instanceof TotemBaseBlock) {
                 //noinspection ConstantConditions
-                ((TotemBaseBlockEntity) world.getBlockEntity(down)).onUse(state, world, pos, null, null, null);
+                ((TotemBaseBlockEntity) world.getBlockEntity(down)).rite = null;
                 super.onBreak(world, pos, state, player);
                 return;
             }
