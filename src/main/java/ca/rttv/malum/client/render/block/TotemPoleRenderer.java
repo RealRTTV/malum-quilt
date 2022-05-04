@@ -7,13 +7,18 @@ import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
 import ca.rttv.malum.util.spirit.MalumSpiritType;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3f;
@@ -39,8 +44,7 @@ public class TotemPoleRenderer implements BlockEntityRenderer<TotemPoleBlockEnti
         if (entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE) == null) {
             return;
         }
-
-        renderQuad(overlayHashmap.get(entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit), entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.color, (entity.currentColor + tickDelta) / 20f, direction, matrices);
+        this.renderQuad(overlayHashmap.get(entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit), entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.color, (entity.currentColor + tickDelta) / 20f, direction, matrices);
     }
 
     public void renderQuad(SpriteIdentifier spriteId, Color color, float alpha, Direction direction, MatrixStack matrices) {
@@ -63,7 +67,7 @@ public class TotemPoleRenderer implements BlockEntityRenderer<TotemPoleBlockEnti
 
     public float rotation(Direction direction) {
         if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-            direction = direction.getOpposite();
+            return direction.getOpposite().asRotation();
         }
         return direction.asRotation();
     }

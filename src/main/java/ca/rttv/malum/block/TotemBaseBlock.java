@@ -1,6 +1,7 @@
 package ca.rttv.malum.block;
 
 import ca.rttv.malum.block.entity.TotemBaseBlockEntity;
+import ca.rttv.malum.block.entity.TotemPoleBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -30,6 +31,7 @@ public class TotemBaseBlock extends BlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        //noinspection ConstantConditions
         return ((TotemBaseBlockEntity) world.getBlockEntity(pos)).onUse(state, world, pos, player, hand, hit);
     }
 
@@ -43,6 +45,22 @@ public class TotemBaseBlock extends BlockWithEntity {
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         world.scheduleBlockTick(pos, state.getBlock(), 1);
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockPos up = pos.up();
+        BlockEntity blockEntity = world.getBlockEntity(up);
+        while (up.getY() <= world.getTopY()) {
+            if (blockEntity instanceof TotemPoleBlockEntity totemPoleBlockEntity) {
+                totemPoleBlockEntity.setCachedBaseBlock(null);
+                up = up.up();
+                blockEntity = world.getBlockEntity(up);
+                continue;
+            }
+            break;
+        }
+        super.onBreak(world, pos, state, player);
     }
 
     @Override

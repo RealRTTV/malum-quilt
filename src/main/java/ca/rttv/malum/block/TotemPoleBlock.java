@@ -34,14 +34,20 @@ public class TotemPoleBlock extends BlockWithEntity {
     }
 
     public void onStrip(BlockState state, World world, BlockPos pos) {
-
+        //noinspection ConstantConditions
+        ((TotemPoleBlockEntity) world.getBlockEntity(pos)).getCachedBaseBlock().rite = null;
+        // todo, play sound
     }
 
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.playSound(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS, 1.0f, 1.0f); // todo, proper noise
         TotemPoleBlockEntity blockEntity = (TotemPoleBlockEntity) world.getBlockEntity(pos);
-        if (blockEntity == null || blockEntity.list == null) {
+        if (blockEntity == null) {
+            return;
+        }
+
+        if (blockEntity.list == null) {
             return;
         }
 
@@ -49,14 +55,14 @@ public class TotemPoleBlock extends BlockWithEntity {
 
         BlockPos up = pos.up();
         BlockState upState = world.getBlockState(up);
-        if (upState.getBlock() instanceof TotemPoleBlock) {
+        if (upState.getBlock() instanceof TotemPoleBlock && upState.get(FACING) == state.get(FACING)) {
             TotemPoleBlockEntity upEntity = (TotemPoleBlockEntity) world.getBlockEntity(up);
             if (upEntity == null) {
                 return;
             }
             upEntity.list = blockEntity.list;
             world.scheduleBlockTick(up, world.getBlockState(up).getBlock(), 20);
-        } else {
+        } else { // todo, delay of 20 ticks
             BlockPos down = pos.down();
             while (down.getY() >= world.getBottomY()) {
                 if (!(world.getBlockEntity(down) instanceof TotemBaseBlockEntity totemBaseBlockEntity)) {
@@ -66,6 +72,7 @@ public class TotemPoleBlock extends BlockWithEntity {
                 totemBaseBlockEntity.rite = TotemBaseBlockEntity.RITES.get(blockEntity.list.hashCode());
                 totemBaseBlockEntity.tick = 0;
                 world.playSound(null, down, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f); // todo, proper noise
+                totemBaseBlockEntity.updateListeners();
                 break;
             }
         }
@@ -111,6 +118,6 @@ public class TotemPoleBlock extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, TOTEM_POLE_BLOCK_ENTITY, (world1, pos, state1, blockEntity) -> blockEntity.tick());
+        return checkType(type, TOTEM_POLE_BLOCK_ENTITY, (w, p, s, b) -> b.tick());
     }
 }

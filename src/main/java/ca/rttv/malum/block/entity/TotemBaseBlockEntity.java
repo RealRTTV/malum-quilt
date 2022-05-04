@@ -2,6 +2,7 @@ package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.rite.Rite;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -9,6 +10,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -36,18 +40,26 @@ public class TotemBaseBlockEntity extends BlockEntity {
 
     public TotemBaseBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+
+        if (world == null) {
+            return;
+        }
+
+        BlockPos up = pos.up();
+        while (world.getBlockEntity(up) instanceof TotemPoleBlockEntity totemPoleBlockEntity) {
+            totemPoleBlockEntity.setCachedBaseBlock(this);
+            up = up.up();
+        }
     }
 
     public void clientTick(World world, BlockPos pos, BlockState state) {
 
     }
 
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, @Nullable PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (player != null) {
-            ItemStack stack = player.getStackInHand(hand);
-            if (!stack.isEmpty()) {
-                return ActionResult.PASS;
-            }
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        ItemStack stack = player.getStackInHand(hand);
+        if (!stack.isEmpty()) {
+            return ActionResult.PASS;
         }
 
         if (world.isClient) {
@@ -55,6 +67,9 @@ public class TotemBaseBlockEntity extends BlockEntity {
         }
 
         if (rite != null) {
+            // todo, play sound
+            rite = null;
+            this.updateListeners();
             return ActionResult.CONSUME;
         }
 
@@ -67,6 +82,27 @@ public class TotemBaseBlockEntity extends BlockEntity {
             rite = null;
         }
         return ActionResult.CONSUME;
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        NbtCompound nbt = super.toInitialChunkDataNbt();
+        this.writeNbt(nbt);
+        return nbt;
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.of(this);
+    }
+
+    public void updateListeners() {
+        this.markDirty();
+
+        if (world != null && !world.isClient) {
+            world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+        }
     }
 
     public boolean isCorrupt() {
@@ -93,12 +129,10 @@ public class TotemBaseBlockEntity extends BlockEntity {
             return;
         }
 
-        tick++;
-
-        if (isCorrupt()) {
-            rite.onCorruptTick(state, world, pos, random, tick);
+        if (this.isCorrupt()) {
+            rite.onCorruptTick(state, world, pos, random, ++tick);
         } else {
-            rite.onTick(state, world, pos, random, tick);
+            rite.onTick(state, world, pos, random, ++tick);
         }
     }
 }

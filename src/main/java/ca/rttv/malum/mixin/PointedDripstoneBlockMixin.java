@@ -15,8 +15,11 @@ import java.util.stream.StreamSupport;
 
 @Mixin(PointedDripstoneBlock.class)
 public abstract class PointedDripstoneBlockMixin {
+    // todo, multiplier
+    private static final float AQUEOUS_MULTIPLIER = 1;
+
     @ModifyVariable(method = "dripTick", at = @At(value = "LOAD", opcode = Opcodes.FLOAD, ordinal = 0), index = 5)
     private static float dripTick(float f, BlockState state, ServerWorld world, BlockPos pos, float dripChance) {
-        return f * (1 + StreamSupport.stream(BlockPos.iterateOutwards(pos, 8, 8, 8).spliterator(), false).filter(totemBasePos -> world.getBlockEntity(pos) instanceof TotemBaseBlockEntity totem && totem.rite == RiteRegistry.ELDRITCH_AQUEOUS_RITE && !totem.isCorrupt()).count());
+        return f * AQUEOUS_MULTIPLIER * (1 + StreamSupport.stream(BlockPos.iterateOutwards(pos, 8, 8, 8).spliterator(), false).filter(totemBasePos -> world.getBlockEntity(pos) instanceof TotemBaseBlockEntity totem && totem.rite == RiteRegistry.ELDRITCH_AQUEOUS_RITE && !totem.isCorrupt()).count());
     }
 }
