@@ -6,6 +6,7 @@ accessible      class     net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible      class     net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider
 extendable      class     net/minecraft/enchantment/EnchantmentTarget
 accessible      class     net/minecraft/util/registry/Registry$RegistryBootstrap
+accessible      class     net/minecraft/network/NetworkState$PacketHandler
 
 accessible      field     net/minecraft/client/particle/ParticleManager                            spriteAwareFactories         Ljava/util/Map;
 accessible      field     net/minecraft/util/math/Matrix4f                                         a03                          F

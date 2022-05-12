@@ -3,11 +3,15 @@ package ca.rttv.malum.block.entity;
 import ca.rttv.malum.block.TotemPoleBlock;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.util.particle.ParticleBuilders;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -22,6 +26,7 @@ public class TotemPoleBlockEntity extends BlockEntity {
     @Nullable
     public List<Item> list;
     public int currentColor;
+    public boolean particles;
     @Nullable
     public TotemBaseBlockEntity cachedBaseBlock;
 
@@ -34,17 +39,32 @@ public class TotemPoleBlockEntity extends BlockEntity {
         currentColor = 0;
     }
 
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.of(this);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        NbtCompound nbt = super.toInitialChunkDataNbt();
+        this.writeNbt(nbt);
+        return nbt;
+    }
+
     @Override
     protected void writeNbt(NbtCompound nbt) {
         nbt.putInt("CurrentColor", currentColor);
+        nbt.putBoolean("Particles", particles);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         currentColor = nbt.getInt("CurrentColor");
+        particles = nbt.getBoolean("Particles");
     }
 
-    public void tick() {
+    public void clientTick() {
         if (currentColor > 10) {
             currentColor--;
         }
@@ -57,19 +77,13 @@ public class TotemPoleBlockEntity extends BlockEntity {
             return;
         }
 
-        if (this.getCachedBaseBlock() == null) {
-            return;
-        }
-
-        if (this.getCachedBaseBlock().rite == null) {
+        if (!particles) {
             return;
         }
 
         if (this.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit == null) {
             return;
         }
-
-        this.getCachedBaseBlock();
 
         this.passiveParticles();
     }
@@ -129,5 +143,13 @@ public class TotemPoleBlockEntity extends BlockEntity {
                 .enableNoClip()
                 .randomMotion(0.01f, 0.01f)
                 .evenlyRepeatEdges(world, pos, 1, Direction.WEST, Direction.EAST, Direction.NORTH, Direction.SOUTH);
+    }
+
+    public void updateListeners() {
+        this.markDirty();
+
+        if (world != null && !world.isClient) {
+            world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+        }
     }
 }

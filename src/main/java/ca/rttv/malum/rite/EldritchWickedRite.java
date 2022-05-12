@@ -1,7 +1,10 @@
 package ca.rttv.malum.rite;
 
+import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.registry.MalumDamageSourceRegistry;
+import ca.rttv.malum.util.spirit.SpiritType;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -39,7 +42,7 @@ public class EldritchWickedRite extends Rite {
         list.forEach(entity -> {
             if (!entity.isInLove() && entity.getBreedingAge() > 0) {
                 entity.damage(MalumDamageSourceRegistry.VOODOO, entity.getMaxHealth());
-                // todo, particle
+                world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> players.networkHandler.sendPacket(new MalumParticleS2CPacket<ClientPlayNetworkHandler>(SpiritType.WICKED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ())));
                 maxKills[0]--;
             }
         });

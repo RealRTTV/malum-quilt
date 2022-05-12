@@ -64,19 +64,26 @@ public class TotemPoleBlock extends BlockWithEntity {
                 return;
             }
             upEntity.list = blockEntity.list;
+            upEntity.particles = blockEntity.particles;
             world.scheduleBlockTick(up, world.getBlockState(up).getBlock(), 20);
+            blockEntity.updateListeners();
         } else { // todo, delay of 20 ticks
             BlockPos down = pos.down();
             while (down.getY() >= world.getBottomY()) {
-                if (!(world.getBlockEntity(down) instanceof TotemBaseBlockEntity totemBaseBlockEntity)) {
-                    down = down.down();
-                    continue;
+                if (world.getBlockEntity(down) instanceof TotemBaseBlockEntity totemBaseBlockEntity) {
+                    totemBaseBlockEntity.rite = TotemBaseBlockEntity.RITES.get(blockEntity.list.hashCode());
+                    blockEntity.list = null;
+                    blockEntity.particles = true;
+                    blockEntity.updateListeners();
+                    totemBaseBlockEntity.tick = 0;
+                    world.playSound(null, down, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f); // todo, proper noise
+                    totemBaseBlockEntity.updateListeners();
+                    break;
                 }
-                totemBaseBlockEntity.rite = TotemBaseBlockEntity.RITES.get(blockEntity.list.hashCode());
-                totemBaseBlockEntity.tick = 0;
-                world.playSound(null, down, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f); // todo, proper noise
-                totemBaseBlockEntity.updateListeners();
-                break;
+                if (world.getBlockEntity(down) instanceof TotemPoleBlockEntity totemPoleBlockEntity) {
+                    totemPoleBlockEntity.list = null;
+                }
+                down = down.down();
             }
         }
     }
@@ -121,6 +128,6 @@ public class TotemPoleBlock extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, TOTEM_POLE_BLOCK_ENTITY, (w, p, s, b) -> b.tick());
+        return checkType(type, TOTEM_POLE_BLOCK_ENTITY, (w, p, s, b) -> b.clientTick());
     }
 }

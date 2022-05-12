@@ -1,6 +1,9 @@
 package ca.rttv.malum.rite;
 
+import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
+import ca.rttv.malum.util.spirit.SpiritType;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -26,7 +29,12 @@ public class SacredRite extends Rite {
             return;
         }
 
-        world.getEntitiesByClass(PlayerEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), player -> !player.isSpectator()).forEach(player -> player.addStatusEffect(new StatusEffectInstance(SACRED_AURA, 200, 0)));
+        world.getEntitiesByClass(PlayerEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), player -> !player.isSpectator()).forEach(player -> {
+            if (!player.hasStatusEffect(SACRED_AURA)) {
+                world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> players.networkHandler.sendPacket(new MalumParticleS2CPacket<ClientPlayNetworkHandler>(SpiritType.SACRED_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ())));
+            }
+            player.addStatusEffect(new StatusEffectInstance(SACRED_AURA, 200, 0));
+        });
     }
 
     @Override
@@ -38,7 +46,7 @@ public class SacredRite extends Rite {
         world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), Entity::isLiving).forEach(entity -> {
             if (world.random.nextFloat() <= 0.04f) {
                 if (entity.getBreedingAge() < 0) {
-                    // todo, particle
+                    world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> players.networkHandler.sendPacket(new MalumParticleS2CPacket<ClientPlayNetworkHandler>(SpiritType.SACRED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ())));
                     entity.setBreedingAge(entity.getBreedingAge() + 25);
                 }
             }

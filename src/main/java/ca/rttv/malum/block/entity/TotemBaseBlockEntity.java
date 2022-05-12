@@ -70,6 +70,19 @@ public class TotemBaseBlockEntity extends BlockEntity {
             // todo, play sound
             rite = null;
             this.updateListeners();
+            BlockPos up = pos.up();
+            BlockEntity blockEntity = world.getBlockEntity(up);
+            while (up.getY() <= world.getTopY()) {
+                if (blockEntity instanceof TotemPoleBlockEntity totemPoleBlockEntity) {
+                    totemPoleBlockEntity.setCachedBaseBlock(null);
+                    totemPoleBlockEntity.particles = false;
+                    totemPoleBlockEntity.updateListeners();
+                    up = up.up();
+                    blockEntity = world.getBlockEntity(up);
+                    continue;
+                }
+                break;
+            }
             return ActionResult.CONSUME;
         }
 
@@ -77,6 +90,7 @@ public class TotemBaseBlockEntity extends BlockEntity {
         BlockPos up = pos.up();
         if (world.getBlockEntity(up) instanceof TotemPoleBlockEntity totemPoleBlockEntity) {
             totemPoleBlockEntity.list = list;
+            totemPoleBlockEntity.particles = true;
             world.scheduleBlockTick(up, world.getBlockState(up).getBlock(), 1);
         } else {
             rite = null;
