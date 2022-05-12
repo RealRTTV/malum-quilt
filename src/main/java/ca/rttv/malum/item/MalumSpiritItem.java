@@ -1,10 +1,10 @@
-package ca.rttv.malum.item.spirit;
+package ca.rttv.malum.item;
 
 import ca.rttv.malum.block.TotemPoleBlock;
 import ca.rttv.malum.item.IFloatingGlowItem;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
-import ca.rttv.malum.util.spirit.MalumSpiritType;
+import ca.rttv.malum.util.spirit.SpiritType;
 import ca.rttv.malum.util.spirit.SpiritTypeProperty;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
@@ -28,9 +28,9 @@ public class MalumSpiritItem extends Item implements IFloatingGlowItem, ItemPart
             .put(RUNEWOOD_LOG, RUNEWOOD_TOTEM_POLE)
             .put(SOULWOOD_LOG, SOULWOOD_TOTEM_POLE)
             .build();
-    public final MalumSpiritType type;
+    public final SpiritType type;
 
-    public MalumSpiritItem(Item.Settings settings, MalumSpiritType type) {
+    public MalumSpiritItem(Item.Settings settings, SpiritType type) {
         super(settings);
         this.type = type;
     }

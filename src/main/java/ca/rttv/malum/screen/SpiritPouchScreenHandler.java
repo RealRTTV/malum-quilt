@@ -1,6 +1,6 @@
 package ca.rttv.malum.screen;
 
-import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.item.MalumSpiritItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;

@@ -42,7 +42,7 @@ public class ArcaneRite extends Rite {
 
     @Override
     public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
-        if (tick % 60 != 0) {
+        if (tick % 100 != 0) {
             return;
         }
 

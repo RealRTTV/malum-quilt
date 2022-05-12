@@ -3,9 +3,10 @@ package ca.rttv.malum.util.handler;
 import ca.rttv.malum.component.MalumComponents;
 import ca.rttv.malum.component.SpiritLivingEntityComponent;
 import ca.rttv.malum.config.CommonConfig;
-import ca.rttv.malum.entity.boomerang.ScytheBoomerangEntity;
+import ca.rttv.malum.entity.ScytheBoomerangEntity;
 import ca.rttv.malum.item.SpiritCollectActivity;
 import ca.rttv.malum.item.SpiritPouchItem;
+import ca.rttv.malum.registry.MalumDamageSourceRegistry;
 import ca.rttv.malum.registry.MalumTags;
 import ca.rttv.malum.util.helper.ItemHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
@@ -23,7 +24,6 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class SpiritHarvestHandler {
-
     public static void exposeSoul(DamageSource source, float amount, LivingEntity target) {
         if (amount == 0) {
             return;
@@ -41,6 +41,10 @@ public class SpiritHarvestHandler {
 
     public static void shatterSoul(DamageSource source, LivingEntity target) {
         LivingEntity attacker = null;
+        if (source == MalumDamageSourceRegistry.FORCED_SHATTER) {
+            SpiritHelper.createSpiritEntities(SpiritHelper.getSpiritItemStacks(target), target, null);
+            return;
+        }
         if (source.getAttacker() instanceof LivingEntity directAttacker) {
             attacker = directAttacker;
         }

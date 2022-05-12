@@ -1,7 +1,7 @@
 package ca.rttv.malum.client.render.block;
 
 import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
-import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.item.MalumSpiritItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

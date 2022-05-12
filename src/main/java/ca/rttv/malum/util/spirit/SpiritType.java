@@ -1,6 +1,6 @@
 package ca.rttv.malum.util.spirit;
 
-import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.item.MalumSpiritItem;
 import ca.rttv.malum.registry.MalumRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.text.LiteralText;
@@ -16,15 +16,15 @@ import java.util.function.Supplier;
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.SpiritTypeRegistry.SPIRITS;
 
-public class MalumSpiritType implements StringIdentifiable {
-    public static final MalumSpiritType SACRED_SPIRIT = new MalumSpiritType("sacred", new Color(243, 65, 107));
-    public static final MalumSpiritType WICKED_SPIRIT = new MalumSpiritType("wicked", new Color(178, 29, 232));
-    public static final MalumSpiritType ARCANE_SPIRIT = new MalumSpiritType("arcane", new Color(212, 55, 255));
-    public static final MalumSpiritType ELDRITCH_SPIRIT = new MalumSpiritType("eldritch", new Color(148, 45, 245), new Color(39, 201, 103));
-    public static final MalumSpiritType AERIAL_SPIRIT = new MalumSpiritType("aerial", new Color(75, 243, 218));
-    public static final MalumSpiritType AQUEOUS_SPIRIT = new MalumSpiritType("aqueous", new Color(42, 114, 232));
-    public static final MalumSpiritType INFERNAL_SPIRIT = new MalumSpiritType("infernal", new Color(210, 134, 39));
-    public static final MalumSpiritType EARTHEN_SPIRIT = new MalumSpiritType("earthen", new Color(73, 234, 27));
+public class SpiritType implements StringIdentifiable {
+    public static final SpiritType SACRED_SPIRIT = new SpiritType("sacred", new Color(243, 65, 107));
+    public static final SpiritType WICKED_SPIRIT = new SpiritType("wicked", new Color(178, 29, 232));
+    public static final SpiritType ARCANE_SPIRIT = new SpiritType("arcane", new Color(212, 55, 255));
+    public static final SpiritType ELDRITCH_SPIRIT = new SpiritType("eldritch", new Color(148, 45, 245), new Color(39, 201, 103));
+    public static final SpiritType AERIAL_SPIRIT = new SpiritType("aerial", new Color(75, 243, 218));
+    public static final SpiritType AQUEOUS_SPIRIT = new SpiritType("aqueous", new Color(42, 114, 232));
+    public static final SpiritType INFERNAL_SPIRIT = new SpiritType("infernal", new Color(210, 134, 39));
+    public static final SpiritType EARTHEN_SPIRIT = new SpiritType("earthen", new Color(73, 234, 27));
 
     public final Color color;
     public final Color endColor;
@@ -32,11 +32,11 @@ public class MalumSpiritType implements StringIdentifiable {
     public final String id;
     private final Supplier<Item> splinterItem;
 
-    public MalumSpiritType(String id, Color color) {
+    public SpiritType(String id, Color color) {
         this(id, color, createEndColor(color));
     }
 
-    public MalumSpiritType(String id, Color color, Color endColor) {
+    public SpiritType(String id, Color color, Color endColor) {
         this.id = id;
         this.color = color;
         this.endColor = endColor;

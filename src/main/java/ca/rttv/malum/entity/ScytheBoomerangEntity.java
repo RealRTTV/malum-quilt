@@ -1,4 +1,4 @@
-package ca.rttv.malum.entity.boomerang;
+package ca.rttv.malum.entity;
 
 import ca.rttv.malum.item.ScytheItem;
 import ca.rttv.malum.registry.MalumEnchantments;

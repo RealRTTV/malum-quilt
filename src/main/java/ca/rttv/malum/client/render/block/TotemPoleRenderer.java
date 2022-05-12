@@ -6,19 +6,14 @@ import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
-import ca.rttv.malum.util.spirit.MalumSpiritType;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
+import ca.rttv.malum.util.spirit.SpiritType;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3f;
@@ -30,7 +25,7 @@ import static ca.rttv.malum.util.helper.RenderHelper.FULL_BRIGHT;
 
 @SuppressWarnings("deprecation")
 public class TotemPoleRenderer implements BlockEntityRenderer<TotemPoleBlockEntity> {
-    public static HashMap<MalumSpiritType, SpriteIdentifier> overlayHashmap = new HashMap<>();
+    public static HashMap<SpiritType, SpriteIdentifier> overlayHashmap = new HashMap<>();
 
     public TotemPoleRenderer() {
         SpiritTypeRegistry.SPIRITS.forEach((s) ->

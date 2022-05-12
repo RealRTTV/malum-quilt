@@ -6,7 +6,7 @@ import ca.rttv.malum.item.EtherBlockItem;
 import ca.rttv.malum.item.EtherWallStandingBlockItem;
 import ca.rttv.malum.item.IridescentEtherBlockItem;
 import ca.rttv.malum.item.IridescentEtherWallStandingBlockItem;
-import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.item.MalumSpiritItem;
 import ca.rttv.malum.util.helper.NbtHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.Inventory;
@@ -89,38 +89,42 @@ public record SpiritInfusionRecipe(Identifier id, String group,
     @Override
     public ItemStack craft(Inventory inventory) {
         if (inventory instanceof SpiritAltarBlockEntity blockEntity) {
-            for (int[] i = {0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
-                if (blockEntity.spiritSlots.get(i[0]).isEmpty()) break;
-                blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElseGet(() -> new IngredientWithCount.StackEntry(ItemStack.EMPTY)).getCount());
-            }
-            blockEntity.getHeldItem().decrement(input.getEntries()[0].getCount());
-            BlockPos pos = blockEntity.getPos();
-            IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.recipe.extraItems.getEntries()).map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count())).toArray(IngredientWithCount.Entry[]::new);
-            BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPos -> {
-                //noinspection ConstantConditions
-                if (blockEntity.getWorld().getBlockEntity(reagentPos) instanceof AbstractItemDisplayBlockEntity displayBlock) {
-                    for (IngredientWithCount.Entry entry : entries) {
-                        if (entry.getStacks().stream().anyMatch(stack -> stack.getItem() == displayBlock.getHeldItem().getItem())) {
-                            int amountToRemove = Math.min(entry.getCount(), displayBlock.getHeldItem().getCount());
-                            entry.decrement(amountToRemove);
-                            displayBlock.getHeldItem().decrement(amountToRemove);
-                            displayBlock.notifyListeners();
-                            break;
+            if (blockEntity.recipe != null) {
+                for (int[] i = {0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
+                    if (blockEntity.spiritSlots.get(i[0]).isEmpty()) break;
+                    blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElseGet(() -> new IngredientWithCount.StackEntry(ItemStack.EMPTY)).getCount());
+                }
+                blockEntity.getHeldItem().decrement(input.getEntries()[0].getCount());
+                BlockPos pos = blockEntity.getPos();
+                IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.recipe.extraItems.getEntries()).map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count())).toArray(IngredientWithCount.Entry[]::new);
+                BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPos -> {
+                    //noinspection ConstantConditions
+                    if (blockEntity.getWorld().getBlockEntity(reagentPos) instanceof AbstractItemDisplayBlockEntity displayBlock) {
+                        for (IngredientWithCount.Entry entry : entries) {
+                            if (entry.getStacks().stream().anyMatch(stack -> stack.getItem() == displayBlock.getHeldItem().getItem())) {
+                                int amountToRemove = Math.min(entry.getCount(), displayBlock.getHeldItem().getCount());
+                                entry.decrement(amountToRemove);
+                                displayBlock.getHeldItem().decrement(amountToRemove);
+                                displayBlock.notifyListeners();
+                                break;
+                            }
                         }
                     }
+                });
+                ItemStack stack = output.copy(); // this has to be copied since these recipes are stored statically-ish iirc
+                if (stack.getItem() instanceof EtherBlockItem || stack.getItem() instanceof EtherWallStandingBlockItem || stack.getItem() instanceof IridescentEtherBlockItem || stack.getItem() instanceof IridescentEtherWallStandingBlockItem) {
+                    NbtCompound nbt = new NbtCompound();
+                    NbtCompound displayNbt = new NbtCompound();
+                    displayNbt.putInt("FirstColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "FirstColor"), 15712278, blockEntity.getHeldItem().getNbt()));
+                    displayNbt.putInt("SecondColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "SecondColor"), 4607909, blockEntity.getHeldItem().getNbt()));
+                    nbt.put("display", displayNbt);
+                    stack.setNbt(nbt);
                 }
-            });
-            ItemStack stack = output.copy();
-            if (stack.getItem() instanceof EtherBlockItem || stack.getItem() instanceof EtherWallStandingBlockItem || stack.getItem() instanceof IridescentEtherBlockItem || stack.getItem() instanceof IridescentEtherWallStandingBlockItem) {
-                NbtCompound nbt = new NbtCompound();
-                NbtCompound displayNbt = new NbtCompound();
-                displayNbt.putInt("FirstColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "FirstColor"), 15712278, blockEntity.getHeldItem().getNbt()));
-                displayNbt.putInt("SecondColor", NbtHelper.getOrDefaultInt(nbtTag -> NbtHelper.getOrThrowInt(nbtTag.getCompound("display"), "SecondColor"), 4607909, blockEntity.getHeldItem().getNbt()));
-                nbt.put("display", displayNbt);
-                stack.setNbt(nbt);
+                ItemScatterer.spawn(blockEntity.getWorld(), pos.up(), DefaultedList.ofSize(1, stack));
+                return stack;
+            } else {
+                throw new IllegalStateException("Spirit Altar recipe must not be null");
             }
-            ItemScatterer.spawn(blockEntity.getWorld(), pos.up(), DefaultedList.ofSize(1, stack)); // this has to be copied since these recipes are stored statically-ish iirc
-            return stack;
         } else {
             throw new IllegalStateException("Parameter 'inventory' must be an instanceof SpiritAltarBlockEntity");
         }

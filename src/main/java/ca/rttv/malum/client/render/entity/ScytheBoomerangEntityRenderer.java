@@ -1,6 +1,6 @@
 package ca.rttv.malum.client.render.entity;
 
-import ca.rttv.malum.entity.boomerang.ScytheBoomerangEntity;
+import ca.rttv.malum.entity.ScytheBoomerangEntity;
 import ca.rttv.malum.item.ScytheItem;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;

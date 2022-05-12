@@ -16,7 +16,8 @@
     "PlayerEntityMixin",
     "PointedDripstoneBlockMixin",
     "SeverPlayerInteractionManagerMixin",
-    "StatusEffectMixin"
+    "StatusEffectMixin",
+    "StatusEffectUtilMixin"
   ],
   "client": [
     "BlockColorsMixin",

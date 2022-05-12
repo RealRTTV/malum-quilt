@@ -1,6 +1,6 @@
 package ca.rttv.malum.enchantment;
 
-import ca.rttv.malum.entity.boomerang.ScytheBoomerangEntity;
+import ca.rttv.malum.entity.ScytheBoomerangEntity;
 import ca.rttv.malum.registry.MalumEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;

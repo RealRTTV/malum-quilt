@@ -35,7 +35,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vector4f;
 
 import static ca.rttv.malum.registry.MalumRegistry.MAGEBANE_BELT;
-import static ca.rttv.malum.util.spirit.MalumSpiritType.ARCANE_SPIRIT;
+import static ca.rttv.malum.util.spirit.SpiritType.ARCANE_SPIRIT;
 
 public class ArcaneAffinity extends MalumSpiritAffinity {
     public ArcaneAffinity() {

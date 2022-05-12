@@ -1,4 +1,4 @@
-package ca.rttv.malum.entity.spirit;
+package ca.rttv.malum.entity;
 
 import ca.rttv.malum.entity.FloatingItemEntity;
 import ca.rttv.malum.registry.MalumAttributeRegistry;

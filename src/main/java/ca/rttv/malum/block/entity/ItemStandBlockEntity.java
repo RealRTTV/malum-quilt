@@ -1,6 +1,6 @@
 package ca.rttv.malum.block.entity;
 
-import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.item.MalumSpiritItem;
 import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;

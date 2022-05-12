@@ -1,7 +1,7 @@
 package ca.rttv.malum.registry;
 
-import ca.rttv.malum.entity.boomerang.ScytheBoomerangEntity;
-import ca.rttv.malum.entity.spirit.SpiritItemEntity;
+import ca.rttv.malum.entity.ScytheBoomerangEntity;
+import ca.rttv.malum.entity.SpiritItemEntity;
 import ca.rttv.malum.util.helper.DataHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

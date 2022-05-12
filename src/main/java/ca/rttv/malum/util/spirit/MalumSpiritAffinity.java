@@ -3,7 +3,7 @@ package ca.rttv.malum.util.spirit;
 public class MalumSpiritAffinity {
     public final String identifier;
 
-    public MalumSpiritAffinity(MalumSpiritType type) {
+    public MalumSpiritAffinity(SpiritType type) {
         this.identifier = type.id + "_affinity";
     }
 

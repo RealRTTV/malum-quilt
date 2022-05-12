@@ -1,11 +1,11 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
-import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.item.MalumSpiritItem;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import ca.rttv.malum.util.particle.ParticleBuilders;
-import ca.rttv.malum.util.spirit.MalumSpiritType;
+import ca.rttv.malum.util.spirit.SpiritType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -146,7 +146,7 @@ public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
 
         return ActionResult.PASS;
     }
-    public void spawnUseParticles(World world, BlockPos pos, MalumSpiritType type) {
+    public void spawnUseParticles(World world, BlockPos pos, SpiritType type) {
         Color color = type.color;
         ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
                 .setAlpha(0.15f, 0f)

@@ -5,7 +5,7 @@ import ca.rttv.malum.block.entity.*;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.block.sapling.SoulwoodSaplingGenerator;
 import ca.rttv.malum.item.*;
-import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.item.MalumSpiritItem;
 import ca.rttv.malum.recipe.BlockTransmutationRecipe;
 import ca.rttv.malum.recipe.SavedNbtRecipe;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
@@ -14,7 +14,7 @@ import ca.rttv.malum.screen.SpiritPouchScreenHandler;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
-import ca.rttv.malum.util.spirit.MalumSpiritType;
+import ca.rttv.malum.util.spirit.SpiritType;
 import ca.rttv.malum.world.gen.feature.GradientTreeFeature;
 import dev.emi.trinkets.api.TrinketItem;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
@@ -364,14 +364,14 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                             Block TWISTED_ROCK_ITEM_PEDESTAL                = registerBlockItem          ("twisted_rock_item_pedestal",                new StoneItemPedestalBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)), MALUM_ARCANE_ROCKS);
 
     // items & blocks, sorted [Main: Spirits]
-                                             Item SACRED_SPIRIT                             = registerItem               ("sacred_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.SACRED_SPIRIT));
-                                             Item WICKED_SPIRIT                             = registerItem               ("wicked_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.WICKED_SPIRIT));
-                                             Item ARCANE_SPIRIT                             = registerItem               ("arcane_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.ARCANE_SPIRIT));
-                                             Item ELDRITCH_SPIRIT                           = registerItem               ("eldritch_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.ELDRITCH_SPIRIT));
-                                             Item EARTHEN_SPIRIT                            = registerItem               ("earthen_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.EARTHEN_SPIRIT));
-                                             Item INFERNAL_SPIRIT                           = registerItem               ("infernal_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.INFERNAL_SPIRIT));
-                                             Item AERIAL_SPIRIT                             = registerItem               ("aerial_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.AERIAL_SPIRIT));
-                                             Item AQUEOUS_SPIRIT                            = registerItem               ("aqueous_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), MalumSpiritType.AQUEOUS_SPIRIT));
+                                             Item SACRED_SPIRIT                             = registerItem               ("sacred_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.SACRED_SPIRIT));
+                                             Item WICKED_SPIRIT                             = registerItem               ("wicked_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.WICKED_SPIRIT));
+                                             Item ARCANE_SPIRIT                             = registerItem               ("arcane_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.ARCANE_SPIRIT));
+                                             Item ELDRITCH_SPIRIT                           = registerItem               ("eldritch_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.ELDRITCH_SPIRIT));
+                                             Item EARTHEN_SPIRIT                            = registerItem               ("earthen_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.EARTHEN_SPIRIT));
+                                             Item INFERNAL_SPIRIT                           = registerItem               ("infernal_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.INFERNAL_SPIRIT));
+                                             Item AERIAL_SPIRIT                             = registerItem               ("aerial_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.AERIAL_SPIRIT));
+                                             Item AQUEOUS_SPIRIT                            = registerItem               ("aqueous_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.AQUEOUS_SPIRIT));
     // items & blocks, sorted [Building Blocks]
                                             Block BLOCK_OF_ARCANE_CHARCOAL                  = registerBlockItem          ("block_of_arcane_charcoal",                  new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 6.0f).sounds(BLOCK_ARCANE_CHARCOAL_SOUNDS)), BUILDING_BLOCKS);
                                             Block BLAZING_QUARTZ_ORE                        = registerBlockItem          ("blazing_quartz_ore",                        new Block(Settings.of(Material.STONE, MapColor.DARK_RED).strength(3.0f, 3.0f).sounds(BLOCK_BLAZING_QUARTZ_ORE_SOUNDS)), BUILDING_BLOCKS);
@@ -431,12 +431,13 @@ public interface MalumRegistry { // maps make stuff look cooler ok?
                                   AltarAcceleratorType RUNEWOOD_ACCELERATOR_TYPE            = registerAcceleratorType    ("runewood",                       1);
                                   AltarAcceleratorType BRILLIANT_ACCELERATOR_TYPE           = registerAcceleratorType    ("brilliant",                      0);
 
-                                          StatusEffect AERIAL_AURA                          = registerStatusEffect       ("aerial_aura",                               new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.AERIAL_SPIRIT.color.getRGB()).addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "E3F9C028-D6CC-4CF2-86A6-D5B5EFD86BE6", 0.2d, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
-                                          StatusEffect CORRUPTED_AERIAL_AURA                = registerStatusEffect       ("corrupted_aerial_aura",                     new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.AERIAL_SPIRIT.color.getRGB()));
-                                          StatusEffect AQUEOUS_AURA                         = registerStatusEffect       ("aqueous_aura",                              new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.AQUEOUS_SPIRIT.color.getRGB()));
-                                          StatusEffect SACRED_AURA                          = registerStatusEffect       ("sacred_aura",                               new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.SACRED_SPIRIT.color.getRGB()));
-                                          StatusEffect EARTHEN_AURA                         = registerStatusEffect       ("earthen_aura",                              new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.EARTHEN_SPIRIT.color.getRGB()).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "04448cbf-ee2c-4f36-b71f-e641a312834a", 3.0d, EntityAttributeModifier.Operation.MULTIPLY_TOTAL).addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, "dc5fc5d7-db54-403f-810d-a16de6293ffd", 1.5d, EntityAttributeModifier.Operation.ADDITION));
-                                          StatusEffect CORRUPTED_EARTHEN_AURA               = registerStatusEffect       ("corrupted_earthen_aura",                    new StatusEffect(StatusEffectType.BENEFICIAL, MalumSpiritType.EARTHEN_SPIRIT.color.getRGB()).addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "e2a25284-a8b1-41a5-9472-90cc83793d44", 2.0d, EntityAttributeModifier.Operation.ADDITION));
+                                          StatusEffect AERIAL_AURA                          = registerStatusEffect       ("aerial_aura",                               new StatusEffect(StatusEffectType.BENEFICIAL, SpiritType.AERIAL_SPIRIT.color.getRGB()).addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "E3F9C028-D6CC-4CF2-86A6-D5B5EFD86BE6", 0.2d, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+                                          StatusEffect CORRUPTED_AERIAL_AURA                = registerStatusEffect       ("corrupted_aerial_aura",                     new StatusEffect(StatusEffectType.BENEFICIAL, SpiritType.AERIAL_SPIRIT.color.getRGB()));
+                                          StatusEffect AQUEOUS_AURA                         = registerStatusEffect       ("aqueous_aura",                              new StatusEffect(StatusEffectType.BENEFICIAL, SpiritType.AQUEOUS_SPIRIT.color.getRGB()));
+                                          StatusEffect SACRED_AURA                          = registerStatusEffect       ("sacred_aura",                               new StatusEffect(StatusEffectType.BENEFICIAL, SpiritType.SACRED_SPIRIT.color.getRGB()));
+                                          StatusEffect EARTHEN_AURA                         = registerStatusEffect       ("earthen_aura",                              new StatusEffect(StatusEffectType.BENEFICIAL, SpiritType.EARTHEN_SPIRIT.color.getRGB()).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "04448cbf-ee2c-4f36-b71f-e641a312834a", 3.0d, EntityAttributeModifier.Operation.MULTIPLY_TOTAL).addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, "dc5fc5d7-db54-403f-810d-a16de6293ffd", 1.5d, EntityAttributeModifier.Operation.ADDITION));
+                                          StatusEffect CORRUPTED_EARTHEN_AURA               = registerStatusEffect       ("corrupted_earthen_aura",                    new StatusEffect(StatusEffectType.BENEFICIAL, SpiritType.EARTHEN_SPIRIT.color.getRGB()).addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "e2a25284-a8b1-41a5-9472-90cc83793d44", 2.0d, EntityAttributeModifier.Operation.ADDITION));
+                                          StatusEffect INFERNAL_AURA                        = registerStatusEffect       ("infernal_aura",                             new StatusEffect(StatusEffectType.BENEFICIAL, SpiritType.INFERNAL_SPIRIT.color.getRGB()).addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, "0a74b987-a6ec-4b9f-815e-a589bf435b93", 0.2d, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
     static <T extends StatusEffect> StatusEffect registerStatusEffect(String id, T effect) {
         STATUS_EFFECTS.put(new Identifier(MODID, id), effect);
         return effect;

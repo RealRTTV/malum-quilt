@@ -25,7 +25,7 @@ public class AerialRite extends Rite {
             return;
         }
 
-        world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> player.addStatusEffect(new StatusEffectInstance(AERIAL_AURA, 200, 1)));
+        world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> player.addStatusEffect(new StatusEffectInstance(AERIAL_AURA, 220, 1)));
     }
 
     @Override
@@ -34,6 +34,6 @@ public class AerialRite extends Rite {
             return;
         }
 
-        world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> player.addStatusEffect(new StatusEffectInstance(CORRUPTED_AERIAL_AURA, 200, 1)));
+        world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> player.addStatusEffect(new StatusEffectInstance(CORRUPTED_AERIAL_AURA, 220, 1)));
     }
 }

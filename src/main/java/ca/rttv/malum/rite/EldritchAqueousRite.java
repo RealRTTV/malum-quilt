@@ -8,6 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Random;
+import java.util.stream.StreamSupport;
 
 public class EldritchAqueousRite extends Rite {
     public EldritchAqueousRite(Item... items) {
@@ -19,14 +20,10 @@ public class EldritchAqueousRite extends Rite {
 
     @Override
     public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
-        if (tick % 80 != 0) {
+        if (tick % 100 != 0) {
             return;
         }
 
-        BlockPos.iterateOutwards(pos.down(), 4, 0, 4).forEach(icePos -> {
-            if (world.getFluidState(icePos).isOf(Fluids.WATER)) {
-                world.setBlockState(icePos, Blocks.ICE.getDefaultState());
-            }
-        });
+        StreamSupport.stream(BlockPos.iterateOutwards(pos.down(), 4, 0, 4).spliterator(), false).filter(icePos -> world.getFluidState(icePos).isOf(Fluids.WATER)).forEach(icePos -> world.setBlockState(icePos, Blocks.ICE.getDefaultState()));
     }
 }

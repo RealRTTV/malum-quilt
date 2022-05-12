@@ -2,7 +2,7 @@ package ca.rttv.malum.block;
 
 import ca.rttv.malum.block.entity.TotemBaseBlockEntity;
 import ca.rttv.malum.block.entity.TotemPoleBlockEntity;
-import ca.rttv.malum.item.spirit.MalumSpiritItem;
+import ca.rttv.malum.item.MalumSpiritItem;
 import ca.rttv.malum.util.spirit.SpiritTypeProperty;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -35,7 +35,10 @@ public class TotemPoleBlock extends BlockWithEntity {
 
     public void onStrip(BlockState state, World world, BlockPos pos) {
         //noinspection ConstantConditions
-        ((TotemPoleBlockEntity) world.getBlockEntity(pos)).getCachedBaseBlock().rite = null;
+        TotemBaseBlockEntity cachedBaseBlock = ((TotemPoleBlockEntity) world.getBlockEntity(pos)).getCachedBaseBlock();
+        if (cachedBaseBlock != null) {
+            cachedBaseBlock.rite = null;
+        }
         // todo, play sound
     }
 

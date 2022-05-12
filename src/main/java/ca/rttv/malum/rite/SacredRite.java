@@ -1,7 +1,9 @@
 package ca.rttv.malum.rite;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.server.world.ServerWorld;
@@ -24,11 +26,22 @@ public class SacredRite extends Rite {
             return;
         }
 
-        world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> player.addStatusEffect(new StatusEffectInstance(SACRED_AURA, 200, 0)));
+        world.getEntitiesByClass(PlayerEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), player -> !player.isSpectator()).forEach(player -> player.addStatusEffect(new StatusEffectInstance(SACRED_AURA, 200, 0)));
     }
 
     @Override
     public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+        if (tick % 20 != 0) {
+            return;
+        }
 
+        world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), Entity::isLiving).forEach(entity -> {
+            if (world.random.nextFloat() <= 0.04f) {
+                if (entity.getBreedingAge() < 0) {
+                    // todo, particle
+                    entity.setBreedingAge(entity.getBreedingAge() + 25);
+                }
+            }
+        });
     }
 }

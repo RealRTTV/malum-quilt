@@ -3,7 +3,7 @@ package ca.rttv.malum.util.helper;
 import ca.rttv.malum.Malum;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
-import ca.rttv.malum.entity.spirit.SpiritItemEntity;
+import ca.rttv.malum.entity.SpiritItemEntity;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumEnchantments;
 import ca.rttv.malum.registry.MalumSoundRegistry;
@@ -11,7 +11,7 @@ import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumEntitySpiritData;
-import ca.rttv.malum.util.spirit.MalumSpiritType;
+import ca.rttv.malum.util.spirit.SpiritType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -91,10 +91,10 @@ public final class SpiritHelper {
     }
 
 
-    public static MalumSpiritType getSpiritType(String spirit) {
-        Optional<MalumSpiritType> type = SpiritTypeRegistry.SPIRITS.stream().filter(s -> s.id.equals(spirit)).findFirst();
+    public static SpiritType getSpiritType(String spirit) {
+        Optional<SpiritType> type = SpiritTypeRegistry.SPIRITS.stream().filter(s -> s.id.equals(spirit)).findFirst();
         if (type.isEmpty()) {
-            return MalumSpiritType.ELDRITCH_SPIRIT;
+            return SpiritType.ELDRITCH_SPIRIT;
         }
         return type.get();
     }

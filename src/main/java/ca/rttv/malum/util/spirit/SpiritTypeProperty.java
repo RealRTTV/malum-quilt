@@ -6,19 +6,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public enum SpiritTypeProperty implements StringIdentifiable {
-    SACRED(MalumSpiritType.SACRED_SPIRIT),
-    WICKED(MalumSpiritType.WICKED_SPIRIT),
-    ARCANE(MalumSpiritType.ARCANE_SPIRIT),
-    ELDRITCH(MalumSpiritType.ELDRITCH_SPIRIT),
-    AERIAL(MalumSpiritType.AERIAL_SPIRIT),
-    AQUEOUS(MalumSpiritType.AQUEOUS_SPIRIT),
-    INFERNAL(MalumSpiritType.INFERNAL_SPIRIT),
-    EARTHEN(MalumSpiritType.EARTHEN_SPIRIT);
+    SACRED(SpiritType.SACRED_SPIRIT),
+    WICKED(SpiritType.WICKED_SPIRIT),
+    ARCANE(SpiritType.ARCANE_SPIRIT),
+    ELDRITCH(SpiritType.ELDRITCH_SPIRIT),
+    AERIAL(SpiritType.AERIAL_SPIRIT),
+    AQUEOUS(SpiritType.AQUEOUS_SPIRIT),
+    INFERNAL(SpiritType.INFERNAL_SPIRIT),
+    EARTHEN(SpiritType.EARTHEN_SPIRIT);
 
     public static final Logger LOGGER = LogManager.getLogger();
-    public final MalumSpiritType spirit;
+    public final SpiritType spirit;
 
-    SpiritTypeProperty(MalumSpiritType spirit) {
+    SpiritTypeProperty(SpiritType spirit) {
         this.spirit = spirit;
     }
 
