@@ -15,7 +15,7 @@ public abstract class Rite {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         List<Item> list = new ArrayList<>();
         Collections.addAll(list, items);
         return list.hashCode();
@@ -25,12 +25,12 @@ public abstract class Rite {
 
     public abstract void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick);
 
-    public Item[] items() {
+    public final Item[] items() {
         return items;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
         Rite that = (Rite) obj;
@@ -38,7 +38,7 @@ public abstract class Rite {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "Rite[" +
                 "items=" + Arrays.toString(items) + ']';
     }
