@@ -13,7 +13,6 @@ import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.listener.SpiritDataReloadListener;
 import ca.rttv.malum.util.spirit.SpiritType;
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -24,13 +23,15 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumRegistry.*;
 
 public final class MalumClient implements ClientModInitializer {
     @Override
-    public void onInitializeClient() {
+    public void onInitializeClient(ModContainer mod) {
         RenderHandler.init();
         MalumRegistry.registerParticleEmitters();
         EntityModelLayerRegistry.registerModelLayer(SpiritHunterArmorModel.LAYER, SpiritHunterArmorModel::getTexturedModelData);

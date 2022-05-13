@@ -4,7 +4,6 @@ import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.enchantment.ReboundEnchantment;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumRegistry;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.item.ItemGroup;
@@ -12,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
 import java.util.Random;
 
@@ -27,7 +28,7 @@ public final class Malum implements ModInitializer {
     public static final ItemGroup MALUM_SPIRITS = FabricItemGroupBuilder.build(new Identifier(MODID, "malum_spirits"), () -> new ItemStack(ARCANE_SPIRIT));
 
     @Override
-    public void onInitialize() {
+    public void onInitialize(ModContainer mod) {
         MalumAttributeRegistry.init();
         MalumParticleRegistry.init();
         MalumRegistry.init();

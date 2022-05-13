@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "ca.rttv",
+    "id": "malum",
+    "version": "${version}",
+    "metadata": {
+      "name": "Malum (Fabric)",
+      "description": "A Fabric port of the mod 'Malum' - A minecraft mod about dark magic.",
+      "contributors": {
+        "RTTV": "Owner",
+        "Arathain": "Owner",
+        "SammySemicolon": "Original Author"
+      },
+      "contact": {
+        "homepage": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "sources": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      },
+      "icon": "assets/malum/icon.png",
+      "license": {
+        "name": "All Rights Reserved",
+        "id": "ARR",
+        "url": "https://en.wikipedia.org/wiki/All_rights_reserved",
+        "description": "All. Rights. Reserved."
+      }
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "ca.rttv.malum.Malum",
+      "client_init": "ca.rttv.malum.MalumClient",
+      "cardinal-components-entity": "ca.rttv.malum.component.MalumComponents",
+      "mm:early_risers": "ca.rttv.malum.MalumEarlyRiser",
+      "client": "ca.rttv.malum.MalumClient"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.16.0-"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=1.0.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": "1.18.2"
+      },
+      {
+        "id": "java",
+        "versions": ">=17"
+      },
+      {
+        "id": "trinkets",
+        "versions": "*"
+      }
+    ],
+    "mixin": "malum.mixins.json",
+    "custom": {
+      "cardinal-components": [
+        "malum:spirit",
+        "malum:player"
+      ]
+    }
+  }
+}
