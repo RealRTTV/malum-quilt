@@ -2,7 +2,6 @@ package ca.rttv.malum.mixin;
 
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import net.minecraft.client.recipebook.ClientRecipeBook;
-import net.minecraft.recipe.Recipe;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

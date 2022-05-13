@@ -1,7 +1,5 @@
 package ca.rttv.malum.util.particle.screen.base;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.world.ClientWorld;
@@ -11,7 +9,6 @@ import net.minecraft.util.math.Vec3f;
 
 import static ca.rttv.malum.util.helper.RenderHelper.FULL_BRIGHT;
 
-@Environment(EnvType.CLIENT)
 public abstract class BillboardScreenParticle extends ScreenParticle {
     protected float quadSize = 0.1F * (this.random.nextFloat() * 0.5F + 0.5F) * 2.0F;
 

@@ -1,6 +1,5 @@
 package ca.rttv.malum.entity;
 
-import ca.rttv.malum.entity.FloatingItemEntity;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.util.handler.SpiritHarvestHandler;

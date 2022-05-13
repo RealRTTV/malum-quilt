@@ -5,7 +5,6 @@ import ca.rttv.malum.block.entity.*;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.block.sapling.SoulwoodSaplingGenerator;
 import ca.rttv.malum.item.*;
-import ca.rttv.malum.item.MalumSpiritItem;
 import ca.rttv.malum.recipe.BlockTransmutationRecipe;
 import ca.rttv.malum.recipe.SavedNbtRecipe;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;

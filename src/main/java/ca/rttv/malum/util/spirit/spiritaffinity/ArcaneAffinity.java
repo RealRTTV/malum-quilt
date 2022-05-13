@@ -16,8 +16,6 @@ import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumSpiritAffinity;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.Shader;
@@ -102,8 +100,7 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
         return (int) (CommonConfig.SOUL_WARD_RATE * Math.exp(-0.15 * player.getAttributeValue(MalumAttributeRegistry.SOUL_WARD_RECOVERY_SPEED)));
     }
 
-    @Environment(EnvType.CLIENT)
-    public static class Client {
+        public static class Client {
         private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/soul_ward/trans_pride.png");
 
         public static void renderSoulWard(MatrixStack matrices, Window window) {

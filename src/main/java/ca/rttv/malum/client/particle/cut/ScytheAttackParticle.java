@@ -1,12 +1,9 @@
 package ca.rttv.malum.client.particle.cut;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 
-@Environment(EnvType.CLIENT)
 public class ScytheAttackParticle extends SpriteBillboardParticle {
     private final SpriteProvider spriteWithAge;
 
@@ -42,8 +39,7 @@ public class ScytheAttackParticle extends SpriteBillboardParticle {
         return ParticleTextureSheet.PARTICLE_SHEET_LIT;
     }
 
-    @Environment(EnvType.CLIENT)
-    public record Factory(SpriteProvider spriteSet) implements ParticleFactory<DefaultParticleType> {
+        public record Factory(SpriteProvider spriteSet) implements ParticleFactory<DefaultParticleType> {
 
         @Override
         public Particle createParticle(DefaultParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {

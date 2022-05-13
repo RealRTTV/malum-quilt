@@ -1,11 +1,8 @@
 package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
-import ca.rttv.malum.enchantment.ReboundEnchantment;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumRegistry;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -13,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 
 import java.util.Random;
 
@@ -22,16 +20,15 @@ public final class Malum implements ModInitializer {
     public static final Random RANDOM = new Random();
     public static final String MODID = "malum"; // 1 character faster than MOD_ID!
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static final ItemGroup MALUM = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(SPIRIT_ALTAR));
-    public static final ItemGroup MALUM_ARCANE_ROCKS = FabricItemGroupBuilder.build(new Identifier(MODID, "malum_shaped_stones"), () -> new ItemStack(TAINTED_ROCK));
-    public static final ItemGroup MALUM_NATURAL_WONDERS = FabricItemGroupBuilder.build(new Identifier(MODID, "malum_natural_wonders"), () -> new ItemStack(RUNEWOOD_SAPLING));
-    public static final ItemGroup MALUM_SPIRITS = FabricItemGroupBuilder.build(new Identifier(MODID, "malum_spirits"), () -> new ItemStack(ARCANE_SPIRIT));
+    public static final ItemGroup MALUM = QuiltItemGroup.builder(new Identifier(MODID, MODID)).icon(() -> new ItemStack(SPIRIT_ALTAR)).build();
+    public static final ItemGroup MALUM_ARCANE_ROCKS = QuiltItemGroup.builder(new Identifier(MODID, "malum_shaped_stones")).icon(() -> new ItemStack(TAINTED_ROCK)).build();
+    public static final ItemGroup MALUM_NATURAL_WONDERS = QuiltItemGroup.builder(new Identifier(MODID, "malum_natural_wonders")).icon(() -> new ItemStack(RUNEWOOD_SAPLING)).build();
+    public static final ItemGroup MALUM_SPIRITS = QuiltItemGroup.builder(new Identifier(MODID, "malum_spirits")).icon(() -> new ItemStack(ARCANE_SPIRIT)).build();
 
     @Override
     public void onInitialize(ModContainer mod) {
         MalumAttributeRegistry.init();
         MalumParticleRegistry.init();
         MalumRegistry.init();
-        UseItemCallback.EVENT.register(ReboundEnchantment::onRightClickItem);
     }
 }

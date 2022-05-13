@@ -43,12 +43,16 @@ dependencies {
 	modImplementation libs.quilt.loader
 
 	modImplementation libs.quilted.fabric.api
+	modImplementation("maven.modrinth:isnrmn:v${project.isnrmn_version}")
 	modImplementation("dev.emi:trinkets:${project.trinkets_version}") {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "com.terraformersmc"
 	}
-	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}")
+	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}") {
+		exclude group: "net.fabricmc"
+		exclude group: "net.fabricmc.fabric-api"
+	}
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}") {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
@@ -61,7 +65,6 @@ dependencies {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 	}
-	modImplementation("maven.modrinth:isnrmn:v${project.isnrmn_version}")
 	implementation("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}") {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"

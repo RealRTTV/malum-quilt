@@ -1,8 +1,8 @@
 package ca.rttv.malum.client.screen.page;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class BookEntry {
     }
 
     public BookEntry addModCompatPage(BookPage page, String modId) {
-        if (FabricLoader.getInstance().isModLoaded(modId)) {
+        if (QuiltLoader.isModLoaded(modId)) {
             pages.add(page);
         }
         return this;

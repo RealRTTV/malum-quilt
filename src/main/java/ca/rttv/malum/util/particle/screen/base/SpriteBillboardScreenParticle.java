@@ -1,12 +1,9 @@
 package ca.rttv.malum.util.particle.screen.base;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.world.ClientWorld;
 
-@Environment(EnvType.CLIENT)
 public abstract class SpriteBillboardScreenParticle extends BillboardScreenParticle {
     protected Sprite sprite;
 

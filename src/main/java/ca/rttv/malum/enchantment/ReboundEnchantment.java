@@ -20,10 +20,10 @@ public class ReboundEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         return 3;
     }
+
     public static TypedActionResult<ItemStack> onRightClickItem(PlayerEntity player, World world, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
         if (!player.isSpectator()) {

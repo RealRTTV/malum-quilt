@@ -1,7 +1,6 @@
 package ca.rttv.malum.item;
 
 import ca.rttv.malum.block.TotemPoleBlock;
-import ca.rttv.malum.item.IFloatingGlowItem;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
 import ca.rttv.malum.util.spirit.SpiritType;

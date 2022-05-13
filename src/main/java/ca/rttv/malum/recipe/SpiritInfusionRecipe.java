@@ -2,11 +2,7 @@ package ca.rttv.malum.recipe;
 
 import ca.rttv.malum.block.entity.AbstractItemDisplayBlockEntity;
 import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
-import ca.rttv.malum.item.EtherBlockItem;
-import ca.rttv.malum.item.EtherWallStandingBlockItem;
-import ca.rttv.malum.item.IridescentEtherBlockItem;
-import ca.rttv.malum.item.IridescentEtherWallStandingBlockItem;
-import ca.rttv.malum.item.MalumSpiritItem;
+import ca.rttv.malum.item.*;
 import ca.rttv.malum.util.helper.NbtHelper;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.Inventory;
