@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_POUCH_SCREEN_HANDLER;
+import static ca.rttv.malum.registry.MalumScreenHandlerRegistry.SPIRIT_POUCH_SCREEN_HANDLER;
 
 @Mixin(HandledScreens.class)
 public final class HandledScreensMixin {

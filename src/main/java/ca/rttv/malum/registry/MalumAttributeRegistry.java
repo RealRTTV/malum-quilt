@@ -7,6 +7,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static ca.rttv.malum.Malum.MODID;
 
@@ -30,6 +31,8 @@ public interface MalumAttributeRegistry {
     EntityAttribute SOUL_WARD_RECOVERY_SPEED = create("soul_ward_recovery_speed", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_recovery_speed", 0D, 0.0D, 2048.0D).setTracked(true));
     EntityAttribute SOUL_WARD_SHATTER_COOLDOWN = create("soul_ward_shatter_cooldown", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_shatter_cooldown", 0.0D, 0.0D, 2048.0D).setTracked(true));
     EntityAttribute SOUL_WARD_CAP = create("soul_ward_capacity", new ClampedEntityAttribute("attribute.name.generic." + MODID + ".soul_ward_capacity", 0D, 0.0D, 2048.0D).setTracked(true));
+
+    UUID MAGIC_DAMAGE_MODIFIER_ID                  = UUID.fromString            ("763FFDF7-B4CA-4802-BD58-9FD9B9D76622");
 
     private static <T extends EntityAttribute> EntityAttribute create(String id, EntityAttribute attribute) {
         ATTRIBUTES.put(new Identifier(MODID, id), attribute);

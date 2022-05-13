@@ -1,5 +1,6 @@
 package ca.rttv.malum.block;
 
+import ca.rttv.malum.registry.MalumItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;
@@ -17,13 +18,13 @@ import net.minecraft.world.World;
 
 @SuppressWarnings("deprecation")
 public class RevealedPillarBlock extends PillarBlock {
-    private final Item item;
+    private final boolean holy;
     private final Block log;
 
-    public RevealedPillarBlock(Settings settings, Item item, Block log) {
+    public RevealedPillarBlock(Settings settings, Block log, boolean holy) {
         super(settings);
         log.getDefaultState().get(PillarBlock.AXIS); // this is basically to assert that the block has an axis blockstate
-        this.item = item;
+        this.holy = holy;
         this.log = log;
     }
 
@@ -36,12 +37,16 @@ public class RevealedPillarBlock extends PillarBlock {
                 }
                 player.getStackInHand(hand).decrement(1);
             }
-            if (!player.getInventory().insertStack(new ItemStack(item))) {
-                player.dropStack(new ItemStack(item));
+            if (!player.getInventory().insertStack(new ItemStack(getSap()))) {
+                player.dropStack(new ItemStack(getSap()));
             }
             world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
             return ActionResult.success(world.isClient);
         }
         return ActionResult.PASS;
+    }
+
+    private Item getSap() {
+        return holy ? MalumItemRegistry.HOLY_SAP : MalumItemRegistry.UNHOLY_SAP;
     }
 }

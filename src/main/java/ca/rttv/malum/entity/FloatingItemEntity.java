@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 import java.awt.*;
 
-import static ca.rttv.malum.registry.MalumRegistry.SACRED_SPIRIT;
+import static ca.rttv.malum.registry.MalumItemRegistry.SACRED_SPIRIT;
 
 public class FloatingItemEntity extends FloatingEntity {
     private static final TrackedData<ItemStack> DATA_ITEM_STACK = DataTracker.registerData(FloatingItemEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);

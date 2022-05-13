@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 
 import java.awt.*;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_JAR_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_JAR_BLOCK_ENTITY;
 
 public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
     private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(1, ItemStack.EMPTY);

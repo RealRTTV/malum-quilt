@@ -18,7 +18,7 @@ import net.minecraft.util.math.Vec3i;
 import java.util.Random;
 import java.util.stream.StreamSupport;
 
-import static ca.rttv.malum.registry.MalumRegistry.CORRUPTED_AERIAL_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.CORRUPTED_AERIAL_AURA;
 
 public class EldritchAerialRite extends Rite {
     public EldritchAerialRite(Item... items) {

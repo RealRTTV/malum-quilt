@@ -16,7 +16,7 @@ import net.minecraft.util.math.Vec3i;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.AQUEOUS_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.AQUEOUS_AURA;
 
 public class AqueousRite extends Rite {
     public AqueousRite(Item... items) {

@@ -41,7 +41,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
 public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     public float speed;

@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public class SpiritAltarBlock extends BlockWithEntity implements Waterloggable {

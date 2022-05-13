@@ -1,7 +1,7 @@
 package ca.rttv.malum.util.spirit;
 
 import ca.rttv.malum.item.MalumSpiritItem;
-import ca.rttv.malum.registry.MalumRegistry;
+import ca.rttv.malum.registry.MalumItemRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
@@ -41,14 +41,14 @@ public class SpiritType implements StringIdentifiable {
         this.color = color;
         this.endColor = endColor;
         switch(id) {
-            case "wicked" -> this.splinterItem = () -> MalumRegistry.WICKED_SPIRIT;
-            case "arcane" -> this.splinterItem = () -> MalumRegistry.ARCANE_SPIRIT;
-            case "eldritch" -> this.splinterItem = () -> MalumRegistry.ELDRITCH_SPIRIT;
-            case "aerial" -> this.splinterItem = () -> MalumRegistry.AERIAL_SPIRIT;
-            case "aqueous" -> this.splinterItem = () -> MalumRegistry.AQUEOUS_SPIRIT;
-            case "infernal" -> this.splinterItem = () -> MalumRegistry.INFERNAL_SPIRIT;
-            case "earthen" -> this.splinterItem = () -> MalumRegistry.EARTHEN_SPIRIT;
-            default -> this.splinterItem = () -> MalumRegistry.SACRED_SPIRIT;
+            case "wicked" -> this.splinterItem = () -> MalumItemRegistry.WICKED_SPIRIT;
+            case "arcane" -> this.splinterItem = () -> MalumItemRegistry.ARCANE_SPIRIT;
+            case "eldritch" -> this.splinterItem = () -> MalumItemRegistry.ELDRITCH_SPIRIT;
+            case "aerial" -> this.splinterItem = () -> MalumItemRegistry.AERIAL_SPIRIT;
+            case "aqueous" -> this.splinterItem = () -> MalumItemRegistry.AQUEOUS_SPIRIT;
+            case "infernal" -> this.splinterItem = () -> MalumItemRegistry.INFERNAL_SPIRIT;
+            case "earthen" -> this.splinterItem = () -> MalumItemRegistry.EARTHEN_SPIRIT;
+            default -> this.splinterItem = () -> MalumItemRegistry.SACRED_SPIRIT;
         }
         SPIRITS.add(this);
     }

@@ -1,7 +1,7 @@
 package ca.rttv.malum.client.screen;
 
 import ca.rttv.malum.client.screen.page.*;
-import ca.rttv.malum.registry.RiteRegistry;
+import ca.rttv.malum.registry.MalumRiteRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumItemRegistry.*;
 import static net.minecraft.item.Items.*;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
 
@@ -167,19 +167,19 @@ public class ProgressionBookScreen extends Screen {
         );
 
         entries.add(new BookEntry(
-                "ether", ETHER.asItem(), 5, 6)
+                "ether", ETHER_ITEM, 5, 6)
                 .addPage(new HeadlineTextPage("ether", "ether_a"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/ether")))
                 .addPage(new TextPage("ether_b"))
-                .addPage(new CraftingBookPage(ETHER_TORCH_ITEM, EMPTY, EMPTY, EMPTY, EMPTY, ETHER.asItem(), EMPTY, EMPTY, STICK, EMPTY))
-                .addPage(new CraftingBookPage(TAINTED_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TAINTED_ROCK.asItem(), ETHER.asItem(), TAINTED_ROCK.asItem(), STICK, TAINTED_ROCK.asItem(), STICK))
-                .addPage(new CraftingBookPage(TWISTED_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TWISTED_ROCK.asItem(), ETHER.asItem(), TWISTED_ROCK.asItem(), STICK, TWISTED_ROCK.asItem(), STICK))
+                .addPage(new CraftingBookPage(ETHER_TORCH_ITEM, EMPTY, EMPTY, EMPTY, EMPTY, ETHER_ITEM, EMPTY, EMPTY, STICK, EMPTY))
+                .addPage(new CraftingBookPage(TAINTED_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TAINTED_ROCK.asItem(), ETHER_ITEM, TAINTED_ROCK.asItem(), STICK, TAINTED_ROCK.asItem(), STICK))
+                .addPage(new CraftingBookPage(TWISTED_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TWISTED_ROCK.asItem(), ETHER_ITEM, TWISTED_ROCK.asItem(), STICK, TWISTED_ROCK.asItem(), STICK))
                 .addPage(new HeadlineTextPage("iridescent_ether", "iridescent_ether_a"))
                 .addPage(new TextPage("iridescent_ether_b"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/iridescent_ether")))
                 .addPage(new CraftingBookPage(IRIDESCENT_ETHER_TORCH_ITEM, EMPTY, EMPTY, EMPTY, EMPTY, IRIDESCENT_ETHER_ITEM, EMPTY, EMPTY, STICK, EMPTY))
-                .addPage(new CraftingBookPage(TAINTED_IRIDESCENT_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TAINTED_ROCK.asItem(), IRIDESCENT_ETHER.asItem(), TAINTED_ROCK.asItem(), STICK, TAINTED_ROCK.asItem(), STICK))
-                .addPage(new CraftingBookPage(TWISTED_IRIDESCENT_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TWISTED_ROCK.asItem(), IRIDESCENT_ETHER.asItem(), TWISTED_ROCK.asItem(), STICK, TWISTED_ROCK.asItem(), STICK))
+                .addPage(new CraftingBookPage(TAINTED_IRIDESCENT_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TAINTED_ROCK.asItem(), IRIDESCENT_ETHER_ITEM, TAINTED_ROCK.asItem(), STICK, TAINTED_ROCK.asItem(), STICK))
+                .addPage(new CraftingBookPage(TWISTED_IRIDESCENT_ETHER_BRAZIER_ITEM, EMPTY, EMPTY, EMPTY, TWISTED_ROCK.asItem(), IRIDESCENT_ETHER_ITEM, TWISTED_ROCK.asItem(), STICK, TWISTED_ROCK.asItem(), STICK))
         );
 
         entries.add(new BookEntry(
@@ -354,7 +354,7 @@ public class ProgressionBookScreen extends Screen {
         );
 
         entries.add(new BookEntry(
-                "altar_acceleration", RUNEWOOD_OBELISK.asItem(), -1, 8)
+                "altar_acceleration", RUNEWOOD_OBELISK_ITEM, -1, 8)
                 .addPage(new HeadlineTextPage("runewood_obelisk", "runewood_obelisk"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/runewood_obelisk")))
                 .addPage(new HeadlineTextPage("brilliant_obelisk", "brilliant_obelisk"))
@@ -375,7 +375,7 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(new HeadlineTextPage("totem_corruption", "totem_corruption_a"))
                 .addPage(new TextPage("totem_corruption_b"))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "arcane_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.ARCANE_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.ARCANE_RITE))
                 .addPage(new TextPage("totem_corruption_c"))
                 .addPage(SpiritInfusionPage.fromId(new Identifier(MODID, "spirit_infusion/soulwood_totem_base")))
         );
@@ -383,49 +383,49 @@ public class ProgressionBookScreen extends Screen {
         entries.add(new BookEntry(
                 "sacred_rite", SACRED_SPIRIT, -2, 11)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "sacred_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.SACRED_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.SACRED_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_sacred_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_SACRED_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.ELDRITCH_SACRED_RITE))
         );
 
         entries.add(new BookEntry(
                 "wicked_rite", WICKED_SPIRIT, 2, 11)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "wicked_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.WICKED_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.WICKED_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_wicked_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_WICKED_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.ELDRITCH_WICKED_RITE))
         );
 
         entries.add(new BookEntry(
                 "earthen_rite", EARTHEN_SPIRIT, -1, 12)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "earthen_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.EARTHEN_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.EARTHEN_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_earthen_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_EARTHEN_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.ELDRITCH_EARTHEN_RITE))
         );
 
         entries.add(new BookEntry(
                 "infernal_rite", INFERNAL_SPIRIT, 1, 12)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "infernal_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.INFERNAL_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.INFERNAL_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_infernal_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_INFERNAL_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.ELDRITCH_INFERNAL_RITE))
         );
 
         entries.add(new BookEntry(
                 "aerial_rite", AERIAL_SPIRIT, -1, 10)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "aerial_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.AERIAL_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.AERIAL_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_aerial_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_AERIAL_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.ELDRITCH_AERIAL_RITE))
         );
 
         entries.add(new BookEntry(
                 "aqueous_rite", AQUEOUS_SPIRIT, 1, 10)
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "aqueous_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.AQUEOUS_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.AQUEOUS_RITE))
                 .addPage(new DoubleHeadlineTextPage("rite_effect", "eldritch_aqueous_rite"))
-                .addPage(new SpiritRitePage(RiteRegistry.ELDRITCH_AQUEOUS_RITE))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.ELDRITCH_AQUEOUS_RITE))
         );
 /*
         entries.add(new BookEntry(

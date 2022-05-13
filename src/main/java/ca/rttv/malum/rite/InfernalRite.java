@@ -15,7 +15,7 @@ import net.minecraft.util.math.Vec3i;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.INFERNAL_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.INFERNAL_AURA;
 
 public class InfernalRite extends Rite {
     public InfernalRite(Item... items) {

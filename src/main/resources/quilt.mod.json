@@ -4,6 +4,7 @@
     "group": "ca.rttv",
     "id": "malum",
     "version": "${version}",
+    "access_widener": "malum.accesswidener",
     "metadata": {
       "name": "Malum (Fabric)",
       "description": "A Fabric port of the mod 'Malum' - A minecraft mod about dark magic.",
@@ -29,8 +30,7 @@
       "init": "ca.rttv.malum.Malum",
       "client_init": "ca.rttv.malum.MalumClient",
       "cardinal-components-entity": "ca.rttv.malum.component.MalumComponents",
-      "mm:early_risers": "ca.rttv.malum.MalumEarlyRiser",
-      "client": "ca.rttv.malum.MalumClient"
+      "mm:early_risers": "ca.rttv.malum.MalumEarlyRiser"
     },
     "depends": [
       {

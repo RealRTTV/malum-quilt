@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_JAR_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_JAR_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public class SpiritJarBlock extends BlockWithEntity implements Waterloggable {

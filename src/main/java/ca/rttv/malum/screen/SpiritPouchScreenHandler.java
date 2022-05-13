@@ -14,7 +14,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import org.jetbrains.annotations.Nullable;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_POUCH_SCREEN_HANDLER;
+import static ca.rttv.malum.registry.MalumScreenHandlerRegistry.SPIRIT_POUCH_SCREEN_HANDLER;
 
 public class SpiritPouchScreenHandler extends ScreenHandler {
     private final Inventory inventory;

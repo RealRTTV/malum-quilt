@@ -1,7 +1,6 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.item.MalumSpiritItem;
-import ca.rttv.malum.registry.MalumRegistry;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.block.BlockState;
@@ -12,9 +11,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.ITEM_STAND_BLOCK_ENTITY;
+
 public class ItemStandBlockEntity extends AbstractItemDisplayBlockEntity {
     public ItemStandBlockEntity(BlockPos pos, BlockState state) {
-        this(MalumRegistry.ITEM_STAND_BLOCK_ENTITY, pos, state);
+        this(ITEM_STAND_BLOCK_ENTITY, pos, state);
     }
 
     public ItemStandBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {

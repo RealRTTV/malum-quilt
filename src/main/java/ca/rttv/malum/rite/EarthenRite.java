@@ -14,8 +14,8 @@ import net.minecraft.util.math.Vec3i;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.CORRUPTED_EARTHEN_AURA;
-import static ca.rttv.malum.registry.MalumRegistry.EARTHEN_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.CORRUPTED_EARTHEN_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.EARTHEN_AURA;
 
 public class EarthenRite extends Rite {
     public EarthenRite(Item... items) {

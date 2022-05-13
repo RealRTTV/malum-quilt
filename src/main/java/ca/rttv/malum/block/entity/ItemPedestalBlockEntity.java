@@ -1,7 +1,7 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.item.MalumSpiritItem;
-import ca.rttv.malum.registry.MalumRegistry;
+import ca.rttv.malum.registry.MalumBlockEntityRegistry;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.block.BlockState;
@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class ItemPedestalBlockEntity extends AbstractItemDisplayBlockEntity {
     public ItemPedestalBlockEntity(BlockPos pos, BlockState state) {
-        this(MalumRegistry.ITEM_PEDESTAL_BLOCK_ENTITY, pos, state);
+        this(MalumBlockEntityRegistry.ITEM_PEDESTAL_BLOCK_ENTITY, pos, state);
     }
 
     public ItemPedestalBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.TOTEM_BASE_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.TOTEM_BASE_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public class TotemBaseBlock extends BlockWithEntity {

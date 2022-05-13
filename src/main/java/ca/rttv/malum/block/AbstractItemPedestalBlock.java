@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-import static ca.rttv.malum.registry.MalumRegistry.ITEM_PEDESTAL_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.ITEM_PEDESTAL_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public abstract class AbstractItemPedestalBlock extends BlockWithEntity implements Waterloggable {

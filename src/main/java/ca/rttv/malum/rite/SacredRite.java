@@ -15,7 +15,7 @@ import net.minecraft.util.math.Box;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.SACRED_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.SACRED_AURA;
 
 public class SacredRite extends Rite {
     public SacredRite(Item... items) {

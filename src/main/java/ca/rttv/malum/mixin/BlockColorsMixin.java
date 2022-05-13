@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.awt.*;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumBlockRegistry.*;
+
 
 @Mixin(BlockColors.class)
 public final class BlockColorsMixin {

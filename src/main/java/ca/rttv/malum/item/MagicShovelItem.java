@@ -13,10 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.ToolMaterial;
 
-import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
-import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_PROFICIENCY;
-import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
-import static ca.rttv.malum.registry.MalumRegistry.NECKLACE_OF_THE_MYSTIC_MIRROR;
+import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
+import static ca.rttv.malum.registry.MalumItemRegistry.NECKLACE_OF_THE_MYSTIC_MIRROR;
 
 public class MagicShovelItem extends ShovelItem {
     private final Multimap<EntityAttribute, EntityAttributeModifier> magicAttributeModifiers;

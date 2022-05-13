@@ -8,7 +8,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
-
 public class WoodenItemPedestalBlock extends AbstractItemPedestalBlock {
     private static final VoxelShape SHAPE = VoxelShapes.union(
             Block.createCuboidShape(4.0d, 0.0d, 4.0d, 12.0d, 3.0d, 12.0d),

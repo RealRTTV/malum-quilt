@@ -1,0 +1,29 @@
+package ca.rttv.malum.registry;
+
+import ca.rttv.malum.screen.SpiritPouchScreenHandler;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static ca.rttv.malum.Malum.MODID;
+
+@SuppressWarnings("unused")
+public interface MalumScreenHandlerRegistry {
+    Map<Identifier, ScreenHandlerType<? extends ScreenHandler>> SCREEN_HANDLERS = new LinkedHashMap<>();
+
+    ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER = registerScreenHandler("spirit_pouch", SpiritPouchScreenHandler::new);
+
+    static <T extends ScreenHandler> ScreenHandlerType<T> registerScreenHandler(String id, ScreenHandlerType.Factory<T> factory) {
+        ScreenHandlerType<T> screenHandlerType = new ScreenHandlerType<>(factory);
+        SCREEN_HANDLERS.put(new Identifier(MODID, id), screenHandlerType);
+        return screenHandlerType;
+    }
+
+    static void init() {
+        SCREEN_HANDLERS.forEach((id, handler) -> Registry.register(Registry.SCREEN_HANDLER, id, handler));
+    }
+}

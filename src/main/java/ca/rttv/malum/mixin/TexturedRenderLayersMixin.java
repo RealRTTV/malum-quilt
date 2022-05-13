@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.registry.MalumRegistry.RUNEWOOD_SIGN_TYPE;
-import static ca.rttv.malum.registry.MalumRegistry.SOULWOOD_SIGN_TYPE;
+import static ca.rttv.malum.registry.MalumSignTypeRegistry.RUNEWOOD_SIGN_TYPE;
+import static ca.rttv.malum.registry.MalumSignTypeRegistry.SOULWOOD_SIGN_TYPE;
 
 @Mixin(TexturedRenderLayers.class)
 public final class TexturedRenderLayersMixin {

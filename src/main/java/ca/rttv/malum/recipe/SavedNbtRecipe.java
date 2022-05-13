@@ -15,7 +15,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.Map;
 
-import static ca.rttv.malum.registry.MalumRegistry.SAVED_NBT_RECIPE_SERIALIZER;
+import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.SAVED_NBT_RECIPE_SERIALIZER;
 
 public class SavedNbtRecipe extends ShapedRecipe {
     private final Item savedItem;
@@ -66,9 +66,7 @@ public class SavedNbtRecipe extends ShapedRecipe {
             String string = packetByteBuf.readString();
             DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(i * j, Ingredient.EMPTY);
 
-            for(int k = 0; k < defaultedList.size(); ++k) {
-                defaultedList.set(k, Ingredient.fromPacket(packetByteBuf));
-            }
+            defaultedList.replaceAll(ignored -> Ingredient.fromPacket(packetByteBuf));
 
             ItemStack itemStack = packetByteBuf.readItemStack();
             Item savedItem = Registry.ITEM.get(new Identifier(packetByteBuf.readString()));

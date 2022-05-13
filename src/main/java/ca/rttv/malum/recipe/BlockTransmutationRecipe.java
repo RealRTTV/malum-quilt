@@ -18,8 +18,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static ca.rttv.malum.registry.MalumRegistry.BLOCK_TRANSMUTATION;
-import static ca.rttv.malum.registry.MalumRegistry.BLOCK_TRANSMUTATION_SERIALIZER;
+import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.BLOCK_TRANSMUTATION_SERIALIZER;
+import static ca.rttv.malum.registry.MalumRecipeTypeRegistry.BLOCK_TRANSMUTATION;
 
 public record BlockTransmutationRecipe(Identifier id, String group,
                                        Ingredient input, ItemStack output) implements Recipe<Inventory> {

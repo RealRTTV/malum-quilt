@@ -16,7 +16,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_POUCH_SCREEN_HANDLER;
+import static ca.rttv.malum.registry.MalumScreenHandlerRegistry.SPIRIT_POUCH_SCREEN_HANDLER;
 
 public class SpiritPouchItem extends Item {
     public SpiritPouchItem(Settings settings) {

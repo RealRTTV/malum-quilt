@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 
 @Mixin(BlockEntityType.class)
 public abstract class BlockEntityTypeMixin {

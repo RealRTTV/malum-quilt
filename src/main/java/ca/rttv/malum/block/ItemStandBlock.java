@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-import static ca.rttv.malum.registry.MalumRegistry.ITEM_STAND_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.ITEM_STAND_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public class ItemStandBlock extends BlockWithEntity implements Waterloggable {

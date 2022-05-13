@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
-import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
 import static net.minecraft.item.Item.ATTACK_DAMAGE_MODIFIER_ID;
 
 @Mixin(ItemStack.class)

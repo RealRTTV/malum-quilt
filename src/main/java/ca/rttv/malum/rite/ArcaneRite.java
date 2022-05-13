@@ -16,8 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import java.util.Random;
 import java.util.stream.StreamSupport;
 
-import static ca.rttv.malum.registry.MalumRegistry.SOULWOOD_TOTEM_BASE;
-import static ca.rttv.malum.registry.MalumRegistry.SOULWOOD_TOTEM_POLE;
+import static ca.rttv.malum.registry.MalumBlockRegistry.SOULWOOD_TOTEM_BASE;
+import static ca.rttv.malum.registry.MalumBlockRegistry.SOULWOOD_TOTEM_POLE;
 
 public class ArcaneRite extends Rite {
     public ArcaneRite(Item... items) {

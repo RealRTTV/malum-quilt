@@ -17,9 +17,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 
-import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
-import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_PROFICIENCY;
-import static ca.rttv.malum.registry.MalumRegistry.MAGIC_DAMAGE_MODIFIER_ID;
+import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
 
 public class ScytheItem extends SwordItem {
     public ScytheItem(ToolMaterial material, float damage, float speed, float magic, Settings settings) {

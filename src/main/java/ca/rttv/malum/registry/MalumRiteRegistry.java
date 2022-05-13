@@ -3,11 +3,15 @@ package ca.rttv.malum.registry;
 import ca.rttv.malum.rite.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
-public interface RiteRegistry {
+public interface MalumRiteRegistry {
+    RegistryKey<Registry<Rite>> RITE_KEY = RegistryKey.ofRegistry(new Identifier(MODID, "rite"));
+    Registry<Rite> RITE = Registry.registerSimple(RITE_KEY, registry -> MalumRiteRegistry.SACRED_RITE);
+
     Rite SACRED_RITE             = register("sacred_rite",            new SacredRite(ARCANE_SPIRIT, SACRED_SPIRIT, SACRED_SPIRIT));
     Rite ELDRITCH_SACRED_RITE    = register("eldritch_sacred_rite",   new EldritchSacredRite(ELDRITCH_SPIRIT, ARCANE_SPIRIT, SACRED_SPIRIT, SACRED_SPIRIT));
     Rite WICKED_RITE             = register("wicked_rite",            new WickedRite(ARCANE_SPIRIT, WICKED_SPIRIT, WICKED_SPIRIT));
@@ -24,5 +28,9 @@ public interface RiteRegistry {
 
     static <T extends Rite> T register(String id, T rite) {
         return Registry.register(RITE, new Identifier(MODID, id), rite);
+    }
+
+    static void init() {
+
     }
 }

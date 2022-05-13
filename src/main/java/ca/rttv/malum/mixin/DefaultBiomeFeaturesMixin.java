@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumPlacedFeatureRegistry.*;
 
 @Mixin(DefaultBiomeFeatures.class)
 public abstract class DefaultBiomeFeaturesMixin {

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-import static ca.rttv.malum.registry.MalumRegistry.AQUEOUS_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.AQUEOUS_AURA;
 
 @Mixin(ServerPlayerInteractionManager.class)
 public abstract class SeverPlayerInteractionManagerMixin {

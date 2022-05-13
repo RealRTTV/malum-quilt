@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static ca.rttv.malum.registry.MalumRegistry.INFERNAL_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.INFERNAL_AURA;
 
 @Mixin(StatusEffectUtil.class)
 public abstract class StatusEffectUtilMixin {

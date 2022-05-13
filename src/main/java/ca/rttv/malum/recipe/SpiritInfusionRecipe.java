@@ -26,8 +26,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_INFUSION;
-import static ca.rttv.malum.registry.MalumRegistry.SPIRIT_INFUSION_SERIALIZER;
+import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.SPIRIT_INFUSION_SERIALIZER;
+import static ca.rttv.malum.registry.MalumRecipeTypeRegistry.SPIRIT_INFUSION;
 
 public record SpiritInfusionRecipe(Identifier id, String group,
                                    IngredientWithCount input, ItemStack output,

@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static ca.rttv.malum.registry.MalumRegistry.AQUEOUS_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.AQUEOUS_AURA;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public final class ClientPlayerInteractionManagerMixin {

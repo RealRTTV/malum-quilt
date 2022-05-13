@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.ATTRIBUTES;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_RESISTANCE;
-import static ca.rttv.malum.registry.MalumRegistry.CORRUPTED_AERIAL_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.CORRUPTED_AERIAL_AURA;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {

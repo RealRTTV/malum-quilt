@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-import static ca.rttv.malum.registry.MalumRegistry.ETHER_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.ETHER_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public abstract class AbstractEtherBlock extends BlockWithEntity implements Waterloggable {

@@ -14,8 +14,8 @@ import net.minecraft.util.math.Vec3i;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.AERIAL_AURA;
-import static ca.rttv.malum.registry.MalumRegistry.CORRUPTED_AERIAL_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.AERIAL_AURA;
+import static ca.rttv.malum.registry.MalumStatusEffectRegistry.CORRUPTED_AERIAL_AURA;
 
 public class AerialRite extends Rite {
     public AerialRite(Item... items) {

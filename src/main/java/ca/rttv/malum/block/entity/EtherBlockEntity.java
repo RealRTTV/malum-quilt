@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 
-import static ca.rttv.malum.registry.MalumRegistry.ETHER_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.ETHER_BLOCK_ENTITY;
 
 public class EtherBlockEntity extends BlockEntity {
     public int firstColorRGB;

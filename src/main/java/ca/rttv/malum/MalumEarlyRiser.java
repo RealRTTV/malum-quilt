@@ -10,7 +10,10 @@ import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.function.Supplier;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumBlockRegistry.RUNEWOOD_PLANKS;
+import static ca.rttv.malum.registry.MalumBlockRegistry.SOULWOOD_PLANKS;
+import static ca.rttv.malum.registry.MalumItemRegistry.SOUL_STAINED_STEEL_INGOT;
+import static ca.rttv.malum.registry.MalumItemRegistry.SPIRIT_FABRIC;
 
 public final class MalumEarlyRiser implements Runnable {
     @Override

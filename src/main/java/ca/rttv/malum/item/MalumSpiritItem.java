@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 import java.awt.*;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 import static ca.rttv.malum.util.helper.SpiritHelper.spawnSpiritScreenParticles;
 
 public class MalumSpiritItem extends Item implements IFloatingGlowItem, ItemParticleEmitter {

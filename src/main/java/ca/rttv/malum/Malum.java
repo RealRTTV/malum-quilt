@@ -1,8 +1,7 @@
 package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
-import ca.rttv.malum.registry.MalumAttributeRegistry;
-import ca.rttv.malum.registry.MalumRegistry;
+import ca.rttv.malum.registry.*;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -14,7 +13,7 @@ import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
 public final class Malum implements ModInitializer {
     public static final Random RANDOM = new Random();
@@ -29,6 +28,22 @@ public final class Malum implements ModInitializer {
     public void onInitialize(ModContainer mod) {
         MalumAttributeRegistry.init();
         MalumParticleRegistry.init();
-        MalumRegistry.init();
+        MalumBlockRegistry.init();
+        MalumItemRegistry.init();
+        MalumEnchantments.init();
+        MalumSoundRegistry.init();
+        MalumEntityRegistry.init();
+        MalumBlockEntityRegistry.init();
+        MalumRiteRegistry.init();
+        MalumSignTypeRegistry.init();
+        MalumBlockSoundGroupRegistry.init();
+        MalumRecipeTypeRegistry.init();
+        MalumRecipeSerializerRegistry.init();
+        MalumFeatureRegistry.init();
+        MalumConfiguredFeatureRegistry.init();
+        MalumPlacedFeatureRegistry.init();
+        MalumScreenHandlerRegistry.init();
+        MalumAcceleratorTypeRegistry.init();
+        MalumStatusEffectRegistry.init();
     }
 }

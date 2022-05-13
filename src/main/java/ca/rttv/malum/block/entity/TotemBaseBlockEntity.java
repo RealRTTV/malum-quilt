@@ -1,6 +1,6 @@
 package ca.rttv.malum.block.entity;
 
-import ca.rttv.malum.registry.MalumRegistry;
+import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.rite.Rite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,8 +24,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-import static ca.rttv.malum.registry.MalumRegistry.SOULWOOD_TOTEM_BASE;
-import static ca.rttv.malum.registry.MalumRegistry.TOTEM_BASE_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.TOTEM_BASE_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockRegistry.SOULWOOD_TOTEM_BASE;
 
 public class TotemBaseBlockEntity extends BlockEntity {
     public static final Map<Integer, Rite> RITES;
@@ -125,17 +125,17 @@ public class TotemBaseBlockEntity extends BlockEntity {
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-        nbt.putString("Rite", Objects.requireNonNullElse(MalumRegistry.RITE.getId(rite), new Identifier("air")).toString());
+        nbt.putString("Rite", Objects.requireNonNullElse(MalumRiteRegistry.RITE.getId(rite), new Identifier("air")).toString());
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        rite = MalumRegistry.RITE.get(new Identifier(nbt.getString("Rite")));
+        rite = MalumRiteRegistry.RITE.get(new Identifier(nbt.getString("Rite")));
     }
 
     static {
         RITES = new HashMap<>();
-        MalumRegistry.RITE.forEach(rite -> RITES.put(rite.hashCode(), rite));
+        MalumRiteRegistry.RITE.forEach(rite -> RITES.put(rite.hashCode(), rite));
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {

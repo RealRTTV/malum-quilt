@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.Map;
 import java.util.Optional;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 
 @Mixin(value = AxeItem.class, priority = 1010)
 public abstract class AxeItemMixin {

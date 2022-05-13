@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Map;
 
-import static ca.rttv.malum.registry.MalumRegistry.*;
+import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 
 @Mixin(RenderLayers.class)
 public final class RenderLayersMixin {
