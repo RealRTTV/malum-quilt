@@ -5,6 +5,12 @@
     "id": "malum",
     "version": "${version}",
     "access_widener": "malum.accesswidener",
+    "provides": [
+      {
+        "id": "fabric_asm",
+        "version": "v2.3"
+      }
+    ],
     "metadata": {
       "name": "Malum (Fabric)",
       "description": "A Fabric port of the mod 'Malum' - A minecraft mod about dark magic.",

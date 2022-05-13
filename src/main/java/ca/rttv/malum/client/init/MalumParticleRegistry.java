@@ -3,6 +3,7 @@ package ca.rttv.malum.client.init;
 import ca.rttv.malum.client.particle.SimpleMalumParticleType;
 import ca.rttv.malum.client.particle.cut.ScytheAttackParticle;
 import ca.rttv.malum.client.particle.spiritflame.SpiritFlameParticleType;
+import ca.rttv.malum.util.helper.DataHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.DefaultParticleType;
@@ -11,8 +12,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.function.BiConsumer;
-
-import static ca.rttv.malum.util.helper.DataHelper.prefix;
 
 @SuppressWarnings("SameParameterValue")
 public class MalumParticleRegistry {
@@ -41,14 +40,14 @@ public class MalumParticleRegistry {
     }
     // shamelessly stolen from Botania
     private static void initParticles(BiConsumer<ParticleType<?>, Identifier> b) {
-        b.accept(SCYTHE_CUT_ATTACK_PARTICLE, prefix("scythe_cut_attack"));
-        b.accept(SCYTHE_SWEEP_ATTACK_PARTICLE, prefix("scythe_sweep_attack"));
-        b.accept(WISP_PARTICLE, prefix("wisp"));
-        b.accept(SMOKE_PARTICLE, prefix("smoke"));
-        b.accept(SPARKLE_PARTICLE, prefix("sparkle"));
-        b.accept(TWINKLE_PARTICLE, prefix("twinkle"));
-        b.accept(STAR_PARTICLE, prefix("star"));
-        b.accept(SPIRIT_FLAME_PARTICLE, prefix("spirit_flame"));
+        b.accept(SCYTHE_CUT_ATTACK_PARTICLE, DataHelper.prefix("scythe_cut_attack"));
+        b.accept(SCYTHE_SWEEP_ATTACK_PARTICLE, DataHelper.prefix("scythe_sweep_attack"));
+        b.accept(WISP_PARTICLE, DataHelper.prefix("wisp"));
+        b.accept(SMOKE_PARTICLE, DataHelper.prefix("smoke"));
+        b.accept(SPARKLE_PARTICLE, DataHelper.prefix("sparkle"));
+        b.accept(TWINKLE_PARTICLE, DataHelper.prefix("twinkle"));
+        b.accept(STAR_PARTICLE, DataHelper.prefix("star"));
+        b.accept(SPIRIT_FLAME_PARTICLE, DataHelper.prefix("spirit_flame"));
     }
     // guess where this one comes from
     private static <T> BiConsumer<T, Identifier> bind(Registry<? super T> registry) {

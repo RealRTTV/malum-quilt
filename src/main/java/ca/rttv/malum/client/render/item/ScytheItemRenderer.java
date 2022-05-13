@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Unit;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.profiler.Profiler;
 import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
 
