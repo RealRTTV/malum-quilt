@@ -30,26 +30,7 @@ import java.util.function.Predicate;
 import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.SPIRIT_INFUSION_SERIALIZER;
 import static ca.rttv.malum.registry.MalumRecipeTypeRegistry.SPIRIT_INFUSION;
 
-public final class SpiritInfusionRecipe implements Recipe<Inventory> {
-    private final Identifier id;
-    private final String group;
-    private final IngredientWithCount input;
-    private final ItemStack output;
-    private final IngredientWithCount extraItems;
-    private final IngredientWithCount spirits;
-
-    public SpiritInfusionRecipe(Identifier id, String group,
-                                IngredientWithCount input, ItemStack output,
-                                IngredientWithCount extraItems,
-                                IngredientWithCount spirits) {
-        this.id = id;
-        this.group = group;
-        this.input = input;
-        this.output = output;
-        this.extraItems = extraItems;
-        this.spirits = spirits;
-    }
-
+public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCount input, ItemStack output, IngredientWithCount extraItems, IngredientWithCount spirits) implements Recipe<Inventory> {
     @Override
     public boolean matches(Inventory inventory, World world) {
         return this.input.test(inventory.getStack(0));
@@ -178,60 +159,6 @@ public final class SpiritInfusionRecipe implements Recipe<Inventory> {
     public RecipeType<?> getType() {
         return SPIRIT_INFUSION;
     }
-
-    public Identifier id() {
-        return id;
-    }
-
-    public String group() {
-        return group;
-    }
-
-    public IngredientWithCount input() {
-        return input;
-    }
-
-    public ItemStack output() {
-        return output;
-    }
-
-    public IngredientWithCount extraItems() {
-        return extraItems;
-    }
-
-    public IngredientWithCount spirits() {
-        return spirits;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (SpiritInfusionRecipe) obj;
-        return Objects.equals(this.id, that.id) &&
-                Objects.equals(this.group, that.group) &&
-                Objects.equals(this.input, that.input) &&
-                Objects.equals(this.output, that.output) &&
-                Objects.equals(this.extraItems, that.extraItems) &&
-                Objects.equals(this.spirits, that.spirits);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, group, input, output, extraItems, spirits);
-    }
-
-    @Override
-    public String toString() {
-        return "SpiritInfusionRecipe[" +
-                "id=" + id + ", " +
-                "group=" + group + ", " +
-                "input=" + input + ", " +
-                "output=" + output + ", " +
-                "extraItems=" + extraItems + ", " +
-                "spirits=" + spirits + ']';
-    }
-
 
     public record Serializer<T extends SpiritInfusionRecipe>(
             RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
