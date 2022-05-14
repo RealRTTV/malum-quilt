@@ -4,7 +4,6 @@
     "group": "ca.rttv",
     "id": "malum",
     "version": "${version}",
-    "access_widener": "malum.accesswidener",
     "provides": [
       {
         "id": "fabric_asm",
@@ -59,13 +58,14 @@
         "id": "trinkets",
         "versions": "*"
       }
-    ],
-    "mixin": "malum.mixins.json",
-    "custom": {
-      "cardinal-components": [
-        "malum:spirit",
-        "malum:player"
-      ]
-    }
-  }
+    ]
+  },
+  "access_widener": "malum.accesswidener",
+  "mixin": [
+    "malum.mixins.json"
+  ],
+  "cardinal-components": [
+    "malum:spirit",
+    "malum:player"
+  ]
 }

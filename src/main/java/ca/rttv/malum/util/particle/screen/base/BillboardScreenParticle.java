@@ -22,7 +22,8 @@ public abstract class BillboardScreenParticle extends ScreenParticle {
 
     @Override
     public void render(BufferBuilder bufferBuilder) {
-        float tickDelta = MinecraftClient.getInstance().getTickDelta();
+        final MinecraftClient client = MinecraftClient.getInstance();
+        float tickDelta = client.getTickDelta();
         float size = getQuadSize(tickDelta) * 10;
         float u0 = getMinU();
         float u1 = getMaxU();
@@ -37,7 +38,7 @@ public abstract class BillboardScreenParticle extends ScreenParticle {
             vector3f.scale(size);
             vector3f.add((float) x, (float) y, 0);
         }
-      /*TODO: JEI tooltips render at 400 z, while the held by mouse item stack renders at around 380, we need a value between to be above the stack, but below JEI tooltips.
+      /* todo, jei tooltips render at 400 z, while the held by mouse item stack renders at around 380, we need a value between to be above the stack, but below JEI tooltips.
          There is definitely a better way of doing this.
        */
         int z = 390;

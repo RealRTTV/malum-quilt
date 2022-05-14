@@ -1,6 +1,6 @@
 package ca.rttv.malum.screen;
 
-import ca.rttv.malum.item.MalumSpiritItem;
+import ca.rttv.malum.item.SpiritItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -27,7 +27,7 @@ public class SpiritPouchScreenHandler extends ScreenHandler {
 
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(inventory, j + i * 9, 8 + j * 18, 18 + i * 18) { public boolean canInsert(ItemStack stack) { return stack.getItem() instanceof MalumSpiritItem; } } );
+                this.addSlot(new Slot(inventory, j + i * 9, 8 + j * 18, 18 + i * 18) { public boolean canInsert(ItemStack stack) { return stack.getItem() instanceof SpiritItem; } } );
             }
         }
 

@@ -1,6 +1,6 @@
 package ca.rttv.malum.block.entity;
 
-import ca.rttv.malum.item.MalumSpiritItem;
+import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.registry.MalumBlockEntityRegistry;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
@@ -20,7 +20,7 @@ public class ItemPedestalBlockEntity extends AbstractItemDisplayBlockEntity {
     }
 
     public void clientTick(World world, BlockPos pos, BlockState state) {
-        if (getHeldItem().getItem() instanceof MalumSpiritItem item) {
+        if (getHeldItem().getItem() instanceof SpiritItem item) {
             Vec3d vec = DataHelper.fromBlockPos(pos).add(itemOffset());
             double x = vec.x;
             double y = vec.y + Math.sin(world.getTime() / 20f) * 0.1f;

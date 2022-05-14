@@ -37,6 +37,7 @@ public class MalumScreenParticleRegistry {
     }
 
     public static SpriteProvider getSpriteSet(Identifier resourceLocation) {
-        return FabricSpriteProviderImplAccessor.FabricSpriteProviderImpl(MinecraftClient.getInstance().particleManager, MinecraftClient.getInstance().particleManager.spriteAwareFactories.get(resourceLocation));
+        final MinecraftClient client = MinecraftClient.getInstance();
+        return FabricSpriteProviderImplAccessor.FabricSpriteProviderImpl(client.particleManager, client.particleManager.spriteAwareFactories.get(resourceLocation));
     }
 }

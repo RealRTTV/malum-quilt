@@ -61,6 +61,8 @@ dependencies {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 	}
+	modImplementation(libs.quilt.loading.screen)
+	modImplementation(libs.midnightlib)
 	include(libs.fabric.asm) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"

@@ -2,7 +2,7 @@ package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.block.ObeliskBlock;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
-import ca.rttv.malum.item.MalumSpiritItem;
+import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.recipe.IngredientWithCount;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import ca.rttv.malum.util.block.entity.IAltarAccelerator;
@@ -104,7 +104,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                     accelerator.addParticles(pos, itemPos);
                 }
             }
-            if (item.getItem() instanceof MalumSpiritItem spiritSplinterItem && world != null) {
+            if (item.getItem() instanceof SpiritItem spiritSplinterItem && world != null) {
                 Vec3d offset = spiritOffset(this, i, 0.5f); // doing 0.5f makes it so the particle is in between this tick's particle and the next ticks particle. Instead of making it perfectly precise at the start and shittier at the end of the tick we make it about right at some points and perfect at others
                 Color color = spiritSplinterItem.type.color;
                 Color endColor = spiritSplinterItem.type.endColor;
@@ -151,7 +151,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (player.getStackInHand(hand).getItem() instanceof MalumSpiritItem) {
+        if (player.getStackInHand(hand).getItem() instanceof SpiritItem) {
             this.addSpirits(state, world, pos, player, hand, hit);
         } else if (this.getHeldItem().isEmpty() && player.getStackInHand(hand).isEmpty()) {
             this.grabSpirit(state, world, pos, player, hand, hit);

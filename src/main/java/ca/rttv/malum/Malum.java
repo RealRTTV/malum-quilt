@@ -1,7 +1,9 @@
 package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.enchantment.ReboundEnchantment;
 import ca.rttv.malum.registry.*;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -45,5 +47,6 @@ public final class Malum implements ModInitializer {
         MalumScreenHandlerRegistry.init();
         MalumAcceleratorTypeRegistry.init();
         MalumStatusEffectRegistry.init();
+        UseItemCallback.EVENT.register(ReboundEnchantment::onRightClickItem);
     }
 }

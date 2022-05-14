@@ -32,6 +32,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vector4f;
 
+import java.util.Objects;
+
 import static ca.rttv.malum.registry.MalumItemRegistry.MAGEBANE_BELT;
 import static ca.rttv.malum.util.spirit.SpiritType.ARCANE_SPIRIT;
 
@@ -106,12 +108,12 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
         public static void renderSoulWard(MatrixStack matrices, Window window) {
             final MinecraftClient client = MinecraftClient.getInstance();
             ClientPlayerEntity player = client.player;
-            if (player != null && !player.isCreative() && !player.isSpectator()) {
+            if (player != null && client.world != null && !player.isCreative() && !player.isSpectator()) {
                 float soulWard = MalumComponents.PLAYER_COMPONENT.get(player).soulWard;
                     if (soulWard > 0) {
                         float absorb = MathHelper.ceil(player.getAbsorptionAmount());
-                        float maxHealth = (float) player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).getValue();
-                        float armor = (float) player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).getValue();
+                        float maxHealth = (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).getValue();
+                        float armor = (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR)).getValue();
 
                         int left = window.getScaledWidth() / 2 - 91;
                         int top = window.getScaledHeight() - 59;
@@ -152,8 +154,8 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                                         .setAlphaCurveMultiplier(0.75f)
                                         .setScale(0.2f*progress, 0f)
                                         .setAlpha(0.05f, 0)
-                                        .setSpin(MinecraftClient.getInstance().world.random.nextFloat() * 6.28f)
-                                        .setSpinOffset(MinecraftClient.getInstance().world.random.nextFloat() * 6.28f)
+                                        .setSpin(client.world.random.nextFloat() * 6.28f)
+                                        .setSpinOffset(client.world.random.nextFloat() * 6.28f)
                                         .randomOffset(2)
                                         .randomMotion(0.5f, 0.5f)
                                         .overwriteRenderOrder(ScreenParticle.RenderOrder.BEFORE_UI)

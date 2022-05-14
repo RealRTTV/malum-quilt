@@ -1,6 +1,7 @@
 package ca.rttv.malum.enchantment;
 
 import ca.rttv.malum.entity.ScytheBoomerangEntity;
+import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -13,6 +14,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 public class ReboundEnchantment extends Enchantment {
     public ReboundEnchantment(Rarity weight, EnchantmentTarget target, EquipmentSlot... equipmentSlots) {
@@ -24,7 +26,7 @@ public class ReboundEnchantment extends Enchantment {
         return 3;
     }
 
-    public static TypedActionResult<ItemStack> onRightClickItem(PlayerEntity player, World world, Hand hand) {
+    public static TypedActionResult<ItemStack> onRightClickItem(@NotNull PlayerEntity player, World world, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
         if (!player.isSpectator()) {
             int enchantmentLevel = EnchantmentHelper.getLevel(MalumEnchantments.REBOUND, stack);
@@ -42,7 +44,7 @@ public class ReboundEnchantment extends Enchantment {
                     entity.setData((float) damage, player.getUuid(), slot, stack);
                     entity.getDataTracker().set(ScytheBoomerangEntity.SCYTHE, stack);
 
-                    entity.shootFromRotation(player, player.getPitch(), player.getYaw(), 0.0F, (float) (1.5F /* + player.getAttributeValue(MalumAttributeRegistry.SCYTHE_PROFICIENCY) * 0.125f */), 0F);
+                    entity.shootFromRotation(player, player.getPitch(), player.getYaw(), 0.0F, (float) (1.5d + player.getAttributeValue(MalumAttributeRegistry.SCYTHE_PROFICIENCY) * 0.125f), 0F);
                     world.spawnEntity(entity);
                 }
                 player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));

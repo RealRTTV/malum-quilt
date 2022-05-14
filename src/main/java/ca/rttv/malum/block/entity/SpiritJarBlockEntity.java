@@ -1,7 +1,7 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
-import ca.rttv.malum.item.MalumSpiritItem;
+import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import ca.rttv.malum.util.particle.ParticleBuilders;
@@ -44,7 +44,7 @@ public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
     }
 
     public void clientTick(World world, BlockPos pos, BlockState state) {
-        if (this.getHeldItem().getItem() instanceof MalumSpiritItem item) {
+        if (this.getHeldItem().getItem() instanceof SpiritItem item) {
             Vec3d vec = DataHelper.fromBlockPos(pos).add(new Vec3d(0.5f, 0.5f, 0.5f));
             double x = vec.x;
             double y = vec.y + Math.sin(world.getTime() / 20f) * 0.1f;
@@ -116,9 +116,9 @@ public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
             return ActionResult.PASS;
         }
 
-        if (player.getStackInHand(hand).getItem() != this.getHeldItem().getItem() && !this.getHeldItem().isEmpty() && !(player.getStackInHand(hand).getItem() instanceof MalumSpiritItem)) {
+        if (player.getStackInHand(hand).getItem() != this.getHeldItem().getItem() && !this.getHeldItem().isEmpty() && !(player.getStackInHand(hand).getItem() instanceof SpiritItem)) {
             if(world.isClient) {
-                spawnUseParticles(world, pos, ((MalumSpiritItem) getHeldItem().getItem()).type);
+                spawnUseParticles(world, pos, ((SpiritItem) getHeldItem().getItem()).type);
             }
             int count;
             if (player.isSneaking()) {
@@ -130,10 +130,10 @@ public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
             this.getHeldItem().decrement(count);
             world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
             return ActionResult.CONSUME;
-        } else if (player.getStackInHand(hand).getItem() instanceof MalumSpiritItem && (player.getStackInHand(hand).getItem() == this.getHeldItem().getItem() || this.getHeldItem().isEmpty())) {
+        } else if (player.getStackInHand(hand).getItem() instanceof SpiritItem && (player.getStackInHand(hand).getItem() == this.getHeldItem().getItem() || this.getHeldItem().isEmpty())) {
             ItemStack stack = player.getStackInHand(hand);
             if(world.isClient) {
-                spawnUseParticles(world, pos, ((MalumSpiritItem) stack.getItem()).type);
+                spawnUseParticles(world, pos, ((SpiritItem) stack.getItem()).type);
             }
             if (this.getHeldItem().isEmpty()) {
                 this.setStack(0, new ItemStack(stack.getItem(), stack.getCount())); // this is to not carry nbt

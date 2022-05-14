@@ -10,6 +10,8 @@ fabric_asm = "v2.3"
 cca = "4.1.4"
 mixin_extras = "0.0.8"
 trinkets = "3.3.1"
+quilt_loading_screen = "3.0.0+1.18.2"
+midnightlib = "0.4.0"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -23,6 +25,8 @@ cardinal_components_base = { module = "dev.onyxstudios.cardinal-components-api:c
 cardinal_components_entity = { module = "dev.onyxstudios.cardinal-components-api:cardinal-components-entity", version.ref = "cca" }
 mixin_extras = { module = "com.github.LlamaLad7:MixinExtras", version.ref = "mixin_extras" }
 trinkets = { module = "dev.emi:trinkets", version.ref = "trinkets" }
+quilt_loading_screen = { module = "maven.modrinth:quilt-loading-screen", version.ref = "quilt_loading_screen" }
+midnightlib = { module = "maven.modrinth:midnightlib", version.ref = "midnightlib"}
 
 # If you have multiple similar dependencies, you can declare a dependency bundle and reference it on the build script with "libs.bundles.example".
 # [bundles]

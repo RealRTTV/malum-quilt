@@ -74,8 +74,12 @@ public class IridescentEtherWallStandingBlockItem extends WallStandingBlockItem 
 
     @Override
     public void particleTick(ItemStack stack, float x, float y, ScreenParticle.RenderOrder renderOrder) {
-        World world = MinecraftClient.getInstance().world;
-        float gameTime = world.getTime() + MinecraftClient.getInstance().getTickDelta();
+        final MinecraftClient client = MinecraftClient.getInstance();
+        World world = client.world;
+        if (world == null) {
+            return;
+        }
+        float gameTime = world.getTime() + client.getTickDelta();
         IridescentEtherWallStandingBlockItem etherItem = (IridescentEtherWallStandingBlockItem) stack.getItem();
         Color firstColor = new Color(etherItem.getFirstColor(stack));
         Color secondColor = new Color(etherItem.getSecondColor(stack));

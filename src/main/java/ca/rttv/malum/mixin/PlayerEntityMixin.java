@@ -15,16 +15,20 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.SCYTHE_PROFICIENCY;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
+
+    @Unique
+    float f;
+
     @Shadow public abstract void spawnSweepAttackParticles();
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
@@ -33,18 +37,23 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        return super.damage(source, ArcaneAffinity.consumeSoulWard((LivingEntity) (Object)this, source, amount));
+        return super.damage(source, ArcaneAffinity.consumeSoulWard(this, source, amount));
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void malum$tick(CallbackInfo ci) {
-        ArcaneAffinity.recoverSoulWard((PlayerEntity)(Object) this);
+        ArcaneAffinity.recoverSoulWard((PlayerEntity) (Object) this);
     }
 
-    @SuppressWarnings("InvalidInjectorMethodSignature")
-    @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void attack(Entity target, CallbackInfo ci, float f, float g, boolean bl, boolean bl2, int i, boolean bl3, boolean bl4, double d) {
-        if(this.getStackInHand(Hand.MAIN_HAND).getItem() instanceof ScytheItem) {
+    @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getMovementSpeed()F"), index = 3)
+    private float captureF(float f) {
+        this.f = f;
+        return f;
+    }
+
+    @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"))
+    private void attack(Entity target, CallbackInfo ci) {
+        if (this.getStackInHand(Hand.MAIN_HAND).getItem() instanceof ScytheItem) {
             float l = 1.0F + EnchantmentHelper.getSweepingMultiplier(this) * f;
 
             for (LivingEntity livingEntity : this.world.getNonSpectatingEntities(LivingEntity.class, target.getBoundingBox().expand(1.0, 0.25, 1.0))) {

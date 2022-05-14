@@ -57,7 +57,7 @@ public class ScreenParticleHandler {
                     ScreenParticle.RenderOrder renderOrder = AFTER_EVERYTHING;
                     Screen screen = minecraft.currentScreen;
                     if (screen != null) {
-                        //TODO: REI
+                        // todo, rei
                         renderOrder = BEFORE_TOOLTIPS;
                         if (renderingHotbar) {
                             renderOrder = BEFORE_UI;
@@ -76,7 +76,8 @@ public class ScreenParticleHandler {
     }
 
     public static void renderParticles() {
-        Screen screen = MinecraftClient.getInstance().currentScreen;
+        final MinecraftClient client = MinecraftClient.getInstance();
+        Screen screen = client.currentScreen;
 //        if (screen instanceof IRecipesGui) {
 //            renderParticles(AFTER_EVERYTHING);
 //        }
@@ -88,10 +89,11 @@ public class ScreenParticleHandler {
     }
 
     public static void renderParticles(ScreenParticle.RenderOrder... renderOrders) {
+        final MinecraftClient client = MinecraftClient.getInstance();
         PARTICLES.forEach((pair, particles) -> {
             ParticleTextureSheet type = pair.getFirst();
             if (Arrays.stream(renderOrders).anyMatch(o -> o.equals(pair.getSecond()))) {
-                type.begin(TESSELATOR.getBuffer(), MinecraftClient.getInstance().getTextureManager());
+                type.begin(TESSELATOR.getBuffer(), client.getTextureManager());
                 for (ScreenParticle next : particles) {
                     if (next instanceof GenericScreenParticle genericScreenParticle) {
                         genericScreenParticle.trackStack();

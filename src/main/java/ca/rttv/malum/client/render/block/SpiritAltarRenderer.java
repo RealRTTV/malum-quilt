@@ -17,8 +17,12 @@ import net.minecraft.world.World;
 public class SpiritAltarRenderer implements BlockEntityRenderer<SpiritAltarBlockEntity> {
     @Override
     public void render(SpiritAltarBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        World world = MinecraftClient.getInstance().world;
-        ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+        final MinecraftClient client = MinecraftClient.getInstance();
+        World world = client.world;
+        if (world == null) {
+            return;
+        }
+        ItemRenderer itemRenderer = client.getItemRenderer();
         DefaultedList<ItemStack> inventory = blockEntity.spiritSlots;
         for (int i = 0; i < inventory.size(); i++) {
             ItemStack item = inventory.get(i);

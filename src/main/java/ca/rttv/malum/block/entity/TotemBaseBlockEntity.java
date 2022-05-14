@@ -1,6 +1,7 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.registry.MalumRiteRegistry;
+import ca.rttv.malum.registry.MalumSoundRegistry;
 import ca.rttv.malum.rite.Rite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,6 +15,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -67,7 +69,7 @@ public class TotemBaseBlockEntity extends BlockEntity {
         }
 
         if (rite != null) {
-            // todo, play sound
+            world.playSound(null, pos, MalumSoundRegistry.TOTEM_CANCELLED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
             rite = null;
             this.updateListeners();
             BlockPos up = pos.up();

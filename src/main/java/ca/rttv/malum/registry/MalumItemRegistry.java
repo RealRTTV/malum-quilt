@@ -145,11 +145,11 @@ public interface MalumItemRegistry {
     // copper impetus
     // cracked gold impetus
     // gold impetus
-    Item ETHER_ITEM                                  = registerItem             ("ether",                                     new EtherBlockItem(ETHER, new Item.Settings().group(MALUM)));
+    Item ETHER_ITEM                                  = registerItem             ("ether",                                     new ParticleEmittingEtherBlockItem(ETHER, new Item.Settings().group(MALUM)));
     Item ETHER_TORCH_ITEM                            = registerItem             ("ether_torch",                               new EtherWallStandingBlockItem(ETHER_TORCH, WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
     Item TAINTED_ETHER_BRAZIER_ITEM                  = registerItem             ("tainted_ether_brazier",                     new EtherBlockItem(TAINTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
     Item TWISTED_ETHER_BRAZIER_ITEM                  = registerItem             ("twisted_ether_brazier",                     new EtherBlockItem(TWISTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-    Item IRIDESCENT_ETHER_ITEM                       = registerItem             ("iridescent_ether",                          new IridescentEtherBlockItem(IRIDESCENT_ETHER, new Item.Settings().group(MALUM)));
+    Item IRIDESCENT_ETHER_ITEM                       = registerItem             ("iridescent_ether",                          new ParticleEmittingIridescentEtherBlockItem(IRIDESCENT_ETHER, new Item.Settings().group(MALUM)));
     Item IRIDESCENT_ETHER_TORCH_ITEM                 = registerItem             ("iridescent_ether_torch",                    new IridescentEtherWallStandingBlockItem(IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
     Item TAINTED_IRIDESCENT_ETHER_BRAZIER_ITEM       = registerItem             ("tainted_iridescent_ether_brazier",          new IridescentEtherBlockItem(TAINTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
     Item TWISTED_IRIDESCENT_ETHER_BRAZIER_ITEM       = registerItem             ("twisted_iridescent_ether_brazier",          new IridescentEtherBlockItem(TWISTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
@@ -276,14 +276,14 @@ public interface MalumItemRegistry {
     Item TWISTED_ROCK_ITEM_PEDESTAL                = registerItem               ("twisted_rock_item_pedestal",                new BlockItem(MalumBlockRegistry.TWISTED_ROCK_ITEM_PEDESTAL, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
 
     // items & blocks, sorted [Main: Spirits]
-    Item SACRED_SPIRIT                             = registerItem               ("sacred_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.SACRED_SPIRIT));
-    Item WICKED_SPIRIT                             = registerItem               ("wicked_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.WICKED_SPIRIT));
-    Item ARCANE_SPIRIT                             = registerItem               ("arcane_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.ARCANE_SPIRIT));
-    Item ELDRITCH_SPIRIT                           = registerItem               ("eldritch_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.ELDRITCH_SPIRIT));
-    Item EARTHEN_SPIRIT                            = registerItem               ("earthen_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.EARTHEN_SPIRIT));
-    Item INFERNAL_SPIRIT                           = registerItem               ("infernal_spirit",                           new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.INFERNAL_SPIRIT));
-    Item AERIAL_SPIRIT                             = registerItem               ("aerial_spirit",                             new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.AERIAL_SPIRIT));
-    Item AQUEOUS_SPIRIT                            = registerItem               ("aqueous_spirit",                            new MalumSpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.AQUEOUS_SPIRIT));
+    Item SACRED_SPIRIT                             = registerItem               ("sacred_spirit",                             new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.SACRED_SPIRIT));
+    Item WICKED_SPIRIT                             = registerItem               ("wicked_spirit",                             new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.WICKED_SPIRIT));
+    Item ARCANE_SPIRIT                             = registerItem               ("arcane_spirit",                             new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.ARCANE_SPIRIT));
+    Item ELDRITCH_SPIRIT                           = registerItem               ("eldritch_spirit",                           new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.ELDRITCH_SPIRIT));
+    Item EARTHEN_SPIRIT                            = registerItem               ("earthen_spirit",                            new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.EARTHEN_SPIRIT));
+    Item INFERNAL_SPIRIT                           = registerItem               ("infernal_spirit",                           new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.INFERNAL_SPIRIT));
+    Item AERIAL_SPIRIT                             = registerItem               ("aerial_spirit",                             new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.AERIAL_SPIRIT));
+    Item AQUEOUS_SPIRIT                            = registerItem               ("aqueous_spirit",                            new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.AQUEOUS_SPIRIT));
 
     // items & blocks, sorted [Building Blocks]
     Item BLOCK_OF_ARCANE_CHARCOAL                  = registerItem               ("block_of_arcane_charcoal",                  new BlockItem(MalumBlockRegistry.BLOCK_OF_ARCANE_CHARCOAL, new Item.Settings().group(BUILDING_BLOCKS)));

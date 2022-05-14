@@ -1,6 +1,6 @@
 package ca.rttv.malum.util.spirit;
 
-import ca.rttv.malum.item.MalumSpiritItem;
+import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.registry.MalumItemRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.text.LiteralText;
@@ -65,8 +65,8 @@ public class SpiritType implements StringIdentifiable {
         return new Color(color.getGreen(), color.getBlue(), color.getRed());
     }
 
-    public MalumSpiritItem getSplinterItem() {
-        return (MalumSpiritItem) splinterItem.get();
+    public SpiritItem getSplinterItem() {
+        return (SpiritItem) splinterItem.get();
     }
 
     public Identifier getOverlayTexture() {

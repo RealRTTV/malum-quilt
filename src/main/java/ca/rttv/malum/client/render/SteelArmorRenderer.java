@@ -21,8 +21,9 @@ public class SteelArmorRenderer implements ArmorRenderer {
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, BipedEntityModel<LivingEntity> contextModel) {
+        final MinecraftClient client = MinecraftClient.getInstance();
         if (armorModel == null) {
-            armorModel = new SoulStainedSteelArmorModel(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(SoulStainedSteelArmorModel.LAYER));
+            armorModel = new SoulStainedSteelArmorModel(client.getEntityModelLoader().getModelPart(SoulStainedSteelArmorModel.LAYER));
         }
         contextModel.setAttributes(armorModel);
         armorModel.setVisible(false);

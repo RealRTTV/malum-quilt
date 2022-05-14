@@ -14,8 +14,9 @@ import net.minecraft.world.World;
 public class SpiritJarRenderer implements BlockEntityRenderer<SpiritJarBlockEntity> {
     @Override
     public void render(SpiritJarBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        World world = MinecraftClient.getInstance().world;
-        ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+        final MinecraftClient client = MinecraftClient.getInstance();
+        World world = client.world;
+        ItemRenderer itemRenderer = client.getItemRenderer();
         if (blockEntity.getHeldItem() != null && world != null) {
             matrices.push();
             double y =  0.5f + Math.sin(world.getTime() / 20f) * 0.2f;

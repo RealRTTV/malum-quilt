@@ -25,9 +25,11 @@ public class MalumParticleRegistry {
     public static final SimpleMalumParticleType STAR_PARTICLE = new SimpleMalumParticleType();
 
     public static final SpiritFlameParticleType SPIRIT_FLAME_PARTICLE = new SpiritFlameParticleType();
+
     public static void init() {
         initParticles(bind(Registry.PARTICLE_TYPE));
     }
+
     public static void registerFactories() {
         ParticleFactoryRegistry.getInstance().register(SCYTHE_CUT_ATTACK_PARTICLE, ScytheAttackParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(SCYTHE_SWEEP_ATTACK_PARTICLE, ScytheAttackParticle.Factory::new);
@@ -39,15 +41,15 @@ public class MalumParticleRegistry {
         ParticleFactoryRegistry.getInstance().register(SPIRIT_FLAME_PARTICLE, SpiritFlameParticleType.Factory::new);
     }
     // shamelessly stolen from Botania
-    private static void initParticles(BiConsumer<ParticleType<?>, Identifier> b) {
-        b.accept(SCYTHE_CUT_ATTACK_PARTICLE, DataHelper.prefix("scythe_cut_attack"));
-        b.accept(SCYTHE_SWEEP_ATTACK_PARTICLE, DataHelper.prefix("scythe_sweep_attack"));
-        b.accept(WISP_PARTICLE, DataHelper.prefix("wisp"));
-        b.accept(SMOKE_PARTICLE, DataHelper.prefix("smoke"));
-        b.accept(SPARKLE_PARTICLE, DataHelper.prefix("sparkle"));
-        b.accept(TWINKLE_PARTICLE, DataHelper.prefix("twinkle"));
-        b.accept(STAR_PARTICLE, DataHelper.prefix("star"));
-        b.accept(SPIRIT_FLAME_PARTICLE, DataHelper.prefix("spirit_flame"));
+    private static void initParticles(BiConsumer<ParticleType<?>, Identifier> registry) {
+        registry.accept(SCYTHE_CUT_ATTACK_PARTICLE, DataHelper.prefix("scythe_cut_attack"));
+        registry.accept(SCYTHE_SWEEP_ATTACK_PARTICLE, DataHelper.prefix("scythe_sweep_attack"));
+        registry.accept(WISP_PARTICLE, DataHelper.prefix("wisp"));
+        registry.accept(SMOKE_PARTICLE, DataHelper.prefix("smoke"));
+        registry.accept(SPARKLE_PARTICLE, DataHelper.prefix("sparkle"));
+        registry.accept(TWINKLE_PARTICLE, DataHelper.prefix("twinkle"));
+        registry.accept(STAR_PARTICLE, DataHelper.prefix("star"));
+        registry.accept(SPIRIT_FLAME_PARTICLE, DataHelper.prefix("spirit_flame"));
     }
     // guess where this one comes from
     private static <T> BiConsumer<T, Identifier> bind(Registry<? super T> registry) {

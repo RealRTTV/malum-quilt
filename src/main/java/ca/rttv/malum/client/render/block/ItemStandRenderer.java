@@ -1,7 +1,7 @@
 package ca.rttv.malum.client.render.block;
 
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
-import ca.rttv.malum.item.MalumSpiritItem;
+import ca.rttv.malum.item.SpiritItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -22,7 +22,7 @@ public class ItemStandRenderer implements BlockEntityRenderer<ItemStandBlockEnti
         if (!stack.isEmpty() && world != null) {
             matrices.push();
             Vec3f offset = new Vec3f(entity.itemOffset());
-            if (stack.getItem() instanceof MalumSpiritItem) {
+            if (stack.getItem() instanceof SpiritItem) {
                 double y = Math.sin(((world.getTime() + tickDelta) ) / 20f) * 0.05f;
                 matrices.translate(0, y, 0);
             }

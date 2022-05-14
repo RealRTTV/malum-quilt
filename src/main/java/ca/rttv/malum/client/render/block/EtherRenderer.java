@@ -15,7 +15,7 @@ public class EtherRenderer implements BlockEntityRenderer<EtherBlockEntity> {
 //        if (!stack.isEmpty()) {
 //            matrices.push();
 //            Vec3f offset = new Vec3f(entity.itemOffset());
-//            if (stack.getItem() instanceof MalumSpiritItem) {
+//            if (stack.getItem() instanceof SpiritItem) {
 //                double y = Math.sin(((world.getTime() + tickDelta)) / 20f) * 0.1f;
 //                matrices.translate(0, y, 0);
 //            }

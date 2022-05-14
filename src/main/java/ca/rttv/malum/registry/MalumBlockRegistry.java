@@ -15,8 +15,6 @@ import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumAcceleratorTypeRegistry.BRILLIANT_ACCELERATOR_TYPE;
 import static ca.rttv.malum.registry.MalumAcceleratorTypeRegistry.RUNEWOOD_ACCELERATOR_TYPE;
 import static ca.rttv.malum.registry.MalumBlockSoundGroupRegistry.*;
-import static ca.rttv.malum.registry.MalumItemRegistry.HOLY_SAP;
-import static ca.rttv.malum.registry.MalumItemRegistry.UNHOLY_SAP;
 import static ca.rttv.malum.registry.MalumSignTypeRegistry.RUNEWOOD_SIGN_TYPE;
 import static ca.rttv.malum.registry.MalumSignTypeRegistry.SOULWOOD_SIGN_TYPE;
 import static net.minecraft.sound.BlockSoundGroup.*;

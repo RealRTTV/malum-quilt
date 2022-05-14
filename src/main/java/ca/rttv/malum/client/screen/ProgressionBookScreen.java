@@ -2,6 +2,7 @@ package ca.rttv.malum.client.screen;
 
 import ca.rttv.malum.client.screen.page.*;
 import ca.rttv.malum.registry.MalumRiteRegistry;
+import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumItemRegistry.*;
+import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_TOOLTIPS;
 import static net.minecraft.item.Items.*;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
 
@@ -610,7 +612,7 @@ public class ProgressionBookScreen extends Screen {
         cut();
 
         renderEntries(matrices, mouseX, mouseY, partialTicks);
-//        ScreenParticleHandler.renderParticles(BEFORE_TOOLTIPS); todo: screen particles
+        ScreenParticleHandler.renderParticles(BEFORE_TOOLTIPS);
         GL11.glDisable(GL_SCISSOR_TEST);
 
         renderTransparentTexture(FADE_TEXTURE, matrices, guiLeft, guiTop, 1, 1, bookWidth, bookHeight, 512, 512);

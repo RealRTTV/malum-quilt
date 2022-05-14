@@ -15,8 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3f;
 
-public class ScytheBoomerangEntityRenderer extends EntityRenderer<ScytheBoomerangEntity>
-{
+@SuppressWarnings("deprecation")
+public class ScytheBoomerangEntityRenderer extends EntityRenderer<ScytheBoomerangEntity> {
     public final ItemRenderer itemRenderer;
 
     public ScytheBoomerangEntityRenderer(EntityRendererFactory.Context context) {
@@ -27,15 +27,14 @@ public class ScytheBoomerangEntityRenderer extends EntityRenderer<ScytheBoomeran
     }
 
     @Override
-    public void render(ScytheBoomerangEntity entityIn, float entityYaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider bufferIn, int packedLightIn)
-    {
+    public void render(ScytheBoomerangEntity entityIn, float entityYaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider bufferIn, int packedLightIn) {
         matrixStack.push();
         ItemStack itemstack = entityIn.getItem();
         BakedModel ibakedmodel = this.itemRenderer.getHeldItemModel(itemstack, entityIn.world, null, 1);
         matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90F));
         matrixStack.scale(2f, 2f, 2f);
         matrixStack.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion((entityIn.age + tickDelta) * 0.8f));
-        itemRenderer.renderItem(itemstack, itemstack.getItem() instanceof ScytheItem ? ModelTransformation.Mode.NONE : ModelTransformation.Mode.FIXED, false, matrixStack, bufferIn, packedLightIn, OverlayTexture.DEFAULT_UV, ibakedmodel);
+        itemRenderer.renderItem(itemstack, ModelTransformation.Mode.NONE, false, matrixStack, bufferIn, packedLightIn, OverlayTexture.DEFAULT_UV, ibakedmodel);
 
         matrixStack.pop();
 

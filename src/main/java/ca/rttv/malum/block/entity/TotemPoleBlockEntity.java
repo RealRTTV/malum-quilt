@@ -2,6 +2,7 @@ package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.block.TotemPoleBlock;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.registry.MalumSoundRegistry;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,6 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -37,6 +39,9 @@ public class TotemPoleBlockEntity extends BlockEntity {
     public TotemPoleBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         currentColor = 0;
+        if (world != null) {
+            world.playSound(null, pos, MalumSoundRegistry.TOTEM_ENGRAVE, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+        }
     }
 
     @Nullable

@@ -2,7 +2,9 @@ package ca.rttv.malum.block;
 
 import ca.rttv.malum.block.entity.TotemBaseBlockEntity;
 import ca.rttv.malum.block.entity.TotemPoleBlockEntity;
-import ca.rttv.malum.item.MalumSpiritItem;
+import ca.rttv.malum.item.SpiritItem;
+import ca.rttv.malum.registry.MalumSoundRegistry;
+import ca.rttv.malum.rite.Rite;
 import ca.rttv.malum.util.spirit.SpiritTypeProperty;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -39,12 +41,11 @@ public class TotemPoleBlock extends BlockWithEntity {
         if (cachedBaseBlock != null) {
             cachedBaseBlock.rite = null;
         }
-        // todo, play sound
+        world.playSound(null, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
     }
 
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        world.playSound(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS, 1.0f, 1.0f); // todo, proper noise
         TotemPoleBlockEntity blockEntity = (TotemPoleBlockEntity) world.getBlockEntity(pos);
         if (blockEntity == null) {
             return;
@@ -66,22 +67,32 @@ public class TotemPoleBlock extends BlockWithEntity {
             upEntity.list = blockEntity.list;
             upEntity.particles = blockEntity.particles;
             world.scheduleBlockTick(up, world.getBlockState(up).getBlock(), 20);
+            world.playSound(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, MalumSoundRegistry.TOTEM_CHARGE, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
             blockEntity.updateListeners();
         } else { // todo, delay of 20 ticks
             BlockPos down = pos.down();
+            Rite rite = TotemBaseBlockEntity.RITES.get(blockEntity.list.hashCode());
+            blockEntity.particles = (rite != null);
+            blockEntity.updateListeners();
             while (down.getY() >= world.getBottomY()) {
                 if (world.getBlockEntity(down) instanceof TotemBaseBlockEntity totemBaseBlockEntity) {
-                    totemBaseBlockEntity.rite = TotemBaseBlockEntity.RITES.get(blockEntity.list.hashCode());
+                    totemBaseBlockEntity.rite = rite;
                     blockEntity.list = null;
-                    blockEntity.particles = true;
-                    blockEntity.updateListeners();
                     totemBaseBlockEntity.tick = 0;
-                    world.playSound(null, down, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.BLOCKS, 1.0f, 1.0f); // todo, proper noise
+                    if (totemBaseBlockEntity.rite != null) {
+                        world.playSound(null, down, MalumSoundRegistry.TOTEM_ACTIVATED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+                    } else {
+                        world.playSound(null, down, MalumSoundRegistry.TOTEM_CANCELLED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+                    }
                     totemBaseBlockEntity.updateListeners();
                     break;
                 }
                 if (world.getBlockEntity(down) instanceof TotemPoleBlockEntity totemPoleBlockEntity) {
                     totemPoleBlockEntity.list = null;
+                    if (rite == null) {
+                        totemPoleBlockEntity.particles = false;
+                        totemPoleBlockEntity.updateListeners();
+                    }
                 }
                 down = down.down();
             }
@@ -90,7 +101,7 @@ public class TotemPoleBlock extends BlockWithEntity {
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        return new ItemStack(MalumSpiritItem.POLE_BLOCKS.inverse().get(state.getBlock()));
+        return new ItemStack(SpiritItem.POLE_BLOCKS.inverse().get(state.getBlock()));
     }
 
     @Override

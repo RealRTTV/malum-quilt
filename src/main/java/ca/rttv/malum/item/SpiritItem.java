@@ -9,6 +9,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -22,14 +23,14 @@ import java.awt.*;
 import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 import static ca.rttv.malum.util.helper.SpiritHelper.spawnSpiritScreenParticles;
 
-public class MalumSpiritItem extends Item implements IFloatingGlowItem, ItemParticleEmitter {
+public class SpiritItem extends Item implements IFloatingGlowItem, ItemParticleEmitter {
     public static final BiMap<Block, Block> POLE_BLOCKS = new ImmutableBiMap.Builder<Block, Block>()
             .put(RUNEWOOD_LOG, RUNEWOOD_TOTEM_POLE)
             .put(SOULWOOD_LOG, SOULWOOD_TOTEM_POLE)
             .build();
     public final SpiritType type;
 
-    public MalumSpiritItem(Item.Settings settings, SpiritType type) {
+    public SpiritItem(Item.Settings settings, SpiritType type) {
         super(settings);
         this.type = type;
     }
@@ -54,10 +55,11 @@ public class MalumSpiritItem extends Item implements IFloatingGlowItem, ItemPart
         World world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
         BlockState state = world.getBlockState(pos);
+        PlayerEntity player = ctx.getPlayer();
         Block pole = POLE_BLOCKS.get(state.getBlock());
         if (pole != null && ctx.getSide().getAxis() != Direction.Axis.Y) {
             world.setBlockState(pos, pole.getDefaultState().with(TotemPoleBlock.FACING, ctx.getSide()).with(TotemPoleBlock.SPIRIT_TYPE, SpiritTypeProperty.of(ctx.getStack().getItem())));
-            if (!world.isClient && !ctx.getPlayer().isCreative()) {
+            if (!world.isClient && (player == null || !player.isCreative())) {
                 ctx.getStack().decrement(1);
             }
             return ActionResult.success(world.isClient);

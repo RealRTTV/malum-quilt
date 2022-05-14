@@ -225,11 +225,14 @@ public final class SpiritHelper {
     }
 
     public static void spawnSpiritScreenParticles(Color color, Color endColor, ItemStack stack, float pXPosition, float pYPosition, ScreenParticle.RenderOrder renderOrder) {
-        Random rand = MinecraftClient.getInstance().world.getRandom();
+        final MinecraftClient client = MinecraftClient.getInstance();
+        if (client.world == null) {
+            return;
+        }
         ParticleBuilders.create(MalumScreenParticleRegistry.TWINKLE)
                 .setAlpha(0.07f, 0f)
-                .setLifetime(10 + rand.nextInt(10))
-                .setScale(0.4f + rand.nextFloat(), 0)
+                .setLifetime(10 + client.world.random.nextInt(10))
+                .setScale(0.4f + client.world.random.nextFloat(), 0)
                 .setColor(color, endColor)
                 .setColorCurveMultiplier(2f)
                 .randomOffset(0.05f)
@@ -240,9 +243,9 @@ public final class SpiritHelper {
 
         ParticleBuilders.create(MalumScreenParticleRegistry.WISP)
                 .setAlpha(0.01f, 0f)
-                .setLifetime(20 + rand.nextInt(8))
-                .setSpin(nextFloat(rand, 0.2f, 0.4f))
-                .setScale(0.6f + rand.nextFloat() * 0.4f, 0)
+                .setLifetime(20 + client.world.random.nextInt(8))
+                .setSpin(nextFloat(client.world.random, 0.2f, 0.4f))
+                .setScale(0.6f + client.world.random.nextFloat() * 0.4f, 0)
                 .setColor(color, endColor)
                 .setColorCurveMultiplier(1.25f)
                 .randomOffset(0.1f)
@@ -250,9 +253,9 @@ public final class SpiritHelper {
                 .overwriteRenderOrder(renderOrder)
                 .centerOnStack(stack)
                 .repeat(pXPosition, pYPosition, 1)
-                .setLifetime(10 + rand.nextInt(2))
-                .setSpin(nextFloat(rand, 0.05f, 0.1f))
-                .setScale(0.8f + rand.nextFloat() * 0.4f, 0f)
+                .setLifetime(10 + client.world.random.nextInt(2))
+                .setSpin(nextFloat(client.world.random, 0.05f, 0.1f))
+                .setScale(0.8f + client.world.random.nextFloat() * 0.4f, 0f)
                 .randomMotion(0.01f, 0.01f)
                 .repeat(pXPosition, pYPosition, 1);
     }

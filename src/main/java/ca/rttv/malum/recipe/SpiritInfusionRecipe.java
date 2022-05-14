@@ -24,15 +24,31 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.SPIRIT_INFUSION_SERIALIZER;
 import static ca.rttv.malum.registry.MalumRecipeTypeRegistry.SPIRIT_INFUSION;
 
-public record SpiritInfusionRecipe(Identifier id, String group,
-                                   IngredientWithCount input, ItemStack output,
-                                   IngredientWithCount extraItems,
-                                   IngredientWithCount spirits) implements Recipe<Inventory> {
+public final class SpiritInfusionRecipe implements Recipe<Inventory> {
+    private final Identifier id;
+    private final String group;
+    private final IngredientWithCount input;
+    private final ItemStack output;
+    private final IngredientWithCount extraItems;
+    private final IngredientWithCount spirits;
+
+    public SpiritInfusionRecipe(Identifier id, String group,
+                                IngredientWithCount input, ItemStack output,
+                                IngredientWithCount extraItems,
+                                IngredientWithCount spirits) {
+        this.id = id;
+        this.group = group;
+        this.input = input;
+        this.output = output;
+        this.extraItems = extraItems;
+        this.spirits = spirits;
+    }
 
     @Override
     public boolean matches(Inventory inventory, World world) {
@@ -55,7 +71,7 @@ public record SpiritInfusionRecipe(Identifier id, String group,
     }
 
     public boolean doSpiritsMatch(List<ItemStack> spirits) {
-        if (Arrays.stream(this.spirits.getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).getStack().getItem() instanceof MalumSpiritItem))) {
+        if (Arrays.stream(this.spirits.getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).getStack().getItem() instanceof SpiritItem))) {
             throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
         }
         List<ItemStack> newSpirits = new ArrayList<>(spirits);
@@ -163,7 +179,62 @@ public record SpiritInfusionRecipe(Identifier id, String group,
         return SPIRIT_INFUSION;
     }
 
-    public record Serializer<T extends SpiritInfusionRecipe>(SpiritInfusionRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
+    public Identifier id() {
+        return id;
+    }
+
+    public String group() {
+        return group;
+    }
+
+    public IngredientWithCount input() {
+        return input;
+    }
+
+    public ItemStack output() {
+        return output;
+    }
+
+    public IngredientWithCount extraItems() {
+        return extraItems;
+    }
+
+    public IngredientWithCount spirits() {
+        return spirits;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        var that = (SpiritInfusionRecipe) obj;
+        return Objects.equals(this.id, that.id) &&
+                Objects.equals(this.group, that.group) &&
+                Objects.equals(this.input, that.input) &&
+                Objects.equals(this.output, that.output) &&
+                Objects.equals(this.extraItems, that.extraItems) &&
+                Objects.equals(this.spirits, that.spirits);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, group, input, output, extraItems, spirits);
+    }
+
+    @Override
+    public String toString() {
+        return "SpiritInfusionRecipe[" +
+                "id=" + id + ", " +
+                "group=" + group + ", " +
+                "input=" + input + ", " +
+                "output=" + output + ", " +
+                "extraItems=" + extraItems + ", " +
+                "spirits=" + spirits + ']';
+    }
+
+
+    public record Serializer<T extends SpiritInfusionRecipe>(
+            RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
 
         public T read(Identifier id, JsonObject jsonObject) {
             String group = JsonHelper.getString(jsonObject, "group", "");

@@ -3,6 +3,7 @@ package ca.rttv.malum.client.screen;
 import ca.rttv.malum.client.screen.page.BookEntry;
 import ca.rttv.malum.client.screen.page.BookPage;
 import ca.rttv.malum.client.screen.page.EntryObject;
+import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -14,6 +15,7 @@ import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import static ca.rttv.malum.Malum.MODID;
+import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_TOOLTIPS;
 
 public class EntryScreen extends Screen {
     public static final Identifier BOOK_TEXTURE = new Identifier(MODID, "textures/gui/book/entry.png");
@@ -94,7 +96,7 @@ public class EntryScreen extends Screen {
                 }
             }
         }
-//        ScreenParticleHandler.renderParticles(BEFORE_TOOLTIPS); todo: screen particles
+        ScreenParticleHandler.renderParticles(BEFORE_TOOLTIPS);
     }
 
     @Override
@@ -162,7 +164,13 @@ public class EntryScreen extends Screen {
     }
 
     public void playSound() {
+        if (client == null) {
+            return;
+        }
         PlayerEntity player = client.player;
+        if (player == null) {
+            return;
+        }
         player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.PLAYERS, 1.0f, player.world.random.nextFloat() * 0.4F + 0.8F);
     }
 }
