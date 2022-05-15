@@ -6,7 +6,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public abstract class BookPage {
-
     public final Identifier TEXTURE;
 
     public BookPage(Identifier texture) {

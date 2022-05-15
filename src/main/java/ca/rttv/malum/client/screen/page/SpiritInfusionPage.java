@@ -5,6 +5,7 @@ import ca.rttv.malum.recipe.IngredientWithCount;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -32,6 +33,10 @@ public class SpiritInfusionPage extends BookPage {
     public SpiritInfusionPage(SpiritInfusionRecipe recipe) {
         super(new Identifier(MODID, "textures/gui/book/pages/spirit_infusion_page.png"));
         this.recipe = recipe;
+    }
+
+    public static SpiritInfusionPage fromOutput(Item output) {
+        return new SpiritInfusionPage(recipe -> recipe.getOutput().isOf(output));
     }
 
     public static SpiritInfusionPage fromId(Identifier id) {

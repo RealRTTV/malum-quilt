@@ -49,14 +49,12 @@ public class TotemBaseBlock extends BlockWithEntity {
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         BlockPos up = pos.up();
         BlockEntity blockEntity = world.getBlockEntity(up);
-        while (up.getY() <= world.getTopY()) {
-            if (blockEntity instanceof TotemPoleBlockEntity totemPoleBlockEntity) {
-                totemPoleBlockEntity.setCachedBaseBlock(null);
-                up = up.up();
-                blockEntity = world.getBlockEntity(up);
-                continue;
-            }
-            break;
+        while (blockEntity instanceof TotemPoleBlockEntity totemPoleBlockEntity) {
+            totemPoleBlockEntity.setCachedBaseBlock(null);
+            totemPoleBlockEntity.particles = false;
+            totemPoleBlockEntity.updateListeners();
+            up = up.up();
+            blockEntity = world.getBlockEntity(up);
         }
         super.onBreak(world, pos, state, player);
     }

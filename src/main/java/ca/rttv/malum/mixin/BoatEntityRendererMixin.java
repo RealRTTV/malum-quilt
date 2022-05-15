@@ -21,7 +21,7 @@ public final class BoatEntityRendererMixin {
     private static void useMalumNamespace(EntityRendererFactory.Context context, BoatEntity.Type type, CallbackInfoReturnable<Pair<Identifier, BoatEntityModel>> cir) {
         if (type == MalumBoatTypes.RUNEWOOD || type == MalumBoatTypes.SOULWOOD) {
             cir.setReturnValue(Pair.of(
-                    new Identifier(MODID, "textures/entity/boat/" + type.getName() + ".png"), new BoatEntityModel(context.getPart(EntityModelLayers.createBoat(type)))
+                    new Identifier(MODID, "textures/entity/boat/" + type.getName() + "_boat.png"), new BoatEntityModel(context.getPart(EntityModelLayers.createBoat(type)))
             ));
         }
     }

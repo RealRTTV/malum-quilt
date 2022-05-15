@@ -56,7 +56,7 @@ public interface MalumItemRegistry {
     Item RUNEWOOD_TILES_STAIRS                       = registerItem             ("runewood_tiles_stairs",                     new BlockItem(MalumBlockRegistry.RUNEWOOD_TILES_STAIRS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item CUT_RUNEWOOD_PLANKS                         = registerItem             ("cut_runewood_planks",                       new BlockItem(MalumBlockRegistry.CUT_RUNEWOOD_PLANKS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_BEAM                               = registerItem             ("runewood_beam",                             new BlockItem(MalumBlockRegistry.RUNEWOOD_BEAM, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
-    Item RUNEWOOD_DOOR_ITEM                          = registerItem             ("runewood_door",                             new TallBlockItem(RUNEWOOD_DOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
+    Item RUNEWOOD_DOOR                               = registerItem             ("runewood_door",                             new TallBlockItem(MalumBlockRegistry.RUNEWOOD_DOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_TRAPDOOR                           = registerItem             ("runewood_trapdoor",                         new BlockItem(MalumBlockRegistry.RUNEWOOD_TRAPDOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOLID_RUNEWOOD_TRAPDOOR                     = registerItem             ("solid_runewood_trapdoor",                   new BlockItem(MalumBlockRegistry.SOLID_RUNEWOOD_TRAPDOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_PLANKS_BUTTON                      = registerItem             ("runewood_planks_button",                    new BlockItem(MalumBlockRegistry.RUNEWOOD_PLANKS_BUTTON, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
@@ -65,7 +65,7 @@ public interface MalumItemRegistry {
     Item RUNEWOOD_PLANKS_FENCE_GATE                  = registerItem             ("runewood_planks_fence_gate",                new BlockItem(MalumBlockRegistry.RUNEWOOD_PLANKS_FENCE_GATE, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_ITEM_STAND                         = registerItem             ("runewood_item_stand",                       new BlockItem(MalumBlockRegistry.RUNEWOOD_ITEM_STAND, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_ITEM_PEDESTAL                      = registerItem             ("runewood_item_pedestal",                    new BlockItem(MalumBlockRegistry.RUNEWOOD_ITEM_PEDESTAL, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
-    Item RUNEWOOD_SIGN_ITEM                          = registerItem             ("runewood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), RUNEWOOD_SIGN, RUNEWOOD_WALL_SIGN));
+    Item RUNEWOOD_SIGN                               = registerItem             ("runewood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), MalumBlockRegistry.RUNEWOOD_SIGN, RUNEWOOD_WALL_SIGN));
     Item RUNEWOOD_BOAT                               = registerItem             ("runewood_boat",                             new BoatItem(MalumBoatTypes.RUNEWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
     Item UNHOLY_SAP                                  = registerItem             ("unholy_sap",                                new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item UNHOLY_SAPBALL                              = registerItem             ("unholy_sapball",                            new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
@@ -92,7 +92,7 @@ public interface MalumItemRegistry {
     Item SOULWOOD_TILES_STAIRS                       = registerItem             ("soulwood_tiles_stairs",                     new BlockItem(MalumBlockRegistry.SOULWOOD_TILES_STAIRS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item CUT_SOULWOOD_PLANKS                         = registerItem             ("cut_soulwood_planks",                       new BlockItem(MalumBlockRegistry.CUT_SOULWOOD_PLANKS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_BEAM                               = registerItem             ("soulwood_beam",                             new BlockItem(MalumBlockRegistry.SOULWOOD_BEAM, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
-    Item SOULWOOD_DOOR_ITEM                          = registerItem             ("soulwood_door",                             new TallBlockItem(SOULWOOD_DOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
+    Item SOULWOOD_DOOR                               = registerItem             ("soulwood_door",                             new TallBlockItem(MalumBlockRegistry.SOULWOOD_DOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_TRAPDOOR                           = registerItem             ("soulwood_trapdoor",                         new BlockItem(MalumBlockRegistry.SOULWOOD_TRAPDOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOLID_SOULWOOD_TRAPDOOR                     = registerItem             ("solid_soulwood_trapdoor",                   new BlockItem(MalumBlockRegistry.SOLID_SOULWOOD_TRAPDOOR, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_PLANKS_BUTTON                      = registerItem             ("soulwood_planks_button",                    new BlockItem(MalumBlockRegistry.SOULWOOD_PLANKS_BUTTON, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
@@ -101,7 +101,7 @@ public interface MalumItemRegistry {
     Item SOULWOOD_PLANKS_FENCE_GATE                  = registerItem             ("soulwood_planks_fence_gate",                new BlockItem(MalumBlockRegistry.SOULWOOD_PLANKS_FENCE_GATE, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_ITEM_STAND                         = registerItem             ("soulwood_item_stand",                       new BlockItem(MalumBlockRegistry.SOULWOOD_ITEM_STAND, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_ITEM_PEDESTAL                      = registerItem             ("soulwood_item_pedestal",                    new BlockItem(MalumBlockRegistry.SOULWOOD_ITEM_PEDESTAL, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
-    Item SOULWOOD_SIGN_ITEM                          = registerItem             ("soulwood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), SOULWOOD_SIGN, SOULWOOD_WALL_SIGN));
+    Item SOULWOOD_SIGN                               = registerItem             ("soulwood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), MalumBlockRegistry.SOULWOOD_SIGN, SOULWOOD_WALL_SIGN));
     Item SOULWOOD_BOAT                               = registerItem             ("soulwood_boat",                             new BoatItem(MalumBoatTypes.SOULWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
 
 // items & blocks, sorted [Main]
@@ -116,9 +116,9 @@ public interface MalumItemRegistry {
     Item SPIRIT_JAR                                 = registerItem             ("spirit_jar",                                new BlockItem(MalumBlockRegistry.SPIRIT_JAR, new Item.Settings().group(MALUM)));
     // soul vial
 
-    Item RUNEWOOD_OBELISK_ITEM                      = registerItem             ("runewood_obelisk",                          new TallBlockItem(RUNEWOOD_OBELISK, new Item.Settings().group(MALUM)));
-    Item BRILLIANT_OBELISK_ITEM                     = registerItem             ("brilliant_obelisk",                         new TallBlockItem(BRILLIANT_OBELISK, new Item.Settings().group(MALUM)));
-    // spirit crucible
+    Item RUNEWOOD_OBELISK                           = registerItem             ("runewood_obelisk",                          new TallBlockItem(MalumBlockRegistry.RUNEWOOD_OBELISK, new Item.Settings().group(MALUM)));
+    Item BRILLIANT_OBELISK                          = registerItem             ("brilliant_obelisk",                         new TallBlockItem(MalumBlockRegistry.BRILLIANT_OBELISK, new Item.Settings().group(MALUM)));
+    Item SPIRIT_CRUCIBLE                            = registerItem             ("spirit_crucible",                           new TallBlockItem(MalumBlockRegistry.SPIRIT_CRUCIBLE, new Item.Settings().group(MALUM)));
     Item RUNEWOOD_TOTEM_BASE                        = registerItem             ("runewood_totem_base",                       new BlockItem(MalumBlockRegistry.RUNEWOOD_TOTEM_BASE, new Item.Settings().group(MALUM)));
     Item SOULWOOD_TOTEM_BASE                        = registerItem             ("soulwood_totem_base",                       new BlockItem(MalumBlockRegistry.SOULWOOD_TOTEM_BASE, new Item.Settings().group(MALUM)));
     // soulwood plinth
@@ -135,8 +135,8 @@ public interface MalumItemRegistry {
     Item SOUL_STAINED_STEEL_NUGGET                  = registerItem             ("soul_stained_steel_nugget",                 new Item(new Item.Settings().group(MALUM)));
     Item BLOCK_OF_SOUL_STAINED_STEEL                = registerItem             ("block_of_soul_stained_steel",               new BlockItem(MalumBlockRegistry.BLOCK_OF_SOUL_STAINED_STEEL, new Item.Settings().group(MALUM)));
     Item STAINED_SPIRIT_RESONATOR                   = registerItem             ("stained_spirit_resonator",                  new Item(new Item.Settings().group(MALUM)));
-    // cracked alchemical impetus
-    // alchemical impetus
+    Item CRACKED_ALCHEMICAL_IMPETUS                 = registerItem             ("cracked_alchemical_impetus",                new Item(new Item.Settings().maxCount(1).group(MALUM)));
+    Item ALCHEMICAL_IMPETUS                         = registerItem             ("alchemical_impetus",                        new Item(new Item.Settings().maxCount(1).group(MALUM)));
     // cracked vitric impetus
     // vitric impetus
     // cracked iron impetus
@@ -145,14 +145,14 @@ public interface MalumItemRegistry {
     // copper impetus
     // cracked gold impetus
     // gold impetus
-    Item ETHER_ITEM                                  = registerItem             ("ether",                                     new ParticleEmittingEtherBlockItem(ETHER, new Item.Settings().group(MALUM)));
-    Item ETHER_TORCH_ITEM                            = registerItem             ("ether_torch",                               new EtherWallStandingBlockItem(ETHER_TORCH, WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
-    Item TAINTED_ETHER_BRAZIER_ITEM                  = registerItem             ("tainted_ether_brazier",                     new EtherBlockItem(TAINTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-    Item TWISTED_ETHER_BRAZIER_ITEM                  = registerItem             ("twisted_ether_brazier",                     new EtherBlockItem(TWISTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-    Item IRIDESCENT_ETHER_ITEM                       = registerItem             ("iridescent_ether",                          new ParticleEmittingIridescentEtherBlockItem(IRIDESCENT_ETHER, new Item.Settings().group(MALUM)));
-    Item IRIDESCENT_ETHER_TORCH_ITEM                 = registerItem             ("iridescent_ether_torch",                    new IridescentEtherWallStandingBlockItem(IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
-    Item TAINTED_IRIDESCENT_ETHER_BRAZIER_ITEM       = registerItem             ("tainted_iridescent_ether_brazier",          new IridescentEtherBlockItem(TAINTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-    Item TWISTED_IRIDESCENT_ETHER_BRAZIER_ITEM       = registerItem             ("twisted_iridescent_ether_brazier",          new IridescentEtherBlockItem(TWISTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
+    Item ETHER                                       = registerItem             ("ether",                                     new ParticleEmittingEtherBlockItem(MalumBlockRegistry.ETHER, new Item.Settings().group(MALUM)));
+    Item ETHER_TORCH                                 = registerItem             ("ether_torch",                               new EtherWallStandingBlockItem(MalumBlockRegistry.ETHER_TORCH, WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
+    Item TAINTED_ETHER_BRAZIER                       = registerItem             ("tainted_ether_brazier",                     new EtherBlockItem(MalumBlockRegistry.TAINTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
+    Item TWISTED_ETHER_BRAZIER                       = registerItem             ("twisted_ether_brazier",                     new EtherBlockItem(MalumBlockRegistry.TWISTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
+    Item IRIDESCENT_ETHER                            = registerItem             ("iridescent_ether",                          new ParticleEmittingIridescentEtherBlockItem(MalumBlockRegistry.IRIDESCENT_ETHER, new Item.Settings().group(MALUM)));
+    Item IRIDESCENT_ETHER_TORCH                      = registerItem             ("iridescent_ether_torch",                    new IridescentEtherWallStandingBlockItem(MalumBlockRegistry.IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
+    Item TAINTED_IRIDESCENT_ETHER_BRAZIER            = registerItem             ("tainted_iridescent_ether_brazier",          new IridescentEtherBlockItem(MalumBlockRegistry.TAINTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
+    Item TWISTED_IRIDESCENT_ETHER_BRAZIER            = registerItem             ("twisted_iridescent_ether_brazier",          new IridescentEtherBlockItem(MalumBlockRegistry.TWISTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
     Item SPIRIT_POUCH                                = registerItem             ("spirit_pouch",                              new SpiritPouchItem(new Item.Settings().group(MALUM).maxCount(1)));
     Item CRUDE_SCYTHE                                = registerScytheItem       ("crude_scythe",                              new ScytheItem(ToolMaterials.IRON, 3, -3.1f, 0.0f, new Item.Settings().group(MALUM)));
     Item SOUL_STAINED_STEEL_SCYTHE                   = registerScytheItem       ("soul_stained_steel_scythe",                 new ScytheItem(MalumToolMaterials.SOUL_STAINED_STEEL, 0.5f, -3.1f, 4.0f, new Item.Settings().group(MALUM)));
@@ -166,10 +166,10 @@ public interface MalumItemRegistry {
     Item SOUL_STAINED_STEEL_CHESTPLATE               = registerItem             ("soul_stained_steel_chestplate",             new MagicArmorItem(MalumArmorMaterials.SOUL_STAINED_STEEL, EquipmentSlot.CHEST, 1.0f, 3.0f, 0.0f, 0.0f, new Item.Settings().group(MALUM)));
     Item SOUL_STAINED_STEEL_LEGGINGS                 = registerItem             ("soul_stained_steel_leggings",               new MagicArmorItem(MalumArmorMaterials.SOUL_STAINED_STEEL, EquipmentSlot.LEGS, 1.0f, 3.0f, 0.0f, 0.0f, new Item.Settings().group(MALUM)));
     Item SOUL_STAINED_STEEL_BOOTS                    = registerItem             ("soul_stained_steel_boots",                  new MagicArmorItem(MalumArmorMaterials.SOUL_STAINED_STEEL, EquipmentSlot.FEET, 1.0f, 3.0f, 0.0f, 0.0f, new Item.Settings().group(MALUM)));
-    Item SPIRIT_HUNTER_CLOAK                         = registerItem             ("soul_hunter_cloak",                         new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.HEAD, 0.0f, 0.0f, 1.0f, 1.0f, new Item.Settings().group(MALUM)));
-    Item SPIRIT_HUNTER_ROBE                          = registerItem             ("soul_hunter_robe",                          new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.CHEST,0.0f, 0.0f, 1.0f, 1.0f,  new Item.Settings().group(MALUM)));
-    Item SPIRIT_HUNTER_LEGGINGS                      = registerItem             ("soul_hunter_leggings",                      new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.LEGS, 0.0f, 0.0f, 1.0f, 1.0f, new Item.Settings().group(MALUM)));
-    Item SPIRIT_HUNTER_BOOTS                         = registerItem             ("soul_hunter_boots",                         new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.FEET, 0.0f, 0.0f, 1.0f, 1.0f, new Item.Settings().group(MALUM)));
+    Item SOUL_HUNTER_CLOAK                           = registerItem             ("soul_hunter_cloak",                         new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.HEAD, 0.0f, 0.0f, 1.0f, 1.0f, new Item.Settings().group(MALUM)));
+    Item SOUL_HUNTER_ROBE                            = registerItem             ("soul_hunter_robe",                          new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.CHEST,0.0f, 0.0f, 1.0f, 1.0f,  new Item.Settings().group(MALUM)));
+    Item SOUL_HUNTER_LEGGINGS                        = registerItem             ("soul_hunter_leggings",                      new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.LEGS, 0.0f, 0.0f, 1.0f, 1.0f, new Item.Settings().group(MALUM)));
+    Item SOUL_HUNTER_BOOTS                           = registerItem             ("soul_hunter_boots",                         new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.FEET, 0.0f, 0.0f, 1.0f, 1.0f, new Item.Settings().group(MALUM)));
     // tyrving
     Item GILDED_RING                                 = registerItem             ("gilded_ring",                               new AttributeTrinketItem(new Item.Settings().group(MALUM).maxCount(1), (modifiers, uuid) -> modifiers.put(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(uuid, "Trinket modifier", 2.0f, EntityAttributeModifier.Operation.ADDITION))));
     Item ORNATE_RING                                 = registerItem             ("ornate_ring",                               new AttributeTrinketItem(new Item.Settings().group(MALUM).maxCount(1), (modifiers, uuid) -> modifiers.put(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, new EntityAttributeModifier(uuid, "Trinket modifier", 2.0f, EntityAttributeModifier.Operation.ADDITION))));

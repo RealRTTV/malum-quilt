@@ -23,6 +23,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Random;
 
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.TOTEM_POLE_BLOCK_ENTITY;
@@ -115,12 +116,25 @@ public class TotemPoleBlock extends BlockWithEntity {
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         BlockPos down = pos.down();
         BlockState downState = world.getBlockState(down);
+        BlockPos up = pos.up();
+        BlockState upState = world.getBlockState(up);
+        while (upState.getBlock() instanceof TotemPoleBlock) {
+            TotemPoleBlockEntity blockEntity = Objects.requireNonNull((TotemPoleBlockEntity) world.getBlockEntity(up));
+            blockEntity.particles = false;
+            blockEntity.updateListeners();
+            up = up.up();
+            upState = world.getBlockState(up);
+        }
         while (down.getY() >= world.getBottomY()) {
             if (downState.getBlock() instanceof TotemBaseBlock) {
                 //noinspection ConstantConditions
                 ((TotemBaseBlockEntity) world.getBlockEntity(down)).rite = null;
                 super.onBreak(world, pos, state, player);
                 return;
+            } else if (downState.getBlock() instanceof TotemPoleBlock) {
+                TotemPoleBlockEntity blockEntity = Objects.requireNonNull((TotemPoleBlockEntity) world.getBlockEntity(down));
+                blockEntity.particles = false;
+                blockEntity.updateListeners();
             }
             down = down.down();
             downState = world.getBlockState(down);

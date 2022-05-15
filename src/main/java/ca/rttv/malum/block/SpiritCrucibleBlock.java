@@ -1,18 +1,27 @@
 package ca.rttv.malum.block;
 
-import ca.rttv.malum.util.block.entity.IAltarAccelerator;
+import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
+import ca.rttv.malum.block.entity.SpiritCrucibleBlockEntity;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -23,42 +32,23 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Random;
+
 @SuppressWarnings("deprecation")
-public abstract class ObeliskBlock extends Block implements Waterloggable, IAltarAccelerator {
+public class SpiritCrucibleBlock extends BlockWithEntity implements Waterloggable {
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final VoxelShape LOWER = VoxelShapes.union(Block.createCuboidShape(0.0d, 0.0d, 0.0d, 6.0d, 5.0d, 6.0d),
-            Block.createCuboidShape(10.0d, 0.0d, 10.0d, 16.0d, 5.0d, 16.0d),
-            Block.createCuboidShape(10.0d, 0.0d, 0.0d, 16.0d, 5.0d, 6.0d),
-            Block.createCuboidShape(0.0d, 0.0d, 10.0d, 6.0d, 5.0d, 16.0d),
-            Block.createCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 3.0d, 15.0d),
-            Block.createCuboidShape(3.0d, 2.5d, 3.0d, 13.0d, 16.0d, 13.0d));
-    public static final VoxelShape UPPER = Block.createCuboidShape(3.0d, 0.0d, 3.0d, 13.0d, 9.0d, 13.0d);
+    public static final VoxelShape LOWER = VoxelShapes.union(Block.createCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 12.0d, 16.0d),
+            Block.createCuboidShape(2.0d, 12.0d, 2.0d, 14.0d, 16.0d, 14.0d));
+    public static final VoxelShape UPPER = VoxelShapes.union(Block.createCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 4.0d, 16.0d),
+            Block.createCuboidShape(5.0d, -2.0d, -2.0d, 11.0d, 6.0d, 4.0d),
+            Block.createCuboidShape(12.0d, -2.0d, 5.0d, 18.0d, 6.0d, 11.0d),
+            Block.createCuboidShape(-2.0d, -2.0d, 5.0d, 4.0d, 6.0d, 11.0d),
+            Block.createCuboidShape(5.0d, -2.0d, 12.0d, 11.0d, 6.0d, 18.0d));
 
-    @Override
-    public float getAcceleration() {
-        return this.getAcceleratorType().acceleration();
-    }
-
-    @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if (state.get(HALF) != DoubleBlockHalf.UPPER) {
-            return world.isAir(pos.up());
-        } else {
-            BlockState blockState = world.getBlockState(pos.down());
-            return blockState.isOf(this) && blockState.get(HALF) == DoubleBlockHalf.LOWER;
-        }
-    }
-
-
-    public ObeliskBlock(Settings settings) {
+    public SpiritCrucibleBlock(AbstractBlock.Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false).with(HALF, DoubleBlockHalf.LOWER));
-    }
-
-    @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.BLOCK;
     }
 
     @Override
@@ -92,6 +82,37 @@ public abstract class ObeliskBlock extends Block implements Waterloggable, IAlta
         builder.add(HALF, WATERLOGGED);
     }
 
+    @Override
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (state.get(HALF) == DoubleBlockHalf.LOWER) {
+            return;
+        }
+
+        ((SpiritCrucibleBlockEntity) world.getBlockEntity(pos)).scheduledTick(state, world, pos, random);
+
+        world.scheduleBlockTick(pos, state.getBlock(), 1);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return super.getTicker(world, state, type);
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world.isClient) {
+            return ActionResult.SUCCESS;
+        }
+
+        if (state.get(HALF) == DoubleBlockHalf.LOWER) {
+            BlockPos up = pos.up();
+            return ((SpiritCrucibleBlockEntity) world.getBlockEntity(up)).onUse(world.getBlockState(up), world, up, player, hand, new BlockHitResult(hit.getType() == BlockHitResult.Type.MISS, hit.getPos().add(0, 1.0d, 0), hit.getSide(), hit.getBlockPos().up(), hit.isInsideBlock())); // stupid code lol
+        }
+
+        return ((SpiritCrucibleBlockEntity) world.getBlockEntity(pos)).onUse(state, world, pos, player, hand, hit);
+    }
+
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -111,5 +132,26 @@ public abstract class ObeliskBlock extends Block implements Waterloggable, IAlta
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        if (state.get(HALF) != DoubleBlockHalf.UPPER) {
+            return world.isAir(pos.up());
+        } else {
+            BlockState blockState = world.getBlockState(pos.down());
+            return blockState.isOf(this) && blockState.get(HALF) == DoubleBlockHalf.LOWER;
+        }
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new SpiritCrucibleBlockEntity(pos, state);
     }
 }
