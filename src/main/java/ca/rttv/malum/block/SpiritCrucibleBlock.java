@@ -34,6 +34,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_CRUCIBLE_BLOCK_ENTITY;
+
 @SuppressWarnings("deprecation")
 public class SpiritCrucibleBlock extends BlockWithEntity implements Waterloggable {
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
@@ -96,7 +99,7 @@ public class SpiritCrucibleBlock extends BlockWithEntity implements Waterloggabl
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return super.getTicker(world, state, type);
+        return world.isClient ? checkType(type, SPIRIT_CRUCIBLE_BLOCK_ENTITY, (world1, pos, state1, blockEntity) -> blockEntity.clientTick(world1, pos, state1)) : null;
     }
 
     @Override

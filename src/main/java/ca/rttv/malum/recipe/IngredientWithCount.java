@@ -1,5 +1,6 @@
 package ca.rttv.malum.recipe;
 
+import ca.rttv.malum.registry.SpiritTypeRegistry;
 import com.google.gson.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -96,8 +97,12 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
             TagKey<Item> tagKey = TagKey.of(Registry.ITEM_KEY, identifier);
             int count = JsonHelper.getInt(json, "count", 1);
             return new IngredientWithCount.TagEntry(tagKey, count);
+        } else if (json.has("type")) {
+            Item item = SpiritTypeRegistry.SPIRITS.get(json.get("type").getAsString()).getSplinterItem();
+            int count = JsonHelper.getInt(json, "count", 1);
+            return new IngredientWithCount.StackEntry(new ItemStack(item, count));
         } else {
-            throw new JsonParseException("An ingredient entry needs either a tag or an item");
+            throw new JsonParseException("An ingredient entry needs either a tag or an item or a spirit type (\"type\": \"sacred\")");
         }
     }
 

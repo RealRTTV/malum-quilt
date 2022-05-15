@@ -10,7 +10,7 @@
       "item": "malum:hallowed_gold_ingot"
     },
     "Y": {
-      "tag": "forge:glass_panes"
+      "item": "minecraft:glass_pane"
     }
   },
   "result": {

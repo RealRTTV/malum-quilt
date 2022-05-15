@@ -14,7 +14,7 @@
       "count": 2
     },
     {
-      "item": "minecraft:lapis_lazuli",
+      "item": "minecraft:lapis",
       "count": 4
     },
     {
@@ -24,7 +24,7 @@
   ],
   "spirits": [
     {
-      "item": "malum:arcane_spirit",
+      "type": "arcane",
       "count": 24
     }
   ]

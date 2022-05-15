@@ -10,7 +10,7 @@
       "item": "malum:soul_stained_steel_ingot"
     },
     "X": {
-      "tag": "forge:leather"
+      "item": "minecraft:leather"
     }
   },
   "result": {

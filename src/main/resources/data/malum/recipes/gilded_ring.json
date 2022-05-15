@@ -10,7 +10,7 @@
       "item": "malum:hallowed_gold_ingot"
     },
     "X": {
-      "tag": "forge:leather"
+      "item": "minecraft:leather"
     }
   },
   "result": {

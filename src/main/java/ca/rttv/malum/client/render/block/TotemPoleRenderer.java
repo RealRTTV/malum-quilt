@@ -28,7 +28,7 @@ public class TotemPoleRenderer implements BlockEntityRenderer<TotemPoleBlockEnti
     public static HashMap<SpiritType, SpriteIdentifier> overlayHashmap = new HashMap<>();
 
     public TotemPoleRenderer() {
-        SpiritTypeRegistry.SPIRITS.forEach((s) ->
+        SpiritTypeRegistry.SPIRITS.forEach((string, s) ->
                 overlayHashmap.put(s, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, s.getOverlayTexture()))
         );
     }

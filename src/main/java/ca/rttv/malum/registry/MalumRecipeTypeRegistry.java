@@ -1,8 +1,6 @@
 package ca.rttv.malum.registry;
 
-import ca.rttv.malum.recipe.BlockTransmutationRecipe;
-import ca.rttv.malum.recipe.SavedNbtRecipe;
-import ca.rttv.malum.recipe.SpiritInfusionRecipe;
+import ca.rttv.malum.recipe.*;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -20,6 +18,8 @@ public interface MalumRecipeTypeRegistry {
         RecipeType<SpiritInfusionRecipe> SPIRIT_INFUSION     = registerRecipeType("spirit_infusion",     new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
               RecipeType<SavedNbtRecipe> SAVED_NBT_RECIPE    = registerRecipeType("nbt_carry",           new RecipeType<>() { public String toString() { return "nbt_carry"; } });
     RecipeType<BlockTransmutationRecipe> BLOCK_TRANSMUTATION = registerRecipeType("block_transmutation", new RecipeType<>() { public String toString() { return "block_transmutation"; } });
+        RecipeType<SpiritFocusingRecipe> SPIRIT_FOCUSING     = registerRecipeType("spirit_focusing",     new RecipeType<>() { public String toString() { return "spirit_focusing"; }});
+          RecipeType<SpiritRepairRecipe> SPIRIT_REPAIR       = registerRecipeType("spirit_repair",       new RecipeType<>() { public String toString() { return "spirit_repair"; }});
 
     static <T extends Recipe<?>> RecipeType<T> registerRecipeType(String id, RecipeType<T> type) {
         RECIPE_TYPES.put(new Identifier(MODID, id), type);

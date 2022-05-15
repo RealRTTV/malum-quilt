@@ -50,7 +50,7 @@ public class SpiritType implements StringIdentifiable {
             case "earthen" -> this.splinterItem = () -> MalumItemRegistry.EARTHEN_SPIRIT;
             default -> this.splinterItem = () -> MalumItemRegistry.SACRED_SPIRIT;
         }
-        SPIRITS.add(this);
+        SPIRITS.put(id, this);
     }
 
     public Text getComponent(int count) {
@@ -77,12 +77,4 @@ public class SpiritType implements StringIdentifiable {
     public String asString() {
         return this.id;
     }
-
-//TODO: ALL OF THIS
-
-//    public BlockState getBlockState(boolean isCorrupt, BlockHitResult hit) {
-//        //need to make these
-//        Block base = isCorrupt ? BlockRegistry.SOULWOOD_TOTEM_POLE.get() : BlockRegistry.RUNEWOOD_TOTEM_POLE.get();
-//        return base.getDefaultState().setValue(BlockStateProperties.HORIZONTAL_FACING, hit.getDirection()).setValue(TotemPoleBlock.SPIRIT_TYPE, SpiritTypeRegistry.SPIRITS.indexOf(this));
-//    }
 }

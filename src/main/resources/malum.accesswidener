@@ -7,6 +7,9 @@ accessible      class     net/minecraft/client/particle/ParticleManager$SimpleSp
 extendable      class     net/minecraft/enchantment/EnchantmentTarget
 accessible      class     net/minecraft/util/registry/Registry$RegistryBootstrap
 accessible      class     net/minecraft/network/NetworkState$PacketHandler
+accessible      class     net/minecraft/recipe/Ingredient$Entry
+accessible      class     net/minecraft/recipe/Ingredient$TagEntry
+accessible      class     net/minecraft/recipe/Ingredient$StackEntry
 
 accessible      field     net/minecraft/client/particle/ParticleManager                            spriteAwareFactories         Ljava/util/Map;
 accessible      field     net/minecraft/util/math/Matrix4f                                         a03                          F
@@ -56,3 +59,6 @@ accessible      method    net/minecraft/block/TallPlantBlock                    
 accessible      method    net/minecraft/util/registry/Registry                                     registerSimple               (Lnet/minecraft/util/registry/RegistryKey;Lnet/minecraft/util/registry/Registry$RegistryBootstrap;)Lnet/minecraft/util/registry/Registry;
 accessible      method    net/minecraft/entity/effect/StatusEffect                                 <init>                       (Lnet/minecraft/entity/effect/StatusEffectType;I)V
 accessible      method    net/minecraft/util/hit/BlockHitResult                                    <init>                       (ZLnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/BlockPos;Z)V
+accessible      method    net/minecraft/recipe/Ingredient                                          ofEntries                    (Ljava/util/stream/Stream;)Lnet/minecraft/recipe/Ingredient;
+accessible      method    net/minecraft/recipe/Ingredient$TagEntry                                 <init>                       (Lnet/minecraft/tag/TagKey;)V
+accessible      method    net/minecraft/recipe/Ingredient$StackEntry                               <init>                       (Lnet/minecraft/item/ItemStack;)V

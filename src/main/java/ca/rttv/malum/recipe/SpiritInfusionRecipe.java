@@ -160,8 +160,7 @@ public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCo
         return SPIRIT_INFUSION;
     }
 
-    public record Serializer<T extends SpiritInfusionRecipe>(
-            RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
+    public record Serializer<T extends SpiritInfusionRecipe>(RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
 
         public T read(Identifier id, JsonObject jsonObject) {
             String group = JsonHelper.getString(jsonObject, "group", "");

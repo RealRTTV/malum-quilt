@@ -210,13 +210,13 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(SpiritInfusionPage.fromOutput(ALCHEMICAL_IMPETUS))
         );
 
-//        entries.add(new BookEntry(
-//                "working_with_ashes", GUNPOWDER, 6, 5)
-//                .addPage(new HeadlineTextPage("working_with_ashes", "working_with_ashes"))
-//                .addPage(SpiritCruciblePage.fromOutput(GUNPOWDER))
-//                .addPage(SpiritCruciblePage.fromOutput(GLOWSTONE_DUST))
-//                .addPage(SpiritCruciblePage.fromOutput(REDSTONE))
-//        );
+        entries.add(new BookEntry(
+                "working_with_ashes", GUNPOWDER, 6, 5)
+                .addPage(new HeadlineTextPage("working_with_ashes", "working_with_ashes"))
+                .addPage(SpiritCruciblePage.fromOutput(GUNPOWDER))
+                .addPage(SpiritCruciblePage.fromOutput(GLOWSTONE_DUST))
+                .addPage(SpiritCruciblePage.fromOutput(REDSTONE))
+        );
 
 //        entries.add(new BookEntry(
 //                "metallurgic_magic", IRON_NODE, 8, 7)

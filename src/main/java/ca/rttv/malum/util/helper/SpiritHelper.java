@@ -92,7 +92,7 @@ public final class SpiritHelper {
 
 
     public static SpiritType getSpiritType(String spirit) {
-        Optional<SpiritType> type = SpiritTypeRegistry.SPIRITS.stream().filter(s -> s.id.equals(spirit)).findFirst();
+        Optional<SpiritType> type = SpiritTypeRegistry.SPIRITS.values().stream().filter(s -> s.id.equals(spirit)).findFirst();
         if (type.isEmpty()) {
             return SpiritType.ELDRITCH_SPIRIT;
         }

@@ -22,17 +22,17 @@
       "count": 2
     },
     {
-      "tag": "forge:gems/emerald",
+      "item": "minecraft:emerald",
       "count": 4
     }
   ],
   "spirits": [
     {
-      "item": "malum:sacred_spirit",
+      "type": "sacred",
       "count": 64
     },
     {
-      "item": "malum:eldritch_spirit",
+      "type": "eldritch",
       "count": 4
     }
   ]

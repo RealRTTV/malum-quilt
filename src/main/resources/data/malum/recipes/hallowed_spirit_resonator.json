@@ -13,7 +13,7 @@
       "item": "malum:runewood_planks"
     },
     "Y": {
-      "tag": "forge:gems/quartz"
+      "item": "minecraft:quartz"
     }
   },
   "result": {
