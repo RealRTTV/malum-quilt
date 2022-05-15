@@ -283,7 +283,7 @@ public interface MalumItemRegistry {
     Item CRACKED_IRON_IMPETUS                       = registerItem               ("cracked_iron_impetus",                      new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item IRON_IMPETUS                               = registerItem               ("iron_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item CRACKED_COPPER_IMPETUS                     = registerItem               ("cracked_copper_impetus",                    new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item COPPER_IMPETUS                             = registerItem               ("cracked_iron_impetus",                      new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item COPPER_IMPETUS                             = registerItem               ("copper_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item CRACKED_GOLD_IMPETUS                       = registerItem               ("cracked_gold_impetus",                      new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item GOLD_IMPETUS                               = registerItem               ("gold_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item CRACKED_LEAD_IMPETUS                       = registerItem               ("cracked_lead_impetus",                      new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
@@ -293,7 +293,7 @@ public interface MalumItemRegistry {
     Item IRON_NODE                                  = registerItem               ("iron_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item COPPER_NODE                                = registerItem               ("copper_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item GOLD_NODE                                  = registerItem               ("gold_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item LEAD_NODE                                  = registerItem               ("leaf_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item LEAD_NODE                                  = registerItem               ("lead_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item SILVER_NODE                                = registerItem               ("silver_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item CRACKED_ALUMINUM_IMPETUS                   = registerItem               ("cracked_aluminum_impetus",                  new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
     Item ALUMINUM_IMPETUS                           = registerItem               ("aluminum_impetus",                          new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
