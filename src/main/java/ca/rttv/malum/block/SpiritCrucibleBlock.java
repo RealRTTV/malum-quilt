@@ -57,7 +57,7 @@ public class SpiritCrucibleBlock extends BlockWithEntity implements Waterloggabl
         if (!world.isAir(fromPos)) {
             return;
         }
-        if (direction.getAxis() == Direction.Axis.Y) {
+        if (direction == Direction.UP && state.get(HALF) == DoubleBlockHalf.LOWER || direction == Direction.DOWN && state.get(HALF) == DoubleBlockHalf.UPPER) {
             world.breakBlock(pos, false);
         }
     }

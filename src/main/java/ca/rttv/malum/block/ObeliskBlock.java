@@ -63,11 +63,11 @@ public abstract class ObeliskBlock extends Block implements Waterloggable, IAlta
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        Direction direction = Direction.fromVector(pos.subtract(fromPos));
+        Direction direction = Direction.fromVector(fromPos.subtract(pos));
         if (!world.isAir(fromPos)) {
             return;
         }
-        if (direction.getAxis() == Direction.Axis.Y) {
+        if (direction == Direction.UP && state.get(HALF) == DoubleBlockHalf.LOWER || direction == Direction.DOWN && state.get(HALF) == DoubleBlockHalf.UPPER) {
             world.breakBlock(pos, false);
         }
     }
