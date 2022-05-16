@@ -6,12 +6,11 @@ import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.ShaderUniformHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.Shader;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
 
@@ -20,36 +19,49 @@ public class RenderHandler {
     public static final HashMap<RenderLayer, ShaderUniformHandler> HANDLERS = new HashMap<>();
     public static VertexConsumerProvider.Immediate DELAYED_RENDER;
     public static Matrix4f PARTICLE_MATRIX = null;
+    public static Frustum FRUSTUM;
 
     public static void init() {
         DELAYED_RENDER = VertexConsumerProvider.immediate(BUFFERS, new BufferBuilder(256));
     }
 
+
     public static void renderLast(MatrixStack stack) {
+        //prepareFrustum(stack, MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos(), MinecraftClient.getInstance().gameRenderer.getBasicProjectionMatrix(MinecraftClient.getInstance().options.fov));
         stack.push();
         if (ClientConfig.DELAYED_PARTICLE_RENDERING) {
             RenderSystem.getModelViewStack().push();
             RenderSystem.getModelViewStack().loadIdentity();
-            if (PARTICLE_MATRIX != null) RenderSystem.getModelViewStack().method_34425(PARTICLE_MATRIX);
+            if (PARTICLE_MATRIX != null) {
+                RenderSystem.getModelViewStack().method_34425(PARTICLE_MATRIX);
+            }
             RenderSystem.applyModelViewMatrix();
             DELAYED_RENDER.draw(RenderLayers.ADDITIVE_PARTICLE);
             DELAYED_RENDER.draw(RenderLayers.ADDITIVE_BLOCK_PARTICLE);
             RenderSystem.getModelViewStack().pop();
             RenderSystem.applyModelViewMatrix();
         }
-        for (RenderLayer layer : BUFFERS.keySet()) {
-            Shader shader = RenderHelper.getShader(layer);
-            if (HANDLERS.containsKey(layer)) {
-                ShaderUniformHandler handler = HANDLERS.get(layer);
-                handler.updateShaderData(shader);
+        for (RenderLayer type : BUFFERS.keySet()) {
+            Shader instance = RenderHelper.getShader(type);
+            if (HANDLERS.containsKey(type)) {
+                ShaderUniformHandler handler = HANDLERS.get(type);
+                handler.updateShaderData(instance);
             }
-            DELAYED_RENDER.draw(layer);
-
-            if (shader instanceof ExtendedShader extendedShaderInstance) {
+            DELAYED_RENDER.draw(type);
+            if (instance instanceof ExtendedShader extendedShaderInstance) {
                 extendedShaderInstance.setUniformDefaults();
             }
         }
         DELAYED_RENDER.draw();
         stack.pop();
+    }
+
+    public static void prepareFrustum(MatrixStack poseStack, Vec3d position, Matrix4f stack) {
+        Matrix4f matrix4f = poseStack.peek().getModel();
+        double d0 = position.getX();
+        double d1 = position.getY();
+        double d2 = position.getZ();
+        FRUSTUM = new Frustum(matrix4f, stack);
+        FRUSTUM.setPosition(d0, d1, d2);
     }
 }

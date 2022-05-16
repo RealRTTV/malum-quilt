@@ -54,9 +54,6 @@ public class TotemBaseBlockEntity extends BlockEntity {
         }
     }
 
-    public void clientTick(World world, BlockPos pos, BlockState state) {
-
-    }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(hand);

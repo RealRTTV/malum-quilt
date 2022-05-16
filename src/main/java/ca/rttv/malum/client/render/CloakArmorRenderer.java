@@ -26,18 +26,20 @@ public class CloakArmorRenderer implements ArmorRenderer {
             armorModel = new SpiritHunterArmorModel(client.getEntityModelLoader().getModelPart(SpiritHunterArmorModel.LAYER));
         }
         contextModel.setAttributes(armorModel);
-        armorModel.setVisible(false);
+        armorModel.setVisible(true);
         armorModel.head.visible = slot == EquipmentSlot.HEAD;
+        armorModel.lowered_hood.visible = slot == EquipmentSlot.CHEST;
+        armorModel.cape.visible = slot == EquipmentSlot.CHEST;
+        armorModel.body.getChild("codpiece").visible = slot == EquipmentSlot.LEGS;
         armorModel.body.visible = slot == EquipmentSlot.CHEST;
-        armorModel.body.getChild("codpiece").visible = slot == EquipmentSlot.CHEST;
         armorModel.leftArm.visible = slot == EquipmentSlot.CHEST;
         armorModel.rightArm.visible = slot == EquipmentSlot.CHEST;
         armorModel.leftLeg.visible = slot == EquipmentSlot.LEGS || slot == EquipmentSlot.FEET;
         armorModel.rightLeg.visible = slot == EquipmentSlot.LEGS || slot == EquipmentSlot.FEET;
         armorModel.leftLeg.getChild("left_boot").visible = slot == EquipmentSlot.FEET;
         armorModel.rightLeg.getChild("right_boot").visible = slot == EquipmentSlot.FEET;
-        armorModel.leftLeg.getChild("left_leggings").visible = slot == EquipmentSlot.LEGS;
-        armorModel.rightLeg.getChild("right_leggings").visible = slot == EquipmentSlot.LEGS;
+        armorModel.leftLeg.getChild("left_leg_robe").visible = slot == EquipmentSlot.LEGS;
+        armorModel.rightLeg.getChild("right_leg_robe").visible = slot == EquipmentSlot.LEGS;
         ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, armorModel, texture);
 
     }
