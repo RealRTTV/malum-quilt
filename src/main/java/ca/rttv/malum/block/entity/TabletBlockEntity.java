@@ -1,24 +1,24 @@
 package ca.rttv.malum.block.entity;
 
+import ca.rttv.malum.block.TabletBlock;
 import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import static ca.rttv.malum.registry.MalumBlockEntityRegistry.ITEM_STAND_BLOCK_ENTITY;
+import static ca.rttv.malum.registry.MalumBlockEntityRegistry.TABLET_BLOCK_ENTITY;
 
-public class ItemStandBlockEntity extends AbstractItemDisplayBlockEntity {
-    public ItemStandBlockEntity(BlockPos pos, BlockState state) {
-        this(ITEM_STAND_BLOCK_ENTITY, pos, state);
+public class TabletBlockEntity extends AbstractItemDisplayBlockEntity {
+    public TabletBlockEntity(BlockPos pos, BlockState state) {
+        this(TABLET_BLOCK_ENTITY, pos, state);
     }
 
-    public ItemStandBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
+    public TabletBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
 
@@ -32,10 +32,10 @@ public class ItemStandBlockEntity extends AbstractItemDisplayBlockEntity {
         }
     }
 
+    @Override
     public Vec3d itemOffset() {
-        Direction direction = this.getCachedState().get(Properties.FACING);
-        Vec3d directionVector = new Vec3d(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
-        return new Vec3d(0.5f - directionVector.getX() * 0.25f, 0.5f - directionVector.getY() * 0.1f, 0.5f - directionVector.getZ() * 0.25f);
+        Direction direction = this.getCachedState().get(TabletBlock.FACING);
+        Vec3d directionVector = Vec3d.of(direction.getVector());
+        return new Vec3d(0.5f + directionVector.x * 0.25f, 0.5f + directionVector.y * 0.4f, 0.5f + directionVector.z * 0.25f);
     }
-
 }

@@ -35,7 +35,7 @@ public class TheDevice extends Block {
         }
     }
 
-    public void playSound(World level, BlockPos pos) {
-        level.playSound(null, pos, MalumSoundRegistry.SUSPICIOUS_SOUND, SoundCategory.BLOCKS, 1, 1);
+    public void playSound(World world, BlockPos pos) {
+        world.playSound(null, pos, MalumSoundRegistry.SUSPICIOUS_SOUND, SoundCategory.BLOCKS, 1, 1);
     }
 }

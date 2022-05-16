@@ -114,6 +114,7 @@ public interface MalumBlockRegistry {
     Block IRIDESCENT_WALL_ETHER_TORCH                 = registerBlock            ("iridescent_wall_ether_torch",               new EtherWallTorchBlock(Settings.of(Material.DECORATION).noCollision().breakInstantly().luminance(state -> 14).sounds(WOOD)));
     Block TAINTED_IRIDESCENT_ETHER_BRAZIER            = registerBlock            ("tainted_iridescent_ether_brazier",          new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)));
     Block TWISTED_IRIDESCENT_ETHER_BRAZIER            = registerBlock            ("twisted_iridescent_ether_brazier",          new EtherBrazierBlock(Settings.of(Material.DECORATION).luminance(state -> 14)));
+    Block TWISTED_TABLET                              = registerBlock            ("twisted_tablet",                            new TabletBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)));
 
     // items & blocks, sorted [Main: Arcane Rocks]
     Block TAINTED_ROCK                                = registerBlock            ("tainted_rock",                              new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f)));

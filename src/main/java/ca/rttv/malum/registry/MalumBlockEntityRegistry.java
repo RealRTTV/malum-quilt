@@ -1,8 +1,6 @@
 package ca.rttv.malum.registry;
 
-import ca.rttv.malum.block.SpiritCrucibleBlock;
 import ca.rttv.malum.block.entity.*;
-import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
@@ -26,6 +24,7 @@ public interface MalumBlockEntityRegistry {
        BlockEntityType<TotemBaseBlockEntity> TOTEM_BASE_BLOCK_ENTITY      = registerBlockEntity("totem_base",      BlockEntityType.Builder.create(TotemBaseBlockEntity::new, RUNEWOOD_TOTEM_BASE, SOULWOOD_TOTEM_BASE).build(null));
        BlockEntityType<TotemPoleBlockEntity> TOTEM_POLE_BLOCK_ENTITY      = registerBlockEntity("totem_pole",      BlockEntityType.Builder.create(TotemPoleBlockEntity::new, RUNEWOOD_TOTEM_POLE, SOULWOOD_TOTEM_POLE).build(null));
   BlockEntityType<SpiritCrucibleBlockEntity> SPIRIT_CRUCIBLE_BLOCK_ENTITY = registerBlockEntity("spirit_crucible", BlockEntityType.Builder.create(SpiritCrucibleBlockEntity::new, SPIRIT_CRUCIBLE).build(null));
+          BlockEntityType<TabletBlockEntity> TABLET_BLOCK_ENTITY          = registerBlockEntity("tablet",          BlockEntityType.Builder.create(TabletBlockEntity::new, TWISTED_TABLET).build(null));
 
     static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String id, BlockEntityType<T> type) {
         BLOCK_ENTITY_TYPES.put(new Identifier(MODID, id), type);

@@ -43,8 +43,8 @@ public class SpiritCruciblePage extends BookPage {
             inputStack = inputStacks[(int) ((client.world.getTime() / 20L) % inputStacks.length)];
         }
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 67, guiTop + 59, mouseX, mouseY);
-//        ProgressionBookScreen.renderComponents(matrices, recipe.output(), guiLeft + 67, guiTop + 126, mouseX, mouseY);
-//        ProgressionBookScreen.renderComponents(matrices, recipe.spirits(), guiLeft + 65, guiTop + 16, mouseX, mouseY, false);
+        ProgressionBookScreen.renderItem(matrices, recipe.output(), guiLeft + 67, guiTop + 126, mouseX, mouseY);
+        ProgressionBookScreen.renderComponents(matrices, recipe.spirits(), guiLeft + 65, guiTop + 16, mouseX, mouseY, false);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class SpiritCruciblePage extends BookPage {
             inputStack = inputStacks[(int) ((client.world.getTime() / 20L) % inputStacks.length)];
         }
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 209, guiTop + 59, mouseX, mouseY);
-//        ProgressionBookScreen.renderComponent(matrices, recipe.output(), guiLeft + 209, guiTop + 126, mouseX, mouseY);
-//        ProgressionBookScreen.renderComponents(matrices, recipe.spirits(), guiLeft + 207, guiTop + 16, mouseX, mouseY, false);
+        ProgressionBookScreen.renderItem(matrices, recipe.output(), guiLeft + 209, guiTop + 126, mouseX, mouseY);
+        ProgressionBookScreen.renderComponents(matrices, recipe.spirits(), guiLeft + 207, guiTop + 16, mouseX, mouseY, false);
     }
 
     public static SpiritCruciblePage fromInput(Item inputItem) {

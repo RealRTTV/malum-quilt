@@ -249,7 +249,7 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
 
         @Override
         public void decrement(int dec) {
-            count = count - dec;
+            count -= dec;
         }
 
         public TagKey<Item> tag() {

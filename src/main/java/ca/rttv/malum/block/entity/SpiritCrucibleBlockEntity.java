@@ -30,12 +30,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.awt.Color;
-import java.util.ArrayList;
+import java.awt.*;
 import java.util.List;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_CRUCIBLE_BLOCK_ENTITY;
 
@@ -56,14 +53,12 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
 
     public SpiritCrucibleBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
-        focusingRecipe = SpiritFocusingRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
-        repairRecipe = SpiritRepairRecipe.getRecipe(world, this.getHeldItem(), spiritSlots, this.getTabletStacks());
     }
 
     private List<ItemStack> getTabletStacks() {
         Map<Item, Integer> map = new LinkedHashMap<>();
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
-            if (world.getBlockEntity(possiblePos) instanceof AbstractItemDisplayBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
+            if (world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
                 Item key = displayBlock.getHeldItem().getItem();
                 Integer value = displayBlock.getHeldItem().getCount();
                 if (!map.containsKey(key)) {
@@ -89,6 +84,14 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (focusingRecipe == null) {
+            focusingRecipe = SpiritFocusingRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
+        }
+
+        if (repairRecipe == null) {
+            repairRecipe = SpiritRepairRecipe.getRecipe(world, this.getHeldItem(), spiritSlots, this.getTabletStacks());
+        }
+
 //        if (queuedCracks > 0) {
 //            crackTimer++;
 //            if (crackTimer % 7 == 0) {

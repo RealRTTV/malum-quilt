@@ -28,7 +28,7 @@ import java.util.stream.StreamSupport;
 import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.SPIRIT_REPAIR_SERIALIZER;
 import static ca.rttv.malum.registry.MalumRecipeTypeRegistry.SPIRIT_REPAIR;
 
-public record SpiritRepairRecipe(Identifier id, String group, String inputLookup, double durabilityPercentage, Ingredient input, IngredientWithCount spirits, ItemStack repairMaterial) implements Recipe<Inventory> {
+public record SpiritRepairRecipe(Identifier id, String group, String inputLookup, double durabilityPercentage, Ingredient input, IngredientWithCount spirits, IngredientWithCount repairMaterial) implements Recipe<Inventory> {
     @Nullable
     public static SpiritRepairRecipe getRecipe(World world, Predicate<SpiritRepairRecipe> predicate) {
         List<SpiritRepairRecipe> recipes = getRecipes(world);
@@ -70,7 +70,7 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
 
     @Override
     public boolean matches(Inventory inventory, World world) {
-        return repairMaterial.isOf(inventory.getStack(0).getItem());
+        return input.test(inventory.getStack(0));
     }
 
     @Override
@@ -113,19 +113,19 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
     public record Serializer<T extends SpiritRepairRecipe>(SpiritRepairRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
         @Override
         public T read(Identifier id, JsonObject json) {
-            String group =  JsonHelper.getString(json, "group", "");
+            System.out.println(id);
+            String group = JsonHelper.getString(json, "group", "");
             String inputLookup = json.get("inputLookup").getAsString();
             double durabilityPercentage = json.get("durabilityPercentage").getAsDouble();
             Ingredient inputs = SpiritRepairRecipe.parseItems(json.getAsJsonArray("inputs"));
             IngredientWithCount spirits = IngredientWithCount.fromJson(json.getAsJsonArray("spirits"));
-            ItemStack repairMaterial = IngredientWithCount.fromJson(json.getAsJsonObject("repairMaterial")).getMatchingStacks()[0];
-            System.out.println("Finished!");
+            IngredientWithCount repairMaterial = IngredientWithCount.fromJson(json.getAsJsonObject("repairMaterial"));
             return recipeFactory.create(id, group, inputLookup, durabilityPercentage, inputs, spirits, repairMaterial);
         }
 
         @Override
         public T read(Identifier id, PacketByteBuf buf) {
-            return recipeFactory.create(id, buf.readString(), buf.readString(), buf.readDouble(), Ingredient.fromPacket(buf), IngredientWithCount.fromPacket(buf), buf.readItemStack());
+            return recipeFactory.create(id, buf.readString(), buf.readString(), buf.readDouble(), Ingredient.fromPacket(buf), IngredientWithCount.fromPacket(buf), IngredientWithCount.fromPacket(buf));
         }
 
         @Override
@@ -135,11 +135,11 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
             buf.writeDouble(recipe.durabilityPercentage());
             recipe.input().write(buf);
             recipe.spirits().write(buf);
-            buf.writeItemStack(recipe.repairMaterial());
+            recipe.repairMaterial().write(buf);
         }
 
         public interface RecipeFactory<T> {
-            T create(Identifier id, String group, String inputLookup, double durabilityPercentage, Ingredient input, IngredientWithCount spirits, ItemStack repairMaterial);
+            T create(Identifier id, String group, String inputLookup, double durabilityPercentage, Ingredient input, IngredientWithCount spirits, IngredientWithCount repairMaterial);
         }
     }
 

@@ -1,6 +1,7 @@
 package ca.rttv.malum.client.screen;
 
 import ca.rttv.malum.client.screen.page.*;
+import ca.rttv.malum.recipe.IngredientWithCount;
 import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -24,7 +25,9 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumItemRegistry.*;
@@ -218,33 +221,33 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(SpiritCruciblePage.fromOutput(REDSTONE))
         );
 
-//        entries.add(new BookEntry(
-//                "metallurgic_magic", IRON_NODE, 8, 7)
-//                .addPage(new HeadlineTextPage("metallurgic_magic", "metallurgic_magic_a"))
-//                .addPage(new TextPage("metallurgic_magic_b"))
-//                .addPage(SpiritInfusionPage.fromOutput(IRON_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(IRON_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(GOLD_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(GOLD_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(COPPER_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(COPPER_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(LEAD_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(LEAD_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(SILVER_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(SILVER_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(ALUMINUM_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(ALUMINUM_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(NICKEL_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(NICKEL_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(URANIUM_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(URANIUM_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(OSMIUM_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(OSMIUM_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(ZINC_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(ZINC_NODE))
-//                .addPage(SpiritInfusionPage.fromOutput(TIN_IMPETUS))
-//                .addPage(SpiritCruciblePage.fromOutput(TIN_NODE))
-//        );
+        entries.add(new BookEntry(
+                "metallurgic_magic", IRON_NODE, 8, 7)
+                .addPage(new HeadlineTextPage("metallurgic_magic", "metallurgic_magic_a"))
+                .addPage(new TextPage("metallurgic_magic_b"))
+                .addPage(SpiritInfusionPage.fromOutput(IRON_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(IRON_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(GOLD_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(GOLD_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(COPPER_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(COPPER_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(LEAD_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(LEAD_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(SILVER_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(SILVER_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(ALUMINUM_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(ALUMINUM_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(NICKEL_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(NICKEL_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(URANIUM_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(URANIUM_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(OSMIUM_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(OSMIUM_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(ZINC_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(ZINC_NODE))
+                .addPage(SpiritInfusionPage.fromOutput(TIN_IMPETUS))
+                .addPage(SpiritCruciblePage.fromOutput(TIN_NODE))
+        );
 
 //        entries.add(new BookEntry(
 //                "crucible_acceleration", SPIRIT_CATALYZER, 7, 4)
@@ -606,6 +609,76 @@ public class ProgressionBookScreen extends Screen {
             screen = new ProgressionBookScreen();
         }
         return screen;
+    }
+
+    public static void renderComponents(MatrixStack matrices, IngredientWithCount components, int posX, int posY, int mouseX, int mouseY, boolean vertical) {
+        List<ItemStack> items = Arrays.stream(components.getEntries()).flatMap(entry -> entry.getStacks().stream()).distinct().collect(Collectors.toList());
+        ProgressionBookScreen.renderItemList(matrices, items, posX, posY, mouseX, mouseY, vertical);
+    }
+
+    private static void renderItemList(MatrixStack matrices, List<ItemStack> items, int posX, int posY, int mouseX, int mouseY, boolean vertical) {
+        int slots = items.size();
+        renderItemFrames(matrices, posX, posY, vertical, slots);
+        if (vertical) {
+            posX -= 10 * (slots - 1);
+        } else {
+            posY -= 10 * (slots - 1);
+        }
+        for (int i = 0; i < slots; i++) {
+            ItemStack stack = items.get(i);
+            int offset = i * 20;
+            int oLeft = posX + 2 + (vertical ? 0 : offset);
+            int oTop = posY + 2 + (vertical ? offset : 0);
+            ProgressionBookScreen.renderItem(matrices, stack, oLeft, oTop, mouseX, mouseY);
+        }
+    }
+
+    public static void renderItemFrames(MatrixStack matrices, int posX, int posY, boolean vertical, int slots) {
+        if (vertical) {
+            posY -= 10 * (slots - 1);
+        } else {
+            posX -= 10 * (slots - 1);
+        }
+        //item slot
+        for (int i = 0; i < slots; i++) {
+            int offset = i * 20;
+            int dx = posX + (vertical ? 0 : offset);
+            int dy = posY + (vertical ? offset : 0);
+            renderTexture(EntryScreen.BOOK_TEXTURE, matrices, dx, dy, 75, 192, 20, 20, 512, 512);
+
+            if (vertical) {
+                //bottom fade
+                if (slots > 1 && i != slots - 1) {
+                    renderTexture(EntryScreen.BOOK_TEXTURE, matrices, posX + 1, dy + 19, 75, 213, 18, 2, 512, 512);
+                }
+                //bottommost fade
+                if (i == slots - 1) {
+                    renderTexture(EntryScreen.BOOK_TEXTURE, matrices, dx + 1, dy + 19, 75, 216, 18, 2, 512, 512);
+                }
+            } else {
+                //bottom fade
+                renderTexture(EntryScreen.BOOK_TEXTURE, matrices, dx + 1, posY + 19, 75, 216, 18, 2, 512, 512);
+                if (slots > 1 && i != slots - 1) {
+                    //side fade
+                    renderTexture(EntryScreen.BOOK_TEXTURE, matrices, dx + 19, posY, 96, 192, 2, 20, 512, 512);
+                }
+            }
+        }
+
+        //crown
+        int crownLeft = posX + 5 + (vertical ? 0 : 10 * (slots - 1));
+        renderTexture(EntryScreen.BOOK_TEXTURE, matrices, crownLeft, posY - 5, 128, 192, 10, 6, 512, 512);
+
+        //side bars
+        if (vertical) {
+            renderTexture(EntryScreen.BOOK_TEXTURE, matrices, posX - 4, posY - 4, 99, 200, 28, 7, 512, 512);
+            renderTexture(EntryScreen.BOOK_TEXTURE, matrices, posX - 4, posY + 17 + 20 * (slots - 1), 99, 192, 28, 7, 512, 512);
+        }
+        // top bars
+        else {
+            renderTexture(EntryScreen.BOOK_TEXTURE, matrices, posX - 4, posY - 4, 59, 192, 7, 28, 512, 512);
+            renderTexture(EntryScreen.BOOK_TEXTURE, matrices, posX + 17 + 20 * (slots - 1), posY - 4, 67, 192, 7, 28, 512, 512);
+        }
     }
 
     public void setupObjects() {

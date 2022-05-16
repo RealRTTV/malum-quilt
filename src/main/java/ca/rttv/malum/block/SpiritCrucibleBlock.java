@@ -1,6 +1,5 @@
 package ca.rttv.malum.block;
 
-import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.block.entity.SpiritCrucibleBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,7 +20,6 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -34,7 +32,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_CRUCIBLE_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
@@ -83,6 +80,11 @@ public class SpiritCrucibleBlock extends BlockWithEntity implements Waterloggabl
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(HALF, WATERLOGGED);
+    }
+
+    @Override
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+        world.scheduleBlockTick(pos, state.getBlock(), 1);
     }
 
     @Override

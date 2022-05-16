@@ -88,6 +88,7 @@ public class ItemStandBlock extends BlockWithEntity implements Waterloggable {
         }
         return super.getStateForNeighborUpdate(state, direction, neighbourState, world, pos, neighbourPos);
     }
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
@@ -97,7 +98,7 @@ public class ItemStandBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         Direction direction = state.get(FACING);
-        return switch(direction) {
+        return switch (direction) {
             case UP -> UP_SHAPE;
             case DOWN -> DOWN_SHAPE;
             case NORTH -> NORTH_SHAPE;
