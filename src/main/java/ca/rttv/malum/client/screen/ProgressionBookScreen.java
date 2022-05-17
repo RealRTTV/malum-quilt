@@ -10,6 +10,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.BackgroundHelper;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -249,44 +250,44 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(SpiritCruciblePage.fromOutput(TIN_NODE))
         );
 
-//        entries.add(new BookEntry(
-//                "crucible_acceleration", SPIRIT_CATALYZER, 7, 4)
-//                .addPage(new HeadlineTextPage("crucible_acceleration", "crucible_acceleration_a"))
-//                .addPage(new TextPage("crucible_acceleration_b"))
-//                .addPage(new TextPage("crucible_acceleration_c"))
-//                .addPage(SpiritInfusionPage.fromOutput(SPIRIT_CATALYZER))
-//        );
+        entries.add(new BookEntry(
+                "crucible_acceleration", SPIRIT_CATALYZER, 7, 4)
+                .addPage(new HeadlineTextPage("crucible_acceleration", "crucible_acceleration_a"))
+                .addPage(new TextPage("crucible_acceleration_b"))
+                .addPage(new TextPage("crucible_acceleration_c"))
+                .addPage(SpiritInfusionPage.fromOutput(SPIRIT_CATALYZER))
+        );
 
-//        entries.add(new BookEntry(
-//                "impetus_restoration", TWISTED_TABLET, 7, 8)
-//                .addPage(new HeadlineTextPage("impetus_restoration", "impetus_restoration_a"))
-//                .addPage(new TextPage("impetus_restoration_b"))
-//                .addPage(new TextPage("impetus_restoration_c"))
-//                .addPage(SpiritInfusionPage.fromOutput(TWISTED_TABLET))
-//                .addPage(SpiritRepairPage.fromInput(CRACKED_ALCHEMICAL_IMPETUS))
-//                .addPage(SpiritRepairPage.fromInput(CRACKED_COPPER_IMPETUS))
-//                .addPage(new HeadlineTextPage("expanded_focusing", "expanded_focusing_a"))
-//                .addPage(new TextPage("expanded_focusing_b"))
-//                .addPage(SpiritRepairPage.fromInput(WOODEN_PICKAXE))
-//                .addPage(SpiritRepairPage.fromInput(STONE_PICKAXE))
-//                .addPage(SpiritRepairPage.fromInput(IRON_PICKAXE))
-//                .addPage(SpiritRepairPage.fromInput(DIAMOND_PICKAXE))
-//                .addPage(SpiritRepairPage.fromInput(GOLDEN_PICKAXE))
-//                .addPage(SpiritRepairPage.fromInput(NETHERITE_PICKAXE))
-//                .addPage(new TextPage("expanded_focusing_c"))
-//                .addPage(SpiritRepairPage.fromInput(SOUL_STAINED_STEEL_PICKAXE))
-//                .addPage(SpiritRepairPage.fromInput(SOUL_STAINED_STEEL_SCYTHE))
-//                .addPage(SpiritRepairPage.fromInput(SOUL_HUNTER_BOOTS))
-//        );
+        entries.add(new BookEntry(
+                "impetus_restoration", TWISTED_TABLET, 7, 8)
+                .addPage(new HeadlineTextPage("impetus_restoration", "impetus_restoration_a"))
+                .addPage(new TextPage("impetus_restoration_b"))
+                .addPage(new TextPage("impetus_restoration_c"))
+                .addPage(SpiritInfusionPage.fromOutput(TWISTED_TABLET))
+                .addPage(SpiritRepairPage.fromInput(CRACKED_ALCHEMICAL_IMPETUS))
+                .addPage(SpiritRepairPage.fromInput(CRACKED_COPPER_IMPETUS))
+                .addPage(new HeadlineTextPage("expanded_focusing", "expanded_focusing_a"))
+                .addPage(new TextPage("expanded_focusing_b"))
+                .addPage(SpiritRepairPage.fromInput(WOODEN_PICKAXE))
+                .addPage(SpiritRepairPage.fromInput(STONE_PICKAXE))
+                .addPage(SpiritRepairPage.fromInput(IRON_PICKAXE))
+                .addPage(SpiritRepairPage.fromInput(DIAMOND_PICKAXE))
+                .addPage(SpiritRepairPage.fromInput(GOLDEN_PICKAXE))
+                .addPage(SpiritRepairPage.fromInput(NETHERITE_PICKAXE))
+                .addPage(new TextPage("expanded_focusing_c"))
+                .addPage(SpiritRepairPage.fromInput(SOUL_STAINED_STEEL_PICKAXE))
+                .addPage(SpiritRepairPage.fromInput(SOUL_STAINED_STEEL_SCYTHE))
+                .addPage(SpiritRepairPage.fromInput(SOUL_HUNTER_BOOTS))
+        );
 
-//        entries.add(new BookEntry(
-//                "crystal_creation", QUARTZ, 9, 5)
-//                .addPage(new HeadlineTextPage("crystal_creation", "crystal_creation"))
-//                .addPage(SpiritCruciblePage.fromOutput(QUARTZ))
-//                .addPage(SpiritCruciblePage.fromOutput(AMETHYST_SHARD))
-//                .addPage(SpiritCruciblePage.fromOutput(BLAZING_QUARTZ))
-//                .addPage(SpiritCruciblePage.fromOutput(PRISMARINE_CRYSTALS))
-//        );
+        entries.add(new BookEntry(
+                "crystal_creation", QUARTZ, 9, 5)
+                .addPage(new HeadlineTextPage("crystal_creation", "crystal_creation"))
+                .addPage(SpiritCruciblePage.fromOutput(QUARTZ))
+                .addPage(SpiritCruciblePage.fromOutput(AMETHYST_SHARD))
+                .addPage(SpiritCruciblePage.fromOutput(BLAZING_QUARTZ))
+                .addPage(SpiritCruciblePage.fromOutput(PRISMARINE_CRYSTALS))
+        );
 
         entries.add(new BookEntry(
                 "spirit_metals", SOUL_STAINED_STEEL_INGOT, -3, 6)
@@ -484,21 +485,21 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(SpiritInfusionPage.fromOutput(MAGEBANE_BELT))
         );
 
-//        entries.add(new BookEntry(
-//                "tyrving", TYRVING, -1, 15)
-//                .addPage(new HeadlineTextPage("tyrving", "tyrving_a"))
-//                .addPage(SpiritInfusionPage.fromOutput(TYRVING))
-//                .addPage(new TextPage("tyrving_b"))
-//                .addPage(SpiritRepairPage.fromInput(TYRVING))
-//        );
+        entries.add(new BookEntry(
+                "tyrving", TYRVING, -1, 15)
+                .addPage(new HeadlineTextPage("tyrving", "tyrving_a"))
+                .addPage(SpiritInfusionPage.fromOutput(TYRVING))
+                .addPage(new TextPage("tyrving_b"))
+                .addPage(SpiritRepairPage.fromInput(TYRVING))
+        );
 
-//        entries.add(new BookEntry(
-//                "ceaseless_impetus", CEASELESS_IMPETUS, 0, 16)
-//                .addPage(new HeadlineTextPage("ceaseless_impetus", "ceaseless_impetus_a"))
-//                .addPage(new TextPage("ceaseless_impetus_b"))
-//                .addPage(SpiritInfusionPage.fromOutput(CEASELESS_IMPETUS))
-//                .addPage(SpiritRepairPage.fromInput(CRACKED_CEASELESS_IMPETUS))
-//        );
+        entries.add(new BookEntry(
+                "ceaseless_impetus", CEASELESS_IMPETUS, 0, 16)
+                .addPage(new HeadlineTextPage("ceaseless_impetus", "ceaseless_impetus_a"))
+                .addPage(new TextPage("ceaseless_impetus_b"))
+                .addPage(SpiritInfusionPage.fromOutput(CEASELESS_IMPETUS))
+                .addPage(SpiritRepairPage.fromInput(CRACKED_CEASELESS_IMPETUS))
+        );
 
         entries.add(new BookEntry(
                 "huh", THE_DEVICE, 0, -10)
@@ -542,7 +543,7 @@ public class ProgressionBookScreen extends Screen {
         client.getItemRenderer().renderInGuiWithOverrides(stack, posX, posY);
         client.getItemRenderer().renderGuiItemOverlay(screen.textRenderer, stack, posX, posY, null);
         if (isHovering(mouseX, mouseY, posX, posY, 16, 16)) {
-            screen.renderTooltip(matrices, new TranslatableText(stack.getTranslationKey()), mouseX, mouseY);
+            screen.renderTooltip(matrices, stack.getTooltip(client.player, TooltipContext.Default.NORMAL), mouseX, mouseY);
         }
     }
 
@@ -624,12 +625,15 @@ public class ProgressionBookScreen extends Screen {
         } else {
             posY -= 10 * (slots - 1);
         }
-        for (int i = 0; i < slots; i++) {
-            ItemStack stack = items.get(i);
-            int offset = i * 20;
-            int oLeft = posX + 2 + (vertical ? 0 : offset);
-            int oTop = posY + 2 + (vertical ? offset : 0);
-            ProgressionBookScreen.renderItem(matrices, stack, oLeft, oTop, mouseX, mouseY);
+        posX -= 19; // idk why
+        posY += 21; // idk why
+        for (ItemStack stack : items) {
+            ProgressionBookScreen.renderItem(matrices, stack, posX, posY, mouseX, mouseY);
+            if (vertical) {
+                posY -= 20;
+            } else {
+                posX += 20;
+            }
         }
     }
 

@@ -18,7 +18,8 @@
     "PlayerEntityMixin",
     "SeverPlayerInteractionManagerMixin",
     "StatusEffectMixin",
-    "StatusEffectUtilMixin"
+    "StatusEffectUtilMixin",
+    "UnbreakingEnchantmentMixin"
   ],
   "client": [
     "BlockColorsMixin",

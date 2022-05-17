@@ -6,8 +6,6 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
@@ -18,8 +16,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
-
-import static ca.rttv.malum.registry.MalumBlockEntityRegistry.TOTEM_BASE_BLOCK_ENTITY;
 
 @SuppressWarnings("deprecation")
 public class TotemBaseBlock extends BlockWithEntity {

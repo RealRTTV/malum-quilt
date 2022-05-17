@@ -23,7 +23,7 @@ public class TabletBlockEntity extends AbstractItemDisplayBlockEntity {
     }
 
     public void clientTick(World world, BlockPos pos, BlockState state) {
-        if (getHeldItem().getItem() instanceof SpiritItem item) {
+        if (this.getHeldItem().getItem() instanceof SpiritItem item) {
             Vec3d vec = DataHelper.fromBlockPos(pos).add(itemOffset());
             double x = vec.x;
             double y = vec.y + Math.sin((world.getTime()) / 20f) * 0.1f;

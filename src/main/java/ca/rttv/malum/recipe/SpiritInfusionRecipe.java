@@ -18,8 +18,10 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,11 +57,16 @@ public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCo
             throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
         }
         List<ItemStack> newSpirits = new ArrayList<>(spirits);
+        for (int i = 0; i < newSpirits.size(); i++) {
+            if (newSpirits.get(i).isEmpty()) {
+                newSpirits.remove(i--);
+            }
+        }
         for (IngredientWithCount.Entry entry : this.spirits.getEntries()) {
             IngredientWithCount.StackEntry stackEntry = (IngredientWithCount.StackEntry) entry;
             boolean foundMatch = false;
             for (int i = 0; i < newSpirits.size(); i++) {
-                if (stackEntry.isValidItem(spirits.get(i))) {
+                if (stackEntry.isValidItem(newSpirits.get(i))) {
                     foundMatch = true;
                     newSpirits.remove(i);
                     break;
@@ -159,7 +166,7 @@ public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCo
         return SPIRIT_INFUSION;
     }
 
-    public record Serializer<T extends SpiritInfusionRecipe>(RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
+    public record Serializer<T extends SpiritInfusionRecipe>(RecipeFactory<T> recipeFactory) implements RecipeSerializer<T>, QuiltRecipeSerializer<T> {
 
         public T read(Identifier id, JsonObject jsonObject) {
             String group = JsonHelper.getString(jsonObject, "group", "");
@@ -185,6 +192,30 @@ public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCo
             buf.writeItemStack(spiritInfusionRecipe.output());
             spiritInfusionRecipe.extraItems().write(buf);
             spiritInfusionRecipe.spirits().write(buf);
+        }
+
+        @Override
+        public JsonObject toJson(T recipe) {
+            JsonObject json = new JsonObject();
+
+            json.addProperty("type", "malum:spirit_infusion");
+
+            if (!recipe.group().equals("")) {
+                json.addProperty("group", recipe.group());
+            }
+
+            json.add("input", recipe.input().toJson());
+
+            JsonObject output = new JsonObject();
+            output.addProperty("item", Registry.ITEM.getId(recipe.output().getItem()).toString());
+            output.addProperty("item", recipe.output().getCount());
+            json.add("output", output);
+
+            json.add("extra_items", recipe.extraItems().toJson());
+
+            json.add("spirits", recipe.spirits().toJson());
+
+            return json;
         }
 
         public interface RecipeFactory<T extends SpiritInfusionRecipe> {

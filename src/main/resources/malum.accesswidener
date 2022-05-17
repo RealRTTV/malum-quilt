@@ -34,6 +34,7 @@ accessible      field     net/minecraft/item/ArmorItem                          
 mutable         field     net/minecraft/item/ArmorItem                                             attributeModifiers           Lcom/google/common/collect/Multimap;
 accessible      field     net/minecraft/entity/LivingEntity                                        lastDamageTaken              F
 accessible      field     net/minecraft/item/Item                                                  ATTACK_DAMAGE_MODIFIER_ID    Ljava/util/UUID;
+accessible      field     net/minecraft/recipe/Ingredient                                          entries                      [Lnet/minecraft/recipe/Ingredient$Entry;
 
 accessible      method    net/minecraft/entity/damage/DamageSource                                 setUnblockable               ()Lnet/minecraft/entity/damage/DamageSource;
 accessible      method    net/minecraft/entity/damage/DamageSource                                 <init>                       (Ljava/lang/String;)V
@@ -62,3 +63,4 @@ accessible      method    net/minecraft/util/hit/BlockHitResult                 
 accessible      method    net/minecraft/recipe/Ingredient                                          ofEntries                    (Ljava/util/stream/Stream;)Lnet/minecraft/recipe/Ingredient;
 accessible      method    net/minecraft/recipe/Ingredient$TagEntry                                 <init>                       (Lnet/minecraft/tag/TagKey;)V
 accessible      method    net/minecraft/recipe/Ingredient$StackEntry                               <init>                       (Lnet/minecraft/item/ItemStack;)V
+accessible      method    net/minecraft/item/ItemStack                                             <init>                       (Lnet/minecraft/item/ItemConvertible;ILjava/util/Optional;)V

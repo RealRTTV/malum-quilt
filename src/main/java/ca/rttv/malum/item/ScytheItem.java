@@ -2,6 +2,7 @@ package ca.rttv.malum.item;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import com.google.common.collect.ImmutableMultimap;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -15,7 +16,9 @@ import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
 
@@ -39,6 +42,11 @@ public class ScytheItem extends SwordItem {
             );
         }
         this.attributeModifiers = builder.build();
+    }
+
+    @Override
+    public boolean canMine(BlockState state, World world, BlockPos pos, PlayerEntity miner) {
+        return true;
     }
 
     @Override

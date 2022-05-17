@@ -24,5 +24,6 @@ public final class BlockEntityRendererFactoriesMixin {
         register(TOTEM_POLE_BLOCK_ENTITY, renderer -> new TotemPoleRenderer());
         register(SPIRIT_CRUCIBLE_BLOCK_ENTITY, renderer -> new SpiritCrucibleRenderer());
         register(TABLET_BLOCK_ENTITY, renderer -> new TabletRenderer());
+        register(SPIRIT_CATALYZER_BLOCK_ENTITY, renderer -> new SpiritCatalyzerRenderer());
     }
 }

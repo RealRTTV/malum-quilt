@@ -1,26 +1,49 @@
 {
   "variants": {
-    "facing=west": [
+    "facing=west,half=lower": [
       {
         "model": "malum:block/spirit_catalyzer",
         "y": 270
       }
     ],
-    "facing=south": [
+    "facing=south,half=lower": [
       {
         "model": "malum:block/spirit_catalyzer",
         "y": 180
       }
     ],
-    "facing=east": [
+    "facing=east,half=lower": [
       {
         "model": "malum:block/spirit_catalyzer",
         "y": 90
       }
     ],
-    "facing=north": [
+    "facing=north,half=lower": [
       {
         "model": "malum:block/spirit_catalyzer"
+      }
+    ],
+    "facing=west,half=upper": [
+      {
+        "model": "malum:block/spirit_catalyzer_component",
+        "y": 270
+      }
+    ],
+    "facing=south,half=upper": [
+      {
+        "model": "malum:block/spirit_catalyzer_component",
+        "y": 180
+      }
+    ],
+    "facing=east,half=upper": [
+      {
+        "model": "malum:block/spirit_catalyzer_component",
+        "y": 90
+      }
+    ],
+    "facing=north,half=upper": [
+      {
+        "model": "malum:block/spirit_catalyzer_component"
       }
     ]
   }

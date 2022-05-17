@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.Map;
 
@@ -47,16 +48,16 @@ public class SavedNbtRecipe extends ShapedRecipe {
         return SAVED_NBT_RECIPE_SERIALIZER;
     }
 
-    public static class Serializer implements RecipeSerializer<SavedNbtRecipe> {
-        public SavedNbtRecipe read(Identifier identifier, JsonObject jsonObject) {
-            String string = JsonHelper.getString(jsonObject, "group", "");
-            Map<String, Ingredient> map = ShapedRecipe.readSymbols(JsonHelper.getObject(jsonObject, "key"));
-            String[] strings = ShapedRecipe.removePadding(ShapedRecipe.getPattern(JsonHelper.getArray(jsonObject, "pattern")));
+    public static class Serializer implements RecipeSerializer<SavedNbtRecipe>, QuiltRecipeSerializer<SavedNbtRecipe> {
+        public SavedNbtRecipe read(Identifier identifier, JsonObject json) {
+            String string = JsonHelper.getString(json, "group", "");
+            Map<String, Ingredient> map = ShapedRecipe.readSymbols(JsonHelper.getObject(json, "key"));
+            String[] strings = ShapedRecipe.removePadding(ShapedRecipe.getPattern(JsonHelper.getArray(json, "pattern")));
             int i = strings[0].length();
             int j = strings.length;
             DefaultedList<Ingredient> defaultedList = ShapedRecipe.createPatternMatrix(strings, map, i, j);
-            ItemStack itemStack = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-            Item savedItem = JsonHelper.getItem(jsonObject.get("nbtCarry").getAsJsonObject(), "item");
+            ItemStack itemStack = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
+            Item savedItem = JsonHelper.getItem(json.get("nbtCarry").getAsJsonObject(), "item");
             return new SavedNbtRecipe(identifier, string, i, j, defaultedList, itemStack, savedItem);
         }
 
@@ -84,6 +85,13 @@ public class SavedNbtRecipe extends ShapedRecipe {
 
             packetByteBuf.writeItemStack(savedNbtRecipe.getOutput());
             packetByteBuf.writeString(Registry.ITEM.getId(savedNbtRecipe.savedItem).toString());
+        }
+
+        @Override
+        public JsonObject toJson(SavedNbtRecipe recipe) {
+            JsonObject json = new JsonObject();
+            json.add("Unable to deserialize malum:saved_nbt_recipe to a json, Reason: Incapable of converting SavedNbtRecipe object to JsonObject", null);
+            return json;
         }
     }
 }

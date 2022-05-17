@@ -1,0 +1,10 @@
+{
+  "registry_name": "minecraft:endermite",
+  "primary_type": "eldritch",
+  "spirits": [
+    {
+      "spirit": "eldritch",
+      "count": 1
+    }
+  ]
+}

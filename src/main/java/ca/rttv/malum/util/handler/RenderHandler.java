@@ -6,7 +6,6 @@ import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.ShaderUniformHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;

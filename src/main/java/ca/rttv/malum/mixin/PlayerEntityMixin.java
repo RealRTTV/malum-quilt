@@ -1,6 +1,7 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.item.ScytheItem;
+import ca.rttv.malum.item.TyrvingItem;
 import ca.rttv.malum.util.spirit.spiritaffinity.ArcaneAffinity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -9,6 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
@@ -25,7 +27,6 @@ import static ca.rttv.malum.registry.MalumAttributeRegistry.SCYTHE_PROFICIENCY;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
-
     @Unique
     float f;
 
@@ -79,5 +80,14 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             return value + (float) this.getAttributeValue(SCYTHE_PROFICIENCY) * 0.5f;
         }
         return value;
+    }
+
+    @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/entity/LivingEntity;)I", ordinal = 0), index = 8)
+    private boolean attack(boolean bl4) {
+        ItemStack itemStack = this.getStackInHand(Hand.MAIN_HAND);
+        if (itemStack.getItem() instanceof TyrvingItem) {
+            return false;
+        }
+        return bl4;
     }
 }

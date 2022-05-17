@@ -74,7 +74,11 @@ public class TotemPoleBlockEntity extends BlockEntity {
             currentColor--;
         }
 
-        if (currentColor < 10) {
+        if (!particles) {
+            currentColor = 0;
+        }
+
+        if (currentColor < 10 && particles) {
             currentColor++;
         }
 

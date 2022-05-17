@@ -12,8 +12,10 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -21,8 +23,7 @@ import java.util.function.Predicate;
 import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.BLOCK_TRANSMUTATION_SERIALIZER;
 import static ca.rttv.malum.registry.MalumRecipeTypeRegistry.BLOCK_TRANSMUTATION;
 
-public record BlockTransmutationRecipe(Identifier id, String group,
-                                       Ingredient input, ItemStack output) implements Recipe<Inventory> {
+public record BlockTransmutationRecipe(Identifier id, String group, Ingredient input, ItemStack output) implements Recipe<Inventory> {
 
     @Nullable
     public static BlockTransmutationRecipe getRecipe(Block block, World world) {
@@ -89,7 +90,7 @@ public record BlockTransmutationRecipe(Identifier id, String group,
         return BLOCK_TRANSMUTATION;
     }
 
-    public record Serializer<T extends BlockTransmutationRecipe>(BlockTransmutationRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
+    public record Serializer<T extends BlockTransmutationRecipe>(BlockTransmutationRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T>, QuiltRecipeSerializer<T> {
 
         @Override
         public T read(Identifier id, JsonObject json) {
@@ -112,6 +113,23 @@ public record BlockTransmutationRecipe(Identifier id, String group,
             buf.writeString(recipe.group());
             recipe.input().write(buf);
             buf.writeItemStack(recipe.output());
+        }
+
+        @Override
+        public JsonObject toJson(T recipe) {
+            JsonObject json = new JsonObject();
+
+            json.addProperty("type", "malum:block_transmutation");
+
+            if (!recipe.group().equals("")) {
+                json.addProperty("group", recipe.group());
+            }
+
+            json.addProperty("input", Registry.ITEM.getId(recipe.input().getMatchingStacks()[0].getItem()).toString());
+
+            json.addProperty("output", Registry.ITEM.getId(recipe.output().getItem()).toString());
+
+            return json;
         }
 
         public interface RecipeFactory<T> {

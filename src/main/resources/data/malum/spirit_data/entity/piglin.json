@@ -1,0 +1,14 @@
+{
+  "registry_name": "minecraft:piglin",
+  "primary_type": "wicked",
+  "spirits": [
+    {
+      "spirit": "wicked",
+      "count": 1
+    },
+    {
+      "spirit": "infernal",
+      "count": 1
+    }
+  ]
+}

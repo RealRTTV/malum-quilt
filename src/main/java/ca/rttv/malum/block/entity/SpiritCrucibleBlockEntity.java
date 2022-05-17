@@ -1,14 +1,17 @@
 package ca.rttv.malum.block.entity;
 
+import ca.rttv.malum.block.SpiritCatalyzerBlock;
 import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.recipe.SpiritFocusingRecipe;
 import ca.rttv.malum.recipe.SpiritRepairRecipe;
+import ca.rttv.malum.util.block.entity.ICrucibleAccelerator;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -23,10 +26,13 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -41,11 +47,14 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
     public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(9, ItemStack.EMPTY);
     private float spiritSpin = 0.0f;
     @Nullable
-    private SpiritFocusingRecipe focusingRecipe;
+    public SpiritFocusingRecipe focusingRecipe;
     @Nullable
-    private SpiritRepairRecipe repairRecipe;
-    private int progress;
+    public SpiritRepairRecipe repairRecipe;
+    @Nullable
+    Map<String, List<Pair<ICrucibleAccelerator, BlockPos>>> accelerators;
+    private float progress = 0.0f;
     private float speed = 0.0f;
+    private int queuedCracks = 0;
 
     public SpiritCrucibleBlockEntity(BlockPos pos, BlockState state) {
         this(SPIRIT_CRUCIBLE_BLOCK_ENTITY, pos, state);
@@ -55,7 +64,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
         super(blockEntityType, blockPos, blockState);
     }
 
-    private List<ItemStack> getTabletStacks() {
+    public List<ItemStack> getTabletStacks() {
         Map<Item, Integer> map = new LinkedHashMap<>();
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
             if (world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
@@ -84,6 +93,8 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        // todo, make only run on first tick
+
         if (focusingRecipe == null) {
             focusingRecipe = SpiritFocusingRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
         }
@@ -104,31 +115,63 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
 //            }
 //        }
 
+        // bad code (i tried to make it efficient, it is but it's still heavy, especially if it has to re-cache) AND THIS RUNS  E V E R Y   T I C K, todo, fix this speed
         if (focusingRecipe != null) {
-//            if (!accelerators.isEmpty()) { // todo
-//                boolean canAccelerate = true;
-//                for (ICrucibleAccelerator accelerator : accelerators) {
-//                    boolean canAcceleratorAccelerate = accelerator.canAccelerate();
-//                    if (!canAcceleratorAccelerate) {
-//                        canAccelerate = false;
-//                    }
-//                }
-//            }
-        }
-
-
-        if (focusingRecipe != null) {
+            if (accelerators == null) {
+                accelerators = new HashMap<>();
+                BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(possiblePos -> {
+                    BlockState state2 = world.getBlockState(possiblePos);
+                    if (state2.getBlock() instanceof ICrucibleAccelerator accelerator
+                            && (!state2.contains(SpiritCatalyzerBlock.HALF) || state2.get(SpiritCatalyzerBlock.HALF) == DoubleBlockHalf.UPPER)
+                            && accelerator.canAccelerate(possiblePos, world)) {
+                        List<Pair<ICrucibleAccelerator, BlockPos>> accs = accelerators.get(accelerator.name());
+                        if (accs != null && accs.size() <= 8) {
+                            accs.add(new Pair<>(accelerator, possiblePos.toImmutable()));
+                        } else {
+                            accelerators.put(accelerator.name(), new ArrayList<>(Collections.singleton(new Pair<>(accelerator, possiblePos.toImmutable()))));
+                        }
+                    }
+                });
+            }
+            speed = 0.0f;
+            accelerators.forEach((name, accs) -> {
+                speed += SpiritCatalyzerBlock.SPEED_INCREASE[accs.size() - 1];
+                accs.forEach(accelerator -> accelerator.getLeft().tick(accelerator.getRight(), world));
+            });
             progress += 1 + speed;
             if (progress >= focusingRecipe.time()) {
-                focusingRecipe.craft(this); // todo
+                focusingRecipe.craft(this);
+                final int[] durabilityCost = {focusingRecipe.durabilityCost()};
+                accelerators.forEach((name, accs) -> {
+                    float chance = SpiritCatalyzerBlock.DAMAGE_CHANCES[accs.size() - 1];
+                    int rolls = SpiritCatalyzerBlock.DAMAGE_ROLLS[accs.size() - 1];
+                    for (int i = 0; i < rolls; i++) {
+                        if (world.random.nextFloat() <= chance) {
+                            durabilityCost[0]++;
+                            chance *= chance;
+                            continue;
+                        }
+                        break;
+                    }
+                });
+                queuedCracks += durabilityCost[0];
+                if (this.getHeldItem().damage(durabilityCost[0], world.random, null)) {
+                    Identifier id = Registry.ITEM.getId(this.getHeldItem().getItem());
+                    this.setStack(0, new ItemStack(Registry.ITEM.get(new Identifier(id.getNamespace(), "cracked_" + id.getPath()))));
+                }
+                progress = 0;
+                this.notifyListeners();
+                this.focusingRecipe = null;
             }
-            return;
         } else if (repairRecipe != null) {
             ItemStack damagedItem = this.getHeldItem();
             int time = 400 + damagedItem.getDamage() * 5;
             progress++;
             if (progress >= time) {
-                repairRecipe.craft(this); // todo
+                repairRecipe.craft(this);
+                progress = 0;
+                this.notifyListeners();
+                this.repairRecipe = null;
             }
         }
 
@@ -172,9 +215,9 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
                 }
             }
         }
-        //spirit particles shot out from the twisted tablet
+
 //        if (repairRecipe != null) {
-//            TwistedTabletBlockEntity tabletBlockEntity = validTablet;
+//            TabletBlockEntity tabletBlockEntity = validTablet;
 //
 //            ArrayList<Color> colors = new ArrayList<>();
 //            ArrayList<Color> endColors = new ArrayList<>();
@@ -241,7 +284,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
 //                    }
 //                }
 //                if (item.getItem() instanceof SpiritItem spiritSplinterItem) {
-//                    Vec3d offset = spiritOffset(this, i);
+//                    Vec3d offset = spiritOffset(this, i, 0.5f);
 //                    Color color = spiritSplinterItem.type.color;
 //                    Color endColor = spiritSplinterItem.type.endColor;
 //                    double x = pos.getX() + offset.x;
@@ -250,7 +293,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
 //                    Vec3d velocity = new Vec3d(x, y, z).subtract(itemPos).normalize().multiply(-0.03f);
 //                    for (ICrucibleAccelerator accelerator : accelerators) {
 //                        if (accelerator != null) {
-//                            accelerator.addParticles(color, endColor, 0.08f / this.getSpiritCount(), worldPosition, itemPos);
+//                            accelerator.addParticles(color, endColor, 0.08f / this.getSpiritCount(), pos, itemPos);
 //                        }
 //                    }
 //                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
@@ -362,7 +405,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
     protected void writeNbt(NbtCompound nbt) {
         Inventories.writeNbt(nbt, heldItem);
         DataHelper.writeNbt(nbt, spiritSlots, "Spirits");
-        nbt.putInt("Progress", progress);
+        nbt.putFloat("Progress", progress);
         nbt.putFloat("Speed", speed);
     }
 
@@ -372,7 +415,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
         spiritSlots.clear();
         Inventories.readNbt(nbt, heldItem);
         DataHelper.readNbt(nbt, spiritSlots, "Spirits");
-        progress = nbt.getInt("Progress");
+        progress = nbt.getFloat("Progress");
         speed = nbt.getFloat("Speed");
     }
 

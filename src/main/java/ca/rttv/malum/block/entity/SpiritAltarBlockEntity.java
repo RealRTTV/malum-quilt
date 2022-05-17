@@ -77,7 +77,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
                 spinUp++;
                 this.notifyListeners();
             }
-                progress++;
+                progress += 1 + speed;
                 int progressCap = (int) (300 * Math.exp(-0.15 * speed));
                 if (progress >= progressCap) {
                     recipe.craft(this);

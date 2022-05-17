@@ -10,6 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -19,6 +20,7 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -53,7 +55,7 @@ public class SpiritCrucibleBlock extends BlockWithEntity implements Waterloggabl
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        Direction direction = Direction.fromVector(pos.subtract(fromPos));
+        Direction direction = Direction.fromVector(fromPos.subtract(pos));
         if (!world.isAir(fromPos)) {
             return;
         }
@@ -116,6 +118,18 @@ public class SpiritCrucibleBlock extends BlockWithEntity implements Waterloggabl
         }
 
         return ((SpiritCrucibleBlockEntity) world.getBlockEntity(pos)).onUse(state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock())) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof SpiritCrucibleBlockEntity) {
+                ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
+            }
+
+            super.onStateReplaced(state, world, pos, newState, moved);
+        }
     }
 
     @Nullable

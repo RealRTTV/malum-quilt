@@ -158,7 +158,7 @@ public interface MalumItemRegistry {
     Item SOUL_HUNTER_ROBE                           = registerItem             ("soul_hunter_robe",                          new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.CHEST,0.0f, 0.0f, 1.0f, 1.0f,  new Item.Settings().group(MALUM)));
     Item SOUL_HUNTER_LEGGINGS                       = registerItem             ("soul_hunter_leggings",                      new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.LEGS, 0.0f, 0.0f, 1.0f, 1.0f, new Item.Settings().group(MALUM)));
     Item SOUL_HUNTER_BOOTS                          = registerItem             ("soul_hunter_boots",                         new MagicArmorItem(SOUL_CLOAK, EquipmentSlot.FEET, 0.0f, 0.0f, 1.0f, 1.0f, new Item.Settings().group(MALUM)));
-    // tyrving
+    Item TYRVING                                    = registerItem             ("tyrving",                                   new TyrvingItem(MalumToolMaterials.TWISTED_ROCK, 3.0f, -2.7f, new Item.Settings().group(MALUM)));
     Item GILDED_RING                                = registerItem             ("gilded_ring",                               new AttributeTrinketItem(new Item.Settings().group(MALUM).maxCount(1), (modifiers, uuid) -> modifiers.put(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(uuid, "Trinket modifier", 2.0f, EntityAttributeModifier.Operation.ADDITION))));
     Item ORNATE_RING                                = registerItem             ("ornate_ring",                               new AttributeTrinketItem(new Item.Settings().group(MALUM).maxCount(1), (modifiers, uuid) -> modifiers.put(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, new EntityAttributeModifier(uuid, "Trinket modifier", 2.0f, EntityAttributeModifier.Operation.ADDITION))));
     Item ORNATE_NECKLACE                            = registerItem             ("ornate_necklace",                           new AttributeTrinketItem(new Item.Settings().group(MALUM).maxCount(1), (modifiers, uuid) -> modifiers.put(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, new EntityAttributeModifier(uuid, "Trinket modifier", 4.0f, EntityAttributeModifier.Operation.ADDITION))));
@@ -172,12 +172,13 @@ public interface MalumItemRegistry {
     Item NECKLACE_OF_THE_NARROW_EDGE                = registerItem             ("necklace_of_the_narrow_edge",               new AttributeTrinketItem(new Item.Settings().group(MALUM).maxCount(1), (modifiers, uuid) -> modifiers.put(SCYTHE_PROFICIENCY, new EntityAttributeModifier(uuid, "Trinket modifier", 4.0f, EntityAttributeModifier.Operation.ADDITION))));
     Item WARDED_BELT                                = registerItem             ("warded_belt",                               new AttributeTrinketItem(new Item.Settings().group(MALUM).maxCount(1), (modifiers, uuid) -> { modifiers.put(MAGIC_RESISTANCE, new EntityAttributeModifier(uuid, "Trinket modifier", 1.0f, EntityAttributeModifier.Operation.ADDITION)); modifiers.put(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(uuid, "Trinket modifier", 2.0f, EntityAttributeModifier.Operation.ADDITION)); modifiers.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier(uuid, "Trinket modifier", 0.2f, EntityAttributeModifier.Operation.ADDITION)); modifiers.put(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, new EntityAttributeModifier(uuid, "Trinket modifier", 1.0f, EntityAttributeModifier.Operation.ADDITION)); }));
     Item MAGEBANE_BELT                              = registerItem             ("magebane_belt",                             new AttributeTrinketItem(new Item.Settings().group(MALUM).maxCount(1), (modifiers, uuid) -> { modifiers.put(MAGIC_RESISTANCE, new EntityAttributeModifier(uuid, "Trinket modifier", 2.0f, EntityAttributeModifier.Operation.ADDITION)); modifiers.put(SOUL_WARD_CAP, new EntityAttributeModifier(uuid, "Trinket modifier", 3.0f, EntityAttributeModifier.Operation.ADDITION)); }));
-    // cracked ceaseless impetus
-    // ceaseless impetus
+    Item CRACKED_CEASELESS_IMPETUS                  = registerItem             ("cracked_ceaseless_impetus",                 new Item(new Item.Settings().maxCount(1).group(MALUM).rarity(Rarity.UNCOMMON)));
+    Item CEASELESS_IMPETUS                          = registerItem             ("ceaseless_impetus",                         new Item(new Item.Settings().maxCount(1).maxDamage(2).group(MALUM).rarity(Rarity.UNCOMMON)));
     Item RAW_SOULSTONE                              = registerItem             ("raw_soulstone",                             new Item(new Item.Settings().group(MALUM)));
     Item CRUSHED_SOULSTONE                          = registerItem             ("crushed_soulstone",                         new Item(new Item.Settings().group(MALUM)));
     Item BLOCK_OF_RAW_SOULSTONE                     = registerItem             ("block_of_raw_soulstone",                    new BlockItem(MalumBlockRegistry.BLOCK_OF_RAW_SOULSTONE, new Item.Settings().group(MALUM)));
     Item TWISTED_TABLET                             = registerItem             ("twisted_tablet",                            new BlockItem(MalumBlockRegistry.TWISTED_TABLET, new Item.Settings().group(MALUM)));
+    Item SPIRIT_CATALYZER                           = registerItem             ("spirit_catalyzer",                          new TallBlockItem(MalumBlockRegistry.SPIRIT_CATALYZER, new Item.Settings().group(MALUM)));
 
     // items & blocks, sorted [Main: Arcane Rocks]
     Item TAINTED_ROCK                               = registerItem             ("tainted_rock",                              new BlockItem(MalumBlockRegistry.TAINTED_ROCK, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
@@ -189,8 +190,6 @@ public interface MalumItemRegistry {
     Item CRACKED_TAINTED_ROCK_TILES                 = registerItem             ("cracked_tainted_rock_tiles",                new BlockItem(MalumBlockRegistry.CRACKED_TAINTED_ROCK_TILES, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item SMALL_TAINTED_ROCK_BRICKS                  = registerItem             ("small_tainted_rock_bricks",                 new BlockItem(MalumBlockRegistry.SMALL_TAINTED_ROCK_BRICKS, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item CRACKED_SMALL_TAINTED_ROCK_BRICKS          = registerItem             ("cracked_small_tainted_rock_bricks",         new BlockItem(MalumBlockRegistry.CRACKED_SMALL_TAINTED_ROCK_BRICKS, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
-    Item TAINTED_ROCK_PILLAR                        = registerItem             ("tainted_rock_pillar",                       new BlockItem(MalumBlockRegistry.TAINTED_ROCK_PILLAR, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
-    Item TAINTED_ROCK_PILLAR_CAP                    = registerItem             ("tainted_rock_pillar_cap",                   new BlockItem(MalumBlockRegistry.TAINTED_ROCK_PILLAR_CAP, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item TAINTED_ROCK_COLUMN                        = registerItem             ("tainted_rock_column",                       new BlockItem(MalumBlockRegistry.TAINTED_ROCK_COLUMN, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item TAINTED_ROCK_COLUMN_CAP                    = registerItem             ("tainted_rock_column_cap",                   new BlockItem(MalumBlockRegistry.TAINTED_ROCK_COLUMN_CAP, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item CUT_TAINTED_ROCK                           = registerItem             ("cut_tainted_rock",                          new BlockItem(MalumBlockRegistry.CUT_TAINTED_ROCK, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
@@ -232,8 +231,6 @@ public interface MalumItemRegistry {
     Item CRACKED_TWISTED_ROCK_TILES                 = registerItem             ("cracked_twisted_rock_tiles",                new BlockItem(MalumBlockRegistry.CRACKED_TWISTED_ROCK_TILES, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item SMALL_TWISTED_ROCK_BRICKS                  = registerItem             ("small_twisted_rock_bricks",                 new BlockItem(MalumBlockRegistry.SMALL_TWISTED_ROCK_BRICKS, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item CRACKED_SMALL_TWISTED_ROCK_BRICKS          = registerItem             ("cracked_small_twisted_rock_bricks",         new BlockItem(MalumBlockRegistry.CRACKED_SMALL_TWISTED_ROCK_BRICKS, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
-    Item TWISTED_ROCK_PILLAR                        = registerItem             ("twisted_rock_pillar",                       new BlockItem(MalumBlockRegistry.TWISTED_ROCK_PILLAR, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
-    Item TWISTED_ROCK_PILLAR_CAP                    = registerItem             ("twisted_rock_pillar_cap",                   new BlockItem(MalumBlockRegistry.TWISTED_ROCK_PILLAR_CAP, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item TWISTED_ROCK_COLUMN                        = registerItem             ("twisted_rock_column",                       new BlockItem(MalumBlockRegistry.TWISTED_ROCK_COLUMN, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item TWISTED_ROCK_COLUMN_CAP                    = registerItem             ("twisted_rock_column_cap",                   new BlockItem(MalumBlockRegistry.TWISTED_ROCK_COLUMN_CAP, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item CUT_TWISTED_ROCK                           = registerItem             ("cut_twisted_rock",                          new BlockItem(MalumBlockRegistry.CUT_TWISTED_ROCK, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
@@ -266,8 +263,8 @@ public interface MalumItemRegistry {
     Item CRACKED_SMALL_TWISTED_ROCK_BRICKS_STAIRS   = registerItem             ("cracked_small_twisted_rock_bricks_stairs",  new BlockItem(MalumBlockRegistry.CRACKED_SMALL_TWISTED_ROCK_BRICKS_STAIRS, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item TWISTED_ROCK_ITEM_STAND                    = registerItem             ("twisted_rock_item_stand",                   new BlockItem(MalumBlockRegistry.TWISTED_ROCK_ITEM_STAND, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
     Item TWISTED_ROCK_ITEM_PEDESTAL                 = registerItem             ("twisted_rock_item_pedestal",                new BlockItem(MalumBlockRegistry.TWISTED_ROCK_ITEM_PEDESTAL, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
-    // tainted rock button
-    // twisted rock button
+    Item TAINTED_ROCK_BUTTON                        = registerItem             ("tainted_rock_button",                       new BlockItem(MalumBlockRegistry.TAINTED_ROCK_BUTTON, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
+    Item TWISTED_ROCK_BUTTON                        = registerItem             ("twisted_rock_button",                       new BlockItem(MalumBlockRegistry.TWISTED_ROCK_BUTTON, new Item.Settings().group(MALUM_ARCANE_ROCKS)));
 
     // items & blocks, sorted [Main: Spirits]
     Item SACRED_SPIRIT                              = registerItem             ("sacred_spirit",                             new SpiritItem(new Item.Settings().group(MALUM_SPIRITS), SpiritType.SACRED_SPIRIT));
@@ -281,40 +278,40 @@ public interface MalumItemRegistry {
 
     // items & blocks, sorted [Main: Metallurgic Magic]
     Item CRACKED_ALCHEMICAL_IMPETUS                 = registerItem             ("cracked_alchemical_impetus",                new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item ALCHEMICAL_IMPETUS                         = registerItem             ("alchemical_impetus",                        new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item ALCHEMICAL_IMPETUS                         = registerItem             ("alchemical_impetus",                        new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_IRON_IMPETUS                       = registerItem             ("cracked_iron_impetus",                      new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item IRON_IMPETUS                               = registerItem             ("iron_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item IRON_IMPETUS                               = registerItem             ("iron_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_COPPER_IMPETUS                     = registerItem             ("cracked_copper_impetus",                    new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item COPPER_IMPETUS                             = registerItem             ("copper_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item COPPER_IMPETUS                             = registerItem             ("copper_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_GOLD_IMPETUS                       = registerItem             ("cracked_gold_impetus",                      new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item GOLD_IMPETUS                               = registerItem             ("gold_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item GOLD_IMPETUS                               = registerItem             ("gold_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_LEAD_IMPETUS                       = registerItem             ("cracked_lead_impetus",                      new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item LEAD_IMPETUS                               = registerItem             ("lead_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item LEAD_IMPETUS                               = registerItem             ("lead_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_SILVER_IMPETUS                     = registerItem             ("cracked_silver_impetus",                    new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item SILVER_IMPETUS                             = registerItem             ("silver_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item IRON_NODE                                  = registerItem             ("iron_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item COPPER_NODE                                = registerItem             ("copper_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item GOLD_NODE                                  = registerItem             ("gold_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item LEAD_NODE                                  = registerItem             ("lead_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item SILVER_NODE                                = registerItem             ("silver_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item SILVER_IMPETUS                             = registerItem             ("silver_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item IRON_NODE                                  = registerItem             ("iron_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item COPPER_NODE                                = registerItem             ("copper_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item GOLD_NODE                                  = registerItem             ("gold_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item LEAD_NODE                                  = registerItem             ("lead_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item SILVER_NODE                                = registerItem             ("silver_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_ALUMINUM_IMPETUS                   = registerItem             ("cracked_aluminum_impetus",                  new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item ALUMINUM_IMPETUS                           = registerItem             ("aluminum_impetus",                          new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item ALUMINUM_NODE                              = registerItem             ("aluminum_node",                             new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item ALUMINUM_IMPETUS                           = registerItem             ("aluminum_impetus",                          new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item ALUMINUM_NODE                              = registerItem             ("aluminum_node",                             new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_NICKEL_IMPETUS                     = registerItem             ("cracked_nickel_impetus",                    new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item NICKEL_IMPETUS                             = registerItem             ("nickel_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item NICKEL_NODE                                = registerItem             ("nickel_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item NICKEL_IMPETUS                             = registerItem             ("nickel_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item NICKEL_NODE                                = registerItem             ("nickel_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_URANIUM_IMPETUS                    = registerItem             ("cracked_uranium_impetus",                   new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item URANIUM_IMPETUS                            = registerItem             ("uranium_impetus",                           new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item URANIUM_NODE                               = registerItem             ("uranium_node",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item URANIUM_IMPETUS                            = registerItem             ("uranium_impetus",                           new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item URANIUM_NODE                               = registerItem             ("uranium_node",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_OSMIUM_IMPETUS                     = registerItem             ("cracked_osmium_impetus",                    new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item OSMIUM_IMPETUS                             = registerItem             ("osmium_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item OSMIUM_NODE                                = registerItem             ("osmium_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item OSMIUM_IMPETUS                             = registerItem             ("osmium_impetus",                            new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item OSMIUM_NODE                                = registerItem             ("osmium_node",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_ZINC_IMPETUS                       = registerItem             ("cracked_zinc_impetus",                      new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item ZINC_IMPETUS                               = registerItem             ("zinc_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item ZINC_NODE                                  = registerItem             ("zinc_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item ZINC_IMPETUS                               = registerItem             ("zinc_impetus",                              new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item ZINC_NODE                                  = registerItem             ("zinc_node",                                 new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
     Item CRACKED_TIN_IMPETUS                        = registerItem             ("cracked_tin_impetus",                       new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item TIN_IMPETUS                                = registerItem             ("tin_impetus",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
-    Item TIN_NODE                                   = registerItem             ("tin_node",                                  new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC)));
+    Item TIN_IMPETUS                                = registerItem             ("tin_impetus",                               new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
+    Item TIN_NODE                                   = registerItem             ("tin_node",                                  new Item(new Item.Settings().maxCount(1).group(MALUM_METALLURGIC_MAGIC).maxDamage(100)));
 
     // items & blocks, sorted [Building Blocks]
     Item BLOCK_OF_ARCANE_CHARCOAL                   = registerItem             ("block_of_arcane_charcoal",                  new BlockItem(MalumBlockRegistry.BLOCK_OF_ARCANE_CHARCOAL, new Item.Settings().group(BUILDING_BLOCKS)));

@@ -12,8 +12,7 @@ import java.util.function.Supplier;
 
 import static ca.rttv.malum.registry.MalumBlockRegistry.RUNEWOOD_PLANKS;
 import static ca.rttv.malum.registry.MalumBlockRegistry.SOULWOOD_PLANKS;
-import static ca.rttv.malum.registry.MalumItemRegistry.SOUL_STAINED_STEEL_INGOT;
-import static ca.rttv.malum.registry.MalumItemRegistry.SPIRIT_FABRIC;
+import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
 public final class MalumEarlyRiser implements Runnable {
     @Override
@@ -46,7 +45,9 @@ public final class MalumEarlyRiser implements Runnable {
                 ).build();
 
         // toolMaterials
-        ClassTinkerers.enumBuilder(toolMaterialsTarget, int.class, int.class, float.class, float.class, int.class, Supplier.class).addEnum("SOUL_STAINED_STEEL", 3, 1250, 7.5f, 2.5f, 16, (Supplier<Ingredient>) () -> Ingredient.ofItems(SOUL_STAINED_STEEL_INGOT)).build();
+        ClassTinkerers.enumBuilder(toolMaterialsTarget, int.class, int.class, float.class, float.class, int.class, Supplier.class)
+                .addEnum("SOUL_STAINED_STEEL", 3, 1250, 7.5f, 2.5f, 16, (Supplier<Ingredient>) () -> Ingredient.ofItems(SOUL_STAINED_STEEL_INGOT))
+                .addEnum("TWISTED_ROCK", 3, 850, 8.0f, 1.0f, 12, (Supplier<Ingredient>) () -> Ingredient.ofItems(TWISTED_ROCK)).build();
     }
 
     static {

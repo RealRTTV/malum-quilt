@@ -1,5 +1,7 @@
 package ca.rttv.malum.recipe;
 
+import ca.rttv.malum.block.entity.SpiritCrucibleBlockEntity;
+import ca.rttv.malum.block.entity.TabletBlockEntity;
 import ca.rttv.malum.item.SpiritItem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -13,11 +15,14 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,20 +45,43 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
         return null;
     }
 
-    public static SpiritRepairRecipe getRecipe(World world, ItemStack stack, List<ItemStack> spirits, List<ItemStack> tables) {
-        return getRecipe(world, recipe -> recipe.input.test(stack) && recipe.doSpiritsMatch(spirits));
+    public static SpiritRepairRecipe getRecipe(World world, ItemStack stack, List<ItemStack> spirits, List<ItemStack> tablets) {
+        return getRecipe(world, recipe -> recipe.input.test(stack)
+                && recipe.doSpiritsMatch(spirits)
+                && recipe.doTabletsMatch(tablets));
     }
-    
+
+    private boolean doTabletsMatch(List<ItemStack> tablets) {
+        for (IngredientWithCount.Entry entry : repairMaterial.getEntries()) {
+            boolean found = false;
+            for (ItemStack tablet : tablets) {
+                if (entry.isValidItem(tablet)) {
+                    found = true;
+                    // we don't remove the entry since it can cause errors with tags accepting the "wrong" item, thus it can be used multiple times
+                    // todo: make a config option for the removal
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+        return true;
+    }
+
     private boolean doSpiritsMatch(List<ItemStack> spirits) {
         if (Arrays.stream(spirits().getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).getStack().getItem() instanceof SpiritItem))) {
             throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
         }
         List<ItemStack> newSpirits = new ArrayList<>(spirits);
+        for (int i = 0; i < newSpirits.size(); i++) {
+            if (newSpirits.get(i).isEmpty()) {
+                newSpirits.remove(i--);
+            }
+        }
         for (IngredientWithCount.Entry entry : spirits().getEntries()) {
             IngredientWithCount.StackEntry stackEntry = (IngredientWithCount.StackEntry) entry;
             boolean foundMatch = false;
             for (int i = 0; i < newSpirits.size(); i++) {
-                if (stackEntry.isValidItem(spirits.get(i))) {
+                if (stackEntry.isValidItem(newSpirits.get(i))) {
                     foundMatch = true;
                     newSpirits.remove(i);
                     break;
@@ -75,7 +103,54 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
 
     @Override
     public ItemStack craft(Inventory inventory) {
-        return null; // todo
+        if (!(inventory instanceof SpiritCrucibleBlockEntity blockEntity)) {
+            throw new IllegalStateException("Parameter 'inventory' must be an instanceof SpiritCrucibleBlockEntity");
+        }
+
+        if (blockEntity.repairRecipe == null) {
+            throw new IllegalStateException("Spirit Crucible recipe must not be null");
+        }
+
+        if (blockEntity.getWorld() == null) {
+            throw new IllegalStateException("Spirit Crucible world must not be null");
+        }
+
+        ItemStack heldItem = blockEntity.getHeldItem();
+
+        // spirits
+        for (int[] i = {0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
+            if (blockEntity.spiritSlots.get(i[0]).isEmpty()) break;
+            blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElse(new IngredientWithCount.StackEntry(ItemStack.EMPTY)).getCount());
+        }
+
+        if (blockEntity.getWorld().random.nextDouble() <= durabilityPercentage && heldItem.damage(1, blockEntity.getWorld().random, null)) {
+            Identifier id = Registry.ITEM.getId(heldItem.getItem());
+            blockEntity.setStack(0, new ItemStack(Registry.ITEM.get(new Identifier(id.getNamespace(), "cracked_" + id.getPath()))));
+        }
+
+        BlockPos pos = blockEntity.getPos();
+
+        IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.repairRecipe.repairMaterial.getEntries()).map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count())).toArray(IngredientWithCount.Entry[]::new);
+
+        BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPos -> {
+            if (blockEntity.getWorld().getBlockEntity(reagentPos) instanceof TabletBlockEntity tabletBlock) {
+                for (IngredientWithCount.Entry entry : entries) {
+                    if (entry.getStacks().stream().anyMatch(stack -> stack.getItem() == tabletBlock.getHeldItem().getItem())) {
+                        int amountToRemove = Math.min(entry.getCount(), tabletBlock.getHeldItem().getCount());
+                        entry.decrement(amountToRemove);
+                        tabletBlock.getHeldItem().decrement(amountToRemove);
+                        tabletBlock.notifyListeners();
+                        break;
+                    }
+                }
+            }
+        });
+
+        heldItem.setDamage(Math.max(0, blockEntity.getHeldItem().getDamage() - (int) (blockEntity.getHeldItem().getMaxDamage() * durabilityPercentage)));
+
+        blockEntity.setStack(0, ItemStack.EMPTY);
+        ItemScatterer.spawn(blockEntity.getWorld(), pos.up(), DefaultedList.ofSize(1, heldItem));
+        return blockEntity.getHeldItem();
     }
 
     @Override
@@ -110,10 +185,9 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
         return defaultedList;
     }
 
-    public record Serializer<T extends SpiritRepairRecipe>(SpiritRepairRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T> {
+    public record Serializer<T extends SpiritRepairRecipe>(SpiritRepairRecipe.Serializer.RecipeFactory<T> recipeFactory) implements RecipeSerializer<T>, QuiltRecipeSerializer<T> {
         @Override
         public T read(Identifier id, JsonObject json) {
-            System.out.println(id);
             String group = JsonHelper.getString(json, "group", "");
             String inputLookup = json.get("inputLookup").getAsString();
             double durabilityPercentage = json.get("durabilityPercentage").getAsDouble();
@@ -136,6 +210,29 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
             recipe.input().write(buf);
             recipe.spirits().write(buf);
             recipe.repairMaterial().write(buf);
+        }
+
+        @Override
+        public JsonObject toJson(T recipe) {
+            JsonObject json = new JsonObject();
+
+            json.addProperty("type", "malum:spirit_repair");
+
+            if (!recipe.group().equals("")) {
+                json.addProperty("group", recipe.group());
+            }
+
+            json.addProperty("inputLookup", recipe.inputLookup());
+
+            json.addProperty("durabilityPercentage", recipe.durabilityPercentage());
+
+            json.add("inputs", recipe.input().toJson());
+
+            json.add("repairMaterial", recipe.repairMaterial().toJson());
+
+            json.add("spirits", recipe.spirits().toJson());
+
+            return json;
         }
 
         public interface RecipeFactory<T> {
