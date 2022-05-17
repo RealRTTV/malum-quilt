@@ -5,7 +5,6 @@ import ca.rttv.malum.registry.MalumEnchantments;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
 import ca.rttv.malum.util.helper.ItemHelper;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;

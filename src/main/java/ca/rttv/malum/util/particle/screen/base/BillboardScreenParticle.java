@@ -2,22 +2,22 @@ package ca.rttv.malum.util.particle.screen.base;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
+import net.minecraft.world.World;
 
 import static ca.rttv.malum.util.helper.RenderHelper.FULL_BRIGHT;
 
 public abstract class BillboardScreenParticle extends ScreenParticle {
     protected float quadSize = 0.1F * (this.random.nextFloat() * 0.5F + 0.5F) * 2.0F;
 
-    protected BillboardScreenParticle(ClientWorld pWorld, double pX, double pY) {
-        super(pWorld, pX, pY);
+    protected BillboardScreenParticle(World clientWorld, double pX, double pY) {
+        super(clientWorld, pX, pY);
     }
 
-    protected BillboardScreenParticle(ClientWorld pWorld, double pX, double pY, double pXSpeed, double pYSpeed) {
-        super(pWorld, pX, pY, pXSpeed, pYSpeed);
+    protected BillboardScreenParticle(World clientWorld, double pX, double pY, double pXSpeed, double pYSpeed) {
+        super(clientWorld, pX, pY, pXSpeed, pYSpeed);
     }
 
     @Override

@@ -2,6 +2,7 @@ package ca.rttv.malum.client.render.block;
 
 import ca.rttv.malum.block.TotemPoleBlock;
 import ca.rttv.malum.block.entity.TotemPoleBlockEntity;
+import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.registry.SpiritTypeRegistry;
 import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.handler.RenderHandler;
@@ -21,6 +22,7 @@ import net.minecraft.util.math.Vec3f;
 import java.awt.*;
 import java.util.HashMap;
 
+import static ca.rttv.malum.block.TotemPoleBlock.SPIRIT_TYPE;
 import static ca.rttv.malum.util.helper.RenderHelper.FULL_BRIGHT;
 
 @SuppressWarnings("deprecation")
@@ -36,10 +38,23 @@ public class TotemPoleRenderer implements BlockEntityRenderer<TotemPoleBlockEnti
     @Override
     public void render(TotemPoleBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         Direction direction = entity.getCachedState().get(Properties.HORIZONTAL_FACING);
-        if (entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE) == null) {
+        if (entity.getCachedState().get(SPIRIT_TYPE) == null) {
             return;
         }
-        renderQuad(overlayHashmap.get(entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit), entity.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.color, (entity.currentColor + tickDelta) / 20f, direction, matrices);
+
+        Color color;
+        if (entity.getCachedBaseBlock() != null && entity.getCachedBaseBlock().rite == MalumRiteRegistry.TRANS_RITE) {
+            if (entity.getCachedState().get(SPIRIT_TYPE).spirit == SpiritType.AERIAL_SPIRIT) {
+                color = new Color(0x5bcefa);
+            } else if (entity.getCachedState().get(SPIRIT_TYPE).spirit == SpiritType.ARCANE_SPIRIT) {
+                color = new Color(0xf5a9b8);
+            } else {
+                color = Color.WHITE;
+            }
+        } else {
+            color = entity.getCachedState().get(SPIRIT_TYPE).spirit.color;
+        }
+        renderQuad(overlayHashmap.get(entity.getCachedState().get(SPIRIT_TYPE).spirit), color, (entity.currentColor + tickDelta) / 20f, direction, matrices);
     }
 
     public void renderQuad(SpriteIdentifier material, Color color, float alpha, Direction direction, MatrixStack matrices) {

@@ -2,8 +2,10 @@ package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.block.TotemPoleBlock;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
 import ca.rttv.malum.util.particle.ParticleBuilders;
+import ca.rttv.malum.util.spirit.SpiritType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -22,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.util.List;
 
+import static ca.rttv.malum.block.TotemPoleBlock.SPIRIT_TYPE;
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.TOTEM_POLE_BLOCK_ENTITY;
 
 public class TotemPoleBlockEntity extends BlockEntity {
@@ -125,8 +128,22 @@ public class TotemPoleBlockEntity extends BlockEntity {
             return;
         }
 
-        Color color = this.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.color;
-        Color endColor = this.getCachedState().get(TotemPoleBlock.SPIRIT_TYPE).spirit.endColor;
+        SpiritType spirit = this.getCachedState().get(SPIRIT_TYPE).spirit;
+
+        Color color = spirit.color;
+        Color endColor = spirit.endColor;
+        if (this.getCachedBaseBlock() != null && this.getCachedBaseBlock().rite == MalumRiteRegistry.TRANS_RITE) {
+            if (spirit == SpiritType.AERIAL_SPIRIT) {
+                color = new Color(0x5bcefa);
+                endColor = new Color(0x5bcefa);
+            } else if (spirit == SpiritType.ARCANE_SPIRIT) {
+                color = new Color(0xf5a9b8);
+                endColor = new Color(0xf5a9b8);
+            } else {
+                color = Color.WHITE;
+                endColor = Color.WHITE;
+            }
+        }
         ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
                 .setAlpha(0.06f, 0f)
                 .setLifetime(5)

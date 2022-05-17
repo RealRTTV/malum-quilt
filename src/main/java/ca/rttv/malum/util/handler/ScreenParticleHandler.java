@@ -4,6 +4,7 @@ import ca.rttv.malum.util.particle.screen.GenericScreenParticle;
 import ca.rttv.malum.util.particle.screen.ScreenParticleEffect;
 import ca.rttv.malum.util.particle.screen.ScreenParticleType;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
+import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
 import ca.rttv.malum.util.particle.screen.emitter.ParticleEmitter;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
@@ -134,6 +135,10 @@ public class ScreenParticleHandler {
         for (Item item : items) {
             EMITTERS.put(item, new ParticleEmitter(emitter));
         }
+    }
+
+    public static void registerItemParticleEmitter(net.minecraft.util.Pair<ItemParticleEmitter, Item[]> pair) {
+        registerItemParticleEmitter(pair.getLeft()::particleTick, pair.getRight());
     }
 
     public record StackTracker(ItemStack stack, ScreenParticle.RenderOrder order, float xOrigin, float yOrigin) {

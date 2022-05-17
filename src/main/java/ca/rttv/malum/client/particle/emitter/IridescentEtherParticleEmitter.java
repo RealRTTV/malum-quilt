@@ -1,22 +1,18 @@
-package ca.rttv.malum.item;
+package ca.rttv.malum.client.particle.emitter;
 
 import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
+import ca.rttv.malum.item.IridescentEtherBlockItem;
 import ca.rttv.malum.util.particle.Easing;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
-import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.awt.*;
 
-public class ParticleEmittingIridescentEtherBlockItem extends IridescentEtherBlockItem implements ItemParticleEmitter {
-    public ParticleEmittingIridescentEtherBlockItem(Block block, Settings settings) {
-        super(block, settings);
-    }
-
+public class IridescentEtherParticleEmitter implements ItemParticleEmitter {
     @Override
     public void particleTick(ItemStack stack, float x, float y, ScreenParticle.RenderOrder renderOrder) {
         final MinecraftClient client = MinecraftClient.getInstance();

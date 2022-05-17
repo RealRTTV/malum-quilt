@@ -56,14 +56,12 @@ public class SpiritHarvestHandler {
             if (source.getSource() instanceof ScytheBoomerangEntity scytheBoomerang) {
                 stack = scytheBoomerang.scythe;
             }
-            if (!(target instanceof PlayerEntity)) {
-                //  if (!source.getMsgId().equals(DamageSourceRegistry.VOODOO_NO_SHATTER.getMsgId())) {
+            if (!(target instanceof PlayerEntity) && source != MalumDamageSourceRegistry.VOODOO_NO_SHATTER) {
                 SpiritLivingEntityComponent component = MalumComponents.SPIRIT_COMPONENT.get(target);
                 if (component.exposedSoul > 0 && !component.isSoulless() && (!CommonConfig.SOULLESS_SPAWNERS || (CommonConfig.SOULLESS_SPAWNERS && !component.isSpawnerSpawned()))) {
                     SpiritHelper.createSpiritsFromWeapon(target, attacker, stack);
                     component.setSoulless(true);
                 }
-               // }
             }
         }
     }

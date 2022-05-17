@@ -9,11 +9,10 @@ import ca.rttv.malum.client.render.entity.ScytheBoomerangEntityRenderer;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumItemRegistry;
+import ca.rttv.malum.registry.MalumParticleEmitterRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
-import ca.rttv.malum.util.listener.SpiritDataReloadListener;
-import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -27,24 +26,15 @@ import net.minecraft.util.registry.Registry;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
-import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.registry.MalumItemRegistry.ITEMS;
+import static ca.rttv.malum.registry.MalumParticleEmitterRegistry.PARTICLE_EMITTER;
 
 public final class MalumClient implements ClientModInitializer {
     @Override
     public void onInitializeClient(ModContainer mod) {
         RenderHandler.init();
-        List<Item> items = new ArrayList<>(ITEMS.values());
-        DataHelper.takeAll(items, i -> i instanceof ItemParticleEmitter).forEach(i -> {
-                    ItemParticleEmitter emitter = (ItemParticleEmitter) i;
-                    ScreenParticleHandler.registerItemParticleEmitter(i, emitter::particleTick);
-                }
-        );
+        MalumParticleEmitterRegistry.init();
+        PARTICLE_EMITTER.forEach(ScreenParticleHandler::registerItemParticleEmitter);
         EntityModelLayerRegistry.registerModelLayer(SpiritHunterArmorModel.LAYER, SpiritHunterArmorModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SoulStainedSteelArmorModel.LAYER, SoulStainedSteelArmorModel::getTexturedModelData);
         ArmorRenderer.register(new CloakArmorRenderer(DataHelper.prefix("textures/armor/spirit_hunter_reforged.png")), MalumItemRegistry.SOUL_HUNTER_CLOAK, MalumItemRegistry.SOUL_HUNTER_ROBE, MalumItemRegistry.SOUL_HUNTER_LEGGINGS, MalumItemRegistry.SOUL_HUNTER_BOOTS);
@@ -52,7 +42,6 @@ public final class MalumClient implements ClientModInitializer {
         EntityRendererRegistry.register(MalumEntityRegistry.SCYTHE_BOOMERANG, ScytheBoomerangEntityRenderer::new);
         EntityRendererRegistry.register(MalumEntityRegistry.NATURAL_SPIRIT, FloatingItemEntityRenderer::new);
 
-        ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new SpiritDataReloadListenerFabricImpl());
         for (Item item : MalumItemRegistry.SCYTHES) {
             Identifier scytheId = Registry.ITEM.getId(item);
             ScytheItemRenderer scytheItemRenderer = new ScytheItemRenderer(scytheId);
@@ -62,13 +51,6 @@ public final class MalumClient implements ClientModInitializer {
                 out.accept(new ModelIdentifier(scytheId + "_gui", "inventory"));
                 out.accept(new ModelIdentifier(scytheId + "_handheld", "inventory"));
             });
-        }
-    }
-
-    public static class SpiritDataReloadListenerFabricImpl extends SpiritDataReloadListener implements IdentifiableResourceReloader {
-        @Override
-        public Identifier getQuiltId() {
-            return new Identifier(MODID, "spirit_data");
         }
     }
 }

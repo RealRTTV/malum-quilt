@@ -1,8 +1,6 @@
 package ca.rttv.malum.item;
 
 import ca.rttv.malum.block.TotemPoleBlock;
-import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
-import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
 import ca.rttv.malum.util.spirit.SpiritType;
 import ca.rttv.malum.util.spirit.SpiritTypeProperty;
 import com.google.common.collect.BiMap;
@@ -11,7 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -21,9 +18,8 @@ import net.minecraft.world.World;
 import java.awt.*;
 
 import static ca.rttv.malum.registry.MalumBlockRegistry.*;
-import static ca.rttv.malum.util.helper.SpiritHelper.spawnSpiritScreenParticles;
 
-public class SpiritItem extends Item implements IFloatingGlowItem, ItemParticleEmitter {
+public class SpiritItem extends Item implements IFloatingGlowItem {
     public static final BiMap<Block, Block> POLE_BLOCKS = new ImmutableBiMap.Builder<Block, Block>()
             .put(RUNEWOOD_LOG, RUNEWOOD_TOTEM_POLE)
             .put(SOULWOOD_LOG, SOULWOOD_TOTEM_POLE)
@@ -43,11 +39,6 @@ public class SpiritItem extends Item implements IFloatingGlowItem, ItemParticleE
     @Override
     public Color getEndColor() {
         return type.endColor;
-    }
-
-    @Override
-    public void particleTick(ItemStack stack, float x, float y, ScreenParticle.RenderOrder renderOrder) {
-        spawnSpiritScreenParticles(type.color, type.endColor, stack, x, y, renderOrder);
     }
 
     @Override

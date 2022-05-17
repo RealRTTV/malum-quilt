@@ -1,13 +1,11 @@
 package ca.rttv.malum.util.helper;
 
 import ca.rttv.malum.Malum;
+import ca.rttv.malum.block.entity.TotemBaseBlockEntity;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
 import ca.rttv.malum.entity.SpiritItemEntity;
-import ca.rttv.malum.registry.MalumAttributeRegistry;
-import ca.rttv.malum.registry.MalumEnchantments;
-import ca.rttv.malum.registry.MalumSoundRegistry;
-import ca.rttv.malum.registry.SpiritTypeRegistry;
+import ca.rttv.malum.registry.*;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumEntitySpiritData;
@@ -17,6 +15,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -58,6 +57,18 @@ public final class SpiritHelper {
     public static void createSpiritEntities(ArrayList<ItemStack> spirits, LivingEntity target, @Nullable LivingEntity attacker) {
         if (spirits.isEmpty()) {
             return;
+        }
+        if (!target.getWorld().isClient) {
+            boolean[] trans = {false};
+            BlockPos.iterateOutwards(target.getBlockPos(), 8, 8, 8).forEach(pos -> {
+                if (target.getWorld().getBlockEntity(pos) instanceof TotemBaseBlockEntity totemBaseBlockEntity && totemBaseBlockEntity.rite == MalumRiteRegistry.TRANS_RITE) {
+                    trans[0] = true;
+                }
+            });
+
+            if (trans[0]) {
+                spirits = new ArrayList<>(spirits.stream().map(stack -> stack.isOf(MalumItemRegistry.AERIAL_SPIRIT) ? new ItemStack(MalumItemRegistry.ARCANE_SPIRIT, stack.getCount()) : (stack.isOf(MalumItemRegistry.ARCANE_SPIRIT) ? new ItemStack(MalumItemRegistry.AERIAL_SPIRIT, stack.getCount()) : stack)).toList());
+            }
         }
         createSpiritEntities(spirits, spirits.stream().mapToInt(ItemStack::getCount).sum(), target.world, target.getPos().add(0, target.getStandingEyeHeight() / 2f, 0), attacker);
     }

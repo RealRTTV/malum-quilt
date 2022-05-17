@@ -6,8 +6,8 @@ import ca.rttv.malum.util.particle.screen.base.SpriteBillboardScreenParticle;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
 import net.minecraft.client.gui.hud.BackgroundHelper;
 import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 import java.awt.*;
 
@@ -17,8 +17,8 @@ public class GenericScreenParticle extends SpriteBillboardScreenParticle {
     protected final FabricSpriteProviderImpl spriteProvider;
     float[] hsv1 = new float[3], hsv2 = new float[3];
 
-    public GenericScreenParticle(ClientWorld world, ScreenParticleEffect data, FabricSpriteProviderImpl spriteSet, double x, double y, double xMotion, double yMotion) {
-        super(world, x, y);
+    public GenericScreenParticle(World clientWorld, ScreenParticleEffect data, FabricSpriteProviderImpl spriteSet, double x, double y, double xMotion, double yMotion) {
+        super(clientWorld, x, y);
         this.data = data;
         this.textureSheet = data.textureSheet;
         this.spriteProvider = spriteSet;

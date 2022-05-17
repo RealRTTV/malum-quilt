@@ -157,9 +157,10 @@ public class TotemPoleBlock extends BlockWithEntity {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING, SPIRIT_TYPE);
     }
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, TOTEM_POLE_BLOCK_ENTITY, (w, p, s, b) -> b.clientTick());
+        return world.isClient ? checkType(type, TOTEM_POLE_BLOCK_ENTITY, (w, p, s, b) -> b.clientTick()) : null;
     }
 }

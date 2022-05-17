@@ -25,6 +25,7 @@ public interface MalumRiteRegistry {
     Rite ELDRITCH_AERIAL_RITE    = register("eldritch_aerial_rite",   new EldritchAerialRite(ELDRITCH_SPIRIT, ARCANE_SPIRIT, AERIAL_SPIRIT, AERIAL_SPIRIT));
     Rite AQUEOUS_RITE            = register("aqueous_rite",           new AqueousRite(ARCANE_SPIRIT, AQUEOUS_SPIRIT, AQUEOUS_SPIRIT));
     Rite ELDRITCH_AQUEOUS_RITE   = register("eldritch_aqueous_rite",  new EldritchAqueousRite(ELDRITCH_SPIRIT, ARCANE_SPIRIT, AQUEOUS_SPIRIT, AQUEOUS_SPIRIT));
+    Rite TRANS_RITE              = register("trans_rite",             new TransRite(AERIAL_SPIRIT, ARCANE_SPIRIT, EARTHEN_SPIRIT, ARCANE_SPIRIT, AERIAL_SPIRIT));
 
     static <T extends Rite> T register(String id, T rite) {
         return Registry.register(RITE, new Identifier(MODID, id), rite);

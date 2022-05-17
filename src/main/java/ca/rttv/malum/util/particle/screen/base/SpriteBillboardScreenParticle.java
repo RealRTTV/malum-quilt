@@ -2,17 +2,17 @@ package ca.rttv.malum.util.particle.screen.base;
 
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.world.World;
 
 public abstract class SpriteBillboardScreenParticle extends BillboardScreenParticle {
     protected Sprite sprite;
 
-    protected SpriteBillboardScreenParticle(ClientWorld pWorld, double pX, double pY) {
-        super(pWorld, pX, pY);
+    protected SpriteBillboardScreenParticle(World clientWorld, double pX, double pY) {
+        super(clientWorld, pX, pY);
     }
 
-    protected SpriteBillboardScreenParticle(ClientWorld pWorld, double pX, double pY, double pXSpeed, double pYSpeed) {
-        super(pWorld, pX, pY, pXSpeed, pYSpeed);
+    protected SpriteBillboardScreenParticle(World clientWorld, double pX, double pY, double pXSpeed, double pYSpeed) {
+        super(clientWorld, pX, pY, pXSpeed, pYSpeed);
     }
 
     protected void setSprite(Sprite pSprite) {

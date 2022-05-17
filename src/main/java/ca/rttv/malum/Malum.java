@@ -3,15 +3,19 @@ package ca.rttv.malum;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.enchantment.ReboundEnchantment;
 import ca.rttv.malum.registry.*;
+import ca.rttv.malum.util.listener.SpiritDataReloadListener;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
+import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
+import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
 
 import java.util.Random;
 
@@ -49,5 +53,14 @@ public final class Malum implements ModInitializer {
         MalumAcceleratorTypeRegistry.init();
         MalumStatusEffectRegistry.init();
         UseItemCallback.EVENT.register(ReboundEnchantment::onRightClickItem);
+
+        ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new SpiritDataReloadListenerFabricImpl());
+    }
+
+    public static class SpiritDataReloadListenerFabricImpl extends SpiritDataReloadListener implements IdentifiableResourceReloader {
+        @Override
+        public Identifier getQuiltId() {
+            return new Identifier(MODID, "spirit_data");
+        }
     }
 }

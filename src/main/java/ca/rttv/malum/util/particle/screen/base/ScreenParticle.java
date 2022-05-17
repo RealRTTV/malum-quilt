@@ -2,7 +2,7 @@ package ca.rttv.malum.util.particle.screen.base;
 
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.world.World;
 
 import java.util.Random;
 
@@ -12,7 +12,7 @@ public abstract class ScreenParticle {
         BEFORE_UI, BEFORE_TOOLTIPS, AFTER_EVERYTHING
     }
 
-    public final ClientWorld world;
+    public final World clientWorld; // this can't be a ClientWorld cause of server environment stuff
     public double prevX;
     public double prevY;
     public double x;
@@ -36,8 +36,8 @@ public abstract class ScreenParticle {
     public float velocityMultiplier = 0.98F;
     public RenderOrder renderOrder = RenderOrder.AFTER_EVERYTHING;
 
-    protected ScreenParticle(ClientWorld pWorld, double pX, double pY) {
-        this.world = pWorld;
+    protected ScreenParticle(World clientWorld, double pX, double pY) {
+        this.clientWorld = clientWorld;
         this.setScale(0.2F);
         this.x = pX;
         this.y = pY;
@@ -46,8 +46,8 @@ public abstract class ScreenParticle {
         this.maxAge = (int) (4.0F / (this.random.nextFloat() * 0.9F + 0.1F));
     }
 
-    public ScreenParticle(ClientWorld pWorld, double pX, double pY, double pXSpeed, double pYSpeed) {
-        this(pWorld, pX, pY);
+    public ScreenParticle(World clientWorld, double pX, double pY, double pXSpeed, double pYSpeed) {
+        this(clientWorld, pX, pY);
         this.velocityX = pXSpeed + (Math.random() * 2.0D - 1.0D) * (double) 0.4F;
         this.velocityY = pYSpeed + (Math.random() * 2.0D - 1.0D) * (double) 0.4F;
         double d0 = (Math.random() + Math.random() + 1.0D) * (double) 0.15F;

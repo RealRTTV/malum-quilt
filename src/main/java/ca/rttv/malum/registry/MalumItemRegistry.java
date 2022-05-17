@@ -113,7 +113,6 @@ public interface MalumItemRegistry {
     Item SPIRIT_ALTAR                               = registerItem             ("spirit_altar",                              new BlockItem(MalumBlockRegistry.SPIRIT_ALTAR, new Item.Settings().group(MALUM)));
     Item SPIRIT_JAR                                 = registerItem             ("spirit_jar",                                new BlockItem(MalumBlockRegistry.SPIRIT_JAR, new Item.Settings().group(MALUM)));
     // soul vial
-
     Item RUNEWOOD_OBELISK                           = registerItem             ("runewood_obelisk",                          new TallBlockItem(MalumBlockRegistry.RUNEWOOD_OBELISK, new Item.Settings().group(MALUM)));
     Item BRILLIANT_OBELISK                          = registerItem             ("brilliant_obelisk",                         new TallBlockItem(MalumBlockRegistry.BRILLIANT_OBELISK, new Item.Settings().group(MALUM)));
     Item SPIRIT_CRUCIBLE                            = registerItem             ("spirit_crucible",                           new TallBlockItem(MalumBlockRegistry.SPIRIT_CRUCIBLE, new Item.Settings().group(MALUM)));
@@ -133,11 +132,11 @@ public interface MalumItemRegistry {
     Item SOUL_STAINED_STEEL_NUGGET                  = registerItem             ("soul_stained_steel_nugget",                 new Item(new Item.Settings().group(MALUM)));
     Item BLOCK_OF_SOUL_STAINED_STEEL                = registerItem             ("block_of_soul_stained_steel",               new BlockItem(MalumBlockRegistry.BLOCK_OF_SOUL_STAINED_STEEL, new Item.Settings().group(MALUM)));
     Item STAINED_SPIRIT_RESONATOR                   = registerItem             ("stained_spirit_resonator",                  new Item(new Item.Settings().group(MALUM)));
-    Item ETHER                                      = registerItem             ("ether",                                     new ParticleEmittingEtherBlockItem(MalumBlockRegistry.ETHER, new Item.Settings().group(MALUM)));
+    Item ETHER                                      = registerItem             ("ether",                                     new EtherBlockItem(MalumBlockRegistry.ETHER, new Item.Settings().group(MALUM)));
     Item ETHER_TORCH                                = registerItem             ("ether_torch",                               new EtherWallStandingBlockItem(MalumBlockRegistry.ETHER_TORCH, WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
     Item TAINTED_ETHER_BRAZIER                      = registerItem             ("tainted_ether_brazier",                     new EtherBlockItem(MalumBlockRegistry.TAINTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
     Item TWISTED_ETHER_BRAZIER                      = registerItem             ("twisted_ether_brazier",                     new EtherBlockItem(MalumBlockRegistry.TWISTED_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
-    Item IRIDESCENT_ETHER                           = registerItem             ("iridescent_ether",                          new ParticleEmittingIridescentEtherBlockItem(MalumBlockRegistry.IRIDESCENT_ETHER, new Item.Settings().group(MALUM)));
+    Item IRIDESCENT_ETHER                           = registerItem             ("iridescent_ether",                          new IridescentEtherBlockItem(MalumBlockRegistry.IRIDESCENT_ETHER, new Item.Settings().group(MALUM)));
     Item IRIDESCENT_ETHER_TORCH                     = registerItem             ("iridescent_ether_torch",                    new IridescentEtherWallStandingBlockItem(MalumBlockRegistry.IRIDESCENT_ETHER_TORCH, IRIDESCENT_WALL_ETHER_TORCH, new Item.Settings().group(MALUM)));
     Item TAINTED_IRIDESCENT_ETHER_BRAZIER           = registerItem             ("tainted_iridescent_ether_brazier",          new IridescentEtherBlockItem(MalumBlockRegistry.TAINTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
     Item TWISTED_IRIDESCENT_ETHER_BRAZIER           = registerItem             ("twisted_iridescent_ether_brazier",          new IridescentEtherBlockItem(MalumBlockRegistry.TWISTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));

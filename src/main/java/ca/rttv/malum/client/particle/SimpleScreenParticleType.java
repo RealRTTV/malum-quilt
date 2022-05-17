@@ -6,7 +6,7 @@ import ca.rttv.malum.util.particle.screen.ScreenParticleType;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
 import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.world.World;
 
 public class SimpleScreenParticleType extends ScreenParticleType<ScreenParticleEffect> {
 
@@ -22,8 +22,8 @@ public class SimpleScreenParticleType extends ScreenParticleType<ScreenParticleE
         }
 
         @Override
-        public ScreenParticle createParticle(ClientWorld pLevel, ScreenParticleEffect options, double pX, double pY, double pXSpeed, double pYSpeed) {
-            return new GenericScreenParticle(pLevel, options, (FabricSpriteProviderImpl) sprite, pX, pY, pXSpeed, pYSpeed);
+        public ScreenParticle createParticle(World clientWorld, ScreenParticleEffect options, double pX, double pY, double pXSpeed, double pYSpeed) {
+            return new GenericScreenParticle(clientWorld, options, (FabricSpriteProviderImpl) sprite, pX, pY, pXSpeed, pYSpeed);
         }
     }
 }
