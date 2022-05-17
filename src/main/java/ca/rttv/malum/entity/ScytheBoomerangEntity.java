@@ -39,7 +39,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
 
     public ItemStack scythe;
     public UUID ownerUUID;
-    public PlayerEntity owner;
+    public Entity owner;
 
     public int slot;
     public float damage;
@@ -59,7 +59,10 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
 
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
-        DamageSource source = DamageSource.mobProjectile(this, getActualOwner());
+        if (!(getActualOwner() instanceof LivingEntity livingEntity)) {
+            return;
+        }
+        DamageSource source = DamageSource.mobProjectile(this, livingEntity);
         Entity entity = entityHitResult.getEntity();
         if (world.isClient)
         {
@@ -73,8 +76,8 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         if (success) {
             if (!world.isClient) {
                 if (entity instanceof LivingEntity livingentity) {
-                    scythe.damage(1, getActualOwner(), (e) -> remove(RemovalReason.KILLED));
-                    ItemHelper.applyEnchantments(owner, livingentity, scythe);
+                    scythe.damage(1, livingEntity, (e) -> remove(RemovalReason.KILLED));
+                    ItemHelper.applyEnchantments(livingEntity, livingentity, scythe);
                     int i = EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, scythe);
                     if (i > 0) {
                         livingentity.setOnFireFor(i * 4);
@@ -87,6 +90,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         }
         super.onEntityHit(entityHitResult);
     }
+
     @Override
     public void tick() {
         super.tick();
@@ -120,10 +124,13 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
             }
         }
 
+        if (!(getActualOwner() instanceof PlayerEntity playerEntity)) {
+            return;
+        }
+
         if (!world.isClient)
         {
-            PlayerEntity playerEntity = getActualOwner();
-            if (playerEntity == null || !playerEntity.isAlive())
+            if (!playerEntity.isAlive())
             {
                 ItemEntity entityitem = new ItemEntity(world, getX(), getY() + 0.5, getZ(), scythe);
                 entityitem.setPickupDelay(40);
@@ -176,13 +183,13 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         }
     }
 
-    public PlayerEntity getActualOwner()
+    public Entity getActualOwner()
     {
         if (owner == null)
         {
             if (!world.isClient)
             {
-                owner = (PlayerEntity) ((ServerWorld) world).getEntity(ownerUUID);
+                owner = ((ServerWorld) world).getEntity(ownerUUID);
             }
         }
         return owner;
