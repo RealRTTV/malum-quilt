@@ -33,6 +33,8 @@ public final class Malum implements ModInitializer {
 
     @Override
     public void onInitialize(ModContainer mod) {
+        // todo, haunted enchantment
+        //
         MalumAttributeRegistry.init();
         MalumParticleRegistry.init();
         MalumBlockRegistry.init();

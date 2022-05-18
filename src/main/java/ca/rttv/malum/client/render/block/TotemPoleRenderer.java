@@ -1,6 +1,5 @@
 package ca.rttv.malum.client.render.block;
 
-import ca.rttv.malum.block.TotemPoleBlock;
 import ca.rttv.malum.block.entity.TotemPoleBlockEntity;
 import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.registry.SpiritTypeRegistry;

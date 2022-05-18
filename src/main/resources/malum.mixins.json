@@ -8,6 +8,7 @@
     "ArmorMaterialsMixin",
     "AxeItemMixin",
     "BlockEntityTypeMixin",
+    "BoatEntityMixin",
     "CookingRecipeSerializerMixin",
     "DefaultBiomeFeaturesMixin",
     "EnchantingTableBlockMixin",

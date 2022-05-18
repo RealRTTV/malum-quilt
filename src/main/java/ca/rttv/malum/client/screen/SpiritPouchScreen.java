@@ -29,6 +29,22 @@ public class SpiritPouchScreen extends HandledScreen<SpiritPouchScreenHandler> {
     }
 
     @Override
+    protected boolean handleHotbarKeyPressed(int keyCode, int scanCode) {
+        if (!this.handler.getCursorStack().isEmpty() || this.focusedSlot == null) {
+            return super.handleHotbarKeyPressed(keyCode, scanCode);
+        }
+
+        if (!this.client.options.swapHandsKey.matchesKey(keyCode, scanCode)) {
+            return super.handleHotbarKeyPressed(keyCode, scanCode);
+        }
+
+        if (handler.lockedSlot != -1) {
+            return super.handleHotbarKeyPressed(keyCode, scanCode);
+        }
+        return false;
+    }
+
+    @Override
     protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
 
     }

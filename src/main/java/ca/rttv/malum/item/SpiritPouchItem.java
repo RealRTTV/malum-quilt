@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -32,17 +33,18 @@ public class SpiritPouchItem extends Item {
             player.openHandledScreen(new NamedScreenHandlerFactory() {
                 @Override
                 public Text getDisplayName() {
-                    return Text.of("");
+                    return LiteralText.EMPTY;
                 }
 
                 @Override
-                public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+                public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
                     DefaultedList<ItemStack> stacks = DefaultedList.ofSize(27, ItemStack.EMPTY);
-                    NbtCompound nbt = playerEntity.getStackInHand(hand).getNbt();
+                    NbtCompound nbt = player.getStackInHand(hand).getNbt();
+                    ItemStack stack = player.getStackInHand(hand);
                     if (nbt != null) {
                         Inventories.readNbt(nbt, stacks);
                     }
-                    return new SpiritPouchScreenHandler(SPIRIT_POUCH_SCREEN_HANDLER, syncId, playerInventory, new SimpleInventory(stacks.toArray(ItemStack[]::new)), playerEntity.getStackInHand(hand));
+                    return new SpiritPouchScreenHandler(SPIRIT_POUCH_SCREEN_HANDLER, syncId, playerInventory, new SimpleInventory(stacks.toArray(ItemStack[]::new)), stack, playerInventory.getSlotWithStack(stack));
                 }
             });
             return super.use(world, player, hand);

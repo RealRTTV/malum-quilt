@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.SPIRIT_REPAIR_SERIALIZER;
@@ -191,7 +192,7 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
             String group = JsonHelper.getString(json, "group", "");
             String inputLookup = json.get("inputLookup").getAsString();
             double durabilityPercentage = json.get("durabilityPercentage").getAsDouble();
-            Ingredient inputs = SpiritRepairRecipe.parseItems(json.getAsJsonArray("inputs"));
+            Ingredient inputs = SpiritRepairRecipe.parseItems(json.getAsJsonArray("inputs"), inputLookup);
             IngredientWithCount spirits = IngredientWithCount.fromJson(json.getAsJsonArray("spirits"));
             IngredientWithCount repairMaterial = IngredientWithCount.fromJson(json.getAsJsonObject("repairMaterial"));
             return recipeFactory.create(id, group, inputLookup, durabilityPercentage, inputs, spirits, repairMaterial);
@@ -240,7 +241,7 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
         }
     }
 
-    private static Ingredient parseItems(JsonArray input) {
-        return Ingredient.ofEntries(StreamSupport.stream(input.spliterator(), false).map(JsonElement::getAsString).map(string -> string.startsWith("#") ? new Ingredient.TagEntry(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1)))) : new Ingredient.StackEntry(new ItemStack(Registry.ITEM.get(new Identifier(string))))));
+    private static Ingredient parseItems(JsonArray input, String inputLookup) {
+        return Ingredient.ofEntries(Stream.concat(StreamSupport.stream(input.spliterator(), false).map(JsonElement::getAsString).map(string -> string.startsWith("#") ? new Ingredient.TagEntry(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1)))) : new Ingredient.StackEntry(new ItemStack(Registry.ITEM.get(new Identifier(string))))), StreamSupport.stream(Registry.ITEM.spliterator(), false).filter(item -> item.isDamageable() && Registry.ITEM.getId(item).getPath().startsWith(inputLookup)).map(item -> new Ingredient.StackEntry(item.getDefaultStack()))));
     }
 }
