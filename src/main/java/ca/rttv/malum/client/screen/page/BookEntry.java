@@ -2,12 +2,14 @@ package ca.rttv.malum.client.screen.page;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class BookEntry {
-    public final ItemStack iconStack;
+    public final Function<World, ItemStack> iconStack;
     public final String id;
     public final int xOffset;
     public final int yOffset;
@@ -15,7 +17,14 @@ public class BookEntry {
     public EntryObjectSupplier objectSupplier = EntryObject::new;
 
     public BookEntry(String id, Item item, int xOffset, int yOffset) {
-        this.iconStack = item.getDefaultStack();
+        this.iconStack = world -> item.getDefaultStack();
+        this.id = id;
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+    }
+
+    public BookEntry(String id, Function<World, ItemStack> iconStack, int xOffset, int yOffset) {
+        this.iconStack = iconStack;
         this.id = id;
         this.xOffset = xOffset;
         this.yOffset = yOffset;

@@ -1,6 +1,7 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.inventory.DefaultedInventory;
 import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
@@ -11,7 +12,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
@@ -28,7 +28,7 @@ import java.awt.*;
 
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_JAR_BLOCK_ENTITY;
 
-public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
+public class SpiritJarBlockEntity extends BlockEntity implements DefaultedInventory {
     private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
     public SpiritJarBlockEntity(BlockPos pos, BlockState state) {
@@ -54,43 +54,8 @@ public class SpiritJarBlockEntity extends BlockEntity implements Inventory {
     }
 
     @Override
-    public int size() {
-        return stacks.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return stacks.isEmpty();
-    }
-
-    @Override
-    public ItemStack getStack(int slot) {
-        return stacks.get(slot);
-    }
-
-    @Override
-    public ItemStack removeStack(int slot, int amount) {
-        return Inventories.splitStack(stacks, slot, amount);
-    }
-
-    @Override
-    public ItemStack removeStack(int slot) {
-        return Inventories.removeStack(stacks, slot);
-    }
-
-    @Override
-    public void setStack(int slot, ItemStack stack) {
-        stacks.set(slot, stack);
-    }
-
-    @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return !(player.squaredDistanceTo(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) > 64.0D);
-    }
-
-    @Override
-    public void clear() {
-        stacks.clear();
+    public DefaultedList<ItemStack> getInvStackList() {
+        return stacks;
     }
 
     @Override

@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.quiltmc.loader.api.QuiltLoader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -21,7 +20,7 @@ public abstract class EnchantmentScreenHandlerMixin {
     // I modify the vanilla method too, because particles
     // in dev env make method = "m_mpsetdhw"
     // when pushing and compiling make method = "method_17411"
-    @ModifyVariable(method = "method_17411", at = @At(value = "FIELD", target = "Lnet/minecraft/block/EnchantingTableBlock;field_36535:Ljava/util/List;"), index = 4)
+    @ModifyVariable(method = "m_mpsetdhw", at = @At(value = "FIELD", target = "Lnet/minecraft/block/EnchantingTableBlock;field_36535:Ljava/util/List;"), index = 4)
     private int brilliantObeliskEnchantmentPower(int ix, ItemStack stack, World world, BlockPos pos) {
         for(BlockPos blockPos : EnchantingTableBlock.field_36535) {
             if (isObelisk(world, pos, blockPos)) {

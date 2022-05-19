@@ -23,6 +23,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -477,6 +478,12 @@ public class ProgressionBookScreen extends Screen {
                 .addPage(CraftingBookPage.fullPage(BLOCK_OF_ARCANE_CHARCOAL, ARCANE_CHARCOAL))
                 .addPage(new CraftingBookPage(new ItemStack(UNHOLY_SAPBALL, 3), Items.SLIME_BALL, UNHOLY_SAP))
                 .addPage(new SmeltingBookPage(UNHOLY_SAP, UNHOLY_SYRUP))
+        );
+
+        entries.add(new BookEntry(
+                "trans_rite", (World world) -> world.getTime() % 40L > 20L ? AERIAL_SPIRIT.getDefaultStack() : SACRED_SPIRIT.getDefaultStack(), 0, 14)
+                .addPage(new HeadlineTextPage("trans_rite", "trans_rite"))
+                .addPage(new SpiritRitePage(MalumRiteRegistry.TRANS_RITE))
         );
 
         entries.add(new BookEntry(

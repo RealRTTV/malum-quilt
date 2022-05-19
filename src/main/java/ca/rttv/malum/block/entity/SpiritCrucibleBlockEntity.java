@@ -1,20 +1,19 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.block.SpiritCatalyzerBlock;
+import ca.rttv.malum.inventory.DefaultedInventory;
 import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.recipe.SpiritFocusingRecipe;
 import ca.rttv.malum.recipe.SpiritRepairRecipe;
 import ca.rttv.malum.util.block.entity.ICrucibleAccelerator;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -42,7 +41,7 @@ import java.util.*;
 
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_CRUCIBLE_BLOCK_ENTITY;
 
-public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory {
+public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedInventory {
     public final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
     public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(9, ItemStack.EMPTY);
     private float spiritSpin = 0.0f;
@@ -178,15 +177,6 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
         if (focusingRecipe == null && repairRecipe == null) {
             progress = 0;
         }
-
-//        if (focusingRecipe == null) {
-//            tabletFetchCooldown--;
-//            if (tabletFetchCooldown <= 0) {
-//                tabletFetchCooldown = 5;
-//                fetchTablets(world, this.pos.up());
-//                this.notifyListeners();
-//            }
-//        }
     }
 
     public void clientTick(World world, BlockPos pos, BlockState state) {
@@ -437,55 +427,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements Inventory 
     }
 
     @Override
-    public int size() {
-        return heldItem.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return heldItem.isEmpty();
-    }
-
-    @Override
-    public ItemStack getStack(int slot) {
-        return heldItem.get(slot);
-    }
-
-    @Override
-    public ItemStack removeStack(int slot, int amount) {
-        ItemStack stack = Inventories.splitStack(this.heldItem, slot, amount);
-        this.notifyListeners();
-        return stack;
-    }
-
-    @Override
-    public ItemStack removeStack(int slot) {
-        this.notifyListeners();
-        return Inventories.removeStack(this.heldItem, slot);
-    }
-
-    @Override
-    public void setStack(int slot, ItemStack stack) {
-        heldItem.set(slot, stack);
-        this.notifyListeners();
-    }
-
-    @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return !(player.squaredDistanceTo(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) > 64.0D);
-    }
-
-    @Override
-    public void clear() {
-        heldItem.clear();
-        this.notifyListeners();
-    }
-
-    public void notifyListeners() {
-        this.markDirty();
-
-        if (world != null && !world.isClient) {
-            world.updateListeners(pos, this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
-        }
+    public DefaultedList<ItemStack> getInvStackList() {
+        return heldItem;
     }
 }

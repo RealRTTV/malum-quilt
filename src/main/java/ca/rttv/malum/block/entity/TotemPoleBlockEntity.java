@@ -155,7 +155,7 @@ public class TotemPoleBlockEntity extends BlockEntity {
                 .enableNoClip()
                 .randomOffset(0.1f, 0.1f)
                 .randomMotion(0.01f, 0.01f)
-                .evenlyRepeatEdges(world, pos, 1, Direction.WEST, Direction.EAST, Direction.NORTH, Direction.SOUTH);
+                .evenlyRepeatEdges(world, pos, 5, Direction.WEST, Direction.EAST, Direction.NORTH, Direction.SOUTH);
 
         ParticleBuilders.create(MalumParticleRegistry.SMOKE_PARTICLE)
                 .setAlpha(0.06f, 0f)
@@ -168,7 +168,7 @@ public class TotemPoleBlockEntity extends BlockEntity {
                 .randomOffset(0.2f)
                 .enableNoClip()
                 .randomMotion(0.01f, 0.01f)
-                .evenlyRepeatEdges(world, pos, 1, Direction.WEST, Direction.EAST, Direction.NORTH, Direction.SOUTH);
+                .evenlyRepeatEdges(world, pos, 5, Direction.WEST, Direction.EAST, Direction.NORTH, Direction.SOUTH);
     }
 
     public void updateListeners() {

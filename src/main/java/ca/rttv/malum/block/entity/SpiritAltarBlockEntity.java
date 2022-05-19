@@ -2,6 +2,7 @@ package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.block.ObeliskBlock;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.inventory.DefaultedInventory;
 import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.recipe.IngredientWithCount;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
@@ -10,14 +11,12 @@ import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import ca.rttv.malum.util.particle.ParticleBuilders;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -43,7 +42,7 @@ import java.util.*;
 
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_ALTAR_BLOCK_ENTITY;
 
-public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
+public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInventory {
     public float speed;
     public int progress;
     public int spinUp;
@@ -258,12 +257,9 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
         return stacks;
     }
 
-    public void notifyListeners() {
-        this.markDirty();
-
-        if (world != null && !world.isClient) {
-            world.updateListeners(getPos(), getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-        }
+    @Override
+    public DefaultedList<ItemStack> getInvStackList() {
+        return heldItem;
     }
 
     public void swapSlots(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -307,51 +303,6 @@ public class SpiritAltarBlockEntity extends BlockEntity implements Inventory {
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.of(this);
-    }
-
-
-    @Override
-    public int size() {
-        return this.heldItem.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.heldItem.isEmpty();
-    }
-
-    @Override
-    public ItemStack getStack(int slot) {
-        return this.heldItem.get(slot);
-    }
-
-    @Override
-    public ItemStack removeStack(int slot, int amount) {
-        ItemStack stack = Inventories.splitStack(this.heldItem, slot, amount);
-        this.notifyListeners();
-        return stack;
-    }
-
-    @Override
-    public ItemStack removeStack(int slot) {
-        return Inventories.removeStack(this.heldItem, slot);
-    }
-
-    @Override
-    public void setStack(int slot, ItemStack stack) {
-        this.heldItem.set(slot, stack);
-        this.notifyListeners();
-    }
-
-    @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return !(player.squaredDistanceTo(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) > 64.0D);
-    }
-
-    @Override
-    public void clear() {
-        this.heldItem.clear();
-        this.notifyListeners();
     }
 
     @Override

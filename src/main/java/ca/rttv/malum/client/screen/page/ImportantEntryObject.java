@@ -15,6 +15,6 @@ public class ImportantEntryObject extends EntryObject {
         int posX = offsetPosX(xOffset);
         int posY = offsetPosY(yOffset);
         ProgressionBookScreen.renderTexture(ProgressionBookScreen.FRAME_TEXTURE, matrices, posX, posY, 34, 252, width, height, 512, 512);
-        client.getItemRenderer().renderInGuiWithOverrides(entry.iconStack, posX + 8, posY + 8);
+        client.getItemRenderer().renderInGuiWithOverrides(entry.iconStack.apply(client.world), posX + 8, posY + 8);
     }
 }
