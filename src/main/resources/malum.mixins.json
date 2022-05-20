@@ -20,7 +20,8 @@
     "SeverPlayerInteractionManagerMixin",
     "StatusEffectMixin",
     "StatusEffectUtilMixin",
-    "UnbreakingEnchantmentMixin"
+    "UnbreakingEnchantmentMixin",
+    "VegetationConfiguredFeaturesMixin"
   ],
   "client": [
     "BlockColorsMixin",
