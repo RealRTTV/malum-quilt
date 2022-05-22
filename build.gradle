@@ -49,6 +49,11 @@ dependencies {
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "com.terraformersmc"
 	}
+	modImplementation libs.satin
+	//modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
+	//modImplementation "maven.modrinth:iris:1.18.x-v1.2.1"
+    runtimeOnly('org.joml:joml:1.10.2') // for sodium
+	modRuntimeOnly "maven.modrinth:lazydfu:0.1.2"
 	modImplementation(libs.cardinal.components.base) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
@@ -74,6 +79,19 @@ dependencies {
 	annotationProcessor(libs.mixin.extras) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
+	}
+}
+configurations.all {
+	resolutionStrategy.dependencySubstitution {
+		substitute module('net.fabricmc:fabric-loader') using module(libs.quilt.loader.get().toString())
+		all { DependencySubstitution dependency ->
+			if (dependency.requested instanceof ModuleComponentSelector && dependency.requested.group == 'net.fabricmc.fabric-api') {
+				if (dependency.requested.module == 'fabric-api')
+					dependency.useTarget libs.quilted.fabric.api.get().toString()
+				else
+					dependency.useTarget 'org.quiltmc.quilted-fabric-api' + ':' + dependency.requested.module + ':' + libs.versions.quilted.fabric.api.get()
+			}
+		}
 	}
 }
 
