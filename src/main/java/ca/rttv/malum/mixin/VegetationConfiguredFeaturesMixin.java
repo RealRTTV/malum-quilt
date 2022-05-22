@@ -17,6 +17,7 @@ public abstract class VegetationConfiguredFeaturesMixin {
         RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;
         List<WeightedPlacedFeature> features = new ArrayList<>(config.features);
         features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), 0.02f));
+        //noinspection unchecked
         return (FC) new RandomFeatureConfig(features, config.defaultFeature);
     }
 
@@ -25,6 +26,7 @@ public abstract class VegetationConfiguredFeaturesMixin {
         RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;
         List<WeightedPlacedFeature> features = new ArrayList<>(config.features);
         features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), 0.01f));
+        //noinspection unchecked
         return (FC) new RandomFeatureConfig(features, config.defaultFeature);
     }
 }
