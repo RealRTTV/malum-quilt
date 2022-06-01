@@ -2,19 +2,24 @@ package ca.rttv.malum.rite;
 
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.util.spirit.SpiritType;
+import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.Item;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
+import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.Random;
 import java.util.stream.StreamSupport;
+
+import static ca.rttv.malum.Malum.MODID;
 
 public class EldritchSacredRite extends Rite {
     public EldritchSacredRite(Item... items) {
@@ -36,7 +41,11 @@ public class EldritchSacredRite extends Rite {
                 }
 
                 BlockPos particlePos = state2.isOpaque() ? possiblePos : possiblePos.down();
-                world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(particlePos).x, new ChunkPos(particlePos).z)).forEach(players -> players.networkHandler.sendPacket(new MalumParticleS2CPacket<ClientPlayNetworkHandler>(SpiritType.SACRED_SPIRIT.color.getRGB(), particlePos.getX() + 0.5d, particlePos.getY() + 0.5d, particlePos.getZ() + 0.5d)));
+                world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
+                    PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                    new MalumParticleS2CPacket(SpiritType.SACRED_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
+                    ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                });
             }
         });
     }
@@ -50,7 +59,11 @@ public class EldritchSacredRite extends Rite {
         world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), Entity::isLiving).stream().filter(entity -> entity.getBreedingAge() != 0).limit(30).forEach(entity -> {
             if (entity.canEat() && world.random.nextFloat() <= 0.05f) {
                 entity.setLoveTicks(600);
-                world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> players.networkHandler.sendPacket(new MalumParticleS2CPacket<ClientPlayNetworkHandler>(SpiritType.SACRED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ())));
+                world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
+                    PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                    new MalumParticleS2CPacket(SpiritType.SACRED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ()).write(buf);
+                    ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                });
             }
         });
     }

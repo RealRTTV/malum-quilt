@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(EnchantmentTarget.class)
 public abstract class EnchantmentTargetMixin {
-
     @Shadow
     public abstract boolean isAcceptableItem(Item item);
 }

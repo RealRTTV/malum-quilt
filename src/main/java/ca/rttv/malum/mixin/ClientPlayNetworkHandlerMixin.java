@@ -21,11 +21,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.awt.*;
 
 @Mixin(ClientPlayNetworkHandler.class)
-public final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListener {
+final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListener {
     @Shadow private ClientWorld world;
 
     @Override
-    public <T extends PacketListener> void onMagicParticle(MalumParticleS2CPacket<T> packet) {
+    public void onMagicParticle(MalumParticleS2CPacket packet) {
         ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
                 .setAlpha(0.1f, 0f)
                 .setLifetime(10)

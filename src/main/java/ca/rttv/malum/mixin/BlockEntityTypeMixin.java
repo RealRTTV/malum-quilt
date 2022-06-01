@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 
 @Mixin(BlockEntityType.class)
-public abstract class BlockEntityTypeMixin {
+abstract class BlockEntityTypeMixin {
     @SuppressWarnings("InvalidInjectorMethodSignature")
     @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/BlockEntityType$Builder;create(Lnet/minecraft/block/entity/BlockEntityType$BlockEntityFactory;[Lnet/minecraft/block/Block;)Lnet/minecraft/block/entity/BlockEntityType$Builder;"), index = 1)
     private static Block[] signAdditions(Block[] blocks) {

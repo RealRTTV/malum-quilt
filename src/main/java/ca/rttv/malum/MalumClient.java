@@ -7,6 +7,7 @@ import ca.rttv.malum.client.render.SteelArmorRenderer;
 import ca.rttv.malum.client.render.entity.FloatingItemEntityRenderer;
 import ca.rttv.malum.client.render.entity.ScytheBoomerangEntityRenderer;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
+import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumItemRegistry;
 import ca.rttv.malum.registry.MalumParticleEmitterRegistry;
@@ -25,8 +26,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
+import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
 
+import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumParticleEmitterRegistry.PARTICLE_EMITTER;
 
 public final class MalumClient implements ClientModInitializer {
@@ -52,5 +55,7 @@ public final class MalumClient implements ClientModInitializer {
                 out.accept(new ModelIdentifier(scytheId + "_handheld", "inventory"));
             });
         }
+
+        ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "MalumParticleS2CPacket"), (client, handler, buf, responceSender) -> new MalumParticleS2CPacket(buf).apply(client.getNetworkHandler()));
     }
 }

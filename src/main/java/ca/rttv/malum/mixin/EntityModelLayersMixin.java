@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static ca.rttv.malum.Malum.MODID;
 
 @Mixin(EntityModelLayers.class)
-public final class EntityModelLayersMixin {
+final class EntityModelLayersMixin {
     // can't use modifyarg or modifyargs cause it only works on methodinsnnodes
     @Inject(method = "create", at = @At("HEAD"), cancellable = true)
     private static void changeSignNamespace(String id, String layer, CallbackInfoReturnable<EntityModelLayer> cir) {

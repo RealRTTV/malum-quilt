@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import static ca.rttv.malum.registry.MalumBlockRegistry.BRILLIANT_OBELISK;
 
 @Mixin(EnchantmentScreenHandler.class)
-public abstract class EnchantmentScreenHandlerMixin {
+abstract class EnchantmentScreenHandlerMixin {
     /**
      * messy solution because I modified the EnchantmentTableBlock method, so it actually adds 1 and then adds 4 to add a total of 5 which is 1/3rd of the bookshelf maximum
      * I modify the vanilla method (EnchantingTableBlock) too, because particles

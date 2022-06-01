@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static ca.rttv.malum.registry.MalumStatusEffectRegistry.SACRED_AURA;
 
 @Mixin(StatusEffect.class)
-public abstract class StatusEffectMixin {
+abstract class StatusEffectMixin {
     @Inject(method = "canApplyUpdateEffect", at = @At("HEAD"), cancellable = true)
     private void canApplyUpdateEffect(int duration, int amplifier, CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this == SACRED_AURA) {

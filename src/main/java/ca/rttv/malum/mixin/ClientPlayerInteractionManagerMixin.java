@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static ca.rttv.malum.registry.MalumStatusEffectRegistry.AQUEOUS_AURA;
 
 @Mixin(ClientPlayerInteractionManager.class)
-public final class ClientPlayerInteractionManagerMixin {
+final class ClientPlayerInteractionManagerMixin {
     @Shadow @Final private MinecraftClient client;
 
     @Inject(method = "getReachDistance", at = @At("HEAD"), cancellable = true)

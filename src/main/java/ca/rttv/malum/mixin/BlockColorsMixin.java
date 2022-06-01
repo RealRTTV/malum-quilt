@@ -16,7 +16,7 @@ import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 
 
 @Mixin(BlockColors.class)
-public final class BlockColorsMixin {
+final class BlockColorsMixin {
     @Inject(method = "create", at = @At(value = "RETURN", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void create(CallbackInfoReturnable<BlockColors> cir, BlockColors blockColors) {
         blockColors.registerColorProvider((state, world, pos, tintIndex) -> {

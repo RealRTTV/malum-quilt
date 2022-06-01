@@ -17,7 +17,7 @@ import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
 import static net.minecraft.item.Item.ATTACK_DAMAGE_MODIFIER_ID;
 
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin {
+abstract class ItemStackMixin {
     @Unique
     private EntityAttributeModifier entityAttributeModifier;
 

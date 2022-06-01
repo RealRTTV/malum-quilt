@@ -16,7 +16,7 @@ import java.util.Map;
 import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
-public abstract class AbstractFurnaceBlockEntityMixin {
+abstract class AbstractFurnaceBlockEntityMixin {
 
     @Unique
     private static Map<Item, Integer> map;

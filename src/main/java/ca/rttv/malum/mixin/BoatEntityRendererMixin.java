@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static ca.rttv.malum.Malum.MODID;
 
 @Mixin(BoatEntityRenderer.class)
-public final class BoatEntityRendererMixin {
+final class BoatEntityRendererMixin {
     @Inject(method = "method_32163", at = @At(value = "HEAD"), cancellable = true, remap = false)
     private static void useMalumNamespace(EntityRendererFactory.Context context, BoatEntity.Type type, CallbackInfoReturnable<Pair<Identifier, BoatEntityModel>> cir) {
         if (type == MalumBoatTypes.RUNEWOOD || type == MalumBoatTypes.SOULWOOD) {

@@ -14,7 +14,7 @@ import static ca.rttv.malum.registry.MalumItemRegistry.RUNEWOOD_BOAT;
 import static ca.rttv.malum.registry.MalumItemRegistry.SOULWOOD_BOAT;
 
 @Mixin(BoatEntity.class)
-public abstract class BoatEntityMixin {
+abstract class BoatEntityMixin {
     @Shadow public abstract BoatEntity.Type getBoatType();
 
     @Inject(method = "asItem", at = @At("HEAD"), cancellable = true)

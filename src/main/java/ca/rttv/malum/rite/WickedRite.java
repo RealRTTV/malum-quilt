@@ -3,16 +3,21 @@ package ca.rttv.malum.rite;
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.registry.MalumDamageSourceRegistry;
 import ca.rttv.malum.util.spirit.SpiritType;
+import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.Random;
+
+import static ca.rttv.malum.Malum.MODID;
 
 public class WickedRite extends Rite {
     public WickedRite(Item... items) {
@@ -35,7 +40,11 @@ public class WickedRite extends Rite {
         }
 
         world.getEntitiesByClass(LivingEntity.class, new Box(pos.add(-8, -8, -8), pos.add(8, 8, 8)), entity -> entity.getHealth() <= 2.5f && (!(entity instanceof PlayerEntity playerEntity) || !playerEntity.getAbilities().creativeMode)).forEach(entity -> {
-            world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> players.networkHandler.sendPacket(new MalumParticleS2CPacket<ClientPlayNetworkHandler>(SpiritType.EARTHEN_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ())));
+            world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
+                PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                new MalumParticleS2CPacket(SpiritType.WICKED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ()).write(buf);
+                ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+            });
             entity.damage(MalumDamageSourceRegistry.FORCED_SHATTER, 10.0f);
         });
     }

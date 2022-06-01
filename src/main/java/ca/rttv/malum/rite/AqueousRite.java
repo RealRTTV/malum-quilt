@@ -2,20 +2,23 @@ package ca.rttv.malum.rite;
 
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.util.spirit.SpiritType;
+import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3i;
+import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.Random;
 
+import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumStatusEffectRegistry.AQUEOUS_AURA;
 
 public class AqueousRite extends Rite {
@@ -31,7 +34,11 @@ public class AqueousRite extends Rite {
 
         world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> {
             if (!player.hasStatusEffect(AQUEOUS_AURA)) {
-                world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> players.networkHandler.sendPacket(new MalumParticleS2CPacket<ClientPlayNetworkHandler>(SpiritType.AQUEOUS_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ())));
+                world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
+                    PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                    new MalumParticleS2CPacket(SpiritType.AQUEOUS_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ()).write(buf);
+                    ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                });
             }
             player.addStatusEffect(new StatusEffectInstance(AQUEOUS_AURA, 220, 1));
         });
@@ -45,7 +52,11 @@ public class AqueousRite extends Rite {
 
         world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> {
             if (!player.hasStatusEffect(StatusEffects.WATER_BREATHING)) {
-                ((ServerPlayerEntity) player).networkHandler.sendPacket(new MalumParticleS2CPacket<ClientPlayNetworkHandler>(SpiritType.AQUEOUS_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ()));
+                world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
+                    PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                    new MalumParticleS2CPacket(SpiritType.AQUEOUS_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ()).write(buf);
+                    ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                });
             }
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 200, 0));
         });

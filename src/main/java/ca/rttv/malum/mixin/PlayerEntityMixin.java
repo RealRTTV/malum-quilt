@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.SCYTHE_PROFICIENCY;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity {
+abstract class PlayerEntityMixin extends LivingEntity {
     @Unique
     float f;
 

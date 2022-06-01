@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(VegetationConfiguredFeatures.class)
-public abstract class VegetationConfiguredFeaturesMixin {
+abstract class VegetationConfiguredFeaturesMixin {
     @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/gen/feature/util/ConfiguredFeatureUtil;register(Ljava/lang/String;Lnet/minecraft/world/gen/feature/Feature;Lnet/minecraft/world/gen/feature/FeatureConfig;)Lnet/minecraft/util/Holder;", ordinal = 34), index = 2)
     private static <FC extends FeatureConfig> FC plainsRunewoodTrees(FC featureConfig) {
         RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;

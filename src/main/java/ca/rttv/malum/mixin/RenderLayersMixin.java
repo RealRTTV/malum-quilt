@@ -12,7 +12,7 @@ import java.util.Map;
 import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 
 @Mixin(RenderLayers.class)
-public final class RenderLayersMixin {
+final class RenderLayersMixin {
     @Shadow @Final private static Map<Block, RenderLayer> BLOCKS;
 
     static {

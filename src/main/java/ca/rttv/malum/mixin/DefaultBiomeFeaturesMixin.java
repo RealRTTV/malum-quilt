@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static ca.rttv.malum.registry.MalumPlacedFeatureRegistry.*;
 
 @Mixin(DefaultBiomeFeatures.class)
-public abstract class DefaultBiomeFeaturesMixin {
+abstract class DefaultBiomeFeaturesMixin {
     @Inject(method = "addDefaultOres(Lnet/minecraft/world/biome/GenerationSettings$Builder;Z)V", at = @At("TAIL"))
     private static void addSoulstoneOre(GenerationSettings.Builder builder, boolean largeCopperOreBlob, CallbackInfo ci) {
         builder.feature(GenerationStep.Feature.UNDERGROUND_ORES, LOWER_ORE_SOULSTONE_PLACED);

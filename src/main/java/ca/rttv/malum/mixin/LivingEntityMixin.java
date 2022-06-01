@@ -35,7 +35,7 @@ import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_RESISTANCE;
 import static ca.rttv.malum.registry.MalumStatusEffectRegistry.CORRUPTED_AERIAL_AURA;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity {
+abstract class LivingEntityMixin extends Entity {
     @Shadow public abstract double getAttributeValue(EntityAttribute attribute);
 
     @Shadow

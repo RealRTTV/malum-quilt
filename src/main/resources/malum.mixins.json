@@ -15,7 +15,6 @@
     "EnchantmentScreenHandlerMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
-    "NetworkStateMixin",
     "PlayerEntityMixin",
     "SeverPlayerInteractionManagerMixin",
     "StatusEffectMixin",
