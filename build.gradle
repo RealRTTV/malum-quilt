@@ -47,18 +47,19 @@ dependencies {
 		exclude group: "com.terraformersmc"
 	}
 	modImplementation libs.satin
+	include libs.satin
 	//modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
 	//modImplementation "maven.modrinth:iris:1.18.x-v1.2.1"
     runtimeOnly('org.joml:joml:1.10.4') // for sodium
 	modRuntimeOnly "maven.modrinth:lazydfu:0.1.2"
-//	modImplementation(libs.cardinal.components.base) {
-//		exclude group: "net.fabricmc"
-//		exclude group: "net.fabricmc.fabric-api"
-//	}
-//	modImplementation(libs.cardinal.components.entity) {
-//		exclude group: "net.fabricmc"
-//		exclude group: "net.fabricmc.fabric-api"
-//	}
+	modImplementation(libs.cardinal.components.base) {
+		exclude group: "net.fabricmc"
+		exclude group: "net.fabricmc.fabric-api"
+	}
+	modImplementation(libs.cardinal.components.entity) {
+		exclude group: "net.fabricmc"
+		exclude group: "net.fabricmc.fabric-api"
+	}
 	modImplementation(libs.fabric.asm) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
@@ -78,7 +79,7 @@ dependencies {
 		exclude group: "net.fabricmc.fabric-api"
 	}
 	modImplementation("com.demonwav.mcdev:annotations:1.0")
-//	modImplementation("io.github.fabricators_of_create:Porting-Lib:1.1.0-beta+1.18.2-dev.5b3ee72")
+	//modImplementation("io.github.fabricators_of_create:Porting-Lib:1.1.0-beta+1.18.2-dev.5b3ee72")
 }
 
 configurations.all {
