@@ -11,8 +11,8 @@
       }
     ],
     "metadata": {
-      "name": "Malum (Fabric)",
-      "description": "A Fabric port of the mod 'Malum' - A minecraft mod about dark magic.",
+      "name": "Malum (Quilt)",
+      "description": "A Quilt port of the mod 'Malum' - A minecraft mod about dark magic.",
       "contributors": {
         "RTTV": "Owner",
         "Arathain": "Owner",
@@ -20,7 +20,7 @@
       },
       "contact": {
         "homepage": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        "sources": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        "sources": "https://github.com/RealRTTV/malum-fabric"
       },
       "icon": "assets/malum/icon.png",
       "license": {

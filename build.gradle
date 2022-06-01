@@ -9,25 +9,22 @@ group = project.maven_group
 
 repositories {
 	maven {
-		name = 'Quilt'
-		url = 'https://maven.quiltmc.org/repository/snapshot'
+	    url 'https://api.modrinth.com/maven'
+	    content {
+		    includeGroup 'maven.modrinth'
+	    }
 	}
-	maven {
-		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/"
-	}
-	maven {
-		name = "Ladysnake Libs"
-		url = "https://ladysnake.jfrog.io/artifactory/mods"
-	}
-	maven {
-		name = "Modrinth"
-		url = "https://api.modrinth.com/maven"
-		content {
-			includeGroup "maven.modrinth"
-		}
-	}
-	maven { url = "https://jitpack.io" }
+	maven { url 'https://maven.quiltmc.org/repository/snapshot' }
+	maven { url 'https://maven.terraformersmc.com' }
+	maven { url 'https://ladysnake.jfrog.io/artifactory/mods' }
+	maven { url 'https://jitpack.io' }
+	// bad create stuff
+	maven { url 'https://mvn.devos.one/snapshots' }
+	maven { url 'https://maven.cafeteria.dev' }
+	maven { url 'https://maven.jamieswhiteshirt.com/libs-release' }
+	maven { url 'https://maven.tterrag.com' }
+	maven { url 'https://cursemaven.com' }
+	maven { url 'https://maven.shedaniel.me' }
 	mavenCentral()
 }
 
@@ -42,8 +39,8 @@ dependencies {
 	}
 	modImplementation libs.quilt.loader
 
-	modImplementation libs.quilted.fabric.api
 	modImplementation libs.isnrmn
+	modImplementation libs.quilted.fabric.api
 	modImplementation(libs.trinkets) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
@@ -52,16 +49,16 @@ dependencies {
 	modImplementation libs.satin
 	//modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
 	//modImplementation "maven.modrinth:iris:1.18.x-v1.2.1"
-    runtimeOnly('org.joml:joml:1.10.2') // for sodium
+    runtimeOnly('org.joml:joml:1.10.4') // for sodium
 	modRuntimeOnly "maven.modrinth:lazydfu:0.1.2"
-	modImplementation(libs.cardinal.components.base) {
-		exclude group: "net.fabricmc"
-		exclude group: "net.fabricmc.fabric-api"
-	}
-	modImplementation(libs.cardinal.components.entity) {
-		exclude group: "net.fabricmc"
-		exclude group: "net.fabricmc.fabric-api"
-	}
+//	modImplementation(libs.cardinal.components.base) {
+//		exclude group: "net.fabricmc"
+//		exclude group: "net.fabricmc.fabric-api"
+//	}
+//	modImplementation(libs.cardinal.components.entity) {
+//		exclude group: "net.fabricmc"
+//		exclude group: "net.fabricmc.fabric-api"
+//	}
 	modImplementation(libs.fabric.asm) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
@@ -80,7 +77,10 @@ dependencies {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 	}
+	modImplementation("com.demonwav.mcdev:annotations:1.0")
+//	modImplementation("io.github.fabricators_of_create:Porting-Lib:1.1.0-beta+1.18.2-dev.5b3ee72")
 }
+
 configurations.all {
 	resolutionStrategy.dependencySubstitution {
 		substitute module('net.fabricmc:fabric-loader') using module(libs.quilt.loader.get().toString())

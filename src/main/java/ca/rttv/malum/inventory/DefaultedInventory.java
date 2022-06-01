@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public interface DefaultedInventory extends Inventory {
     DefaultedList<ItemStack> getInvStackList();
@@ -67,6 +68,7 @@ public interface DefaultedInventory extends Inventory {
         this.notifyListeners();
     }
 
+    @Nullable
     World getWorld();
 
     BlockPos getPos();

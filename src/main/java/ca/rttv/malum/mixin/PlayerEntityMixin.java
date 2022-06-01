@@ -36,9 +36,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        return super.damage(source, ArcaneAffinity.consumeSoulWard(this, source, amount));
+    @ModifyVariable(method = "damage", at = @At("HEAD"), index = 2, argsOnly = true)
+    public float damage(float value, DamageSource source) {
+        return ArcaneAffinity.consumeSoulWard(this, source, value);
     }
 
     @Inject(method = "tick", at = @At("HEAD"))

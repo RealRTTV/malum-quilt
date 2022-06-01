@@ -160,7 +160,7 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
     }
 
     public Ingredient asIngredient() {
-        return Ingredient.fromJson(this.toJson());
+        return Ingredient.ofEntries(Arrays.stream(this.entries).map(entry -> entry instanceof StackEntry stackEntry ? new Ingredient.StackEntry(new ItemStack(stackEntry.stack.getItem())) : new Ingredient.TagEntry(((TagEntry) entry).tag)));
     }
 
     public interface Entry {
