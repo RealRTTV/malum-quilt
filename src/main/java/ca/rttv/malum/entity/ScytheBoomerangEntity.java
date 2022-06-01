@@ -116,7 +116,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
             remove(RemovalReason.DISCARDED);
             return;
         }
-        if (world.isClient) {
+        if (world.isClient && this.scythe != null) {
             if (!isInsideWaterOrBubbleColumn()) {
                 if (EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, getItem()) > 0) {
                     Vec3d vector = new Vec3d(getParticleX(0.7), getRandomBodyY(), getParticleZ(0.7));
