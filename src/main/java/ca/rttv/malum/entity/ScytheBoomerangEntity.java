@@ -42,12 +42,16 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
     public UUID ownerUUID;
     @Nullable
     public PlayerEntity owner;
-
     public int slot;
     public float damage;
     public int age;
     public int returnAge = 8;
     public boolean returning;
+
+    @Override
+    public boolean hasNetherPortalCooldown() {
+        return true;
+    }
 
     public ScytheBoomerangEntity(World world) {
         super(MalumEntityRegistry.SCYTHE_BOOMERANG, world);
@@ -63,7 +67,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         getActualOwner();
-        if (!world.isClient && (owner == null || !owner.isAlive())) {
+        if (!world.isClient && (owner == null || owner.isDead())) {
             ItemEntity entityitem = new ItemEntity(world, getX(), getY() + 0.5, getZ(), scythe);
             entityitem.setPickupDelay(40);
             entityitem.setVelocity(entityitem.getVelocity().multiply(0, 1, 0));
@@ -104,7 +108,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         super.tick();
         age++;
         getActualOwner();
-        if (!world.isClient && (owner == null || !owner.isAlive())) {
+        if (!world.isClient && (owner == null || owner.isDead())) {
             ItemEntity entityitem = new ItemEntity(world, getX(), getY() + 0.5, getZ(), scythe);
             entityitem.setPickupDelay(40);
             entityitem.setVelocity(entityitem.getVelocity().multiply(0, 1, 0));
@@ -179,8 +183,8 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
 
     public PlayerEntity getActualOwner() {
         if (owner == null) {
-            if (!world.isClient) {
-                owner = ((ServerWorld) world).getEntity(ownerUUID) instanceof PlayerEntity playerEntity ? playerEntity : null;
+            if (world instanceof ServerWorld serverWorld) {
+                owner = serverWorld.getEntity(ownerUUID) instanceof PlayerEntity playerEntity ? playerEntity : null;
             }
         }
         return owner;
@@ -194,9 +198,9 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
     }
 
     public void shootFromRotation(Entity shooter, float rotationPitch, float rotationYaw, float pitchOffset, float velocity, float innacuracy) {
-        float f = -MathHelper.sin(rotationYaw * ((float) Math.PI / 180F)) * MathHelper.cos(rotationPitch * ((float) Math.PI / 180F));
+        float f = -MathHelper.sin(rotationYaw * (float) Math.PI / 180F) * MathHelper.cos(rotationPitch * ((float) Math.PI / 180F));
         float f1 = -MathHelper.sin((rotationPitch + pitchOffset) * ((float) Math.PI / 180F));
-        float f2 = MathHelper.cos(rotationYaw * ((float) Math.PI / 180F)) * MathHelper.cos(rotationPitch * ((float) Math.PI / 180F));
+        float f2 = MathHelper.cos(rotationYaw * (float) Math.PI / 180F) * MathHelper.cos(rotationPitch * ((float) Math.PI / 180F));
         this.setVelocity(f, f1, f2, velocity, innacuracy);
         Vec3d vec3 = shooter.getVelocity();
         this.setVelocity(this.getVelocity().add(vec3.x, 0, vec3.z));
@@ -281,5 +285,4 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         super.initDataTracker();
         this.dataTracker.startTracking(SCYTHE, ItemStack.EMPTY);
     }
-
 }
