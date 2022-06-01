@@ -75,5 +75,20 @@ public abstract class AbstractItemDisplayBlockEntity extends BlockEntity impleme
         super.writeNbt(nbt);
     }
 
+    @Override
+    public World getWorld() {
+        return super.getWorld();
+    }
+
+    @Override
+    public BlockPos getPos() {
+        return super.getPos();
+    }
+
+    @Override
+    public BlockState getCachedState() {
+        return super.getCachedState();
+    }
+
     public abstract Vec3d itemOffset();
 }

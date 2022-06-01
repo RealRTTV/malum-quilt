@@ -54,6 +54,21 @@ public class SpiritJarBlockEntity extends BlockEntity implements DefaultedInvent
     }
 
     @Override
+    public World getWorld() {
+        return super.getWorld();
+    }
+
+    @Override
+    public BlockPos getPos() {
+        return super.getPos();
+    }
+
+    @Override
+    public BlockState getCachedState() {
+        return super.getCachedState();
+    }
+
+    @Override
     public DefaultedList<ItemStack> getInvStackList() {
         return stacks;
     }

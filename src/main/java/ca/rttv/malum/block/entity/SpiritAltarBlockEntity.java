@@ -329,6 +329,11 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
     }
 
     @Override
+    public World getWorld() {
+        return super.getWorld();
+    }
+
+    @Override
     public void writeNbt(NbtCompound nbt) {
         nbt.putInt("progress", progress);
         nbt.putInt("spinUp", spinUp);

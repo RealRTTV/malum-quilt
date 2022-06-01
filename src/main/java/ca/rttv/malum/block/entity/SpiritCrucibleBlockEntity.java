@@ -1,6 +1,7 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.block.SpiritCatalyzerBlock;
+import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.inventory.DefaultedInventory;
 import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.recipe.SpiritFocusingRecipe;
@@ -8,6 +9,7 @@ import ca.rttv.malum.recipe.SpiritRepairRecipe;
 import ca.rttv.malum.util.block.entity.ICrucibleAccelerator;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
+import ca.rttv.malum.util.particle.ParticleBuilders;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -226,7 +228,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
 //            for (int i = 0; i < colors.size(); i++) {
 //                Color color = colors.get(i);
 //                Color endColor = endColors.get(i);
-//                Vec3d tabletItemPos = tabletBlockEntity.getItemPos();
+//                Vec3d tabletItemPos = tabletBlockEntity.itemOffset();
 //                Vec3d velocity = tabletItemPos.subtract(itemPos).normalize().multiply(-0.1f);
 //
 //                ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
@@ -268,11 +270,6 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
 //        if (focusingRecipe != null) {
 //            for (int i = 0; i < spiritSlots.size(); i++) {
 //                ItemStack item = spiritSlots.get(i);
-//                for (ICrucibleAccelerator accelerator : accelerators) {
-//                    if (accelerator != null) {
-//                        accelerator.addParticles(worldPosition, itemPos);
-//                    }
-//                }
 //                if (item.getItem() instanceof SpiritItem spiritSplinterItem) {
 //                    Vec3d offset = spiritOffset(this, i, 0.5f);
 //                    Color color = spiritSplinterItem.type.color;
@@ -281,11 +278,6 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
 //                    double y = pos.getY() + offset.y;
 //                    double z = pos.getZ() + offset.z;
 //                    Vec3d velocity = new Vec3d(x, y, z).subtract(itemPos).normalize().multiply(-0.03f);
-//                    for (ICrucibleAccelerator accelerator : accelerators) {
-//                        if (accelerator != null) {
-//                            accelerator.addParticles(color, endColor, 0.08f / this.getSpiritCount(), pos, itemPos);
-//                        }
-//                    }
 //                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
 //                            .setAlpha(0.30f, 0f)
 //                            .setLifetime(40)
@@ -321,6 +313,21 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
 //                }
 //            }
 //        }
+    }
+
+    @Override
+    public World getWorld() {
+        return super.getWorld();
+    }
+
+    @Override
+    public BlockPos getPos() {
+        return super.getPos();
+    }
+
+    @Override
+    public BlockState getCachedState() {
+        return super.getCachedState();
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
