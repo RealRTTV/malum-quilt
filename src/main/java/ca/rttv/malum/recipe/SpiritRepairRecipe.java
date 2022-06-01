@@ -124,11 +124,6 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
             blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElse(new IngredientWithCount.StackEntry(ItemStack.EMPTY)).getCount());
         }
 
-        if (blockEntity.getWorld().random.nextDouble() <= durabilityPercentage && heldItem.damage(1, blockEntity.getWorld().random, null)) {
-            Identifier id = Registry.ITEM.getId(heldItem.getItem());
-            blockEntity.setStack(0, new ItemStack(Registry.ITEM.get(new Identifier(id.getNamespace(), "cracked_" + id.getPath()))));
-        }
-
         BlockPos pos = blockEntity.getPos();
 
         IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.repairRecipe.repairMaterial.getEntries()).map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count())).toArray(IngredientWithCount.Entry[]::new);
@@ -147,7 +142,10 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
             }
         });
 
-        heldItem.setDamage(Math.max(0, blockEntity.getHeldItem().getDamage() - (int) (blockEntity.getHeldItem().getMaxDamage() * durabilityPercentage)));
+        heldItem = this.getOutput(heldItem);
+        if (!Registry.ITEM.getId(heldItem.getItem()).getPath().endsWith("_impetus")) {
+            heldItem.setDamage(Math.max(0, blockEntity.getHeldItem().getDamage() - (int) (blockEntity.getHeldItem().getMaxDamage() * durabilityPercentage)));
+        }
 
         blockEntity.setStack(0, ItemStack.EMPTY);
         ItemScatterer.spawn(blockEntity.getWorld(), pos.up(), DefaultedList.ofSize(1, heldItem));
@@ -161,7 +159,16 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
 
     @Override
     public ItemStack getOutput() {
-        return input.getMatchingStacks()[0];
+        return null;
+    }
+
+    public ItemStack getOutput(ItemStack input) {
+        String id = Registry.ITEM.getId(input.getItem()).toString();
+        if (id.endsWith("_impetus")) {
+            return Registry.ITEM.get(new Identifier(id.replaceAll("cracked_", ""))).getDefaultStack();
+        } else {
+            return input.copy();
+        }
     }
 
     @Override
