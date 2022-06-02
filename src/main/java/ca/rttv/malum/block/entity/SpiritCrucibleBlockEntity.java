@@ -158,7 +158,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                 queuedCracks += durabilityCost[0];
                 if (this.getHeldItem().damage(durabilityCost[0], world.random, null)) {
                     Identifier id = Registry.ITEM.getId(this.getHeldItem().getItem());
-                    this.setStack(0, new ItemStack(Registry.ITEM.get(new Identifier(id.getNamespace(), "cracked_" + id.getPath()))));
+                    this.setStack(0, Registry.ITEM.get(new Identifier(id.getNamespace(), "cracked_" + id.getPath())).getDefaultStack());
                 }
                 progress = 0;
                 this.notifyListeners();

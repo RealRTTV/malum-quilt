@@ -41,7 +41,7 @@ public class EldritchAerialRite extends Rite {
             world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(fallingPos).x, new ChunkPos(fallingPos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.AERIAL_SPIRIT.color.getRGB(), fallingPos.getX() + 0.5d, fallingPos.getY() + 0.5d, fallingPos.getZ() + 0.5d).write(buf);
-                ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
             });
         });
     }
@@ -57,7 +57,7 @@ public class EldritchAerialRite extends Rite {
                 world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                     new MalumParticleS2CPacket(SpiritType.AERIAL_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ()).write(buf);
-                    ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                    ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
                 });
             }
             player.addStatusEffect(new StatusEffectInstance(CORRUPTED_AERIAL_AURA, 100, 40));

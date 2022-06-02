@@ -37,7 +37,7 @@ public class SacredRite extends Rite {
                 world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                     new MalumParticleS2CPacket(SpiritType.SACRED_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ()).write(buf);
-                    ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                    ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
                 });
             }
             player.addStatusEffect(new StatusEffectInstance(SACRED_AURA, 200, 0));
@@ -56,7 +56,7 @@ public class SacredRite extends Rite {
                     world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
                         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                         new MalumParticleS2CPacket(SpiritType.SACRED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ()).write(buf);
-                        ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                        ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
                     });
                     entity.setBreedingAge(entity.getBreedingAge() + 25);
                 }

@@ -51,7 +51,7 @@ final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListen
 
     @Inject(method = "getActiveTotemOfUndying", at = @At("HEAD"), cancellable = true)
     private static void getActiveTotemOfUndying(PlayerEntity player, CallbackInfoReturnable<ItemStack> cir) {
-        for(Hand hand : Hand.values()) {
+        for (Hand hand : Hand.values()) {
             ItemStack itemStack = player.getStackInHand(hand);
             if (itemStack.isOf(MalumItemRegistry.CEASELESS_IMPETUS)) {
                 cir.setReturnValue(itemStack);

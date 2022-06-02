@@ -37,8 +37,8 @@ public class RevealedPillarBlock extends PillarBlock {
                 }
                 player.getStackInHand(hand).decrement(1);
             }
-            if (!player.getInventory().insertStack(new ItemStack(getSap()))) {
-                player.dropStack(new ItemStack(getSap()));
+            if (!player.getInventory().insertStack(getSap().getDefaultStack())) {
+                player.dropStack(getSap().getDefaultStack());
             }
             world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
             return ActionResult.success(world.isClient);

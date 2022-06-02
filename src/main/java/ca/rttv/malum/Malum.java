@@ -53,6 +53,7 @@ public final class Malum implements ModInitializer {
         MalumScreenHandlerRegistry.init();
         MalumAcceleratorTypeRegistry.init();
         MalumStatusEffectRegistry.init();
+        MalumTags.init();
         UseItemCallback.EVENT.register(ReboundEnchantment::onRightClickItem);
 
         ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new SpiritDataReloadListenerFabricImpl());

@@ -61,7 +61,7 @@ public class FloatingItemEntity extends FloatingEntity {
 
     public ItemStack getItem() {
         ItemStack itemstack = this.getItemRaw();
-        return itemstack.isEmpty() ? new ItemStack(this.getDefaultItem()) : itemstack;
+        return itemstack.isEmpty() ? this.getDefaultItem().getDefaultStack() : itemstack;
     }
 
     @Override

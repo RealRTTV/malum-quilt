@@ -27,7 +27,7 @@ public record BlockTransmutationRecipe(Identifier id, String group, Ingredient i
 
     @Nullable
     public static BlockTransmutationRecipe getRecipe(Block block, World world) {
-        return getRecipe(world, recipe -> recipe.input.test(new ItemStack(block)));
+        return getRecipe(world, recipe -> recipe.input.test(block.asItem().getDefaultStack()));
     }
 
     @Nullable
@@ -96,7 +96,7 @@ public record BlockTransmutationRecipe(Identifier id, String group, Ingredient i
         public T read(Identifier id, JsonObject json) {
             String group = JsonHelper.getString(json, "group", "");
             Ingredient input = Ingredient.ofItems(JsonHelper.getItem(json, "input"));
-            ItemStack output = new ItemStack(JsonHelper.getItem(json, "output"));
+            ItemStack output = JsonHelper.getItem(json, "output").getDefaultStack();
             return recipeFactory.create(id, group, input, output);
         }
 

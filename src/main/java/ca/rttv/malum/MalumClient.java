@@ -56,6 +56,6 @@ public final class MalumClient implements ClientModInitializer {
             });
         }
 
-        ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "MalumParticleS2CPacket"), (client, handler, buf, responceSender) -> new MalumParticleS2CPacket(buf).apply(client.getNetworkHandler()));
+        ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "malumparticles2cpacket"), (client, handler, buf, responceSender) -> new MalumParticleS2CPacket(buf).apply(client.getNetworkHandler()));
     }
 }

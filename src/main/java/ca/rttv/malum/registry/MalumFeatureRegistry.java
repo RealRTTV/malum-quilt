@@ -17,10 +17,10 @@ import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 public interface MalumFeatureRegistry {
     Map<Identifier, Feature<? extends FeatureConfig>> FEATURES = new LinkedHashMap<>();
 
-    Feature<DefaultFeatureConfig> RUNEWOOD_TREE_FEATURE = registerFeature("runewood_tree", new GradientTreeFeature(EXPOSED_RUNEWOOD_LOG, RUNEWOOD_LEAVES, RUNEWOOD_LOG, RUNEWOOD_SAPLING));
-    Feature<DefaultFeatureConfig> SOULWOOD_TREE_FEATURE = registerFeature("soulwood_tree", new GradientTreeFeature(EXPOSED_SOULWOOD_LOG, SOULWOOD_LEAVES, SOULWOOD_LOG, SOULWOOD_SAPLING));
+    Feature<DefaultFeatureConfig> RUNEWOOD_TREE_FEATURE = register("runewood_tree", new GradientTreeFeature(EXPOSED_RUNEWOOD_LOG, RUNEWOOD_LEAVES, RUNEWOOD_LOG, RUNEWOOD_SAPLING));
+    Feature<DefaultFeatureConfig> SOULWOOD_TREE_FEATURE = register("soulwood_tree", new GradientTreeFeature(EXPOSED_SOULWOOD_LOG, SOULWOOD_LEAVES, SOULWOOD_LOG, SOULWOOD_SAPLING));
 
-    static <C extends FeatureConfig, F extends Feature<C>> F registerFeature(String id, F feature) {
+    static <C extends FeatureConfig, F extends Feature<C>> F register(String id, F feature) {
         FEATURES.put(new Identifier(MODID, id), feature);
         return feature;
     }

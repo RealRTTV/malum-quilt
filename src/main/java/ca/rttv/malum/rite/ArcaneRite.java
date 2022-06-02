@@ -54,7 +54,7 @@ public class ArcaneRite extends Rite {
                 if (item instanceof BlockItem blockItem) {
                     FallingBlockEntity.fall(world, mutationPos, blockItem.getBlock().getDefaultState());
                 } else {
-                    world.spawnEntity(new ItemEntity(world, mutationPos.getX() + 0.5d, mutationPos.getY() + 0.5d, mutationPos.getZ() + 0.5d, new ItemStack(item), 0.0d, 0.2d, 0.0d));
+                    world.spawnEntity(new ItemEntity(world, mutationPos.getX() + 0.5d, mutationPos.getY() + 0.5d, mutationPos.getZ() + 0.5d, item.getDefaultStack(), 0.0d, 0.2d, 0.0d));
                 }
             }
         });

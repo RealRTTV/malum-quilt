@@ -7,6 +7,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public interface MalumTags {
-    TagKey<Item> SCYTHE = TagKey.of(Registry.ITEM_KEY, new Identifier(Malum.MODID, "scythe"));
+    TagKey<Item> SCYTHE             = TagKey.of(Registry.ITEM_KEY, new Identifier(Malum.MODID, "scythe"));
     TagKey<Item> SOUL_HUNTER_WEAPON = TagKey.of(Registry.ITEM_KEY, new Identifier(Malum.MODID, "soul_hunter_weapon"));
+
+    static void init() {
+
+    }
 }

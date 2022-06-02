@@ -15,9 +15,9 @@ import static ca.rttv.malum.Malum.MODID;
 public interface MalumScreenHandlerRegistry {
     Map<Identifier, ScreenHandlerType<? extends ScreenHandler>> SCREEN_HANDLERS = new LinkedHashMap<>();
 
-    ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER = registerScreenHandler("spirit_pouch", SpiritPouchScreenHandler::new);
+    ScreenHandlerType<SpiritPouchScreenHandler> SPIRIT_POUCH_SCREEN_HANDLER = register("spirit_pouch", SpiritPouchScreenHandler::new);
 
-    static <T extends ScreenHandler> ScreenHandlerType<T> registerScreenHandler(String id, ScreenHandlerType.Factory<T> factory) {
+    static <T extends ScreenHandler> ScreenHandlerType<T> register(String id, ScreenHandlerType.Factory<T> factory) {
         ScreenHandlerType<T> screenHandlerType = new ScreenHandlerType<>(factory);
         SCREEN_HANDLERS.put(new Identifier(MODID, id), screenHandlerType);
         return screenHandlerType;

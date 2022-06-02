@@ -19,11 +19,11 @@ public interface MalumEnchantments {
      EnchantmentTarget SCYTHE = ClassTinkerers.getEnum(EnchantmentTarget.class, "SCYTHE");
      EnchantmentTarget REBOUND_SCYTHE = ClassTinkerers.getEnum(EnchantmentTarget.class, "REBOUND_SCYTHE");
      EnchantmentTarget SOUL_HUNTER_WEAPON = ClassTinkerers.getEnum(EnchantmentTarget.class, "SOUL_HUNTER");
-     Enchantment REBOUND = create("rebound", new ReboundEnchantment(Enchantment.Rarity.UNCOMMON, REBOUND_SCYTHE, EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
+     Enchantment REBOUND = register("rebound", new ReboundEnchantment(Enchantment.Rarity.UNCOMMON, REBOUND_SCYTHE, EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
 //     Enchantment HAUNTED = create("haunted", HauntedEnchantment::new);
-     Enchantment SPIRIT_PLUNDER = create("spirit_plunder", new SpiritPlunderEnchantment());
+     Enchantment SPIRIT_PLUNDER = register("spirit_plunder", new SpiritPlunderEnchantment());
 
-    static <T extends Enchantment> T create(String id, T enchantment) {
+    static <T extends Enchantment> T register(String id, T enchantment) {
         ENCHANTMENTS.put(new Identifier(MODID, id), enchantment);
         return enchantment;
     }

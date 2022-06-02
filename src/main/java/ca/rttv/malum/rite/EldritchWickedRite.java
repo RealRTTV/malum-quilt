@@ -48,7 +48,7 @@ public class EldritchWickedRite extends Rite {
                 world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                     new MalumParticleS2CPacket(SpiritType.WICKED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ()).write(buf);
-                    ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                    ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
                 });
                 maxKills[0]--;
             }

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public interface MalumSignTypeRegistry {
     ArrayList<SignType> SIGN_TYPES = new ArrayList<>();
-    SignType RUNEWOOD_SIGN_TYPE                         = registerSignType         (new SignType("runewood"));
-    SignType SOULWOOD_SIGN_TYPE                         = registerSignType         (new SignType("soulwood"));
+    SignType RUNEWOOD_SIGN_TYPE = register(new SignType("runewood"));
+    SignType SOULWOOD_SIGN_TYPE = register(new SignType("soulwood"));
 
-    static SignType registerSignType(SignType signType) {
+    static SignType register(SignType signType) {
         SIGN_TYPES.add(signType);
         return signType;
     }

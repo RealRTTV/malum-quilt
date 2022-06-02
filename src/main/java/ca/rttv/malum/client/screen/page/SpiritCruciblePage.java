@@ -62,7 +62,7 @@ public class SpiritCruciblePage extends BookPage {
     }
 
     public static SpiritCruciblePage fromInput(Item inputItem) {
-        return new SpiritCruciblePage(recipe -> recipe.input().test(new ItemStack(inputItem)));
+        return new SpiritCruciblePage(recipe -> recipe.input().test(inputItem.getDefaultStack()));
     }
 
     public static SpiritCruciblePage fromOutput(Item outputItem) {

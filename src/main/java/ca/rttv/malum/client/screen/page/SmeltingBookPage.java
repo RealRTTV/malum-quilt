@@ -33,10 +33,10 @@ public class SmeltingBookPage extends BookPage {
         if (client == null) {
             return new SmeltingBookPage(ItemStack.EMPTY, ItemStack.EMPTY);
         }
-        Optional<SmeltingRecipe> optional = client.world.getRecipeManager().getFirstMatch(RecipeType.SMELTING, new SimpleInventory(new ItemStack(input, 1)), client.world);
+        Optional<SmeltingRecipe> optional = client.world.getRecipeManager().getFirstMatch(RecipeType.SMELTING, new SimpleInventory(input.getDefaultStack()), client.world);
         if (optional.isPresent()) {
             SmeltingRecipe recipe = optional.get();
-            return new SmeltingBookPage(new ItemStack(input), recipe.getOutput());
+            return new SmeltingBookPage(input.getDefaultStack(), recipe.getOutput());
         }
         return new SmeltingBookPage(ItemStack.EMPTY, ItemStack.EMPTY);
     }

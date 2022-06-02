@@ -159,7 +159,7 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
 
     @Override
     public ItemStack getOutput() {
-        return null;
+        return this.getOutput(input.getMatchingStacks()[0]);
     }
 
     public ItemStack getOutput(ItemStack input) {
@@ -249,6 +249,6 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
     }
 
     private static Ingredient parseItems(JsonArray input, String inputLookup) {
-        return Ingredient.ofEntries(Stream.concat(StreamSupport.stream(input.spliterator(), false).map(JsonElement::getAsString).map(string -> string.startsWith("#") ? new Ingredient.TagEntry(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1)))) : new Ingredient.StackEntry(new ItemStack(Registry.ITEM.get(new Identifier(string))))), StreamSupport.stream(Registry.ITEM.spliterator(), false).filter(item -> item.isDamageable() && Registry.ITEM.getId(item).getPath().startsWith(inputLookup)).map(item -> new Ingredient.StackEntry(item.getDefaultStack()))));
+        return Ingredient.ofEntries(Stream.concat(StreamSupport.stream(input.spliterator(), false).map(JsonElement::getAsString).map(string -> string.startsWith("#") ? new Ingredient.TagEntry(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1)))) : new Ingredient.StackEntry(Registry.ITEM.get(new Identifier(string)).getDefaultStack())), StreamSupport.stream(Registry.ITEM.spliterator(), false).filter(item -> item.isDamageable() && Registry.ITEM.getId(item).getPath().startsWith(inputLookup)).map(item -> new Ingredient.StackEntry(item.getDefaultStack()))));
     }
 }

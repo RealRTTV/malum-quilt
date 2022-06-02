@@ -116,7 +116,7 @@ public class SpiritJarBlockEntity extends BlockEntity implements DefaultedInvent
                 spawnUseParticles(world, pos, ((SpiritItem) stack.getItem()).type);
             }
             if (this.getHeldItem().isEmpty()) {
-                this.setStack(0, new ItemStack(stack.getItem(), stack.getCount())); // this is to not carry nbt
+                this.setStack(0, new ItemStack(stack.getItem(), stack.getCount())); // this is to not carry nbt and it's better than .copy().setNbt(null);
             } else {
                 this.getHeldItem().increment(stack.getCount());
             }

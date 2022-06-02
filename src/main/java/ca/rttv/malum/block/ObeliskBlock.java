@@ -24,7 +24,7 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public abstract class ObeliskBlock extends Block implements Waterloggable, IAltarAccelerator {
+public class ObeliskBlock extends Block implements Waterloggable, IAltarAccelerator {
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final VoxelShape LOWER = VoxelShapes.union(Block.createCuboidShape(0.0d, 0.0d, 0.0d, 6.0d, 5.0d, 6.0d),
@@ -34,6 +34,7 @@ public abstract class ObeliskBlock extends Block implements Waterloggable, IAlta
             Block.createCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 3.0d, 15.0d),
             Block.createCuboidShape(3.0d, 2.5d, 3.0d, 13.0d, 16.0d, 13.0d));
     public static final VoxelShape UPPER = Block.createCuboidShape(3.0d, 0.0d, 3.0d, 13.0d, 9.0d, 13.0d);
+    private final AltarAcceleratorType accelerator;
 
     @Override
     public float getAcceleration() {
@@ -51,9 +52,15 @@ public abstract class ObeliskBlock extends Block implements Waterloggable, IAlta
     }
 
 
-    public ObeliskBlock(Settings settings) {
+    public ObeliskBlock(AltarAcceleratorType accelerator, Settings settings) {
         super(settings);
+        this.accelerator = accelerator;
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false).with(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    @Override
+    public AltarAcceleratorType getAcceleratorType() {
+        return accelerator;
     }
 
     @Override

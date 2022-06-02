@@ -6,6 +6,7 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,20 +43,24 @@ public class EldritchInfernalRite extends Rite {
             return;
         }
 
-        Recipe<?> recipe = world.getRecipeManager().listAllOfType(RecipeType.SMELTING).stream().filter(smeltingRecipe -> smeltingRecipe.getIngredients().get(0).test(new ItemStack(item))).findFirst().orElse(null);
+        Recipe<?> recipe = world.getRecipeManager().listAllOfType(RecipeType.SMELTING).stream().filter(smeltingRecipe -> smeltingRecipe.getIngredients().get(0).test(item.getDefaultStack())).findFirst().orElse(null);
         if (recipe == null) {
             return;
         }
 
-        Block block = ((BlockItem) recipe.getOutput().getItem()).getBlock();
+        Item output = recipe.getOutput().getItem();
 
         StreamSupport.stream(BlockPos.iterateOutwards(pos.down(), 2, 0, 2).spliterator(), false).filter(possiblePos -> !possiblePos.up().equals(pos) && world.getBlockState(possiblePos).isOf(world.getBlockState(pos.down()).getBlock())).forEach(possiblePos -> {
             world.breakBlock(possiblePos, false);
-            world.setBlockState(possiblePos, block.getDefaultState());
+            if (output instanceof BlockItem blockItem) {
+                world.setBlockState(possiblePos, blockItem.getBlock().getDefaultState());
+            } else {
+                world.spawnEntity(new ItemEntity(world, possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d, output.getDefaultStack()));
+            }
             world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.INFERNAL_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
-                ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
             });
         });
     }
@@ -72,7 +77,7 @@ public class EldritchInfernalRite extends Rite {
             world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.INFERNAL_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
-                ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
             });
         });
     }

@@ -30,10 +30,10 @@ public class HolySyrupItem extends Item {
         }
 
         if (stack.isEmpty()) {
-            return new ItemStack(Items.GLASS_BOTTLE);
+            return Items.GLASS_BOTTLE.getDefaultStack();
         } else {
             if (user instanceof PlayerEntity playerEntity && !playerEntity.getAbilities().creativeMode) {
-                ItemStack itemStack = new ItemStack(Items.GLASS_BOTTLE);
+                ItemStack itemStack = Items.GLASS_BOTTLE.getDefaultStack();
                 if (!playerEntity.getInventory().insertStack(itemStack)) {
                     playerEntity.dropItem(itemStack, false);
                 }

@@ -9,5 +9,5 @@ import java.util.Map;
 
 public interface SpiritTypeRegistry {
     Map<Identifier, MalumEntitySpiritData> SPIRIT_DATA = new HashMap<>();
-    Map<String, SpiritType> SPIRITS = new HashMap<>();
+    Map<String, SpiritType>                SPIRITS     = new HashMap<>();
 }

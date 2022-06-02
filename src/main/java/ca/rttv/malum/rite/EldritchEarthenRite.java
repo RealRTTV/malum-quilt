@@ -34,7 +34,7 @@ public class EldritchEarthenRite extends Rite {
             world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.EARTHEN_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
-                ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
             });
         });
     }
@@ -50,7 +50,7 @@ public class EldritchEarthenRite extends Rite {
             world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.EARTHEN_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
-                ServerPlayNetworking.send(players, new Identifier(MODID, "MalumParticleS2CPacket"), buf);
+                ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
             });
         });
     }

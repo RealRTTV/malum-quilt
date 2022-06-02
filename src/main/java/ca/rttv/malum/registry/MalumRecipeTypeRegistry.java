@@ -15,13 +15,14 @@ import static ca.rttv.malum.Malum.MODID;
 public interface MalumRecipeTypeRegistry {
     Map<Identifier, RecipeType<? extends Recipe<?>>> RECIPE_TYPES = new LinkedHashMap<>();
 
-        RecipeType<SpiritInfusionRecipe> SPIRIT_INFUSION     = registerRecipeType("spirit_infusion",     new RecipeType<>() { public String toString() { return "spirit_infusion"; } });
-              RecipeType<SavedNbtRecipe> SAVED_NBT_RECIPE    = registerRecipeType("nbt_carry",           new RecipeType<>() { public String toString() { return "nbt_carry"; } });
-    RecipeType<BlockTransmutationRecipe> BLOCK_TRANSMUTATION = registerRecipeType("block_transmutation", new RecipeType<>() { public String toString() { return "block_transmutation"; } });
-        RecipeType<SpiritFocusingRecipe> SPIRIT_FOCUSING     = registerRecipeType("spirit_focusing",     new RecipeType<>() { public String toString() { return "spirit_focusing"; }});
-          RecipeType<SpiritRepairRecipe> SPIRIT_REPAIR       = registerRecipeType("spirit_repair",       new RecipeType<>() { public String toString() { return "spirit_repair"; }});
+        RecipeType<SpiritInfusionRecipe> SPIRIT_INFUSION     = register("spirit_infusion");
+              RecipeType<SavedNbtRecipe> SAVED_NBT_RECIPE    = register("nbt_carry");
+    RecipeType<BlockTransmutationRecipe> BLOCK_TRANSMUTATION = register("block_transmutation");
+        RecipeType<SpiritFocusingRecipe> SPIRIT_FOCUSING     = register("spirit_focusing");
+          RecipeType<SpiritRepairRecipe> SPIRIT_REPAIR       = register("spirit_repair");
 
-    static <T extends Recipe<?>> RecipeType<T> registerRecipeType(String id, RecipeType<T> type) {
+    static <T extends Recipe<?>> RecipeType<T> register(String id) {
+        RecipeType<T> type = new RecipeType<>(){ public String toString() { return id; }};
         RECIPE_TYPES.put(new Identifier(MODID, id), type);
         return type;
     }

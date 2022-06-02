@@ -109,7 +109,7 @@ public class TotemPoleBlock extends BlockWithEntity {
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        return new ItemStack(SpiritItem.POLE_BLOCKS.inverse().get(state.getBlock()));
+        return SpiritItem.POLE_BLOCKS.inverse().get(state.getBlock()).asItem().getDefaultStack();
     }
 
     @Override
