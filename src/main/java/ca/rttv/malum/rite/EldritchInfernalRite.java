@@ -1,6 +1,7 @@
 package ca.rttv.malum.rite;
 
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
+import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.spirit.SpiritType;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
@@ -14,6 +15,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -43,7 +45,7 @@ public class EldritchInfernalRite extends Rite {
             return;
         }
 
-        Recipe<?> recipe = world.getRecipeManager().listAllOfType(RecipeType.SMELTING).stream().filter(smeltingRecipe -> smeltingRecipe.getIngredients().get(0).test(item.getDefaultStack())).findFirst().orElse(null);
+        Recipe<?> recipe = DataHelper.findFirstMatching(world.getRecipeManager().listAllOfType(RecipeType.SMELTING).toArray(SmeltingRecipe[]::new), smeltingRecipe -> smeltingRecipe.getIngredients().get(0).test(item.getDefaultStack()), null);
         if (recipe == null) {
             return;
         }

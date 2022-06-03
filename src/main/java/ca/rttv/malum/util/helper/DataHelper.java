@@ -197,4 +197,15 @@ public final class DataHelper {
     public static float distance(float... a) {
         return sqrt(distSqr(a));
     }
+
+    /**
+     * {@code else do if}
+     */
+    public static <T> T findFirstMatching(T[] arr, Predicate<T> predicate, T orElse) {
+        int i = 0;
+        if (arr == null) {
+            return orElse;
+        } else do if (predicate.test(arr[i])) return arr[i]; while (arr.length > i++);
+        return orElse;
+    }
 }
