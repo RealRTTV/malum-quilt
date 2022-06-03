@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class ReboundEnchantment extends Enchantment {
-    public ReboundEnchantment(Rarity weight, EnchantmentTarget target, EquipmentSlot... equipmentSlots) {
-        super(weight, target, equipmentSlots);
+    public ReboundEnchantment(Rarity rarity, EnchantmentTarget target, EquipmentSlot... slots) {
+        super(rarity, target, slots);
     }
 
     @Override

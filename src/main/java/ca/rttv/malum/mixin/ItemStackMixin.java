@@ -1,6 +1,7 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.item.ScytheItem;
+import ca.rttv.malum.util.helper.SpiritHelper;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,17 +23,15 @@ abstract class ItemStackMixin {
     private EntityAttributeModifier entityAttributeModifier;
 
     @ModifyVariable(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/attribute/EntityAttributeModifier;getId()Ljava/util/UUID;", ordinal = 0), index = 13)
-    private EntityAttributeModifier getTooltip(EntityAttributeModifier value) {
+    private EntityAttributeModifier capture(EntityAttributeModifier value) {
         this.entityAttributeModifier = value;
         return value;
     }
 
     @ModifyVariable(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/attribute/EntityAttributeModifier;getOperation()Lnet/minecraft/entity/attribute/EntityAttributeModifier$Operation;", ordinal = 0), index = 18)
     private boolean getTooltip(boolean value, @Nullable PlayerEntity player, TooltipContext context) {
-        if (player != null) {
-            if (entityAttributeModifier.getId() == MAGIC_DAMAGE_MODIFIER_ID) {
-                return true;
-            }
+        if (player != null && entityAttributeModifier.getId() == MAGIC_DAMAGE_MODIFIER_ID) {
+            return true;
         }
         return value;
     }
@@ -41,7 +40,7 @@ abstract class ItemStackMixin {
     private double getTooltip(double value, @Nullable PlayerEntity player, TooltipContext context) {
         if (player != null) {
             if (entityAttributeModifier.getId() == MAGIC_DAMAGE_MODIFIER_ID) {
-                return value + player.getAttributeBaseValue(MAGIC_DAMAGE);
+                return value + player.getAttributeBaseValue(MAGIC_DAMAGE) + SpiritHelper.getHauntedDamage((ItemStack) (Object) this);
             }
         }
         return value;

@@ -1,20 +1,19 @@
 package ca.rttv.malum.item;
 
+import ca.rttv.malum.util.helper.SpiritHelper;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.ToolMaterial;
 
-import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
-import static ca.rttv.malum.registry.MalumItemRegistry.NECKLACE_OF_THE_MYSTIC_MIRROR;
+import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
+import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE_MODIFIER_ID;
 
 public class MagicShovelItem extends ShovelItem {
     private final Multimap<EntityAttribute, EntityAttributeModifier> magicAttributeModifiers;
@@ -39,17 +38,7 @@ public class MagicShovelItem extends ShovelItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        int lastDamageTaken = (int) target.lastDamageTaken;
-        target.lastDamageTaken = 0;
-        target.damage(DamageSource.MAGIC, (float) (attacker.getAttributeValue(MAGIC_DAMAGE) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
-        target.lastDamageTaken += lastDamageTaken;
-        if ((TrinketsApi.getTrinketComponent(attacker).orElseThrow().isEquipped(NECKLACE_OF_THE_MYSTIC_MIRROR))) {
-            TrinketsApi.getTrinketComponent(attacker).orElseThrow().forEach((slot, trinket) -> {
-                if (trinket.getItem() instanceof SpiritCollectActivity spiritCollectActivity) {
-                    spiritCollectActivity.collect(stack, attacker, slot, trinket);
-                }
-            });
-        }
+        SpiritHelper.applySpiritDamage(stack, target, attacker);
         return super.postHit(stack, target, attacker);
     }
 

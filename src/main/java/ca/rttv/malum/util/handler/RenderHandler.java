@@ -16,12 +16,12 @@ import java.util.HashMap;
 public class RenderHandler {
     public static final HashMap<RenderLayer, BufferBuilder> BUFFERS = new HashMap<>();
     public static final HashMap<RenderLayer, ShaderUniformHandler> HANDLERS = new HashMap<>();
-    public static VertexConsumerProvider.Immediate DELAYED_RENDER;
+    public static VertexConsumerProvider.Immediate DELAYED_RENDER = VertexConsumerProvider.immediate(BUFFERS, new BufferBuilder(256));
     public static Matrix4f PARTICLE_MATRIX = null;
     public static Frustum FRUSTUM;
 
     public static void init() {
-        DELAYED_RENDER = VertexConsumerProvider.immediate(BUFFERS, new BufferBuilder(256));
+
     }
 
 

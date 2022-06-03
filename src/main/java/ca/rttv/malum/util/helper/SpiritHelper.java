@@ -4,15 +4,19 @@ import ca.rttv.malum.Malum;
 import ca.rttv.malum.block.entity.TotemBaseBlockEntity;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
+import ca.rttv.malum.enchantment.HauntedEnchantment;
 import ca.rttv.malum.entity.SpiritItemEntity;
+import ca.rttv.malum.item.SpiritCollectActivity;
 import ca.rttv.malum.registry.*;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumEntitySpiritData;
 import ca.rttv.malum.util.spirit.SpiritType;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +30,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 
+import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
+import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_PROFICIENCY;
+import static ca.rttv.malum.registry.MalumItemRegistry.NECKLACE_OF_THE_MYSTIC_MIRROR;
 import static net.minecraft.entity.EquipmentSlot.MAINHAND;
 import static net.minecraft.util.math.MathHelper.nextFloat;
 
@@ -124,6 +131,24 @@ public final class SpiritHelper {
 
     public static ArrayList<ItemStack> getSpiritItemStacks(LivingEntity entity, LivingEntity attacker, ItemStack harvestStack, float spoilsMultiplier) {
         return getSpiritItemStacks(getEntitySpiritData(entity), attacker, harvestStack, spoilsMultiplier);
+    }
+
+    public static void applySpiritDamage(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        int lastDamageTaken = (int) target.lastDamageTaken;
+        target.lastDamageTaken = 0;
+        target.damage(DamageSource.MAGIC, (float) (attacker.getAttributeValue(MAGIC_DAMAGE) + (float) getHauntedDamage(stack) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
+        target.lastDamageTaken += lastDamageTaken;
+        if ((TrinketsApi.getTrinketComponent(attacker).orElseThrow().isEquipped(NECKLACE_OF_THE_MYSTIC_MIRROR))) {
+            TrinketsApi.getTrinketComponent(attacker).orElseThrow().forEach((slot, trinket) -> {
+                if (trinket.getItem() instanceof SpiritCollectActivity spiritCollectActivity) {
+                    spiritCollectActivity.collect(stack, attacker, slot, trinket);
+                }
+            });
+        }
+    }
+
+    public static int getHauntedDamage(ItemStack stack) {
+        return EnchantmentHelper.fromNbt(stack.getEnchantments()).entrySet().stream().filter(entry -> entry.getKey() == MalumEnchantments.HAUNTED).mapToInt(entry -> ((HauntedEnchantment) entry.getKey()).getMagicDamage(entry.getValue())).sum();
     }
 
     public static ArrayList<ItemStack> getSpiritItemStacks(MalumEntitySpiritData data, LivingEntity attacker, ItemStack harvestStack, float spoilsMultiplier) {
