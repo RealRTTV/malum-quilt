@@ -74,10 +74,24 @@ public final class SpiritHelper {
             });
 
             if (trans[0]) {
-                spirits = new ArrayList<>(spirits.stream().map(stack -> stack.isOf(MalumItemRegistry.AERIAL_SPIRIT) ? new ItemStack(MalumItemRegistry.ARCANE_SPIRIT, stack.getCount()) : (stack.isOf(MalumItemRegistry.ARCANE_SPIRIT) ? new ItemStack(MalumItemRegistry.AERIAL_SPIRIT, stack.getCount()) : stack)).toList());
+                spirits = new ArrayList<>(spirits.stream()
+                                                 .map(stack ->
+                                                         stack.isOf(MalumItemRegistry.AERIAL_SPIRIT)
+                                                         ? new ItemStack(MalumItemRegistry.ARCANE_SPIRIT, stack.getCount())
+                                                         : (stack.isOf(MalumItemRegistry.ARCANE_SPIRIT)
+                                                             ? new ItemStack(MalumItemRegistry.AERIAL_SPIRIT, stack.getCount())
+                                                             : stack))
+                                                 .toList());
             }
         }
-        createSpiritEntities(spirits, spirits.stream().mapToInt(ItemStack::getCount).sum(), target.world, target.getPos().add(0, target.getStandingEyeHeight() / 2f, 0), attacker);
+        createSpiritEntities(
+                spirits, spirits.stream()
+                                .mapToInt(ItemStack::getCount)
+                                .sum(),
+                target.world,
+                target.getPos().add(0, target.getStandingEyeHeight() / 2f, 0),
+                attacker
+        );
     }
 
 //    public static void createSpiritEntities(MalumEntitySpiritData data, World world, Vec3d position, LivingEntity attacker) {
@@ -110,7 +124,9 @@ public final class SpiritHelper {
 
 
     public static SpiritType getSpiritType(String spirit) {
-        Optional<SpiritType> type = SpiritTypeRegistry.SPIRITS.values().stream().filter(s -> s.id.equals(spirit)).findFirst();
+        Optional<SpiritType> type = SpiritTypeRegistry.SPIRITS.values().stream()
+                .filter(s -> s.id.equals(spirit))
+                .findFirst();
         if (type.isEmpty()) {
             return SpiritType.ELDRITCH_SPIRIT;
         }
@@ -148,7 +164,11 @@ public final class SpiritHelper {
     }
 
     public static int getHauntedDamage(ItemStack stack) {
-        return EnchantmentHelper.fromNbt(stack.getEnchantments()).entrySet().stream().filter(entry -> entry.getKey() == MalumEnchantments.HAUNTED).mapToInt(entry -> ((HauntedEnchantment) entry.getKey()).getMagicDamage(entry.getValue())).sum();
+        return EnchantmentHelper.fromNbt(stack.getEnchantments()).entrySet()
+                                                                 .stream()
+                                                                 .filter(entry -> entry.getKey() == MalumEnchantments.HAUNTED)
+                                                                 .mapToInt(entry -> ((HauntedEnchantment) entry.getKey()).getMagicDamage(entry.getValue()))
+                                                                 .sum();
     }
 
     public static ArrayList<ItemStack> getSpiritItemStacks(MalumEntitySpiritData data, LivingEntity attacker, ItemStack harvestStack, float spoilsMultiplier) {

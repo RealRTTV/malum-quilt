@@ -53,8 +53,11 @@ public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCo
     }
 
     public boolean doSpiritsMatch(List<ItemStack> spirits) {
-        if (Arrays.stream(this.spirits.getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).getStack().getItem() instanceof SpiritItem))) {
-            throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
+        if (Arrays.stream(this.spirits.getEntries())
+                .anyMatch(entry -> entry.getStacks()
+                                        .stream()
+                                        .anyMatch(stack -> !(stack.getItem() instanceof SpiritItem)))) {
+            throw new IllegalStateException("spirits cannot hold non-spirit items (or tags containing non spirit items)");
         }
         List<ItemStack> newSpirits = new ArrayList<>(spirits);
         for (int i = 0; i < newSpirits.size(); i++) {
@@ -91,16 +94,22 @@ public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCo
             if (blockEntity.recipe != null) {
                 for (int[] i = {0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
                     if (blockEntity.spiritSlots.get(i[0]).isEmpty()) break;
-                    blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElseGet(() -> new IngredientWithCount.StackEntry(ItemStack.EMPTY)).getCount());
+                    blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries())
+                                                                      .filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0])))
+                                                                      .findFirst().orElse(new IngredientWithCount.StackEntry(ItemStack.EMPTY))
+                                                     .getCount());
                 }
                 blockEntity.getHeldItem().decrement(input.getEntries()[0].getCount());
                 BlockPos pos = blockEntity.getPos();
-                IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.recipe.extraItems.getEntries()).map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count())).toArray(IngredientWithCount.Entry[]::new);
+                IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.recipe.extraItems.getEntries())
+                                                            .map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count()))
+                                                            .toArray(IngredientWithCount.Entry[]::new);
                 BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPos -> {
                     //noinspection ConstantConditions
                     if (blockEntity.getWorld().getBlockEntity(reagentPos) instanceof AbstractItemDisplayBlockEntity displayBlock) {
                         for (IngredientWithCount.Entry entry : entries) {
-                            if (entry.getStacks().stream().anyMatch(stack -> stack.getItem() == displayBlock.getHeldItem().getItem())) {
+                            if (entry.getStacks().stream()
+                                                 .anyMatch(stack -> stack.getItem() == displayBlock.getHeldItem().getItem())) {
                                 int amountToRemove = Math.min(entry.getCount(), displayBlock.getHeldItem().getCount());
                                 entry.decrement(amountToRemove);
                                 displayBlock.getHeldItem().decrement(amountToRemove);

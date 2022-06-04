@@ -69,8 +69,11 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
     }
 
     private boolean doSpiritsMatch(List<ItemStack> spirits) {
-        if (Arrays.stream(spirits().getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).getStack().getItem() instanceof SpiritItem))) {
-            throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
+        if (Arrays.stream(spirits().getEntries())
+                                   .anyMatch(entry -> entry.getStacks()
+                                                           .stream()
+                                                           .anyMatch(stack -> !(stack.getItem() instanceof SpiritItem)))) {
+            throw new IllegalStateException("spirits cannot hold non-spirit items (or tags containing non spirit items)");
         }
         List<ItemStack> newSpirits = new ArrayList<>(spirits);
         for (int i = 0; i < newSpirits.size(); i++) {
@@ -121,17 +124,24 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
         // spirits
         for (int[] i = {0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
             if (blockEntity.spiritSlots.get(i[0]).isEmpty()) break;
-            blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElse(new IngredientWithCount.StackEntry(ItemStack.EMPTY)).getCount());
+            blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries())
+                                                              .filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0])))
+                                                              .findFirst()
+                                                              .orElse(new IngredientWithCount.StackEntry(ItemStack.EMPTY))
+                                             .getCount());
         }
 
         BlockPos pos = blockEntity.getPos();
 
-        IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.repairRecipe.repairMaterial.getEntries()).map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count())).toArray(IngredientWithCount.Entry[]::new);
+        IngredientWithCount.Entry[] entries = Arrays.stream(blockEntity.repairRecipe.repairMaterial.getEntries())
+                                                    .map(entry -> entry instanceof IngredientWithCount.StackEntry stackEntry ? new IngredientWithCount.StackEntry(stackEntry.stack().copy()) : new IngredientWithCount.TagEntry(((IngredientWithCount.TagEntry) entry).tag(), ((IngredientWithCount.TagEntry) entry).count()))
+                                                    .toArray(IngredientWithCount.Entry[]::new);
 
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(reagentPos -> {
             if (blockEntity.getWorld().getBlockEntity(reagentPos) instanceof TabletBlockEntity tabletBlock) {
                 for (IngredientWithCount.Entry entry : entries) {
-                    if (entry.getStacks().stream().anyMatch(stack -> stack.getItem() == tabletBlock.getHeldItem().getItem())) {
+                    if (entry.getStacks().stream()
+                                         .anyMatch(stack -> stack.getItem() == tabletBlock.getHeldItem().getItem())) {
                         int amountToRemove = Math.min(entry.getCount(), tabletBlock.getHeldItem().getCount());
                         entry.decrement(amountToRemove);
                         tabletBlock.getHeldItem().decrement(amountToRemove);

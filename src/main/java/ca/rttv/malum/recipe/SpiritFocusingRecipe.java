@@ -45,8 +45,11 @@ public record SpiritFocusingRecipe(Identifier id, String group, int time, int du
     }
 
     private boolean doSpiritsMatch(List<ItemStack> spirits) {
-        if (Arrays.stream(spirits().getEntries()).anyMatch(entry -> entry instanceof IngredientWithCount.TagEntry || !(((IngredientWithCount.StackEntry) entry).getStack().getItem() instanceof SpiritItem))) {
-            throw new IllegalStateException("spirits cannot hold tags or non-spirit items");
+        if (Arrays.stream(spirits().getEntries())
+                                   .anyMatch(entry -> entry.getStacks()
+                                                           .stream()
+                                                           .anyMatch(stack -> !(stack.getItem() instanceof SpiritItem)))) {
+            throw new IllegalStateException("spirits cannot hold non-spirit items (or tags containing non spirit items)");
         }
         List<ItemStack> newSpirits = new ArrayList<>(spirits);
         for (int i = 0; i < newSpirits.size(); i++) {
@@ -95,7 +98,11 @@ public record SpiritFocusingRecipe(Identifier id, String group, int time, int du
         // spirits
         for (int[] i = {0}; i[0] < blockEntity.spiritSlots.size(); i[0]++) {
             if (blockEntity.spiritSlots.get(i[0]).isEmpty()) break;
-            blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries()).filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0]))).findFirst().orElseGet(() -> new IngredientWithCount.StackEntry(ItemStack.EMPTY)).getCount());
+            blockEntity.spiritSlots.get(i[0]).decrement(Arrays.stream(spirits.getEntries())
+                                                              .filter(spirit -> spirit.isValidItem(blockEntity.spiritSlots.get(i[0])))
+                                                              .findFirst()
+                                                              .orElse(new IngredientWithCount.StackEntry(ItemStack.EMPTY))
+                                                        .getCount());
         }
 
         BlockPos pos = blockEntity.getPos();

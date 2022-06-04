@@ -55,8 +55,22 @@ public class FloatingItemEntityRenderer extends EntityRenderer<FloatingItemEntit
             Color color = entity.color;
             builder.setColor(color).setOffset((float) -entity.getX(), (float) -entity.getY(), (float) -entity.getZ())
                     .setAlpha(alpha)
-                    .renderTrail(DELAYED_RENDER.getBuffer(LIGHT_TYPE), matrixStack, positions.stream().map(p -> new Vector4f((float) p.x, (float) p.y, (float) p.z, 1)).collect(Collectors.toList()), f -> f * size)
-                    .renderTrail(DELAYED_RENDER.getBuffer(LIGHT_TYPE), matrixStack, positions.stream().map(p -> new Vector4f((float) p.x, (float) p.y, (float) p.z, 1)).collect(Collectors.toList()), f -> Easing.QUARTIC_IN_OUT.ease(f, 0, size, 1));
+                    .renderTrail(
+                            DELAYED_RENDER.getBuffer(LIGHT_TYPE),
+                            matrixStack,
+                            positions.stream()
+                                     .map(p -> new Vector4f((float) p.x, (float) p.y, (float) p.z, 1))
+                                     .toList(),
+                            f -> f * size
+                    )
+                    .renderTrail(
+                            DELAYED_RENDER.getBuffer(LIGHT_TYPE),
+                            matrixStack,
+                            positions.stream()
+                                     .map(p -> new Vector4f((float) p.x, (float) p.y, (float) p.z, 1))
+                                     .toList(),
+                            f -> Easing.QUARTIC_IN_OUT.ease(f, 0, size, 1)
+                    );
         }
         ItemStack itemStack = entity.getItem();
         BakedModel ibakedmodel = this.itemRenderer.getHeldItemModel(itemStack, entity.world, null, entity.getItem().getCount());

@@ -342,8 +342,11 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
         // maybe unnecessary
         if (!accelerators.isEmpty()) {
             nbt.putInt("acceleratorAmount", accelerators.size());
+            List<BlockPos> accs = accelerators.keySet()
+                                              .stream()
+                                              .toList();
             for (int i = 0; i < accelerators.size(); i++) {
-                BlockHelper.saveBlockPos(nbt, accelerators.keySet().stream().toList().get(i), String.valueOf(i));
+                BlockHelper.saveBlockPos(nbt, accs.get(i), String.valueOf(i));
             }
         }
         Inventories.writeNbt(nbt, this.heldItem);

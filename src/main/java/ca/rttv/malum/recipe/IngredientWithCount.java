@@ -108,7 +108,10 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
 
     private void cacheMatchingStacks() {
         if (this.matchingStacks == null) {
-            this.matchingStacks = Arrays.stream(this.entries).flatMap(entry -> entry.getStacks().stream()).distinct().toArray(ItemStack[]::new);
+            this.matchingStacks = Arrays.stream(this.entries)
+                                        .flatMap(entry -> entry.getStacks().stream())
+                                        .distinct()
+                                        .toArray(ItemStack[]::new);
         }
     }
 
@@ -140,7 +143,8 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
     }
 
     public static IngredientWithCount ofItems(ItemConvertible... items) {
-        return ofStacks(Arrays.stream(items).map(ItemStack::new));
+        return ofStacks(Arrays.stream(items)
+                              .map(ItemStack::new));
     }
 
     public static IngredientWithCount ofStacks(ItemStack... stacks) {
@@ -156,11 +160,13 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
     }
 
     public static IngredientWithCount fromPacket(PacketByteBuf buf) {
-        return ofEntries(buf.readList(PacketByteBuf::readItemStack).stream().map(IngredientWithCount.StackEntry::new));
+        return ofEntries(buf.readList(PacketByteBuf::readItemStack).stream()
+                                                                   .map(IngredientWithCount.StackEntry::new));
     }
 
     public Ingredient asIngredient() {
-        return Ingredient.ofEntries(Arrays.stream(this.entries).map(entry -> entry instanceof StackEntry stackEntry ? new Ingredient.StackEntry(stackEntry.stack.getItem().getDefaultStack()) : new Ingredient.TagEntry(((TagEntry) entry).tag)));
+        return Ingredient.ofEntries(Arrays.stream(this.entries)
+                                          .map(entry -> entry instanceof StackEntry stackEntry ? new Ingredient.StackEntry(stackEntry.stack.getItem().getDefaultStack()) : new Ingredient.TagEntry(((TagEntry) entry).tag)));
     }
 
     public interface Entry {

@@ -87,7 +87,8 @@ public final class DataHelper {
         for (int i = 0; i < count; i++) {
             while (true) {
                 int nextInt = rand.nextInt(range);
-                if (Arrays.stream(ints).noneMatch(j -> j == nextInt)) {
+                if (Arrays.stream(ints)
+                          .noneMatch(j -> j == nextInt)) {
                     ints[i] = nextInt;
                     break;
                 }
@@ -98,7 +99,8 @@ public final class DataHelper {
 
     public static <T> boolean hasDuplicate(T[] things) {
         Set<T> thingSet = new HashSet<>();
-        return !Arrays.stream(things).allMatch(thingSet::add);
+        return !Arrays.stream(things)
+                      .allMatch(thingSet::add);
     }
 
     @SafeVarargs
@@ -136,11 +138,14 @@ public final class DataHelper {
 
     @SafeVarargs
     public static <T> Collection<T> getAll(Collection<? extends T> src, T... items) {
-        return List.copyOf(getAll(src, t -> Arrays.stream(items).anyMatch(tAgain -> tAgain.getClass().isInstance(t))));
+        return List.copyOf(getAll(src, t -> Arrays.stream(items)
+                                                  .anyMatch(tAgain -> tAgain.getClass().isInstance(t))));
     }
 
     public static <T> Collection<T> getAll(Collection<T> src, Predicate<T> pred) {
-        return src.stream().filter(pred).collect(Collectors.toList());
+        return src.stream()
+                  .filter(pred)
+                  .collect(Collectors.toList());
     }
 
     public static Vec3d circlePosition(Vec3d pos, float distance, float current, float total) {

@@ -16,12 +16,16 @@ public class MalumEntitySpiritData {
 
     public MalumEntitySpiritData(SpiritType primaryType, ArrayList<SpiritDataEntry> dataEntries) {
         this.primaryType = primaryType;
-        this.totalCount = dataEntries.stream().mapToInt(d -> d.count).sum();
+        this.totalCount = dataEntries.stream()
+                                     .mapToInt(d -> d.count)
+                                     .sum();
         this.dataEntries = dataEntries;
     }
 
     public ArrayList<Text> createTooltip() {
-        return dataEntries.stream().map(SpiritDataEntry::getComponent).collect(Collectors.toCollection(ArrayList::new));
+        return dataEntries.stream()
+                          .map(SpiritDataEntry::getComponent)
+                          .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void saveTo(NbtCompound tag) {

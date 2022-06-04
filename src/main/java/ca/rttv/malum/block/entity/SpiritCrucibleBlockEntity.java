@@ -90,7 +90,9 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     }
 
     private float getSpiritCount() {
-        return spiritSlots.stream().filter(stack -> stack != ItemStack.EMPTY).count();
+        return spiritSlots.stream()
+                          .filter(stack -> stack != ItemStack.EMPTY)
+                          .count();
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {

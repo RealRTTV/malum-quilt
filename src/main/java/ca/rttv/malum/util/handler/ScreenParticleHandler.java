@@ -93,7 +93,8 @@ public class ScreenParticleHandler {
         final MinecraftClient client = MinecraftClient.getInstance();
         PARTICLES.forEach((pair, particles) -> {
             ParticleTextureSheet type = pair.getFirst();
-            if (Arrays.stream(renderOrders).anyMatch(o -> o.equals(pair.getSecond()))) {
+            if (Arrays.stream(renderOrders)
+                      .anyMatch(o -> o.equals(pair.getSecond()))) {
                 type.begin(TESSELATOR.getBuffer(), client.getTextureManager());
                 for (ScreenParticle next : particles) {
                     if (next instanceof GenericScreenParticle genericScreenParticle) {
@@ -120,7 +121,8 @@ public class ScreenParticleHandler {
     public static void wipeParticles(ScreenParticle.RenderOrder... renderOrders) {
         PARTICLES.forEach((pair, particles) -> {
             if (!particles.isEmpty()) {
-                if (renderOrders.length == 0 || Arrays.stream(renderOrders).anyMatch(o -> o.equals(pair.getSecond()))) {
+                if (renderOrders.length == 0 || Arrays.stream(renderOrders)
+                                                      .anyMatch(o -> o.equals(pair.getSecond()))) {
                     particles.clear();
                 }
             }

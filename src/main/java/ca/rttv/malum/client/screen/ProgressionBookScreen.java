@@ -620,7 +620,10 @@ public class ProgressionBookScreen extends Screen {
     }
 
     public static void renderComponents(MatrixStack matrices, IngredientWithCount components, int posX, int posY, int mouseX, int mouseY, boolean vertical) {
-        List<ItemStack> items = Arrays.stream(components.getEntries()).flatMap(entry -> entry.getStacks().stream()).distinct().collect(Collectors.toList());
+        List<ItemStack> items = Arrays.stream(components.getEntries())
+                                      .flatMap(entry -> entry.getStacks().stream())
+                                      .distinct()
+                                      .toList();
         ProgressionBookScreen.renderItemList(matrices, items, posX, posY, mouseX, mouseY, vertical);
     }
 
