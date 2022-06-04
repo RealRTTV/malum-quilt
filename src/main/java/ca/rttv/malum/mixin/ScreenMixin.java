@@ -13,7 +13,7 @@ import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder
 @Mixin(Screen.class)
 final class ScreenMixin {
     @Inject(at = @At("HEAD"), method = "renderBackground(Lnet/minecraft/client/util/math/MatrixStack;I)V")
-    private void malum$beforeBackgroundParticle(MatrixStack pPoseStack, int pVOffset, CallbackInfo ci) {
+    private void beforeBackgroundParticle(MatrixStack pPoseStack, int pVOffset, CallbackInfo ci) {
         ScreenParticleHandler.renderParticles(BEFORE_UI);
     }
 }

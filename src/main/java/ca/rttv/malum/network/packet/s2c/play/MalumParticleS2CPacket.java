@@ -4,7 +4,6 @@ import ca.rttv.malum.duck.MalumClientPlayPacketListener;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.listener.PacketListener;
 
 public record MalumParticleS2CPacket(int color, double x, double y, double z) implements Packet<ClientPlayPacketListener> {
     public MalumParticleS2CPacket(PacketByteBuf buf) {
@@ -19,6 +18,6 @@ public record MalumParticleS2CPacket(int color, double x, double y, double z) im
     }
 
     public void apply(ClientPlayPacketListener packetListener) {
-        ((MalumClientPlayPacketListener) packetListener).onMagicParticle(this);
+        ((MalumClientPlayPacketListener) packetListener).malum$onMagicParticle(this);
     }
 }

@@ -29,38 +29,38 @@ import static ca.rttv.malum.registry.MalumAttributeRegistry.SCYTHE_PROFICIENCY;
 
 @Mixin(PlayerEntity.class)
 abstract class PlayerEntityMixin extends LivingEntity {
+    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
+        super(entityType, world);
+    }
+
     @Unique
     float f;
 
     @Shadow public abstract void spawnSweepAttackParticles();
 
-    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
-        super(entityType, world);
-    }
-
     /**
      * Performs many reactions when being hit
      */
     @ModifyArgs(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
-    private void malum$onDamaged(Args args) {
+    private void onDamaged(Args args) {
         DamageSource source = args.get(0);
         float value = args.get(1);
         args.set(1, ArcaneAffinity.consumeSoulWard(this, source, value));
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void malum$tick(CallbackInfo ci) {
+    private void tick(CallbackInfo ci) {
         ArcaneAffinity.recoverSoulWard((PlayerEntity) (Object) this);
     }
 
     @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getMovementSpeed()F"), index = 3)
-    private float malum$captureF(float f) {
+    private float captureF(float f) {
         this.f = f;
         return f;
     }
 
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"))
-    private void malum$attack(Entity target, CallbackInfo ci) {
+    private void attack(Entity target, CallbackInfo ci) {
         if (this.getStackInHand(Hand.MAIN_HAND).getItem() instanceof ScytheItem) {
             float l = 1.0F + EnchantmentHelper.getSweepingMultiplier(this) * f;
 
@@ -82,7 +82,7 @@ abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F"), index = 3)
-    private float malum$attack(float value) {
+    private float attack(float value) {
         if (this.getMainHandStack().getItem() instanceof ScytheItem) {
             return value + (float) this.getAttributeValue(SCYTHE_PROFICIENCY) * 0.5f;
         }
@@ -90,7 +90,7 @@ abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/entity/LivingEntity;)I", ordinal = 0), index = 8)
-    private boolean malum$attack(boolean bl4) {
+    private boolean attack(boolean bl4) {
         ItemStack itemStack = this.getStackInHand(Hand.MAIN_HAND);
         if (itemStack.getItem() instanceof TyrvingItem) {
             return false;

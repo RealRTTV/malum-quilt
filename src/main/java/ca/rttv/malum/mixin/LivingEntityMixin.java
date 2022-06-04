@@ -63,14 +63,14 @@ abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "onDeath", at = @At("HEAD"))
-    private void malum$onDeath(DamageSource source, CallbackInfo ci) {
+    private void onDeath(DamageSource source, CallbackInfo ci) {
         if (!world.isClient) {
             SpiritHarvestHandler.shatterSoul(source, (LivingEntity) (Object) this);
         }
     }
 
     @Inject(method = "damage", at = @At("HEAD"))
-    private void malum$damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (!world.isClient) {
             SpiritHarvestHandler.exposeSoul(source, amount, (LivingEntity) (Object) this);
         }

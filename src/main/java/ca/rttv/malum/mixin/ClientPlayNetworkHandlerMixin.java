@@ -25,7 +25,7 @@ final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListen
     @Shadow private ClientWorld world;
 
     @Override
-    public void onMagicParticle(MalumParticleS2CPacket packet) {
+    public void malum$onMagicParticle(MalumParticleS2CPacket packet) {
         ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
                 .setAlpha(0.1f, 0f)
                 .setLifetime(10)

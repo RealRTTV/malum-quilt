@@ -13,7 +13,7 @@ import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder
 @Mixin(HandledScreen.class)
 final class HandledScreenMixin {
     @Inject(at = @At("RETURN"), method = "render")
-    private void malum$beforeTooltipParticle(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    private void beforeTooltipParticle(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         ScreenParticleHandler.renderParticles(BEFORE_TOOLTIPS);
     }
 }

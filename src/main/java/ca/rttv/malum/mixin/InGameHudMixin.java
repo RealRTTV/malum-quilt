@@ -17,7 +17,7 @@ final class InGameHudMixin {
     @Shadow @Final private MinecraftClient client;
 
     @Inject(at = @At("HEAD"), method = "renderHotbar")
-    private void malum$renderHotbarStart(float l1, MatrixStack j1, CallbackInfo ci) {
+    private void renderHotbarStart(float l1, MatrixStack j1, CallbackInfo ci) {
         ScreenParticleHandler.renderingHotbar = false;
     }
 
@@ -27,7 +27,7 @@ final class InGameHudMixin {
     }
 
     @Inject(at = @At("RETURN"), method = "renderHotbar")
-    private void malum$renderHotbarEnd(float l1, MatrixStack j1, CallbackInfo ci) {
+    private void renderHotbarEnd(float l1, MatrixStack j1, CallbackInfo ci) {
         ScreenParticleHandler.renderingHotbar = false;
     }
 }
