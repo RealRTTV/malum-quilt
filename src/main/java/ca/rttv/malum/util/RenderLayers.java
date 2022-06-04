@@ -10,6 +10,7 @@ import net.minecraft.client.render.RenderPhase;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.util.Identifier;
+import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -48,7 +49,7 @@ public class RenderLayers extends RenderPhase {
      */
     public static RenderLayer createGenericRenderLayer(String name, VertexFormat format, VertexFormat.DrawMode mode, Shader shader, Transparency transparency, Identifier texture) {
         RenderLayer type = RenderLayer.of(
-                Malum.MODID + ":" + name, format, mode, 256, false, false, RenderLayer.MultiPhaseParameters.builder()
+                Malum.MODID + ":" + name, format, mode, /*https://youtu.be/A3eHgip6DQM*/ QuiltLoader.isModLoaded("sodium") ? 262144 : 256, false, false, RenderLayer.MultiPhaseParameters.builder()
                         .shader(shader)
                         .writeMaskState(new WriteMaskState(true, true))
                         .lightmap(new Lightmap(false))

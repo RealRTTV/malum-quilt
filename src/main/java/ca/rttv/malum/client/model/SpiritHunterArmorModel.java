@@ -119,7 +119,7 @@ public class SpiritHunterArmorModel extends ArmorModel {
 
         ModelPartData head = root.addChild("head", ModelPartBuilder.create(), ModelTransform.NONE);
         ModelPartData helmet = head.addChild("helmet", ModelPartBuilder.create().uv(0, 0).cuboid(-4.5F, -8.5F, -4.5F, 9.0F, 9.0F, 9.0F, new Dilation(0.0F))
-                .uv(36, 0).cuboid(-4.5F, -8.5F, -4.5F, 9.0F, 9.0F, 9.0F, new Dilation(0.25F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+                .uv(72, 0).cuboid(-4.5F, -8.5F, -4.5F, 9.0F, 9.0F, 9.0F, new Dilation(0.25F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
         ModelPartData left_hood_bit = head.addChild("left_hood_bit", ModelPartBuilder.create().uv(53, 59).mirrored().cuboid(-2.0F, -5.0F, -4.0F, 2.0F, 5.0F, 7.0F, new Dilation(0.25F)).mirrored(false)
                 .uv(53, 47).mirrored().cuboid(-2.0F, -5.0F, -4.0F, 2.0F, 5.0F, 7.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(-4.5F, 0.5F, 0.5F, 0.0F, 0.0F, 0.3927F));
         ModelPartData back_hood_bit = head.addChild("back_hood_bit", ModelPartBuilder.create().uv(48, 33).cuboid(-3.5F, 0.0F, 0.0F, 7.0F, 5.0F, 5.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -8.5F, 4.5F, -0.7854F, 0.0F, 0.0F));

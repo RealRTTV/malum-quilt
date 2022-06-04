@@ -44,7 +44,8 @@ public abstract class AbstractEtherBlock extends BlockWithEntity implements Wate
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         //noinspection ConstantConditions
-        ((EtherBlockEntity) world.getBlockEntity(pos)).onPlaced(world, pos, state, placer, itemStack);
+        if(world.getBlockEntity(pos) instanceof EtherBlockEntity ether)
+        ether.onPlaced(world, pos, state, placer, itemStack);
     }
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbourState, WorldAccess world, BlockPos pos, BlockPos neighbourPos) {

@@ -10,13 +10,15 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
+import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.HashMap;
 
 public class RenderHandler {
     public static final HashMap<RenderLayer, BufferBuilder> BUFFERS = new HashMap<>();
     public static final HashMap<RenderLayer, ShaderUniformHandler> HANDLERS = new HashMap<>();
-    public static VertexConsumerProvider.Immediate DELAYED_RENDER = VertexConsumerProvider.immediate(BUFFERS, new BufferBuilder(256));
+    //https://youtu.be/A3eHgip6DQM
+    public static VertexConsumerProvider.Immediate DELAYED_RENDER = VertexConsumerProvider.immediate(BUFFERS, new BufferBuilder(QuiltLoader.isModLoaded("sodium") ? 262144 : 256));
     public static Matrix4f PARTICLE_MATRIX = null;
     public static Frustum FRUSTUM;
 

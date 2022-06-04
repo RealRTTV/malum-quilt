@@ -23,7 +23,6 @@
     "VegetationConfiguredFeaturesMixin"
   ],
   "client": [
-    "BlockColorsMixin",
     "BlockEntityRendererFactoriesMixin",
     "BoatEntityRendererMixin",
     "ClientPlayerInteractionManagerMixin",

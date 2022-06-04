@@ -48,8 +48,9 @@ dependencies {
 	}
 	modImplementation libs.satin
 	include libs.satin
-//	modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
-//	modImplementation "maven.modrinth:iris:1.18.x-v1.2.1"
+	modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
+	modRuntimeOnly "maven.modrinth:iris:1.18.x-v1.2.4"
+	runtimeOnly compileOnly("org.anarres:jcpp:1.4.14") // for iris
     runtimeOnly('org.joml:joml:1.10.4') // for sodium
 	modRuntimeOnly "maven.modrinth:lazydfu:0.1.2"
 	modImplementation(libs.cardinal.components.base) {
