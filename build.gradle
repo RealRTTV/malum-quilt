@@ -18,13 +18,7 @@ repositories {
 	maven { url 'https://maven.terraformersmc.com' }
 	maven { url 'https://ladysnake.jfrog.io/artifactory/mods' }
 	maven { url 'https://jitpack.io' }
-	// bad create stuff
-	maven { url 'https://mvn.devos.one/snapshots' }
-	maven { url 'https://maven.cafeteria.dev' }
-	maven { url 'https://maven.jamieswhiteshirt.com/libs-release' }
-	maven { url 'https://maven.tterrag.com' }
-	maven { url 'https://cursemaven.com' }
-	maven { url 'https://maven.shedaniel.me' }
+	maven { url "https://maven.shedaniel.me" }
 	mavenCentral()
 }
 
@@ -39,20 +33,20 @@ dependencies {
 	}
 	modImplementation libs.quilt.loader
 
-	modImplementation libs.isnrmn
-	modImplementation libs.quilted.fabric.api
+	modImplementation(libs.isnrmn)
+	modImplementation(libs.quilted.fabric.api)
 	modImplementation(libs.trinkets) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "com.terraformersmc"
 	}
-	modImplementation libs.satin
-	include libs.satin
+	modImplementation(libs.satin)
+	include(libs.satin)
 	modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
-	modRuntimeOnly "maven.modrinth:iris:1.18.x-v1.2.4"
+	modRuntimeOnly("maven.modrinth:iris:1.18.x-v1.2.4")
 	runtimeOnly compileOnly("org.anarres:jcpp:1.4.14") // for iris
     runtimeOnly('org.joml:joml:1.10.4') // for sodium
-	modRuntimeOnly "maven.modrinth:lazydfu:0.1.2"
+	modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
 	modImplementation(libs.cardinal.components.base) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
@@ -61,26 +55,14 @@ dependencies {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 	}
-	modImplementation(libs.fabric.asm) {
-		exclude group: "net.fabricmc"
-		exclude group: "net.fabricmc.fabric-api"
-	}
+	modImplementation(libs.fabric.asm)
 	modImplementation(libs.quilt.loading.screen)
 	modImplementation(libs.midnightlib)
-	include(libs.fabric.asm) {
-		exclude group: "net.fabricmc"
-		exclude group: "net.fabricmc.fabric-api"
-	}
-	implementation(libs.mixin.extras) {
-		exclude group: "net.fabricmc"
-		exclude group: "net.fabricmc.fabric-api"
-	}
-	annotationProcessor(libs.mixin.extras) {
-		exclude group: "net.fabricmc"
-		exclude group: "net.fabricmc.fabric-api"
-	}
+	include(libs.fabric.asm)
+	implementation(libs.mixin.extras)
+	annotationProcessor(libs.mixin.extras)
 	modImplementation("com.demonwav.mcdev:annotations:1.0")
-//	modImplementation("io.github.fabricators_of_create:Porting-Lib:1.1.0-beta+1.18.2-dev.6c764fb")
+	modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:8.2.471")
 }
 
 configurations.all {

@@ -2,6 +2,7 @@ package ca.rttv.malum;
 
 import ca.rttv.malum.util.ModdedErrStream;
 import com.chocohead.mm.api.ClassTinkerers;
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import com.mojang.logging.LogUtils;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvents;
@@ -17,6 +18,7 @@ import static ca.rttv.malum.registry.MalumItemRegistry.*;
 public final class MalumEarlyRiser implements Runnable {
     @Override
     public void run() {
+        MixinExtrasBootstrap.init();
         MappingResolver mappings = QuiltLoader.getMappingResolver();
         final String type = mappings.mapClassName("intermediary", "net.minecraft.class_1690$class_1692");
         final String enchantmentTarget = mappings.mapClassName("intermediary", "net.minecraft.class_1886");

@@ -15,25 +15,15 @@ import static ca.rttv.malum.registry.MalumBlockRegistry.BRILLIANT_OBELISK;
 
 @Mixin(EnchantmentScreenHandler.class)
 abstract class EnchantmentScreenHandlerMixin {
-    /**
-     * messy solution because I modified the EnchantmentTableBlock method, so it actually adds 1 and then adds 4 to add a total of 5 which is 1/3rd of the bookshelf maximum.
-     * I modify the vanilla method (EnchantingTableBlock) too, because particles.
-     * in dev env make method = "m_mpsetdhw".
-     * when pushing make method = "method_17411".
-    */
-    @ModifyVariable(method = "method_17411", at = @At(value = "FIELD", target = "Lnet/minecraft/block/EnchantingTableBlock;field_36535:Ljava/util/List;"), index = 4)
-    private int brilliantObeliskEnchantmentPower(int ix, ItemStack stack, World world, BlockPos pos) {
-        for (BlockPos blockPos : EnchantingTableBlock.field_36535) {
-            if (isObelisk(world, pos, blockPos)) {
-                ix += 4;
-            }
-        }
-        return ix;
+    @SuppressWarnings("UnresolvedMixinReference")
+    @ModifyVariable(method = {"m_mpsetdhw", "method_17411"}, at = @At(value = "FIELD", target = "Lnet/minecraft/block/EnchantingTableBlock;field_36535:Ljava/util/List;"), index = 4, remap = false)
+    private int brilliantObeliskEnchantmentPowerDev(int ix, ItemStack stack, World world, BlockPos pos) {
+        return ix + 4 * (int) EnchantingTableBlock.field_36535.stream().filter(blockPos -> isObelisk(world, pos, blockPos)).count();
     }
 
-    private static boolean isObelisk(World world, BlockPos pos, BlockPos pos2) {
-       return world.getBlockState(pos.add(pos2)).isOf(BRILLIANT_OBELISK)
-           && world.isAir(pos.add(pos2.getX() / 2, pos2.getY(), pos2.getZ() / 2))
-           && world.getBlockState(pos.add(pos2)).get(ObeliskBlock.HALF) == DoubleBlockHalf.LOWER;
+    private static boolean isObelisk(World world, BlockPos tablePos, BlockPos possiblePos) {
+       return world.getBlockState(tablePos.add(possiblePos)).isOf(BRILLIANT_OBELISK)
+           && world.isAir(tablePos.add(possiblePos.getX() / 2, possiblePos.getY(), possiblePos.getZ() / 2))
+           && world.getBlockState(tablePos.add(possiblePos)).get(ObeliskBlock.HALF) == DoubleBlockHalf.LOWER;
     }
 }
