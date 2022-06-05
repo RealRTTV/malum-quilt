@@ -53,11 +53,12 @@ public class SpiritRepairPage extends BookPage {
         } else {
             repairMaterial = repairMaterials[(int) ((client.world.getTime() / 15L) % repairMaterials.length)];
         }
-        ItemStack repairItem = recipe.getOutput(inputStack);
-        repairItem.setDamage((int) (inputStack.getMaxDamage() * recipe.durabilityPercentage()));
+        ItemStack outputStack = recipe.getOutput(inputStack);
+        inputStack.setDamage((int) (inputStack.getMaxDamage() * recipe.durabilityPercentage()));
+        outputStack.setDamage(0); // this is required cause im stupid
         ProgressionBookScreen.renderItem(matrices, repairMaterial, guiLeft + 48, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 86, guiTop + 59, mouseX, mouseY);
-        ProgressionBookScreen.renderItem(matrices, repairItem, guiLeft + 67, guiTop + 126, mouseX, mouseY);
+        ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 67, guiTop + 126, mouseX, mouseY);
         if (recipe.spirits().isPresent()) {
             ProgressionBookScreen.renderComponents(matrices, recipe.spirits(), guiLeft + 65, guiTop + 16, mouseX, mouseY, false);
         }
@@ -79,11 +80,12 @@ public class SpiritRepairPage extends BookPage {
         } else {
             repairMaterial = repairMaterials[(int) ((client.world.getTime() / 15L) % repairMaterials.length)];
         }
-        ItemStack repairItem = recipe.getOutput(inputStack);
-        repairItem.setDamage((int) (inputStack.getMaxDamage() * recipe.durabilityPercentage()));
+        ItemStack outputStack = recipe.getOutput(inputStack);
+        inputStack.setDamage((int) (inputStack.getMaxDamage() * recipe.durabilityPercentage()));
+        outputStack.setDamage(0); // this is required cause im stupid
         ProgressionBookScreen.renderItem(matrices, repairMaterial, guiLeft + 190, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 228, guiTop + 59, mouseX, mouseY);
-        ProgressionBookScreen.renderItem(matrices, repairItem, guiLeft + 209, guiTop + 126, mouseX, mouseY);
+        ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 209, guiTop + 126, mouseX, mouseY);
         if (recipe.spirits().isPresent()) {
             ProgressionBookScreen.renderComponents(matrices, recipe.spirits(), guiLeft + 207, guiTop + 16, mouseX, mouseY, false);
         }

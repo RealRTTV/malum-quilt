@@ -28,13 +28,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static ca.rttv.malum.registry.MalumRecipeSerializerRegistry.SPIRIT_REPAIR_SERIALIZER;
 import static ca.rttv.malum.registry.MalumRecipeTypeRegistry.SPIRIT_REPAIR;
 
-public record SpiritRepairRecipe(Identifier id, String group, String inputLookup, double durabilityPercentage, Ingredient input, IngredientWithCount spirits, IngredientWithCount repairMaterial) implements Recipe<Inventory> {
+public record SpiritRepairRecipe(Identifier id, String group, String itemIdRegex, String modIdRegex, double durabilityPercentage, Ingredient input, IngredientWithCount spirits, IngredientWithCount repairMaterial) implements Recipe<Inventory> {
     @Nullable
     public static SpiritRepairRecipe getRecipe(World world, Predicate<SpiritRepairRecipe> predicate) {
         List<SpiritRepairRecipe> recipes = getRecipes(world);
@@ -207,23 +208,25 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
         @Override
         public T read(Identifier id, JsonObject json) {
             String group = JsonHelper.getString(json, "group", "");
-            String inputLookup = json.get("inputLookup").getAsString();
+            String itemIdRegex = json.get("itemIdRegex").getAsString();
+            String modIdRegex = json.get("modIdRegex").getAsString();
             double durabilityPercentage = json.get("durabilityPercentage").getAsDouble();
-            Ingredient inputs = SpiritRepairRecipe.parseItems(json.getAsJsonArray("inputs"), inputLookup);
+            Ingredient inputs = SpiritRepairRecipe.parseItems(json.getAsJsonArray("inputs"), itemIdRegex, modIdRegex);
             IngredientWithCount spirits = IngredientWithCount.fromJson(json.getAsJsonArray("spirits"));
             IngredientWithCount repairMaterial = IngredientWithCount.fromJson(json.getAsJsonObject("repairMaterial"));
-            return recipeFactory.create(id, group, inputLookup, durabilityPercentage, inputs, spirits, repairMaterial);
+            return recipeFactory.create(id, group, itemIdRegex, modIdRegex, durabilityPercentage, inputs, spirits, repairMaterial);
         }
 
         @Override
         public T read(Identifier id, PacketByteBuf buf) {
-            return recipeFactory.create(id, buf.readString(), buf.readString(), buf.readDouble(), Ingredient.fromPacket(buf), IngredientWithCount.fromPacket(buf), IngredientWithCount.fromPacket(buf));
+            return recipeFactory.create(id, buf.readString(), buf.readString(), buf.readString(), buf.readDouble(), Ingredient.fromPacket(buf), IngredientWithCount.fromPacket(buf), IngredientWithCount.fromPacket(buf));
         }
 
         @Override
         public void write(PacketByteBuf buf, T recipe) {
             buf.writeString(recipe.group());
-            buf.writeString(recipe.inputLookup());
+            buf.writeString(recipe.itemIdRegex());
+            buf.writeString(recipe.modIdRegex());
             buf.writeDouble(recipe.durabilityPercentage());
             recipe.input().write(buf);
             recipe.spirits().write(buf);
@@ -240,7 +243,9 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
                 json.addProperty("group", recipe.group());
             }
 
-            json.addProperty("inputLookup", recipe.inputLookup());
+            json.addProperty("itemIdRegex", recipe.itemIdRegex());
+
+            json.addProperty("modIdRegex", recipe.modIdRegex());
 
             json.addProperty("durabilityPercentage", recipe.durabilityPercentage());
 
@@ -254,11 +259,25 @@ public record SpiritRepairRecipe(Identifier id, String group, String inputLookup
         }
 
         public interface RecipeFactory<T> {
-            T create(Identifier id, String group, String inputLookup, double durabilityPercentage, Ingredient input, IngredientWithCount spirits, IngredientWithCount repairMaterial);
+            T create(Identifier id, String group, String itemIdRegex, String modIdRegex, double durabilityPercentage, Ingredient input, IngredientWithCount spirits, IngredientWithCount repairMaterial);
         }
     }
 
-    private static Ingredient parseItems(JsonArray input, String inputLookup) {
-        return Ingredient.ofEntries(Stream.concat(StreamSupport.stream(input.spliterator(), false).map(JsonElement::getAsString).map(string -> string.startsWith("#") ? new Ingredient.TagEntry(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1)))) : new Ingredient.StackEntry(Registry.ITEM.get(new Identifier(string)).getDefaultStack())), StreamSupport.stream(Registry.ITEM.spliterator(), false).filter(item -> item.isDamageable() && Registry.ITEM.getId(item).getPath().startsWith(inputLookup)).map(item -> new Ingredient.StackEntry(item.getDefaultStack()))));
+    private static Ingredient parseItems(JsonArray input, String itemIdRegex, String modIdRegex) {
+        return Ingredient.ofEntries(
+            Stream.concat(
+                  StreamSupport.stream(input.spliterator(), false)
+                               .map(JsonElement::getAsString)
+                               .map(string -> string.startsWith("#")
+                                            ? new Ingredient.TagEntry(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1))))
+                                            : new Ingredient.StackEntry(Registry.ITEM.get(new Identifier(string)).getDefaultStack())
+                               ),
+                  itemIdRegex.equals("") && modIdRegex.equals("")
+                               ? Stream.empty()
+                               : Registry.ITEM.stream() // expensive, but there's no better way to do it
+                                              .filter(item -> item.isDamageable() && Registry.ITEM.getId(item).getPath().matches(itemIdRegex) && Registry.ITEM.getId(item).getNamespace().matches(modIdRegex))
+                                              .map(item -> new Ingredient.StackEntry(item.getDefaultStack()))
+            ) // if I care about duplicate entries from the itemIdRegex and entries[] then make an implementation of hashCode on tag entry and stack entry and do a collect(Collectors.toSet()).stream() or something
+        );
     }
 }
