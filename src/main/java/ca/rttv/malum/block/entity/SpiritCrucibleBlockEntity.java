@@ -64,6 +64,26 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     public SpiritCrucibleBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
+    public TabletBlockEntity getValidTablet() {
+        if (focusingRecipe == null && !getTablets().isEmpty()) {
+            for (TabletBlockEntity tablet : getTablets()) {
+                repairRecipe = SpiritRepairRecipe.getRecipe(world, this.getHeldItem(), spiritSlots, this.getTabletStacks());
+                if (repairRecipe != null) {
+                    return tablet;
+                }
+            }
+        }
+        return null;
+    }
+    public ArrayList<TabletBlockEntity> getTablets() {
+        ArrayList<TabletBlockEntity> twistedTablets = new ArrayList<>();
+        BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
+            if (world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock) {
+                twistedTablets.add(displayBlock);
+            }
+        });
+        return twistedTablets;
+    }
 
     public List<ItemStack> getTabletStacks() {
         Map<Item, Integer> map = new LinkedHashMap<>();
@@ -82,7 +102,6 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
         map.forEach((item, count) -> stacks.add(new ItemStack(item, count)));
         return stacks;
     }
-
     public static Vec3d spiritOffset(SpiritCrucibleBlockEntity blockEntity, int slot, float tickDelta) {
         float distance = 0.75f + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
         float height = 0.75f;
@@ -120,13 +139,11 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
 
         // bad code (i tried to make it efficient, it is but it's still heavy, especially if it has to re-cache) AND THIS RUNS  E V E R Y   T I C K, todo, fix this speed
         if (focusingRecipe != null) {
-            if (accelerators == null) {
+            if (accelerators == null || accelerators.isEmpty()) {
                 accelerators = new HashMap<>();
                 BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(possiblePos -> {
                     BlockState state2 = world.getBlockState(possiblePos);
-                    if (state2.getBlock() instanceof ICrucibleAccelerator accelerator
-                            && (!state2.contains(SpiritCatalyzerBlock.HALF) || state2.get(SpiritCatalyzerBlock.HALF) == DoubleBlockHalf.UPPER)
-                            && accelerator.canAccelerate(possiblePos, world)) {
+                    if (state2.getBlock() instanceof ICrucibleAccelerator accelerator && (!state2.contains(SpiritCatalyzerBlock.HALF) || state2.get(SpiritCatalyzerBlock.HALF) == DoubleBlockHalf.UPPER) && accelerator.canAccelerate(possiblePos, world)) {
                         List<Pair<ICrucibleAccelerator, BlockPos>> accs = accelerators.get(accelerator.name());
                         if (accs != null && accs.size() <= 8) {
                             accs.add(new Pair<>(accelerator, possiblePos.toImmutable()));
@@ -166,7 +183,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                 this.notifyListeners();
                 this.focusingRecipe = null;
             }
-        } else if (repairRecipe != null) {
+        } else if (repairRecipe != null && this.getValidTablet() != null) {
             ItemStack damagedItem = this.getHeldItem();
             int time = 400 + damagedItem.getDamage() * 5;
             progress++;
@@ -210,111 +227,108 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
             }
         }
 
-//        if (repairRecipe != null) {
-//            TabletBlockEntity tabletBlockEntity = validTablet;
-//
-//            ArrayList<Color> colors = new ArrayList<>();
-//            ArrayList<Color> endColors = new ArrayList<>();
-//            if (tabletBlockEntity.inventory.getStackInSlot(0).getItem() instanceof SpiritItem spiritItem && repairRecipe.repairMaterial.getItem() instanceof SpiritItem) {
-//                colors.add(spiritItem.type.color);
-//                endColors.add(spiritItem.type.endColor);
-//            } else if (!spiritSlots.isEmpty()) {
-//                for (int i = 0; i < spiritSlots.size(); i++) {
-//                    ItemStack item = spiritSlots.get(i);
-//                    if (item.getItem() instanceof SpiritItem spiritItem) {
-//                        colors.add(spiritItem.type.color);
-//                        endColors.add(spiritItem.type.endColor);
-//                    }
-//                }
-//            }
-//            for (int i = 0; i < colors.size(); i++) {
-//                Color color = colors.get(i);
-//                Color endColor = endColors.get(i);
-//                Vec3d tabletItemPos = tabletBlockEntity.itemOffset();
-//                Vec3d velocity = tabletItemPos.subtract(itemPos).normalize().multiply(-0.1f);
-//
-//                ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
-//                        .setAlpha(0.24f / colors.size(), 0f)
-//                        .setLifetime(15)
-//                        .setScale(0.45f + world.random.nextFloat() * 0.15f, 0)
-//                        .randomOffset(0.05)
-//                        .setSpinOffset((0.075f * world.getTime()) % 6.28f)
-//                        .setColor(color, endColor)
-//                        .enableNoClip()
-//                        .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
-//
-//                ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
-//                        .setAlpha(0.24f / colors.size(), 0f)
-//                        .setLifetime(15)
-//                        .setScale(0.45f + world.random.nextFloat() * 0.15f, 0)
-//                        .randomOffset(0.05)
-//                        .setSpinOffset((-0.075f * world.getTime()) % 6.28f)
-//                        .setColor(color, endColor)
-//                        .enableNoClip()
-//                        .repeat(world, tabletItemPos.x, tabletItemPos.y, tabletItemPos.z, 1);
-//
-//                ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
-//                        .setAlpha(0.4f / colors.size(), 0f)
-//                        .setLifetime((int) (10 + world.random.nextInt(8) + Math.sin((0.5 * world.getTime()) % 6.28f)))
-//                        .setScale(0.2f + world.random.nextFloat() * 0.15f, 0)
-//                        .randomOffset(0.05)
-//                        .setSpinOffset((0.075f * world.getTime() % 6.28f))
-//                        .setSpin(0.1f + world.random.nextFloat() * 0.05f)
-//                        .setColor(color.brighter(), endColor)
-//                        .setAlphaCurveMultiplier(0.5f)
-//                        .setColorCurveMultiplier(0.75f)
-//                        .setMotion(velocity.x, velocity.y, velocity.z)
-//                        .enableNoClip()
-//                        .repeat(world, tabletItemPos.x, tabletItemPos.y, tabletItemPos.z, 1);
-//            }
-//            return;
-//        }
-//        if (focusingRecipe != null) {
-//            for (int i = 0; i < spiritSlots.size(); i++) {
-//                ItemStack item = spiritSlots.get(i);
-//                if (item.getItem() instanceof SpiritItem spiritSplinterItem) {
-//                    Vec3d offset = spiritOffset(this, i, 0.5f);
-//                    Color color = spiritSplinterItem.type.color;
-//                    Color endColor = spiritSplinterItem.type.endColor;
-//                    double x = pos.getX() + offset.x;
-//                    double y = pos.getY() + offset.y;
-//                    double z = pos.getZ() + offset.z;
-//                    Vec3d velocity = new Vec3d(x, y, z).subtract(itemPos).normalize().multiply(-0.03f);
-//                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
-//                            .setAlpha(0.30f, 0f)
-//                            .setLifetime(40)
-//                            .setScale(0.2f, 0)
-//                            .randomOffset(0.02f)
-//                            .randomMotion(0.01f, 0.01f)
-//                            .setColor(color, endColor)
-//                            .setColorCurveMultiplier(0.75f)
-//                            .randomMotion(0.0025f, 0.0025f)
-//                            .addMotion(velocity.x, velocity.y, velocity.z)
-//                            .enableNoClip()
-//                            .repeat(world, x, y, z, 1);
-//
-//                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
-//                            .setAlpha(0.12f / this.getSpiritCount(), 0f)
-//                            .setLifetime(25)
-//                            .setScale(0.2f + world.random.nextFloat() * 0.1f, 0)
-//                            .randomOffset(0.05)
-//                            .setSpinOffset((0.075f * world.getTime() % 6.28f))
-//                            .setColor(color, endColor)
-//                            .enableNoClip()
-//                            .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
-//
-//                    ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
-//                            .setAlpha(0.16f / this.getSpiritCount(), 0f)
-//                            .setLifetime(25)
-//                            .setScale(0.45f + world.random.nextFloat() * 0.1f, 0)
-//                            .randomOffset(0.05)
-//                            .setSpinOffset((0.075f * world.getTime() % 6.28f))
-//                            .setColor(color, endColor)
-//                            .enableNoClip()
-//                            .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
-//                }
-//            }
-//        }
+        if (repairRecipe != null) {
+            ArrayList<Color> colors = new ArrayList<>();
+            ArrayList<Color> endColors = new ArrayList<>();
+            if (this.getTabletStacks().get(0).getItem() instanceof SpiritItem spiritItem) {
+                colors.add(spiritItem.type.color);
+                endColors.add(spiritItem.type.endColor);
+            } else if (!spiritSlots.isEmpty()) {
+                for (int i = 0; i < spiritSlots.size(); i++) {
+                    ItemStack item = spiritSlots.get(i);
+                    if (item.getItem() instanceof SpiritItem spiritItem) {
+                        colors.add(spiritItem.type.color);
+                        endColors.add(spiritItem.type.endColor);
+                    }
+                }
+            }
+            for (int i = 0; i < colors.size(); i++) {
+                Color color = colors.get(i);
+                Color endColor = endColors.get(i);
+                Vec3d tabletItemPos = this.getValidTablet().itemOffset();
+                Vec3d velocity = tabletItemPos.subtract(itemPos).normalize().multiply(-0.1f);
+                ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
+                        .setAlpha(0.24f / colors.size(), 0f)
+                        .setLifetime(15)
+                        .setScale(0.45f + world.random.nextFloat() * 0.15f, 0)
+                        .randomOffset(0.05)
+                        .setSpinOffset((0.075f * world.getTime()) % 6.28f)
+                        .setColor(color, endColor)
+                        .enableNoClip()
+                        .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
+
+                ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
+                        .setAlpha(0.24f / colors.size(), 0f)
+                        .setLifetime(15)
+                        .setScale(0.45f + world.random.nextFloat() * 0.15f, 0)
+                        .randomOffset(0.05)
+                        .setSpinOffset((-0.075f * world.getTime()) % 6.28f)
+                        .setColor(color, endColor)
+                        .enableNoClip()
+                        .repeat(world, tabletItemPos.x, tabletItemPos.y, tabletItemPos.z, 1);
+
+                ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                        .setAlpha(0.4f / colors.size(), 0f)
+                        .setLifetime((int) (10 + world.random.nextInt(8) + Math.sin((0.5 * world.getTime()) % 6.28f)))
+                        .setScale(0.2f + world.random.nextFloat() * 0.15f, 0)
+                        .randomOffset(0.05)
+                        .setSpinOffset((0.075f * world.getTime() % 6.28f))
+                        .setSpin(0.1f + world.random.nextFloat() * 0.05f)
+                        .setColor(color.brighter(), endColor)
+                        .setAlphaCurveMultiplier(0.5f)
+                        .setColorCurveMultiplier(0.75f)
+                        .setMotion(velocity.x, velocity.y, velocity.z)
+                        .enableNoClip()
+                        .repeat(world, tabletItemPos.x, tabletItemPos.y, tabletItemPos.z, 1);
+            }
+            return;
+        }
+        if (focusingRecipe != null) {
+            for (int i = 0; i < spiritSlots.size(); i++) {
+                ItemStack item = spiritSlots.get(i);
+                if (item.getItem() instanceof SpiritItem spiritSplinterItem) {
+                    Vec3d offset = spiritOffset(this, i, 0.5f);
+                    Color color = spiritSplinterItem.type.color;
+                    Color endColor = spiritSplinterItem.type.endColor;
+                    double x = pos.getX() + offset.x;
+                    double y = pos.getY() + offset.y;
+                    double z = pos.getZ() + offset.z;
+                    Vec3d velocity = new Vec3d(x, y, z).subtract(itemPos).normalize().multiply(-0.03f);
+                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                            .setAlpha(0.30f, 0f)
+                            .setLifetime(40)
+                            .setScale(0.2f, 0)
+                            .randomOffset(0.02f)
+                            .randomMotion(0.01f, 0.01f)
+                            .setColor(color, endColor)
+                            .setColorCurveMultiplier(0.75f)
+                            .randomMotion(0.0025f, 0.0025f)
+                            .addMotion(velocity.x, velocity.y, velocity.z)
+                            .enableNoClip()
+                            .repeat(world, x, y, z, 1);
+
+                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                            .setAlpha(0.12f / this.getSpiritCount(), 0f)
+                            .setLifetime(25)
+                            .setScale(0.2f + world.random.nextFloat() * 0.1f, 0)
+                            .randomOffset(0.05)
+                            .setSpinOffset((0.075f * world.getTime() % 6.28f))
+                            .setColor(color, endColor)
+                            .enableNoClip()
+                            .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
+
+                    ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
+                            .setAlpha(0.16f / this.getSpiritCount(), 0f)
+                            .setLifetime(25)
+                            .setScale(0.45f + world.random.nextFloat() * 0.1f, 0)
+                            .randomOffset(0.05)
+                            .setSpinOffset((0.075f * world.getTime() % 6.28f))
+                            .setColor(color, endColor)
+                            .enableNoClip()
+                            .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
+                }
+            }
+        }
     }
 
     @Override

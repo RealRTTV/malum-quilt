@@ -200,6 +200,7 @@ public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAc
 
     @Override
     public void tick(BlockPos pos, World world) {
+        if(world.getBlockEntity(pos) instanceof SpiritCatalyzerBlockEntity)
         ((SpiritCatalyzerBlockEntity) world.getBlockEntity(pos)).fuelTick();
     }
 
