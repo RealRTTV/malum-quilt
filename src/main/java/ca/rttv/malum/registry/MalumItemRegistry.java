@@ -42,7 +42,7 @@ public interface MalumItemRegistry {
     Item STRIPPED_RUNEWOOD                          = register("stripped_runewood",                         new BlockItem(MalumBlockRegistry.STRIPPED_RUNEWOOD, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item EXPOSED_RUNEWOOD_LOG                       = register("exposed_runewood_log",                      new BlockItem(MalumBlockRegistry.EXPOSED_RUNEWOOD_LOG, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item REVEALED_RUNEWOOD_LOG                      = register("revealed_runewood_log",                     new BlockItem(MalumBlockRegistry.REVEALED_RUNEWOOD_LOG, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
-    Item RUNEWOOD_PLANKS                            = register("runewood_planks",                           new BlockItem(MalumBlockRegistry.RUNEWOOD_PLANKS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
+    Item RUNEWOOD_PLANKS                            = register("runewood_planks",                           new BlockItem(MalumPlanksRegistry.RUNEWOOD_PLANKS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item VERTICAL_RUNEWOOD_PLANKS                   = register("vertical_runewood_planks",                  new BlockItem(MalumBlockRegistry.VERTICAL_RUNEWOOD_PLANKS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_PANEL                             = register("runewood_panel",                            new BlockItem(MalumBlockRegistry.RUNEWOOD_PANEL, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_TILES                             = register("runewood_tiles",                            new BlockItem(MalumBlockRegistry.RUNEWOOD_TILES, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
@@ -78,7 +78,7 @@ public interface MalumItemRegistry {
     Item STRIPPED_SOULWOOD                          = register("stripped_soulwood",                         new BlockItem(MalumBlockRegistry.STRIPPED_SOULWOOD, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item EXPOSED_SOULWOOD_LOG                       = register("exposed_soulwood_log",                      new BlockItem(MalumBlockRegistry.EXPOSED_SOULWOOD_LOG, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item REVEALED_SOULWOOD_LOG                      = register("revealed_soulwood_log",                     new BlockItem(MalumBlockRegistry.REVEALED_SOULWOOD_LOG, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
-    Item SOULWOOD_PLANKS                            = register("soulwood_planks",                           new BlockItem(MalumBlockRegistry.SOULWOOD_PLANKS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
+    Item SOULWOOD_PLANKS                            = register("soulwood_planks",                           new BlockItem(MalumPlanksRegistry.SOULWOOD_PLANKS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item VERTICAL_SOULWOOD_PLANKS                   = register("vertical_soulwood_planks",                  new BlockItem(MalumBlockRegistry.VERTICAL_SOULWOOD_PLANKS, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_PANEL                             = register("soulwood_panel",                            new BlockItem(MalumBlockRegistry.SOULWOOD_PANEL, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_TILES                             = register("soulwood_tiles",                            new BlockItem(MalumBlockRegistry.SOULWOOD_TILES, new Item.Settings().group(MALUM_NATURAL_WONDERS)));

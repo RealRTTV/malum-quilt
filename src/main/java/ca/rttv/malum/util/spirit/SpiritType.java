@@ -38,7 +38,7 @@ public class SpiritType implements StringIdentifiable {
         this.id = id;
         this.color = color;
         this.endColor = endColor;
-        switch(id) {
+        switch (id) {
             case "wicked" -> this.splinterItem = () -> MalumItemRegistry.WICKED_SPIRIT;
             case "arcane" -> this.splinterItem = () -> MalumItemRegistry.ARCANE_SPIRIT;
             case "eldritch" -> this.splinterItem = () -> MalumItemRegistry.ELDRITCH_SPIRIT;

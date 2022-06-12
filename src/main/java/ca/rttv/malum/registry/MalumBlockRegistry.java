@@ -15,6 +15,8 @@ import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumAcceleratorTypeRegistry.BRILLIANT_ACCELERATOR_TYPE;
 import static ca.rttv.malum.registry.MalumAcceleratorTypeRegistry.RUNEWOOD_ACCELERATOR_TYPE;
 import static ca.rttv.malum.registry.MalumBlockSoundGroupRegistry.*;
+import static ca.rttv.malum.registry.MalumPlanksRegistry.RUNEWOOD_PLANKS;
+import static ca.rttv.malum.registry.MalumPlanksRegistry.SOULWOOD_PLANKS;
 import static ca.rttv.malum.registry.MalumSignTypeRegistry.RUNEWOOD_SIGN_TYPE;
 import static ca.rttv.malum.registry.MalumSignTypeRegistry.SOULWOOD_SIGN_TYPE;
 import static net.minecraft.sound.BlockSoundGroup.*;
@@ -31,7 +33,7 @@ public interface MalumBlockRegistry {
     Block STRIPPED_RUNEWOOD                           = register("stripped_runewood",                         new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(WOOD)));
     Block EXPOSED_RUNEWOOD_LOG                        = register("exposed_runewood_log",                      new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(WOOD)));
     Block REVEALED_RUNEWOOD_LOG                       = register("revealed_runewood_log",                     new RevealedPillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(WOOD), STRIPPED_RUNEWOOD_LOG, true));
-    Block RUNEWOOD_PLANKS                             = register("runewood_planks",                           new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(WOOD)));
+    // RUNEWOOD_PLANKS (in the planks registry)
     Block VERTICAL_RUNEWOOD_PLANKS                    = register("vertical_runewood_planks",                  new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(WOOD)));
     Block RUNEWOOD_PANEL                              = register("runewood_panel",                            new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(WOOD)));
     Block RUNEWOOD_TILES                              = register("runewood_tiles",                            new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(WOOD)));
@@ -64,7 +66,7 @@ public interface MalumBlockRegistry {
     Block STRIPPED_SOULWOOD                           = register("stripped_soulwood",                         new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(WOOD)));
     Block EXPOSED_SOULWOOD_LOG                        = register("exposed_soulwood_log",                      new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(WOOD)));
     Block REVEALED_SOULWOOD_LOG                       = register("revealed_soulwood_log",                     new RevealedPillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(WOOD), STRIPPED_SOULWOOD_LOG, false));
-    Block SOULWOOD_PLANKS                             = register("soulwood_planks",                           new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(WOOD)));
+    // SOULWOOD_PLANKS (in planks registry)
     Block VERTICAL_SOULWOOD_PLANKS                    = register("vertical_soulwood_planks",                  new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(WOOD)));
     Block SOULWOOD_PANEL                              = register("soulwood_panel",                            new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(WOOD)));
     Block SOULWOOD_TILES                              = register("soulwood_tiles",                            new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(WOOD)));
@@ -216,6 +218,7 @@ public interface MalumBlockRegistry {
     }
     
     static void init() {
+        MalumPlanksRegistry.init();
         BLOCKS.forEach((id, block) -> Registry.register(Registry.BLOCK, id, block));
     }
 }

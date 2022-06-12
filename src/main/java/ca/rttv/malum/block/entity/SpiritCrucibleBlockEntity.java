@@ -156,10 +156,10 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
             }
             speed = 0.0f;
             accelerators.forEach((name, accs) -> {
-                speed += SpiritCatalyzerBlock.SPEED_INCREASE[accs.size() - 1];
                 accs.forEach(accelerator -> accelerator.getLeft().tick(accelerator.getRight(), world));
+                speed += SpiritCatalyzerBlock.SPEED_INCREASE[(int) accs.stream().filter(pair -> pair.getLeft().canAccelerate(pair.getRight(), world)).count() - 1];
             });
-            progress += 1 + speed;
+            progress += speed + 1;
             if (progress >= focusingRecipe.time()) {
                 focusingRecipe.craft(this);
                 final int[] durabilityCost = {focusingRecipe.durabilityCost()};
