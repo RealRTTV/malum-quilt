@@ -24,6 +24,7 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -82,7 +83,7 @@ public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAc
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         ((SpiritCatalyzerBlockEntity) world.getBlockEntity(pos)).scheduledTick();
     }
 

@@ -17,12 +17,10 @@ import static ca.rttv.malum.Malum.MODID;
 
 @Mixin(BoatEntityRenderer.class)
 final class BoatEntityRendererMixin {
-    @Inject(method = "method_32163", at = @At(value = "HEAD"), cancellable = true, remap = false)
-    private static void useMalumNamespace(EntityRendererFactory.Context context, BoatEntity.Type type, CallbackInfoReturnable<Pair<Identifier, BoatEntityModel>> cir) {
+    @Inject(method = "getTexture(Lnet/minecraft/entity/vehicle/BoatEntity$Type;Z)Ljava/lang/String;", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    private static void useMalumNamespace(BoatEntity.Type type, boolean isChest, CallbackInfoReturnable<String> cir) {
         if (type == MalumBoatTypes.RUNEWOOD || type == MalumBoatTypes.SOULWOOD) {
-            cir.setReturnValue(Pair.of(
-                    new Identifier(MODID, "textures/entity/boat/" + type.getName() + "_boat.png"), new BoatEntityModel(context.getPart(EntityModelLayers.createBoat(type)))
-            ));
+            cir.setReturnValue("textures/entity/boat/" + type.getName() + "_boat.png");
         }
     }
 }

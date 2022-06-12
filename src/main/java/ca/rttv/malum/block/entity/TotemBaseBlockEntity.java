@@ -21,6 +21,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,7 +67,7 @@ public class TotemBaseBlockEntity extends BlockEntity {
         }
 
         if (rite != null) {
-            world.playSound(null, pos, MalumSoundRegistry.TOTEM_CANCELLED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+            world.playSound(null, pos, MalumSoundRegistry.TOTEM_CANCELLED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat() * 0.2f);
             rite = null;
             this.updateListeners();
             BlockPos up = pos.up();
@@ -137,7 +138,7 @@ public class TotemBaseBlockEntity extends BlockEntity {
         MalumRiteRegistry.RITE.forEach(rite -> RITES.put(rite.hashCode(), rite));
     }
 
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         if (rite == null) {
             return;
         }

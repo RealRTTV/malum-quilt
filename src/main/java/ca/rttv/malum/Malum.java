@@ -9,6 +9,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.random.RandomGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
@@ -22,7 +23,7 @@ import java.util.Random;
 import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
 public final class Malum implements ModInitializer {
-    public static final Random RANDOM = new Random();
+    public static final RandomGenerator RANDOM = RandomGenerator.createLegacy();
     public static final String MODID = "malum"; // 1 character faster than MOD_ID!
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final ItemGroup MALUM = QuiltItemGroup.builder(new Identifier(MODID, MODID)).icon(() -> new ItemStack(SPIRIT_ALTAR)).build();

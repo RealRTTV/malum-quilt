@@ -1,10 +1,9 @@
 package ca.rttv.malum.util.particle.screen.base;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public abstract class ScreenParticle {
 
@@ -22,7 +21,7 @@ public abstract class ScreenParticle {
     public double totalX;
     public double totalY;
     public boolean removed;
-    public final Random random = new Random();
+    public final RandomGenerator random = RandomGenerator.createLegacy();
     public int age;
     public int maxAge;
     public float gravityStrength;

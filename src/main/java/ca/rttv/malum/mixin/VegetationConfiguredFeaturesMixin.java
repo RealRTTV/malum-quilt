@@ -12,21 +12,21 @@ import java.util.List;
 
 @Mixin(VegetationConfiguredFeatures.class)
 abstract class VegetationConfiguredFeaturesMixin {
-    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/gen/feature/util/ConfiguredFeatureUtil;register(Ljava/lang/String;Lnet/minecraft/world/gen/feature/Feature;Lnet/minecraft/world/gen/feature/FeatureConfig;)Lnet/minecraft/util/Holder;", ordinal = 34), index = 2)
-    private static <FC extends FeatureConfig> FC plainsRunewoodTrees(FC featureConfig) {
-        RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;
-        List<WeightedPlacedFeature> features = new ArrayList<>(config.features);
-        features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), 0.02f));
-        //noinspection unchecked
-        return (FC) new RandomFeatureConfig(features, config.defaultFeature);
-    }
-
-    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/gen/feature/util/ConfiguredFeatureUtil;register(Ljava/lang/String;Lnet/minecraft/world/gen/feature/Feature;Lnet/minecraft/world/gen/feature/FeatureConfig;)Lnet/minecraft/util/Holder;", ordinal = 33), index = 2)
-    private static <FC extends FeatureConfig> FC forestRunewoodTrees(FC featureConfig) {
-        RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;
-        List<WeightedPlacedFeature> features = new ArrayList<>(config.features);
-        features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), 0.01f));
-        //noinspection unchecked
-        return (FC) new RandomFeatureConfig(features, config.defaultFeature);
-    }
+//    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/gen/feature/util/ConfiguredFeatureUtil;register(Ljava/lang/String;Lnet/minecraft/world/gen/feature/Feature;Lnet/minecraft/world/gen/feature/FeatureConfig;)Lnet/minecraft/util/Holder;", ordinal = 34), index = 2)
+//    private static <FC extends FeatureConfig> FC plainsRunewoodTrees(FC featureConfig) {
+//        RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;
+//        List<WeightedPlacedFeature> features = new ArrayList<>(config.features);
+//        features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), 0.02f));
+//        //noinspection unchecked
+//        return (FC) new RandomFeatureConfig(features, config.defaultFeature);
+//    }
+//
+//    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/gen/feature/util/ConfiguredFeatureUtil;register(Ljava/lang/String;Lnet/minecraft/world/gen/feature/Feature;Lnet/minecraft/world/gen/feature/FeatureConfig;)Lnet/minecraft/util/Holder;", ordinal = 33), index = 2)
+//    private static <FC extends FeatureConfig> FC forestRunewoodTrees(FC featureConfig) {
+//        RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;
+//        List<WeightedPlacedFeature> features = new ArrayList<>(config.features);
+//        features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), 0.01f));
+//        //noinspection unchecked
+//        return (FC) new RandomFeatureConfig(features, config.defaultFeature);
+//    }
 }

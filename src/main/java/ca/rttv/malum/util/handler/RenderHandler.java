@@ -6,6 +6,7 @@ import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.ShaderUniformHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
@@ -34,7 +35,7 @@ public class RenderHandler {
             RenderSystem.getModelViewStack().push();
             RenderSystem.getModelViewStack().loadIdentity();
             if (PARTICLE_MATRIX != null) {
-                RenderSystem.getModelViewStack().method_34425(PARTICLE_MATRIX);
+                RenderSystem.getModelViewStack().multiplyMatrix(PARTICLE_MATRIX);
             }
             RenderSystem.applyModelViewMatrix();
             DELAYED_RENDER.draw(RenderLayers.ADDITIVE_PARTICLE);
@@ -43,7 +44,7 @@ public class RenderHandler {
             RenderSystem.applyModelViewMatrix();
         }
         for (RenderLayer type : BUFFERS.keySet()) {
-            Shader instance = RenderHelper.getShader(type);
+            ShaderProgram instance = RenderHelper.getShader(type);
             if (HANDLERS.containsKey(type)) {
                 ShaderUniformHandler handler = HANDLERS.get(type);
                 handler.updateShaderData(instance);
@@ -58,7 +59,7 @@ public class RenderHandler {
     }
 
     public static void prepareFrustum(MatrixStack poseStack, Vec3d position, Matrix4f stack) {
-        Matrix4f matrix4f = poseStack.peek().getModel();
+        Matrix4f matrix4f = poseStack.peek().getPosition();
         double d0 = position.getX();
         double d1 = position.getY();
         double d2 = position.getZ();

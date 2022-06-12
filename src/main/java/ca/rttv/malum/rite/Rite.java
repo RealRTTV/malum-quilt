@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.random.RandomGenerator;
 
 import java.util.*;
 
@@ -21,9 +22,9 @@ public abstract class Rite {
         return list.hashCode();
     }
 
-    public abstract void onTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick);
+    public abstract void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick);
 
-    public abstract void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick);
+    public abstract void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick);
 
     public final Item[] items() {
         return items;

@@ -8,10 +8,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.hud.BackgroundHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.util.ColorUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -20,7 +20,6 @@ import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -29,7 +28,6 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumItemRegistry.*;
@@ -57,7 +55,7 @@ public class ProgressionBookScreen extends Screen {
     public boolean ignoreNextMouseInput;
 
     protected ProgressionBookScreen() {
-        super(new TranslatableText("malum.gui.book.title"));
+        super(Text.literal("malum.gui.book.title"));
         this.client = MinecraftClient.getInstance();
         setupEntries();
         setupObjects();
@@ -557,7 +555,7 @@ public class ProgressionBookScreen extends Screen {
     public static void renderWrappingText(MatrixStack matrices, String text, int x, int y, int w) {
         final MinecraftClient client = MinecraftClient.getInstance();
         TextRenderer textRenderer = client.textRenderer;
-        text = new TranslatableText(text).getString();
+        text = Text.literal(text).getString();
         List<String> lines = new ArrayList<>();
         String[] words = text.split(" ");
         String line = "";
@@ -591,12 +589,12 @@ public class ProgressionBookScreen extends Screen {
         int g = (int) MathHelper.lerp(glow, 61, 39);
         int b = (int) MathHelper.lerp(glow, 183, 228);
 
-        textRenderer.draw(matrices, text, x - 1, y, BackgroundHelper.ColorMixer.getArgb(96, 255, 210, 243));
-        textRenderer.draw(matrices, text, x + 1, y, BackgroundHelper.ColorMixer.getArgb(128, 240, 131, 232));
-        textRenderer.draw(matrices, text, x, y - 1, BackgroundHelper.ColorMixer.getArgb(128, 255, 183, 236));
-        textRenderer.draw(matrices, text, x, y + 1, BackgroundHelper.ColorMixer.getArgb(96, 236, 110, 226));
+        textRenderer.draw(matrices, text, x - 1, y, ColorUtil.ARGB32.getArgb(96, 255, 210, 243));
+        textRenderer.draw(matrices, text, x + 1, y, ColorUtil.ARGB32.getArgb(128, 240, 131, 232));
+        textRenderer.draw(matrices, text, x, y - 1, ColorUtil.ARGB32.getArgb(128, 255, 183, 236));
+        textRenderer.draw(matrices, text, x, y + 1, ColorUtil.ARGB32.getArgb(96, 236, 110, 226));
 
-        textRenderer.draw(matrices, text, x, y, BackgroundHelper.ColorMixer.getArgb(255, r, g, b));
+        textRenderer.draw(matrices, text, x, y, ColorUtil.ARGB32.getArgb(255, r, g, b));
     }
 
     public static float glow(float offset) {
@@ -783,7 +781,7 @@ public class ProgressionBookScreen extends Screen {
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (client == null) return false;
         if (keyCode == client.options.inventoryKey.getDefaultKey().getKeyCode()) {
-            onClose();
+            closeScreen();
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);

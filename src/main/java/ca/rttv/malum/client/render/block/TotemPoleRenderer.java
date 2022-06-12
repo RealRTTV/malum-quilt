@@ -7,7 +7,7 @@ import ca.rttv.malum.util.RenderLayers;
 import ca.rttv.malum.util.handler.RenderHandler;
 import ca.rttv.malum.util.helper.RenderHelper;
 import ca.rttv.malum.util.spirit.SpiritType;
-import net.minecraft.client.render.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.texture.Sprite;

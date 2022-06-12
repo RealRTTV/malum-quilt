@@ -1,15 +1,15 @@
 package ca.rttv.malum.util.helper;
 
-import net.minecraft.client.gui.hud.BackgroundHelper;
+import net.minecraft.client.util.ColorUtil;
 import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
 public final class ColorHelper {
     public static Color getColor(int decimal) {
-        int red = BackgroundHelper.ColorMixer.getRed(decimal);
-        int green = BackgroundHelper.ColorMixer.getGreen(decimal);
-        int blue = BackgroundHelper.ColorMixer.getBlue(decimal);
+        int red = ColorUtil.ARGB32.getRed(decimal);
+        int green = ColorUtil.ARGB32.getGreen(decimal);
+        int blue = ColorUtil.ARGB32.getBlue(decimal);
         return new Color(red, green, blue);
     }
 
@@ -18,19 +18,19 @@ public final class ColorHelper {
     }
 
     public static int getColor(Color color) {
-        return BackgroundHelper.ColorMixer.getArgb(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
+        return ColorUtil.ARGB32.getArgb(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
     }
 
     public static int getColor(int r, int g, int b) {
-        return BackgroundHelper.ColorMixer.getArgb(255, r, g, b);
+        return ColorUtil.ARGB32.getArgb(255, r, g, b);
     }
 
     public static int getColor(int r, int g, int b, int a) {
-        return BackgroundHelper.ColorMixer.getArgb(a, r, g, b);
+        return ColorUtil.ARGB32.getArgb(a, r, g, b);
     }
 
     public static int getColor(float r, float g, float b, float a) {
-        return BackgroundHelper.ColorMixer.getArgb((int) (a * 255f), (int) (r * 255f), (int) (g * 255f), (int) (b * 255f));
+        return ColorUtil.ARGB32.getArgb((int) (a * 255f), (int) (r * 255f), (int) (g * 255f), (int) (b * 255f));
     }
 
     public static Color colorLerp(float pct, Color brightColor, Color darkColor) {

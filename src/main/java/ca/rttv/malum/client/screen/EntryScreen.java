@@ -10,7 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -29,7 +29,7 @@ public class EntryScreen extends Screen {
     public int grouping;
 
     public EntryScreen() {
-        super(new TranslatableText("malum.gui.entry.title"));
+        super(Text.literal("malum.gui.entry.title"));
     }
 
     public static void openScreen(EntryObject newObject) {
@@ -138,7 +138,7 @@ public class EntryScreen extends Screen {
     }
 
     @Override
-    public void onClose() {
+    public void closeScreen() {
         close(false);
     }
 

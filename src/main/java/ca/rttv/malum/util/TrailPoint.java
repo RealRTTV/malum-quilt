@@ -1,7 +1,7 @@
 package ca.rttv.malum.util;
 
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumer;
 
 public class TrailPoint {
 
@@ -20,13 +20,13 @@ public class TrailPoint {
     }
 
     public void renderStart(VertexConsumer builder, int packedLight, float r, float g, float b, float a, float u0, float v0, float u1, float v1) {
-        builder.vertex(xp, yp, z).color(r, g, b, a).texture(u0, v0).overlay(OverlayTexture.DEFAULT_UV).light(packedLight).next();
-        builder.vertex(xn, yn, z).color(r, g, b, a).texture(u1, v0).overlay(OverlayTexture.DEFAULT_UV).light(packedLight).next();
+        builder.vertex(xp, yp, z).color(r, g, b, a).uv(u0, v0).overlay(OverlayTexture.DEFAULT_UV).light(packedLight).next();
+        builder.vertex(xn, yn, z).color(r, g, b, a).uv(u1, v0).overlay(OverlayTexture.DEFAULT_UV).light(packedLight).next();
     }
 
     public void renderEnd(VertexConsumer builder, int packedLight, float r, float g, float b, float a, float u0, float v0, float u1, float v1) {
-        builder.vertex(xn, yn, z).color(r, g, b, a).texture(u1, v1).overlay(OverlayTexture.DEFAULT_UV).light(packedLight).next();
-        builder.vertex(xp, yp, z).color(r, g, b, a).texture(u0, v1).overlay(OverlayTexture.DEFAULT_UV).light(packedLight).next();
+        builder.vertex(xn, yn, z).color(r, g, b, a).uv(u1, v1).overlay(OverlayTexture.DEFAULT_UV).light(packedLight).next();
+        builder.vertex(xp, yp, z).color(r, g, b, a).uv(u0, v1).overlay(OverlayTexture.DEFAULT_UV).light(packedLight).next();
     }
     public void renderMid(VertexConsumer builder, int packedLight, float r, float g, float b, float a, float u0, float v0, float u1, float v1) {
         renderEnd(builder, packedLight, r, g, b, a, u0, v0, u1, v1);

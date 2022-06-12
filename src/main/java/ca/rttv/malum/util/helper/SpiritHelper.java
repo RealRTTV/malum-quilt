@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -211,7 +212,7 @@ public final class SpiritHelper {
     }
 
     public static void spawnSpiritParticles(World world, double x, double y, double z, float alphaMultiplier, Vec3d extraVelocity, Color color, Color endColor) {
-        Random rand = world.getRandom();
+        RandomGenerator rand = world.getRandom();
         ParticleBuilders.create(MalumParticleRegistry.TWINKLE_PARTICLE)
                 .setAlpha(0.21f * alphaMultiplier, 0f)
                 .setLifetime(10 + rand.nextInt(4))
@@ -249,7 +250,7 @@ public final class SpiritHelper {
     }
 
     public static void spawnSoulParticles(World world, double x, double y, double z, float alphaMultiplier, float scaleMultiplier, Vec3d extraVelocity, Color color, Color endColor) {
-        Random rand = world.getRandom();
+        RandomGenerator rand = world.getRandom();
         ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
                 .setAlpha(0.25f * alphaMultiplier, 0)
                 .setLifetime(8 + rand.nextInt(5))

@@ -66,7 +66,7 @@ public interface MalumItemRegistry {
     Item RUNEWOOD_ITEM_STAND                        = register("runewood_item_stand",                       new BlockItem(MalumBlockRegistry.RUNEWOOD_ITEM_STAND, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_ITEM_PEDESTAL                     = register("runewood_item_pedestal",                    new BlockItem(MalumBlockRegistry.RUNEWOOD_ITEM_PEDESTAL, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_SIGN                              = register("runewood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), MalumBlockRegistry.RUNEWOOD_SIGN, RUNEWOOD_WALL_SIGN));
-    Item RUNEWOOD_BOAT                              = register("runewood_boat",                             new BoatItem(MalumBoatTypes.RUNEWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
+    Item RUNEWOOD_BOAT                              = register("runewood_boat",                             new BoatItem(false, MalumBoatTypes.RUNEWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
     Item UNHOLY_SAP                                 = register("unholy_sap",                                new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item UNHOLY_SAPBALL                             = register("unholy_sapball",                            new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item UNHOLY_SYRUP                               = register("unholy_syrup",                              new HolySyrupItem(new Item.Settings().group(MALUM_NATURAL_WONDERS).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 300, 0), 1.0f).alwaysEdible().hunger(8).saturationModifier(0.4f).build())));
@@ -102,7 +102,7 @@ public interface MalumItemRegistry {
     Item SOULWOOD_ITEM_STAND                        = register("soulwood_item_stand",                       new BlockItem(MalumBlockRegistry.SOULWOOD_ITEM_STAND, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_ITEM_PEDESTAL                     = register("soulwood_item_pedestal",                    new BlockItem(MalumBlockRegistry.SOULWOOD_ITEM_PEDESTAL, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_SIGN                              = register("soulwood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), MalumBlockRegistry.SOULWOOD_SIGN, SOULWOOD_WALL_SIGN));
-    Item SOULWOOD_BOAT                              = register("soulwood_boat",                             new BoatItem(MalumBoatTypes.SOULWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
+    Item SOULWOOD_BOAT                              = register("soulwood_boat",                             new BoatItem(false, MalumBoatTypes.SOULWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
 
 // items & blocks, sorted [Main]
     Item ENCYCLOPEDIA_ARCANA                        = register("encyclopedia_arcana",                       new EncyclopediaArcanaItem(new Item.Settings().rarity(Rarity.UNCOMMON).group(MALUM)));

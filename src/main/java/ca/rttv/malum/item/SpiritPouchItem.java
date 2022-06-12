@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -33,7 +32,7 @@ public class SpiritPouchItem extends Item {
             player.openHandledScreen(new NamedScreenHandlerFactory() {
                 @Override
                 public Text getDisplayName() {
-                    return LiteralText.EMPTY;
+                    return Text.empty();
                 }
 
                 @Override

@@ -19,6 +19,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -46,7 +47,7 @@ public class TotemPoleBlock extends BlockWithEntity {
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         TotemPoleBlockEntity blockEntity = (TotemPoleBlockEntity) world.getBlockEntity(pos);
         if (blockEntity == null) {
             return;
@@ -70,7 +71,7 @@ public class TotemPoleBlock extends BlockWithEntity {
             blockEntity.particles = true;
             blockEntity.updateListeners();
             world.scheduleBlockTick(up, world.getBlockState(up).getBlock(), 20);
-            world.playSound(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, MalumSoundRegistry.TOTEM_CHARGE, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+            world.playSound(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, MalumSoundRegistry.TOTEM_CHARGE, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat() * 0.2f);
         } else if (blockEntity.particles) {
             BlockPos down = pos.down();
             Rite rite = TotemBaseBlockEntity.RITES.get(blockEntity.list.hashCode());
@@ -82,9 +83,9 @@ public class TotemPoleBlock extends BlockWithEntity {
                     blockEntity.list = null;
                     totemBaseBlockEntity.tick = 0;
                     if (totemBaseBlockEntity.rite != null) {
-                        world.playSound(null, down, MalumSoundRegistry.TOTEM_ACTIVATED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+                        world.playSound(null, down, MalumSoundRegistry.TOTEM_ACTIVATED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat() * 0.2f);
                     } else {
-                        world.playSound(null, down, MalumSoundRegistry.TOTEM_CANCELLED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+                        world.playSound(null, down, MalumSoundRegistry.TOTEM_CANCELLED, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat() * 0.2f);
                     }
                     totemBaseBlockEntity.updateListeners();
                     break;
@@ -103,7 +104,7 @@ public class TotemPoleBlock extends BlockWithEntity {
             blockEntity.particles = true;
             blockEntity.updateListeners();
             world.scheduleBlockTick(pos, world.getBlockState(pos).getBlock(), 20);
-            world.playSound(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, MalumSoundRegistry.TOTEM_CHARGE, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+            world.playSound(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, MalumSoundRegistry.TOTEM_CHARGE, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat() * 0.2f);
         }
     }
 

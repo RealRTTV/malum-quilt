@@ -33,6 +33,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -114,7 +115,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                           .count();
     }
 
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         // todo, make only run on first tick
 
         if (focusingRecipe == null) {

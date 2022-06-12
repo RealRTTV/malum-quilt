@@ -15,11 +15,11 @@ import ca.rttv.malum.util.helper.RenderHelper;
 import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumSpiritAffinity;
+import com.mojang.blaze3d.glfw.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.Shader;
-import net.minecraft.client.util.Window;
+import net.minecraft.client.render.ShaderProgram;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -32,6 +32,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vector4f;
 
+import java.awt.*;
 import java.util.Objects;
 
 import static ca.rttv.malum.registry.MalumItemRegistry.MAGEBANE_BELT;
@@ -130,11 +131,11 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                         RenderSystem.defaultBlendFunc();
                         RenderSystem.setShaderTexture(0, ICONS_TEXTURE);
                         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
-                        Shader shader = MalumShaderRegistry.DISTORTED_TEXTURE.getInstance().get();
-                        shader.getUniformOrDefault("YFrequency").set(15f);
-                        shader.getUniformOrDefault("XFrequency").set(15f);
-                        shader.getUniformOrDefault("Speed").set(550f);
-                        shader.getUniformOrDefault("Intensity").set(150f);
+                        ShaderProgram shader = MalumShaderRegistry.DISTORTED_TEXTURE.getInstance().get();
+                        shader.getUniformOrDefault("YFrequency").setFloat(15f);
+                        shader.getUniformOrDefault("XFrequency").setFloat(15f);
+                        shader.getUniformOrDefault("Speed").setFloat(550f);
+                        shader.getUniformOrDefault("Intensity").setFloat(150f);
                         for (int i = 0; i < Math.ceil(soulWard / 3f); i++) {
                             int row = (int) (Math.ceil(i) / 10f);
                             int x = left + i % 10 * 8;
@@ -142,8 +143,8 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                             int progress = Math.min(3, (int) soulWard - i * 3);
                             int xTextureOffset = 1 + (3 - progress) * 15;
 
-                            shader.getUniformOrDefault("UVCoordinates").set(new Vector4f(xTextureOffset / 45f, (xTextureOffset + 12) / 45f, 1 / 45f, 13 / 45f));
-                            shader.getUniformOrDefault("TimeOffset").set(i * 150f);
+                            shader.getUniformOrDefault("UVCoordinates").setVec4(new Vector4f(xTextureOffset / 45f, (xTextureOffset + 12) / 45f, 1 / 45f, 13 / 45f));
+                            shader.getUniformOrDefault("TimeOffset").setFloat(i * 150f);
 
                             RenderHelper.blit(matrices, MalumShaderRegistry.DISTORTED_TEXTURE, x - 2, y - 2, 13, 13, 1, 1, 1, 1, xTextureOffset, 1, 45f);
 

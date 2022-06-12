@@ -15,6 +15,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.random.RandomGenerator;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.List;
@@ -28,14 +29,14 @@ public class EldritchWickedRite extends Rite {
     }
 
     @Override
-    public void onTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
         if (tick % 20 != 0) {
             world.getEntitiesByClass(LivingEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), entity -> (!(entity instanceof PlayerEntity playerEntity) || !playerEntity.getAbilities().creativeMode)).forEach(entity -> entity.damage(MalumDamageSourceRegistry.VOODOO, 2.0f));
         }
     }
 
     @Override
-    public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
         List<AnimalEntity> list = world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), Entity::isLiving);
         if (list.size() < 30) {
             return;

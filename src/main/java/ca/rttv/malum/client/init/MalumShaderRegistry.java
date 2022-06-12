@@ -3,9 +3,10 @@ package ca.rttv.malum.client.init;
 import ca.rttv.malum.util.ExtendedShader;
 import ca.rttv.malum.util.ShaderHolder;
 import ca.rttv.malum.util.helper.DataHelper;
+import com.mojang.blaze3d.vertex.VertexFormats;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.render.Shader;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.render.ShaderProgram;
 import net.minecraft.resource.ResourceManager;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class MalumShaderRegistry {
-    public static List<Pair<Shader, Consumer<Shader>>> shaderList;
+    public static List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shaderList;
     public static final ShaderHolder ADDITIVE_TEXTURE = new ShaderHolder();
     public static final ShaderHolder ADDITIVE_PARTICLE = new ShaderHolder();
 
@@ -44,7 +45,7 @@ public class MalumShaderRegistry {
     public static void registerShader(ExtendedShader extendedShaderInstance) {
         registerShader(extendedShaderInstance, (shader) -> ((ExtendedShader) shader).getHolder().setInstance(shader));
     }
-    public static void registerShader(Shader shader, Consumer<Shader> onLoaded)
+    public static void registerShader(ShaderProgram shader, Consumer<ShaderProgram> onLoaded)
     {
         shaderList.add(Pair.of(shader, onLoaded));
     }

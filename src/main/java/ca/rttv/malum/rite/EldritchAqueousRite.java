@@ -7,6 +7,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.random.RandomGenerator;
 
 import java.util.Random;
 import java.util.stream.StreamSupport;
@@ -17,7 +18,7 @@ public class EldritchAqueousRite extends Rite {
     }
 
     @Override
-    public void onTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
         if (tick % 40 != 0) {
             return;
         }
@@ -30,7 +31,7 @@ public class EldritchAqueousRite extends Rite {
     }
 
     @Override
-    public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
         if (tick % 100 != 0) {
             return;
         }

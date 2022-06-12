@@ -36,7 +36,7 @@ public abstract class SpriteBillboardScreenParticle extends BillboardScreenParti
     }
 
     public void setSprite(SpriteProvider pSprite) {
-        this.setSprite(pSprite.getSprite(this.random));
+        this.setSprite(pSprite.method_18139(this.random));
     }
 
     public void setSpriteForAge(SpriteProvider pSprite) {

@@ -6,7 +6,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
 import static ca.rttv.malum.Malum.MODID;
@@ -37,7 +36,7 @@ public class SpiritTextPage extends BookPage {
 
     @Override
     public void renderLeft(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
-        Text text = new TranslatableText(this.headlineTranslationKey());
+        Text text = Text.literal(this.headlineTranslationKey());
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 75 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 10);
         ProgressionBookScreen.renderWrappingText(matrices, translationKey(), guiLeft + 16, guiTop + 79, 125);
         ProgressionBookScreen.renderItem(matrices, spiritStack, guiLeft + 67, guiTop + 44, mouseX, mouseY);
@@ -45,7 +44,7 @@ public class SpiritTextPage extends BookPage {
 
     @Override
     public void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
-        Text text = new TranslatableText(this.headlineTranslationKey());
+        Text text = Text.literal(this.headlineTranslationKey());
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 218 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 10);
         ProgressionBookScreen.renderWrappingText(matrices, translationKey(), guiLeft + 158, guiTop + 79, 125);
         ProgressionBookScreen.renderItem(matrices, spiritStack, guiLeft + 209, guiTop + 44, mouseX, mouseY);

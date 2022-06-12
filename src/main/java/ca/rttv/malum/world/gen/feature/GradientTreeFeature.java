@@ -11,6 +11,7 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -61,7 +62,7 @@ public class GradientTreeFeature extends Feature<DefaultFeatureConfig> {
         while (true);
     }
 
-    public void makeLeafBlob(MalumFiller filler, Random rand, BlockPos pos) {
+    public void makeLeafBlob(MalumFiller filler, RandomGenerator rand, BlockPos pos) {
         makeLeafSlice(filler, pos, 1, 0);
         makeLeafSlice(filler, pos.up(1), 2, 1);
         makeLeafSlice(filler, pos.up(2), 2, 2);
@@ -93,7 +94,7 @@ public class GradientTreeFeature extends Feature<DefaultFeatureConfig> {
     public boolean place(FeatureContext<DefaultFeatureConfig> ctx) {
         StructureWorldAccess world = ctx.getWorld();
         BlockPos pos = ctx.getOrigin();
-        Random rand = ctx.getRandom();
+        RandomGenerator rand = ctx.getRandom();
         if (world.isAir(pos.down()) || !sapling.getDefaultState().canPlaceAt(world, pos)) {
             return false;
         }

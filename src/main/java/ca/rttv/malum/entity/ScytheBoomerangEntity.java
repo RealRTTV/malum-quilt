@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 import java.util.UUID;
+import java.util.random.RandomGenerator;
 
 public class ScytheBoomerangEntity extends ThrownItemEntity {
     public static final TrackedData<ItemStack> SCYTHE = DataTracker.registerData(ScytheBoomerangEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
@@ -121,7 +122,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
                 if (EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, getItem()) > 0) {
                     Vec3d vector = new Vec3d(getParticleX(0.7), getRandomBodyY(), getParticleZ(0.7));
                     if (scythe.getItem() instanceof ScytheItem) {
-                        Random random = new Random();
+                        RandomGenerator random = new Random();
                         float f1 = random.nextFloat();
 //                        float f2 = random.nextFloat();
                         vector = new Vec3d(Math.cos(this.age) * 0.8f + this.getX(), getBodyY(0.1), Math.sin(this.age) * 0.8f + this.getZ());
@@ -133,7 +134,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
             } else {
                 Vec3d vector = new Vec3d(getParticleX(0.7), getRandomBodyY(), getParticleZ(0.7));
                 if (scythe.getItem() instanceof ScytheItem) {
-                    Random random = new Random();
+                    RandomGenerator random = new Random();
                     float f1 = random.nextFloat();
 //                    float f2 = random.nextFloat();
                     vector = new Vec3d(Math.cos(this.age) * 0.8f + this.getX(), getBodyY(0.1), Math.sin(this.age) * 0.8f + this.getZ());

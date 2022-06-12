@@ -2,10 +2,10 @@ package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.util.handler.RenderHandler;
+import com.mojang.blaze3d.shader.ShaderStage;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.gl.Program;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Shader;
+import net.minecraft.client.render.ShaderProgram;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourceManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +26,7 @@ final class GameRendererMixin {
     }
 
     @Inject(method = "loadShaders", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void registerShaders(ResourceManager manager, CallbackInfo ci, List<Program> list, List<Pair<Shader, Consumer<Shader>>> list2) throws IOException {
+    private void registerShaders(ResourceManager manager, CallbackInfo ci, List<ShaderStage> list, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> list2) throws IOException {
         MalumShaderRegistry.init(manager);
         list2.addAll(MalumShaderRegistry.shaderList);
     }

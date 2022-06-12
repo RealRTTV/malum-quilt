@@ -33,8 +33,9 @@ dependencies {
 	}
 	modImplementation libs.quilt.loader
 
-	modImplementation(libs.isnrmn)
-	modImplementation(libs.quilted.fabric.api)
+	//modImplementation(libs.isnrmn)
+	modImplementation "org.quiltmc:qsl:2.0.0-beta.2+1.19"
+	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:2.0.0-alpha.2+0.55.3-1.19"
 	modImplementation(libs.trinkets) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
@@ -42,8 +43,8 @@ dependencies {
 	}
 	modImplementation(libs.satin)
 	include(libs.satin)
-	modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
-	modRuntimeOnly("maven.modrinth:iris:1.18.x-v1.2.4")
+	modRuntimeOnly("maven.modrinth:sodium:mc1.19-0.4.2")
+	modRuntimeOnly("maven.modrinth:iris:1.19.x-v1.2.5")
 	runtimeOnly compileOnly("org.anarres:jcpp:1.4.14") // for iris
     runtimeOnly('org.joml:joml:1.10.4') // for sodium
 	modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
@@ -62,7 +63,6 @@ dependencies {
 	implementation(libs.mixin.extras)
 	annotationProcessor(libs.mixin.extras)
 	modImplementation("com.demonwav.mcdev:annotations:1.0")
-	modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:8.2.471")
 }
 
 configurations.all {

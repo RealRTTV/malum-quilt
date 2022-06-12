@@ -33,6 +33,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -69,7 +70,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
         passiveParticles();
     }
 
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         spiritAmount = Math.max(1, MathHelper.lerp(0.1f, spiritAmount, getSpiritCount(spiritSlots)));
         if (recipe != null && this.hasExtraItems(state, world, pos, this.getExtraItemsAndCacheAccelerators(state, world, pos), recipe)) {
             if (spinUp < 10) {

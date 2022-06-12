@@ -1,7 +1,7 @@
 package ca.rttv.malum.util.particle.screen.base;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
@@ -42,10 +42,10 @@ public abstract class BillboardScreenParticle extends ScreenParticle {
          There is definitely a better way of doing this.
        */
         int z = 390;
-        bufferBuilder.vertex(vectors[0].getX(), vectors[0].getY(), z).texture(u1, v1).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();
-        bufferBuilder.vertex(vectors[1].getX(), vectors[1].getY(), z).texture(u1, v0).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();
-        bufferBuilder.vertex(vectors[2].getX(), vectors[2].getY(), z).texture(u0, v0).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();
-        bufferBuilder.vertex(vectors[3].getX(), vectors[3].getY(), z).texture(u0, v1).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();
+        bufferBuilder.vertex(vectors[0].getX(), vectors[0].getY(), z).uv(u1, v1).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();
+        bufferBuilder.vertex(vectors[1].getX(), vectors[1].getY(), z).uv(u1, v0).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();
+        bufferBuilder.vertex(vectors[2].getX(), vectors[2].getY(), z).uv(u0, v0).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();
+        bufferBuilder.vertex(vectors[3].getX(), vectors[3].getY(), z).uv(u0, v1).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();
     }
 
     public float getQuadSize(float tickDelta) {

@@ -3,10 +3,8 @@ package ca.rttv.malum.util.spirit;
 import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.registry.MalumItemRegistry;
 import net.minecraft.item.Item;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.StringIdentifiable;
 
@@ -54,7 +52,7 @@ public class SpiritType implements StringIdentifiable {
     }
 
     public Text getComponent(int count) {
-        return new LiteralText(" " + count + " ").append(new TranslatableText(getDescription())).fillStyle(Style.EMPTY.withColor(color.getRGB()));
+        return Text.literal(" " + count + " ").append(Text.translatable(getDescription())).fillStyle(Style.EMPTY.withColor(color.getRGB()));
     }
 
     public String getDescription() {

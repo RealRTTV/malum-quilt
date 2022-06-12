@@ -43,7 +43,7 @@ public class TotemPoleBlockEntity extends BlockEntity {
         super(type, pos, state);
         currentColor = 0;
         if (world != null) {
-            world.playSound(null, pos, MalumSoundRegistry.TOTEM_ENGRAVE, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat(0.2f));
+            world.playSound(null, pos, MalumSoundRegistry.TOTEM_ENGRAVE, SoundCategory.BLOCKS, 1.0f, 0.9f + world.random.nextFloat() * 0.2f);
         }
     }
 

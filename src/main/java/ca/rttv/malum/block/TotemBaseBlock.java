@@ -12,6 +12,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +31,7 @@ public class TotemBaseBlock extends BlockWithEntity {
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         //noinspection ConstantConditions
         ((TotemBaseBlockEntity) world.getBlockEntity(pos)).scheduledTick(state, world, pos, random);
         world.scheduleBlockTick(pos, state.getBlock(), 1);

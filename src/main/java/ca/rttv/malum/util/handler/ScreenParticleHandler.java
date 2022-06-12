@@ -7,13 +7,13 @@ import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
 import ca.rttv.malum.util.particle.screen.emitter.ParticleEmitter;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.Tessellator;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.GameModeSelectionScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -64,7 +64,7 @@ public class ScreenParticleHandler {
                             renderOrder = BEFORE_UI;
                         }
                     }
-                    Matrix4f last = matrixStack.peek().getModel();
+                    Matrix4f last = matrixStack.peek().getPosition();
                     float x = last.a03;
                     float y = last.a13;
                     if (canSpawnParticles) {
@@ -95,12 +95,12 @@ public class ScreenParticleHandler {
             ParticleTextureSheet type = pair.getFirst();
             if (Arrays.stream(renderOrders)
                       .anyMatch(o -> o.equals(pair.getSecond()))) {
-                type.begin(TESSELATOR.getBuffer(), client.getTextureManager());
+                type.begin(TESSELATOR.getBufferBuilder(), client.getTextureManager());
                 for (ScreenParticle next : particles) {
                     if (next instanceof GenericScreenParticle genericScreenParticle) {
                         genericScreenParticle.trackStack();
                     }
-                    next.render(TESSELATOR.getBuffer());
+                    next.render(TESSELATOR.getBufferBuilder());
                 }
                 type.draw(TESSELATOR);
             }

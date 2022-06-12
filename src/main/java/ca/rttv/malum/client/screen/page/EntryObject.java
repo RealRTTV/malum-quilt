@@ -4,7 +4,7 @@ import ca.rttv.malum.client.screen.EntryScreen;
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
@@ -33,7 +33,7 @@ public class EntryObject extends BookObject {
     @Override
     public void lateRender(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float partialTicks) {
         if (isHovering) {
-            ProgressionBookScreen.screen.renderTooltip(matrices, Arrays.asList(new TranslatableText(entry.translationKey()), new TranslatableText(entry.descriptionTranslationKey()).styled(style -> style.withColor(Formatting.GRAY))), mouseX, mouseY);
+            ProgressionBookScreen.screen.renderTooltip(matrices, Arrays.asList(Text.literal(entry.translationKey()), Text.literal(entry.descriptionTranslationKey()).styled(style -> style.withColor(Formatting.GRAY))), mouseX, mouseY);
         }
     }
 }

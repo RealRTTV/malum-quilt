@@ -13,6 +13,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.random.RandomGenerator;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.Random;
@@ -25,7 +26,7 @@ public class WickedRite extends Rite {
     }
 
     @Override
-    public void onTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
         if (tick % 20 != 0) {
             return;
         }
@@ -34,7 +35,7 @@ public class WickedRite extends Rite {
     }
 
     @Override
-    public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, Random random, long tick) {
+    public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
         if (tick % 20 != 0) {
             return;
         }
