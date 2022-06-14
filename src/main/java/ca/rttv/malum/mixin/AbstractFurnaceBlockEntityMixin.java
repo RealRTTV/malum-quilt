@@ -22,13 +22,13 @@ abstract class AbstractFurnaceBlockEntityMixin {
     private static Map<Item, Integer> map;
 
     @ModifyVariable(method = "createFuelTimeMap", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/AbstractFurnaceBlockEntity;addFuel(Ljava/util/Map;Lnet/minecraft/item/ItemConvertible;I)V", ordinal = 0), index = 0)
-    private static Map<Item, Integer> captureMap(Map<Item, Integer> value) {
+    private static Map<Item, Integer> malum$captureMap(Map<Item, Integer> value) {
         map = value;
         return value;
     }
 
     @Inject(method = "createFuelTimeMap", at = @At(value = "TAIL", shift = At.Shift.BEFORE))
-    private static void createFuelTimeMap(CallbackInfoReturnable<Map<Item, Integer>> cir) {
+    private static void malum$createFuelTimeMap(CallbackInfoReturnable<Map<Item, Integer>> cir) {
         addFuel(map, ARCANE_CHARCOAL, 3200);
         addFuel(map, BLOCK_OF_ARCANE_CHARCOAL, 28800);
         addFuel(map, ARCANE_CHARCOAL_FRAGMENT, 400);

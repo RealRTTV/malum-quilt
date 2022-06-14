@@ -13,7 +13,7 @@ import static ca.rttv.malum.registry.MalumStatusEffectRegistry.SACRED_AURA;
 @Mixin(StatusEffect.class)
 abstract class StatusEffectMixin {
     @Inject(method = "canApplyUpdateEffect", at = @At("HEAD"), cancellable = true)
-    private void canApplyUpdateEffect(int duration, int amplifier, CallbackInfoReturnable<Boolean> cir) {
+    private void malum$canApplyUpdateEffect(int duration, int amplifier, CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this == SACRED_AURA) {
             int i = 20 >> amplifier;
             if (i > 0) {
@@ -25,7 +25,7 @@ abstract class StatusEffectMixin {
     }
 
     @Inject(method = "applyUpdateEffect", at = @At("HEAD"))
-    private void applyUpdateEffect(LivingEntity entity, int amplifier, CallbackInfo ci) {
+    private void malum$applyUpdateEffect(LivingEntity entity, int amplifier, CallbackInfo ci) {
         if ((Object) this == SACRED_AURA) {
             if (entity.getHealth() < entity.getMaxHealth()) {
                 entity.heal(1.0f);

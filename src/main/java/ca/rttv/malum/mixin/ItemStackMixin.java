@@ -23,13 +23,13 @@ abstract class ItemStackMixin {
     private EntityAttributeModifier entityAttributeModifier;
 
     @ModifyVariable(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/attribute/EntityAttributeModifier;getId()Ljava/util/UUID;", ordinal = 0), index = 13)
-    private EntityAttributeModifier capture(EntityAttributeModifier value) {
+    private EntityAttributeModifier malum$capture(EntityAttributeModifier value) {
         this.entityAttributeModifier = value;
         return value;
     }
 
     @ModifyVariable(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/attribute/EntityAttributeModifier;getOperation()Lnet/minecraft/entity/attribute/EntityAttributeModifier$Operation;", ordinal = 0), index = 18)
-    private boolean getTooltip(boolean value, @Nullable PlayerEntity player, TooltipContext context) {
+    private boolean malum$getTooltip(boolean value, @Nullable PlayerEntity player, TooltipContext context) {
         if (player != null && entityAttributeModifier.getId() == MAGIC_DAMAGE_MODIFIER_ID) {
             return true;
         }
@@ -37,7 +37,7 @@ abstract class ItemStackMixin {
     }
 
     @ModifyVariable(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/attribute/EntityAttributeModifier;getOperation()Lnet/minecraft/entity/attribute/EntityAttributeModifier$Operation;", ordinal = 0), index = 14)
-    private double getTooltip(double value, @Nullable PlayerEntity player, TooltipContext context) {
+    private double malum$getTooltip(double value, @Nullable PlayerEntity player, TooltipContext context) {
         if (player != null) {
             if (entityAttributeModifier.getId() == MAGIC_DAMAGE_MODIFIER_ID) {
                 return value + player.getAttributeBaseValue(MAGIC_DAMAGE) + SpiritHelper.getHauntedDamage((ItemStack) (Object) this);
@@ -47,7 +47,7 @@ abstract class ItemStackMixin {
     }
 
     @ModifyArgs(method = "getTooltip", at = @At(value = "INVOKE", target = "Ljava/text/DecimalFormat;format(D)Ljava/lang/String;", ordinal = 0))
-    private void magicProficiencyMultiplier(Args args, @Nullable PlayerEntity player, TooltipContext context) {
+    private void malum$magicProficiencyMultiplier(Args args, @Nullable PlayerEntity player, TooltipContext context) {
         if (player == null) {
             return;
         }

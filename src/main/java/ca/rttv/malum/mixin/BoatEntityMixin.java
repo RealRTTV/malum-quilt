@@ -18,7 +18,7 @@ abstract class BoatEntityMixin {
     @Shadow public abstract BoatEntity.Type getBoatType();
 
     @Inject(method = "asItem", at = @At("HEAD"), cancellable = true)
-    private void asItem(CallbackInfoReturnable<Item> cir) {
+    private void malum$asItem(CallbackInfoReturnable<Item> cir) {
         BoatEntity.Type boatType = this.getBoatType();
         if (boatType == RUNEWOOD) {
             cir.setReturnValue(RUNEWOOD_BOAT);

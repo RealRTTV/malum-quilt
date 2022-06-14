@@ -58,26 +58,26 @@ abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
-    private static void createLivingAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
+    private static void malum$createLivingAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
         ATTRIBUTES.forEach((id, entityAttribute) -> info.getReturnValue().add(entityAttribute));
     }
 
     @Inject(method = "onDeath", at = @At("HEAD"))
-    private void onDeath(DamageSource source, CallbackInfo ci) {
+    private void malum$onDeath(DamageSource source, CallbackInfo ci) {
         if (!world.isClient) {
             SpiritHarvestHandler.shatterSoul(source, (LivingEntity) (Object) this);
         }
     }
 
     @Inject(method = "damage", at = @At("HEAD"))
-    private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void malum$damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (!world.isClient) {
             SpiritHarvestHandler.exposeSoul(source, amount, (LivingEntity) (Object) this);
         }
     }
 
     @ModifyVariable(method = "applyEnchantmentsToDamage", at = @At(value = "RETURN", ordinal = 2, shift = At.Shift.BEFORE), index = 2, argsOnly = true)
-    private float applyEnchantmentsToDamage(float value, DamageSource source, float amount) {
+    private float malum$applyEnchantmentsToDamage(float value, DamageSource source, float amount) {
         if (source == DamageSource.MAGIC) {
             float multiplier = 1.0f - (float) Math.max(((1 - (0.5 * (1 / (0.6 * this.getAttributeValue(MAGIC_RESISTANCE))))) * 0.6), 0);
             return value * multiplier;
@@ -86,13 +86,13 @@ abstract class LivingEntityMixin extends Entity {
     }
 
     @ModifyVariable(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasNoGravity()Z", ordinal = 1), index = 2)
-    private double setVelocity(double d) {
+    private double malum$setVelocity(double d) {
         // todo, fix corrupted aerial aura
         return d;
     }
 
     @ModifyArg(method = "jump", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V", ordinal = 0), index = 1)
-    private double jump(double y) {
+    private double malum$jump(double y) {
         if (this.getStatusEffect(CORRUPTED_AERIAL_AURA) != null) {
             //noinspection ConstantConditions
             return y + this.getStatusEffect(CORRUPTED_AERIAL_AURA).getAmplifier() * 0.15d;
@@ -101,7 +101,7 @@ abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "tryUseTotem", at = @At("HEAD"), cancellable = true)
-    private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
+    private void malum$tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if (source.isOutOfWorld()) {
             cir.setReturnValue(false);
         } else {

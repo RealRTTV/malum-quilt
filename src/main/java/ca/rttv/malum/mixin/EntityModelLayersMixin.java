@@ -14,7 +14,7 @@ import static ca.rttv.malum.Malum.MODID;
 final class EntityModelLayersMixin {
     // can't use modifyarg or modifyargs cause it only works on methodinsnnodes
     @Inject(method = "create", at = @At("HEAD"), cancellable = true)
-    private static void changeSignNamespace(String id, String layer, CallbackInfoReturnable<EntityModelLayer> cir) {
+    private static void malum$changeSignNamespace(String id, String layer, CallbackInfoReturnable<EntityModelLayer> cir) {
         if (id.equals("sign/runewood") || id.equals("sign/soulwood")) {
             cir.setReturnValue(new EntityModelLayer(new Identifier(MODID, id), layer));
         }

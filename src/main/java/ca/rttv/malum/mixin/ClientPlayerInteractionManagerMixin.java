@@ -16,7 +16,7 @@ final class ClientPlayerInteractionManagerMixin {
     @Shadow @Final private MinecraftClient client;
 
     @Inject(method = "getReachDistance", at = @At("HEAD"), cancellable = true)
-    private void getReachDistance(CallbackInfoReturnable<Float> cir) {
+    private void malum$getReachDistance(CallbackInfoReturnable<Float> cir) {
         if (this.client.player != null && this.client.player.hasStatusEffect(AQUEOUS_AURA)) {
             //noinspection ConstantConditions
             cir.setReturnValue(6.0f + this.client.player.getStatusEffect(AQUEOUS_AURA).getAmplifier());

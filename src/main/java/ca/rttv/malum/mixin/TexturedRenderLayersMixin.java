@@ -16,7 +16,7 @@ import static ca.rttv.malum.registry.MalumSignTypeRegistry.SOULWOOD_SIGN_TYPE;
 @Mixin(TexturedRenderLayers.class)
 final class TexturedRenderLayersMixin {
     @Inject(method = "createSignTextureId", at = @At("HEAD"), cancellable = true)
-    private static void changeSignNamespace(SignType type, CallbackInfoReturnable<SpriteIdentifier> cir) {
+    private static void malum$changeSignNamespace(SignType type, CallbackInfoReturnable<SpriteIdentifier> cir) {
         if (type == RUNEWOOD_SIGN_TYPE || type == SOULWOOD_SIGN_TYPE) {
             cir.setReturnValue(new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, new Identifier(MODID, "entity/signs/" + type.getName())));
         }

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(UnbreakingEnchantment.class)
 abstract class UnbreakingEnchantmentMixin {
     @Inject(method = "isAcceptableItem", at = @At("HEAD"), cancellable = true)
-    private void isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+    private void malum$isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (stack.isOf(MalumItemRegistry.CEASELESS_IMPETUS)) {
             cir.setReturnValue(false);
         }

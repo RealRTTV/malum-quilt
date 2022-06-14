@@ -60,11 +60,7 @@ public class EldritchInfernalRite extends Rite {
             } else {
                 world.spawnEntity(new ItemEntity(world, possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d, output.getDefaultStack()));
             }
-            world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
-                PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-                new MalumParticleS2CPacket(SpiritType.INFERNAL_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
-                ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
-            });
+            MalumParticleS2CPacket.sendParticle(world, possiblePos, SpiritType.INFERNAL_SPIRIT);
         });
     }
 
@@ -77,11 +73,7 @@ public class EldritchInfernalRite extends Rite {
         StreamSupport.stream(BlockPos.iterateOutwards(pos.down(), 2, 0, 2).spliterator(), false).filter(possiblePos -> !possiblePos.up().equals(pos) && world.getBlockState(possiblePos).isOf(Blocks.STONE)).forEach(possiblePos -> {
             world.breakBlock(possiblePos, false);
             world.setBlockState(possiblePos, Blocks.NETHERRACK.getDefaultState());
-            world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
-                PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-                new MalumParticleS2CPacket(SpiritType.INFERNAL_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
-                ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
-            });
+            MalumParticleS2CPacket.sendParticle(world, possiblePos, SpiritType.INFERNAL_SPIRIT);
         });
     }
 }

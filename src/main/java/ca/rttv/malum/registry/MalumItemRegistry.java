@@ -141,8 +141,8 @@ public interface MalumItemRegistry {
     Item TAINTED_IRIDESCENT_ETHER_BRAZIER           = register("tainted_iridescent_ether_brazier",          new IridescentEtherBlockItem(MalumBlockRegistry.TAINTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
     Item TWISTED_IRIDESCENT_ETHER_BRAZIER           = register("twisted_iridescent_ether_brazier",          new IridescentEtherBlockItem(MalumBlockRegistry.TWISTED_IRIDESCENT_ETHER_BRAZIER, new Item.Settings().group(MALUM)));
     Item SPIRIT_POUCH                               = register("spirit_pouch",                              new SpiritPouchItem(new Item.Settings().group(MALUM).maxCount(1)));
-    Item CRUDE_SCYTHE                               = registerScytheItem       ("crude_scythe",                              new ScytheItem(ToolMaterials.IRON, 3, -3.1f, 0.0f, new Item.Settings().group(MALUM)));
-    Item SOUL_STAINED_STEEL_SCYTHE                  = registerScytheItem       ("soul_stained_steel_scythe",                 new ScytheItem(MalumToolMaterials.SOUL_STAINED_STEEL, 0.5f, -3.1f, 4.0f, new Item.Settings().group(MALUM)));
+    Item CRUDE_SCYTHE                               = registerScytheItem("crude_scythe",                    new ScytheItem(ToolMaterials.IRON, 3, -3.1f, 0.0f, new Item.Settings().group(MALUM)));
+    Item SOUL_STAINED_STEEL_SCYTHE                  = registerScytheItem("soul_stained_steel_scythe",       new ScytheItem(MalumToolMaterials.SOUL_STAINED_STEEL, 0.5f, -3.1f, 4.0f, new Item.Settings().group(MALUM)));
     // soulwood stave
     Item SOUL_STAINED_STEEL_SWORD                   = register("soul_stained_steel_sword",                  new MagicSwordItem(MalumToolMaterials.SOUL_STAINED_STEEL, 0.0f, -2.4f, 3.0f, new Item.Settings().group(MALUM)));
     Item SOUL_STAINED_STEEL_PICKAXE                 = register("soul_stained_steel_pickaxe",                new MagicPickaxeItem(MalumToolMaterials.SOUL_STAINED_STEEL, -1.0f, -2.8f, 2.0f, new Item.Settings().group(MALUM)));

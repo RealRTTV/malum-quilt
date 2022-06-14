@@ -13,14 +13,14 @@ import static ca.rttv.malum.registry.MalumStatusEffectRegistry.INFERNAL_AURA;
 @Mixin(StatusEffectUtil.class)
 abstract class StatusEffectUtilMixin {
     @Inject(method = "hasHaste", at = @At("HEAD"), cancellable = true)
-    private static void hasHaste(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
+    private static void malum$hasHaste(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity.hasStatusEffect(INFERNAL_AURA)) {
             cir.setReturnValue(true);
         }
     }
 
     @ModifyVariable(method = "getHasteAmplifier", at = @At(value = "RETURN", shift = At.Shift.BY, by = -3), index = 1)
-    private static int getHasteAmplifier(int value, LivingEntity entity) {
+    private static int malum$getHasteAmplifier(int value, LivingEntity entity) {
         if (entity.hasStatusEffect(INFERNAL_AURA)) {
             //noinspection ConstantConditions
             value = Math.max(value, entity.getStatusEffect(INFERNAL_AURA).getAmplifier());

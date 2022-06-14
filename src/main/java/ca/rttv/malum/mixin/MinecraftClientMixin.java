@@ -13,18 +13,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftClient.class)
 final class MinecraftClientMixin {
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/resource/ReloadableResourceManager;registerReloader(Lnet/minecraft/resource/ResourceReloader;)V", ordinal = 17))
-    private void registerParticleFactories(RunArgs runArgs, CallbackInfo ci) {
+    private void malum$registerParticleFactories(RunArgs runArgs, CallbackInfo ci) {
         MalumParticleRegistry.registerFactories();
         MalumScreenParticleRegistry.registerParticleFactories();
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void clientTick(CallbackInfo ci) {
+    private void malum$clientTick(CallbackInfo ci) {
         ScreenParticleHandler.clientTick();
     }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V", ordinal = 4, shift = At.Shift.AFTER))
-    private void renderTickThingamajig(boolean tick, CallbackInfo ci) {
+    private void malum$renderTickThingamajig(boolean tick, CallbackInfo ci) {
         ScreenParticleHandler.renderParticles();
     }
 }

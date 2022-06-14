@@ -17,17 +17,17 @@ final class InGameHudMixin {
     @Shadow @Final private MinecraftClient client;
 
     @Inject(at = @At("HEAD"), method = "renderHotbar")
-    private void renderHotbarStart(float l1, MatrixStack j1, CallbackInfo ci) {
-        ScreenParticleHandler.renderingHotbar = false;
+    private void malum$renderHotbarStart(float l1, MatrixStack j1, CallbackInfo ci) {
+        ScreenParticleHandler.renderingHotbar = true;
     }
 
     @Inject(method = "renderStatusBars(Lnet/minecraft/client/util/math/MatrixStack;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V"))
-    private void renderArmorOverlay(MatrixStack matrices, CallbackInfo info) {
+    private void malum$renderArmorOverlay(MatrixStack matrices, CallbackInfo info) {
         ArcaneAffinity.Client.renderSoulWard(matrices, this.client.getWindow());
     }
 
     @Inject(at = @At("RETURN"), method = "renderHotbar")
-    private void renderHotbarEnd(float l1, MatrixStack j1, CallbackInfo ci) {
+    private void malum$renderHotbarEnd(float l1, MatrixStack j1, CallbackInfo ci) {
         ScreenParticleHandler.renderingHotbar = false;
     }
 }

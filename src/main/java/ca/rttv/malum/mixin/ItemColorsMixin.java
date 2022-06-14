@@ -15,7 +15,7 @@ import static ca.rttv.malum.registry.MalumItemRegistry.*;
 @Mixin(ItemColors.class)
 final class ItemColorsMixin {
     @Inject(method = "create", at = @At(value = "RETURN", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void create(BlockColors blockColors, CallbackInfoReturnable<ItemColors> cir, ItemColors itemColors) {
+    private static void malum$create(BlockColors blockColors, CallbackInfoReturnable<ItemColors> cir, ItemColors itemColors) {
         itemColors.register((stack, tintIndex) -> {
             if (tintIndex != 0) return -1;
             return NbtHelper.getOrDefaultInt(nbt -> NbtHelper.getOrThrowInt(nbt.getCompound("display"), "FirstColor"), 15712278, stack.getNbt());
