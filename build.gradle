@@ -34,8 +34,8 @@ dependencies {
 	modImplementation libs.quilt.loader
 
 	//modImplementation(libs.isnrmn)
-	modImplementation "org.quiltmc:qsl:2.0.0-beta.2+1.19"
-	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:2.0.0-alpha.2+0.55.3-1.19"
+	modImplementation "org.quiltmc:qsl:2.0.0-beta.4+1.19"
+	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:2.0.0-alpha.3+0.55.3-1.19"
 	modImplementation(libs.trinkets) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"

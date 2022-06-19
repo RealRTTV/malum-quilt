@@ -1,25 +1,7 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.Malum;
-import ca.rttv.malum.block.EtherBlock;
-import ca.rttv.malum.block.EtherBrazierBlock;
-import ca.rttv.malum.block.EtherTorchBlock;
-import ca.rttv.malum.block.EtherWallTorchBlock;
-import ca.rttv.malum.block.GradientLeavesBlock;
-import ca.rttv.malum.block.ItemStandBlock;
-import ca.rttv.malum.block.ObeliskBlock;
-import ca.rttv.malum.block.PillarCapBlock;
-import ca.rttv.malum.block.RevealedPillarBlock;
-import ca.rttv.malum.block.SpiritAltarBlock;
-import ca.rttv.malum.block.SpiritCatalyzerBlock;
-import ca.rttv.malum.block.SpiritCrucibleBlock;
-import ca.rttv.malum.block.SpiritJarBlock;
-import ca.rttv.malum.block.StoneItemPedestalBlock;
-import ca.rttv.malum.block.TabletBlock;
-import ca.rttv.malum.block.TheDevice;
-import ca.rttv.malum.block.TotemBaseBlock;
-import ca.rttv.malum.block.TotemPoleBlock;
-import ca.rttv.malum.block.WoodenItemPedestalBlock;
+import ca.rttv.malum.block.*;
 import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.block.sapling.SoulwoodSaplingGenerator;
 import net.minecraft.block.AbstractBlock;
@@ -35,13 +17,11 @@ import net.minecraft.block.Material;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SignBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.StoneButtonBlock;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.WallBlock;
-import net.minecraft.block.WallSignBlock;
 import net.minecraft.block.WoodenButtonBlock;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
@@ -56,12 +36,14 @@ public interface MalumBlockRegistry {
     
     Block RUNEWOOD_LEAVES                             = register("runewood_leaves",                           new GradientLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque()));
     Block RUNEWOOD_SAPLING                            = register("runewood_sapling",                          new SaplingBlock(new RunewoodSaplingGenerator(), Settings.of(Material.LEAVES).ticksRandomly().noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)));
-    Block RUNEWOOD_LOG                                = register("runewood_log",                              new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
     Block STRIPPED_RUNEWOOD_LOG                       = register("stripped_runewood_log",                     new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
-    Block RUNEWOOD                                    = register("runewood",                                  new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
+    Block RUNEWOOD_LOG                                = register("runewood_log",                              new StrippableLogBlock(() -> STRIPPED_RUNEWOOD_LOG, Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
+
     Block STRIPPED_RUNEWOOD                           = register("stripped_runewood",                         new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
-    Block EXPOSED_RUNEWOOD_LOG                        = register("exposed_runewood_log",                      new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
+    Block RUNEWOOD                                    = register("runewood",                                  new StrippableLogBlock(() -> STRIPPED_RUNEWOOD, Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
+
     Block REVEALED_RUNEWOOD_LOG                       = register("revealed_runewood_log",                     new RevealedPillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD), STRIPPED_RUNEWOOD_LOG, true));
+    Block EXPOSED_RUNEWOOD_LOG                        = register("exposed_runewood_log",                      new StrippableLogBlock(() -> REVEALED_RUNEWOOD_LOG, Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
     // RUNEWOOD_PLANKS (in the planks registry)
     Block VERTICAL_RUNEWOOD_PLANKS                    = register("vertical_runewood_planks",                  new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block RUNEWOOD_PANEL                              = register("runewood_panel",                            new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
@@ -84,17 +66,14 @@ public interface MalumBlockRegistry {
     Block RUNEWOOD_PLANKS_FENCE                       = register("runewood_planks_fence",                     new FenceBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block RUNEWOOD_PLANKS_FENCE_GATE                  = register("runewood_planks_fence_gate",                new FenceGateBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block RUNEWOOD_ITEM_STAND                         = register("runewood_item_stand",                       new ItemStandBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block RUNEWOOD_ITEM_PEDESTAL                      = register("runewood_item_pedestal",                    new WoodenItemPedestalBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block RUNEWOOD_SIGN                               = register("runewood_sign",                             new SignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), MalumSignTypeRegistry.RUNEWOOD_SIGN_TYPE));
-    Block RUNEWOOD_WALL_SIGN                          = register("runewood_wall_sign",                        new WallSignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), MalumSignTypeRegistry.RUNEWOOD_SIGN_TYPE));
-    Block SOULWOOD_LEAVES                             = register("soulwood_leaves",                           new GradientLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never)));
+    Block RUNEWOOD_ITEM_PEDESTAL                      = register("runewood_item_pedestal",                    new WoodenItemPedestalBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));Block SOULWOOD_LEAVES                             = register("soulwood_leaves",                           new GradientLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never)));
     Block SOULWOOD_SAPLING                            = register("soulwood_sapling",                          new SaplingBlock(new SoulwoodSaplingGenerator(), Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)));
-    Block SOULWOOD_LOG                                = register("soulwood_log",                              new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
     Block STRIPPED_SOULWOOD_LOG                       = register("stripped_soulwood_log",                     new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
-    Block SOULWOOD                                    = register("soulwood",                                  new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
+    Block SOULWOOD_LOG                                = register("soulwood_log",                              new StrippableLogBlock(() -> STRIPPED_SOULWOOD_LOG, Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
     Block STRIPPED_SOULWOOD                           = register("stripped_soulwood",                         new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
-    Block EXPOSED_SOULWOOD_LOG                        = register("exposed_soulwood_log",                      new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
+    Block SOULWOOD                                    = register("soulwood",                                  new StrippableLogBlock(() -> STRIPPED_SOULWOOD, Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
     Block REVEALED_SOULWOOD_LOG                       = register("revealed_soulwood_log",                     new RevealedPillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD), STRIPPED_SOULWOOD_LOG, false));
+    Block EXPOSED_SOULWOOD_LOG                        = register("exposed_soulwood_log",                      new StrippableLogBlock(() -> REVEALED_SOULWOOD_LOG, Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
     // SOULWOOD_PLANKS (in planks registry)
     Block VERTICAL_SOULWOOD_PLANKS                    = register("vertical_soulwood_planks",                  new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block SOULWOOD_PANEL                              = register("soulwood_panel",                            new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
@@ -118,8 +97,6 @@ public interface MalumBlockRegistry {
     Block SOULWOOD_PLANKS_FENCE_GATE                  = register("soulwood_planks_fence_gate",                new FenceGateBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block SOULWOOD_ITEM_STAND                         = register("soulwood_item_stand",                       new ItemStandBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block SOULWOOD_ITEM_PEDESTAL                      = register("soulwood_item_pedestal",                    new WoodenItemPedestalBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block SOULWOOD_SIGN                               = register("soulwood_sign",                             new SignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), MalumSignTypeRegistry.SOULWOOD_SIGN_TYPE));
-    Block SOULWOOD_WALL_SIGN                          = register("soulwood_wall_sign",                        new WallSignBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).noCollision().sounds(BlockSoundGroup.WOOD), MalumSignTypeRegistry.SOULWOOD_SIGN_TYPE));
     Block SOULSTONE_ORE                               = register("soulstone_ore",                             new ExperienceDroppingBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(MalumBlockSoundGroupRegistry.BLOCK_SOULSTONE_SOUNDS).requiresTool()));
     Block DEEPSLATE_SOULSTONE_ORE                     = register("deepslate_soulstone_ore",                   new ExperienceDroppingBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(7.0f, 6.0f).sounds(MalumBlockSoundGroupRegistry.BLOCK_SOULSTONE_SOUNDS).requiresTool()));
     Block BLOCK_OF_RAW_SOULSTONE                      = register("block_of_raw_soulstone",                    new Block(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(MalumBlockSoundGroupRegistry.BLOCK_SOULSTONE_SOUNDS).requiresTool()));
@@ -129,8 +106,8 @@ public interface MalumBlockRegistry {
     Block RUNEWOOD_OBELISK                            = register("runewood_obelisk",                          new ObeliskBlock(MalumAcceleratorTypeRegistry.RUNEWOOD_ACCELERATOR_TYPE, Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)));
     Block BRILLIANT_OBELISK                           = register("brilliant_obelisk",                         new ObeliskBlock(MalumAcceleratorTypeRegistry.BRILLIANT_ACCELERATOR_TYPE, Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)));
     Block SPIRIT_CRUCIBLE                             = register("spirit_crucible",                           new SpiritCrucibleBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
-    Block RUNEWOOD_TOTEM_POLE                         = register("runewood_totem_pole",                       new TotemPoleBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)));
-    Block SOULWOOD_TOTEM_POLE                         = register("soulwood_totem_pole",                       new TotemPoleBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)));
+    Block RUNEWOOD_TOTEM_POLE                         = register("runewood_totem_pole",                       new TotemPoleBlock(() -> RUNEWOOD_LOG, Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)));
+    Block SOULWOOD_TOTEM_POLE                         = register("soulwood_totem_pole",                       new TotemPoleBlock(() -> SOULWOOD_LOG, Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)));
     Block RUNEWOOD_TOTEM_BASE                         = register("runewood_totem_base",                       new TotemBaseBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)));
     Block SOULWOOD_TOTEM_BASE                         = register("soulwood_totem_base",                       new TotemBaseBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).sounds(BlockSoundGroup.WOOD).strength(2.0f)));
     Block BLOCK_OF_HALLOWED_GOLD                      = register("block_of_hallowed_gold",                    new Block(Settings.of(Material.METAL, MapColor.YELLOW).requiresTool()));
@@ -248,6 +225,7 @@ public interface MalumBlockRegistry {
     
     static void init() {
         MalumPlanksRegistry.init();
+        MalumSignRegistry.init();
         BLOCKS.forEach((id, block) -> Registry.register(Registry.BLOCK, id, block));
     }
 }

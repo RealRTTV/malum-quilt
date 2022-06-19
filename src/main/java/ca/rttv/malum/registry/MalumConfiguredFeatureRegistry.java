@@ -4,8 +4,6 @@ import ca.rttv.malum.Malum;
 import net.minecraft.tag.BiomeTags;
 import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil;
@@ -45,9 +43,9 @@ public interface MalumConfiguredFeatureRegistry {
 
     static void init() {
         BiomeModifications.create(new Identifier(Malum.MODID, "malum"))
-                .add(ModificationPhase.ADDITIONS, BiomeSelectors.isIn(BiomeTags.IS_FOREST), (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.VEGETAL_DECORATION, PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE).value()))
-                .add(ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), biomeModificationContext -> biomeModificationContext.getGenerationSettings().addFeature(GenerationStep.Feature.UNDERGROUND_ORES, LOWER_ORE_SOULSTONE_PLACED.getKey().get()))
-                .add(ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), biomeModificationContext -> biomeModificationContext.getGenerationSettings().addFeature(GenerationStep.Feature.UNDERGROUND_ORES, UPPER_ORE_SOULSTONE_PLACED.getKey().get()))
-                .add(ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), biomeModificationContext -> biomeModificationContext.getGenerationSettings().addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_BRILLIANCE_PLACED.getKey().get()));
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.isIn(BiomeTags.IS_FOREST), (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.VEGETAL_DECORATION, RUNEWOOD_CHECKED.value()))
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), biomeModificationContext -> biomeModificationContext.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.UNDERGROUND_ORES, LOWER_ORE_SOULSTONE_PLACED.value()))
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), biomeModificationContext -> biomeModificationContext.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.UNDERGROUND_ORES, UPPER_ORE_SOULSTONE_PLACED.value()))
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), biomeModificationContext -> biomeModificationContext.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_BRILLIANCE_PLACED.value()));
     }
 }

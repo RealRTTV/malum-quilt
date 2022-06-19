@@ -19,8 +19,7 @@
     "SeverPlayerInteractionManagerMixin",
     "StatusEffectMixin",
     "StatusEffectUtilMixin",
-    "UnbreakingEnchantmentMixin",
-    "VegetationConfiguredFeaturesMixin"
+    "UnbreakingEnchantmentMixin"
   ],
   "client": [
     "BlockEntityRendererFactoriesMixin",

@@ -10,14 +10,20 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.MiningToolItem;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.BlockView;
@@ -26,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.TOTEM_POLE_BLOCK_ENTITY;
 
@@ -33,8 +40,10 @@ import static ca.rttv.malum.registry.MalumBlockEntityRegistry.TOTEM_POLE_BLOCK_E
 public class TotemPoleBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final EnumProperty<SpiritTypeProperty> SPIRIT_TYPE = EnumProperty.of("spirit_type", SpiritTypeProperty.class);
-    public TotemPoleBlock(AbstractBlock.Settings settings) {
+    private final Supplier<Block> stripped;
+    public TotemPoleBlock(Supplier<Block> stripped, AbstractBlock.Settings settings) {
         super(settings);
+        this.stripped = stripped;
     }
 
     public void onStrip(BlockState state, World world, BlockPos pos) {
@@ -157,6 +166,35 @@ public class TotemPoleBlock extends BlockWithEntity {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING, SPIRIT_TYPE);
+    }
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        ItemStack heldStack = player.getEquippedStack(hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+
+        if(heldStack.isEmpty()) {
+            return ActionResult.FAIL;
+        }
+
+        Item held = heldStack.getItem();
+        if(!(held instanceof MiningToolItem tool)) {
+            return ActionResult.FAIL;
+        }
+
+        if(stripped != null && (tool.getMiningSpeedMultiplier(heldStack, state) > 1.0F)) {
+            world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+            if(!world.isClient) {
+                BlockState target = stripped.get().getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS));
+
+                world.setBlockState(pos, target);
+
+                heldStack.damage(1, player, consumedPlayer -> consumedPlayer.sendToolBreakStatus(hand));
+            }
+
+            return ActionResult.SUCCESS;
+        }
+
+        return ActionResult.FAIL;
     }
 
     @Nullable

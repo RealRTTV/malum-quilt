@@ -82,7 +82,7 @@ abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F"), index = 3)
-    private float malum$attack(float value) {
+    private float malum$attackCooldown(float value) {
         if (this.getMainHandStack().getItem() instanceof ScytheItem) {
             return value + (float) this.getAttributeValue(SCYTHE_PROFICIENCY) * 0.5f;
         }
@@ -90,7 +90,7 @@ abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/entity/LivingEntity;)I", ordinal = 0), index = 8)
-    private boolean malum$attack(boolean bl4) {
+    private boolean malum$attackFireAspect(boolean bl4) {
         ItemStack itemStack = this.getStackInHand(Hand.MAIN_HAND);
         if (itemStack.getItem() instanceof TyrvingItem) {
             return false;

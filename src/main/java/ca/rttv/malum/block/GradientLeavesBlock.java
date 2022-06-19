@@ -12,11 +12,13 @@ public class GradientLeavesBlock extends LeavesBlock {
 
     public GradientLeavesBlock(Settings settings) {
         super(settings);
+        this.setDefaultState(this.getDefaultState().with(COLOR, 0));
     }
 
     @Override
     public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(DISTANCE, PERSISTENT, COLOR);
+        super.appendProperties(builder);
+        builder.add(COLOR);
     }
 
     @Override

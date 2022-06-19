@@ -28,30 +28,10 @@ import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 
 @Mixin(AxeItem.class)
 abstract class AxeItemMixin {
-    @Unique
-    private static final Map<Block, Block> MALUM_STRIPPED_BLOCKS = (new Builder<Block, Block>())
-            .put(RUNEWOOD, STRIPPED_RUNEWOOD)
-            .put(RUNEWOOD_LOG, STRIPPED_RUNEWOOD_LOG)
-            .put(EXPOSED_RUNEWOOD_LOG, REVEALED_RUNEWOOD_LOG)
-            .put(RUNEWOOD_TOTEM_POLE, RUNEWOOD_LOG)
-            .put(SOULWOOD, STRIPPED_SOULWOOD)
-            .put(SOULWOOD_LOG, STRIPPED_SOULWOOD_LOG)
-            .put(EXPOSED_SOULWOOD_LOG, REVEALED_SOULWOOD_LOG)
-            .put(SOULWOOD_TOTEM_POLE, SOULWOOD_LOG)
-            .build();
-
     @Inject(method = "useOnBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/AxeItem;getStrippedState(Lnet/minecraft/block/BlockState;)Ljava/util/Optional;"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void malum$useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir, World world, BlockPos blockPos, PlayerEntity playerEntity, BlockState blockState) {
         if (blockState.getBlock() instanceof TotemPoleBlock totemPoleBlock) {
             totemPoleBlock.onStrip(blockState, world, blockPos);
-        }
-    }
-
-    @Inject(method = "getStrippedState", at = @At("HEAD"), cancellable = true)
-    private void malum$getStrippedState(BlockState state, CallbackInfoReturnable<Optional<BlockState>> cir) {
-        Block strippedVariant = MALUM_STRIPPED_BLOCKS.get(state.getBlock());
-        if (strippedVariant != null) {
-            cir.setReturnValue(Optional.of(strippedVariant.getDefaultState().with(PillarBlock.AXIS, state.contains(PillarBlock.AXIS) ? state.get(PillarBlock.AXIS) : Direction.Axis.Y)));
         }
     }
 }

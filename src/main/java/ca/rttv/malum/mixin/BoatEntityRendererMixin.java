@@ -1,5 +1,6 @@
 package ca.rttv.malum.mixin;
 
+import ca.rttv.malum.Malum;
 import ca.rttv.malum.registry.MalumBoatTypes;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.render.entity.BoatEntityRenderer;
@@ -11,7 +12,9 @@ import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import static ca.rttv.malum.Malum.MODID;
 

@@ -22,6 +22,7 @@ import static ca.rttv.malum.Malum.*;
 import static ca.rttv.malum.registry.MalumArmorMaterials.SOUL_CLOAK;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
 import static ca.rttv.malum.registry.MalumBlockRegistry.*;
+import static ca.rttv.malum.registry.MalumSignRegistry.*;
 import static net.minecraft.item.ItemGroup.BUILDING_BLOCKS;
 import static net.minecraft.item.ItemGroup.MISC;
 
@@ -65,7 +66,7 @@ public interface MalumItemRegistry {
     Item RUNEWOOD_PLANKS_FENCE_GATE                 = register("runewood_planks_fence_gate",                new BlockItem(MalumBlockRegistry.RUNEWOOD_PLANKS_FENCE_GATE, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_ITEM_STAND                        = register("runewood_item_stand",                       new BlockItem(MalumBlockRegistry.RUNEWOOD_ITEM_STAND, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item RUNEWOOD_ITEM_PEDESTAL                     = register("runewood_item_pedestal",                    new BlockItem(MalumBlockRegistry.RUNEWOOD_ITEM_PEDESTAL, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
-    Item RUNEWOOD_SIGN                              = register("runewood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), MalumBlockRegistry.RUNEWOOD_SIGN, RUNEWOOD_WALL_SIGN));
+    Item RUNEWOOD_SIGN                              = register("runewood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), MalumSignRegistry.RUNEWOOD_SIGN, RUNEWOOD_WALL_SIGN));
     Item RUNEWOOD_BOAT                              = register("runewood_boat",                             new BoatItem(false, MalumBoatTypes.RUNEWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
     Item UNHOLY_SAP                                 = register("unholy_sap",                                new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item UNHOLY_SAPBALL                             = register("unholy_sapball",                            new Item(new Item.Settings().group(MALUM_NATURAL_WONDERS)));
@@ -101,7 +102,7 @@ public interface MalumItemRegistry {
     Item SOULWOOD_PLANKS_FENCE_GATE                 = register("soulwood_planks_fence_gate",                new BlockItem(MalumBlockRegistry.SOULWOOD_PLANKS_FENCE_GATE, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_ITEM_STAND                        = register("soulwood_item_stand",                       new BlockItem(MalumBlockRegistry.SOULWOOD_ITEM_STAND, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
     Item SOULWOOD_ITEM_PEDESTAL                     = register("soulwood_item_pedestal",                    new BlockItem(MalumBlockRegistry.SOULWOOD_ITEM_PEDESTAL, new Item.Settings().group(MALUM_NATURAL_WONDERS)));
-    Item SOULWOOD_SIGN                              = register("soulwood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), MalumBlockRegistry.SOULWOOD_SIGN, SOULWOOD_WALL_SIGN));
+    Item SOULWOOD_SIGN                              = register("soulwood_sign",                             new SignItem(new Item.Settings().maxCount(16).group(MALUM_NATURAL_WONDERS), MalumSignRegistry.SOULWOOD_SIGN, SOULWOOD_WALL_SIGN));
     Item SOULWOOD_BOAT                              = register("soulwood_boat",                             new BoatItem(false, MalumBoatTypes.SOULWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
 
 // items & blocks, sorted [Main]
