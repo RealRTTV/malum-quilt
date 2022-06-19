@@ -16,6 +16,7 @@ import static ca.rttv.malum.registry.MalumBlockRegistry.SOULWOOD_PLANKS;
 import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
 public final class MalumEarlyRiser implements Runnable {
+    @SuppressWarnings("rawtypes")
     @Override
     public void run() {
         MixinExtrasBootstrap.init();
@@ -39,17 +40,17 @@ public final class MalumEarlyRiser implements Runnable {
                 .addEnumSubclass(
                         "SOUL_CLOAK",
                      "ca.rttv.malum.item.SoulCloakArmorMaterial",
-                              () -> (new Object[]{"soul_cloak", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f, (Supplier<Ingredient>) () -> Ingredient.ofItems(SPIRIT_FABRIC)})
+                              () -> (new Object[]{"soul_cloak", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f, (Supplier) () -> Ingredient.ofItems(SPIRIT_FABRIC)})
                 ).addEnumSubclass(
                         "SOUL_STAINED_STEEL",
                      "ca.rttv.malum.item.SoulStainedSteelArmorMaterial",
-                              () -> (new Object[]{"soul_stained_steel", 22, new int[]{2, 6, 7, 3}, 13, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f, (Supplier<Ingredient>) () -> Ingredient.ofItems(SOUL_STAINED_STEEL_INGOT)})
+                              () -> (new Object[]{"soul_stained_steel", 22, new int[]{2, 6, 7, 3}, 13, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f, (Supplier) () -> Ingredient.ofItems(SOUL_STAINED_STEEL_INGOT)})
                 ).build();
 
         // toolMaterials
         ClassTinkerers.enumBuilder(toolMaterialsTarget, int.class, int.class, float.class, float.class, int.class, Supplier.class)
-                .addEnum("SOUL_STAINED_STEEL", 3, 1250, 7.5f, 2.5f, 16, (Supplier<Ingredient>) () -> Ingredient.ofItems(SOUL_STAINED_STEEL_INGOT))
-                .addEnum("TWISTED_ROCK", 3, 850, 8.0f, 1.0f, 12, (Supplier<Ingredient>) () -> Ingredient.ofItems(TWISTED_ROCK)).build();
+                .addEnum("SOUL_STAINED_STEEL", 3, 1250, 7.5f, 2.5f, 16, (Supplier) () -> Ingredient.ofItems(SOUL_STAINED_STEEL_INGOT))
+                .addEnum("TWISTED_ROCK", 3, 850, 8.0f, 1.0f, 12, (Supplier) () -> Ingredient.ofItems(TWISTED_ROCK)).build();
     }
 
     static {
