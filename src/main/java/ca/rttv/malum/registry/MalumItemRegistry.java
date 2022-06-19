@@ -105,7 +105,7 @@ public interface MalumItemRegistry {
     Item SOULWOOD_BOAT                              = register("soulwood_boat",                             new BoatItem(false, MalumBoatTypes.SOULWOOD, new Item.Settings().maxCount(1).group(MALUM_NATURAL_WONDERS)));
 
 // items & blocks, sorted [Main]
-    Item ENCYCLOPEDIA_ARCANA                        = register("encyclopedia_arcana",                       new EncyclopediaArcanaItem(new Item.Settings().rarity(Rarity.UNCOMMON).group(MALUM)));
+    Item ENCYCLOPEDIA_ARCANA                        = register("encyclopedia_arcana",                       new EncyclopediaArcanaItem(new Item.Settings().rarity(Rarity.UNCOMMON).group(MALUM).maxCount(1)));
     Item SOULSTONE_ORE                              = register("soulstone_ore",                             new BlockItem(MalumBlockRegistry.SOULSTONE_ORE, new Item.Settings().group(MALUM)));
     Item DEEPSLATE_SOULSTONE_ORE                    = register("deepslate_soulstone_ore",                   new BlockItem(MalumBlockRegistry.DEEPSLATE_SOULSTONE_ORE, new Item.Settings().group(MALUM)));
     Item PROCESSED_SOULSTONE                        = register("processed_soulstone",                       new Item(new Item.Settings().group(MALUM)));
