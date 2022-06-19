@@ -59,6 +59,7 @@ dependencies {
 	modImplementation(libs.quilt.loading.screen)
 	modImplementation(libs.midnightlib)
 	include(libs.fabric.asm)
+	include(libs.mixin.extras)
 	implementation(libs.mixin.extras)
 	annotationProcessor(libs.mixin.extras)
 	modImplementation("com.demonwav.mcdev:annotations:1.0")
