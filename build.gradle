@@ -54,7 +54,7 @@ dependencies {
 	modImplementation(libs.annotations)
 	modImplementation(libs.isnrmn)
 	modImplementation(libs.satin)
-	modImplementation(libs.emi)
+	modImplementation(libs.emi) { transitive false }
 
 	// meta-inf these pls:
 	include(libs.satin)
