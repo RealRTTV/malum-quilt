@@ -1,0 +1,11 @@
+{
+  "recipes": [
+    "malum:spirit_infusion/twisted_rock",
+    "malum:spirit_infusion/spirit_fabric",
+    "malum:spirit_infusion/soul_stained_steel_ingot",
+    "malum:spirit_infusion/tainted_rock",
+    "malum:spirit_infusion/hex_ash",
+    "malum:block_transmutation/soulwood_log",
+    "malum:spirit_infusion/hallowed_gold_ingot"
+  ]
+}

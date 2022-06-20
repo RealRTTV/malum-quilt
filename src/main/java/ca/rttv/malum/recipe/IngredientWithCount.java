@@ -165,8 +165,7 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
     }
 
     public Ingredient asIngredient() {
-        return Ingredient.ofEntries(Arrays.stream(this.entries)
-                                          .map(entry -> entry instanceof StackEntry stackEntry ? new Ingredient.StackEntry(stackEntry.stack.getItem().getDefaultStack()) : new Ingredient.TagEntry(((TagEntry) entry).tag)));
+        return Ingredient.ofEntries(Arrays.stream(this.entries).map(Entry::toIngredientEntry));
     }
 
     public interface Entry {
@@ -179,6 +178,8 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
         int getCount();
 
         void decrement(int dec);
+
+        Ingredient.Entry toIngredientEntry();
     }
 
     public record StackEntry(ItemStack stack) implements Entry {
@@ -212,6 +213,11 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
         @Override
         public void decrement(int dec) {
             stack.decrement(dec);
+        }
+
+        @Override
+        public Ingredient.Entry toIngredientEntry() {
+            return new Ingredient.StackEntry(stack);
         }
     }
 
@@ -256,6 +262,11 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
         @Override
         public void decrement(int dec) {
             count -= dec;
+        }
+
+        @Override
+        public Ingredient.Entry toIngredientEntry() {
+            return new Ingredient.TagEntry(tag);
         }
 
         public TagKey<Item> tag() {

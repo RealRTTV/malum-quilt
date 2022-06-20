@@ -31,22 +31,13 @@ dependencies {
 	mappings loom.layered {
 		addLayer quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:v2")
 	}
-	modImplementation libs.quilt.loader
 
-	modImplementation(libs.isnrmn)
-	modImplementation(libs.quilted.fabric.api)
+	// exists when running dev env & in code
 	modImplementation(libs.trinkets) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "com.terraformersmc"
 	}
-	modImplementation(libs.satin)
-	include(libs.satin)
-	modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
-	modRuntimeOnly("maven.modrinth:iris:1.18.x-v1.2.4")
-	runtimeOnly compileOnly("org.anarres:jcpp:1.4.14") // for iris
-    runtimeOnly('org.joml:joml:1.10.4') // for sodium
-	modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
 	modImplementation(libs.cardinal.components.base) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
@@ -55,15 +46,33 @@ dependencies {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 	}
-	modImplementation(libs.fabric.asm)
 	modImplementation(libs.quilt.loading.screen)
+	modImplementation(libs.quilted.fabric.api)
+	modImplementation(libs.quilt.loader)
+	modImplementation(libs.fabric.asm)
 	modImplementation(libs.midnightlib)
+	modImplementation(libs.annotations)
+	modImplementation(libs.isnrmn)
+	modImplementation(libs.satin)
+	modImplementation(libs.emi)
+
+	// meta-inf these pls:
+	include(libs.satin)
 	include(libs.fabric.asm)
 	include(libs.mixin.extras)
+
+	// i believe this means only exists running dev env
+	modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
+	modRuntimeOnly("maven.modrinth:iris:1.18.x-v1.2.4")
+	modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
+
+	runtimeOnly compileOnly("org.anarres:jcpp:1.4.14") // for iris
+
+	runtimeOnly('org.joml:joml:1.10.4') // for sodium
+
 	implementation(libs.mixin.extras)
+
 	annotationProcessor(libs.mixin.extras)
-	modImplementation("com.demonwav.mcdev:annotations:1.0")
-	modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:8.2.471")
 }
 
 configurations.all {

@@ -1,7 +1,6 @@
 package ca.rttv.malum.util.helper;
 
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
 
 import java.util.function.Function;
 

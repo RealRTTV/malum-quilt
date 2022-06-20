@@ -5,7 +5,6 @@ import ca.rttv.malum.util.spirit.SpiritType;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;

@@ -29,7 +29,6 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumItemRegistry.*;

@@ -1,7 +1,10 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.registry.MalumConfiguredFeatureRegistry;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.RandomFeatureConfig;
+import net.minecraft.world.gen.feature.VegetationConfiguredFeatures;
+import net.minecraft.world.gen.feature.WeightedPlacedFeature;
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

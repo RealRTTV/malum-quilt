@@ -13,6 +13,8 @@ trinkets = "3.3.1"
 satin = "1.7.2"
 quilt_loading_screen = "3.0.0+1.18.2"
 midnightlib = "0.4.0"
+annotations = "1.0"
+emi = "0.1.2+1.18.2"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -29,6 +31,8 @@ trinkets = { module = "dev.emi:trinkets", version.ref = "trinkets" }
 quilt_loading_screen = { module = "maven.modrinth:quilt-loading-screen", version.ref = "quilt_loading_screen" }
 midnightlib = { module = "maven.modrinth:midnightlib", version.ref = "midnightlib"}
 satin = { module = "io.github.ladysnake:satin", version.ref = "satin" }
+annotations = { module = "com.demonwav.mcdev:annotations", version.ref = "annotations" }
+emi = { module = "dev.emi:emi", version.ref = "emi" }
 
 # If you have multiple similar dependencies, you can declare a dependency bundle and reference it on the build script with "libs.bundles.example".
 # [bundles]
