@@ -11,9 +11,9 @@ import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.function.Supplier;
 
+import static ca.rttv.malum.registry.MalumItemRegistry.*;
 import static ca.rttv.malum.registry.MalumPlanksRegistry.RUNEWOOD_PLANKS;
 import static ca.rttv.malum.registry.MalumPlanksRegistry.SOULWOOD_PLANKS;
-import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
 public final class MalumEarlyRiser implements Runnable {
     @SuppressWarnings("rawtypes")

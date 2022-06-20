@@ -29,7 +29,6 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Random;
 
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_DAMAGE;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.MAGIC_PROFICIENCY;

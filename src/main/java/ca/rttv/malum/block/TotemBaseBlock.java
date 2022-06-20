@@ -16,8 +16,6 @@ import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
 @SuppressWarnings("deprecation")
 public class TotemBaseBlock extends BlockWithEntity {
     public TotemBaseBlock(Settings settings) {

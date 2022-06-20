@@ -16,7 +16,7 @@ public interface MalumRecipeTypeRegistry {
     Map<Identifier, RecipeType<? extends Recipe<?>>> RECIPE_TYPES = new LinkedHashMap<>();
 
         RecipeType<SpiritInfusionRecipe> SPIRIT_INFUSION     = register("spirit_infusion");
-              RecipeType<SavedNbtRecipe> SAVED_NBT_RECIPE    = register("nbt_carry");
+              RecipeType<SavedNbtRecipe> SAVED_NBT           = register("nbt_carry");
     RecipeType<BlockTransmutationRecipe> BLOCK_TRANSMUTATION = register("block_transmutation");
         RecipeType<SpiritFocusingRecipe> SPIRIT_FOCUSING     = register("spirit_focusing");
           RecipeType<SpiritRepairRecipe> SPIRIT_REPAIR       = register("spirit_repair");

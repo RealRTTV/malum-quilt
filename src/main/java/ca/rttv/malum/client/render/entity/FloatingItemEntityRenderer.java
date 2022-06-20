@@ -23,7 +23,6 @@ import net.minecraft.util.math.Vector4f;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 import static ca.rttv.malum.util.handler.RenderHandler.DELAYED_RENDER;
 

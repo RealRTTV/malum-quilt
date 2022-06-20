@@ -5,7 +5,6 @@ import ca.rttv.malum.util.spirit.SpiritType;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
@@ -17,7 +16,6 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.random.RandomGenerator;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
-import java.util.Random;
 import java.util.stream.StreamSupport;
 
 import static ca.rttv.malum.Malum.MODID;

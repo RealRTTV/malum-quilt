@@ -32,7 +32,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vector4f;
 
-import java.awt.*;
 import java.util.Objects;
 
 import static ca.rttv.malum.registry.MalumItemRegistry.MAGEBANE_BELT;

@@ -35,7 +35,8 @@
       "init": "ca.rttv.malum.Malum",
       "client_init": "ca.rttv.malum.MalumClient",
       "cardinal-components-entity": "ca.rttv.malum.component.MalumComponents",
-      "mm:early_risers": "ca.rttv.malum.MalumEarlyRiser"
+      "mm:early_risers": "ca.rttv.malum.MalumEarlyRiser",
+      "emi": "ca.rttv.malum.MalumEmiPlugin"
     },
     "depends": [
       {

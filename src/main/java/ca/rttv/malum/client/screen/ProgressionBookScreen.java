@@ -555,7 +555,7 @@ public class ProgressionBookScreen extends Screen {
     public static void renderWrappingText(MatrixStack matrices, String text, int x, int y, int w) {
         final MinecraftClient client = MinecraftClient.getInstance();
         TextRenderer textRenderer = client.textRenderer;
-        text = Text.literal(text).getString();
+        text = Text.translatable(text).getString();
         List<String> lines = new ArrayList<>();
         String[] words = text.split(" ");
         String line = "";

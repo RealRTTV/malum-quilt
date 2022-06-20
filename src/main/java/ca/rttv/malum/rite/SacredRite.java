@@ -17,8 +17,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.random.RandomGenerator;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
-import java.util.Random;
-
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumStatusEffectRegistry.SACRED_AURA;
 

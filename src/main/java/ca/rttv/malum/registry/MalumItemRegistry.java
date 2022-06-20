@@ -21,8 +21,10 @@ import java.util.Set;
 import static ca.rttv.malum.Malum.*;
 import static ca.rttv.malum.registry.MalumArmorMaterials.SOUL_CLOAK;
 import static ca.rttv.malum.registry.MalumAttributeRegistry.*;
-import static ca.rttv.malum.registry.MalumBlockRegistry.*;
-import static ca.rttv.malum.registry.MalumSignRegistry.*;
+import static ca.rttv.malum.registry.MalumBlockRegistry.IRIDESCENT_WALL_ETHER_TORCH;
+import static ca.rttv.malum.registry.MalumBlockRegistry.WALL_ETHER_TORCH;
+import static ca.rttv.malum.registry.MalumSignRegistry.RUNEWOOD_WALL_SIGN;
+import static ca.rttv.malum.registry.MalumSignRegistry.SOULWOOD_WALL_SIGN;
 import static net.minecraft.item.ItemGroup.BUILDING_BLOCKS;
 import static net.minecraft.item.ItemGroup.MISC;
 

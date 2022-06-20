@@ -5,7 +5,6 @@ import ca.rttv.malum.util.ShaderHolder;
 import ca.rttv.malum.util.helper.DataHelper;
 import com.mojang.blaze3d.vertex.VertexFormats;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.render.ShaderProgram;
 import net.minecraft.resource.ResourceManager;
 

@@ -18,8 +18,6 @@ import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
 import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
 
-import java.util.Random;
-
 import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
 public final class Malum implements ModInitializer {

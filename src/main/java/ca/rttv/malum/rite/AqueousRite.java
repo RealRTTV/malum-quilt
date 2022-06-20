@@ -17,8 +17,6 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.random.RandomGenerator;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
-import java.util.Random;
-
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumStatusEffectRegistry.AQUEOUS_AURA;
 

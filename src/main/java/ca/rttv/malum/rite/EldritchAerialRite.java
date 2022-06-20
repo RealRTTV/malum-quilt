@@ -19,7 +19,6 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.random.RandomGenerator;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
-import java.util.Random;
 import java.util.stream.StreamSupport;
 
 import static ca.rttv.malum.Malum.MODID;

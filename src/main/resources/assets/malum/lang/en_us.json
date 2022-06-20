@@ -629,6 +629,7 @@
   "malum.gui.book.entry.spirit_trinkets.description": "Forging",
   "malum.gui.book.entry.totem_magic": "Totem Magic",
   "malum.gui.book.entry.totem_magic.description": "Spirit Rites",
+  "malum.gui.book.entry.trans_rite": "Trans Rite(s)!",
   "malum.gui.book.entry.trans_rite.description": ":)",
   "malum.gui.book.entry.tyrving": "Tyrving",
   "malum.gui.book.entry.tyrving.description": "Ancient Relic",
@@ -739,5 +740,14 @@
   "tetra.material.tainted_rock": "Tainted Rock",
   "tetra.material.tainted_rock.prefix": "Tainted Rock",
   "tetra.material.twisted_rock": "Twisted Rock",
-  "tetra.material.twisted_rock.prefix": "Twisted Rock"
+  "tetra.material.twisted_rock.prefix": "Twisted Rock",
+  "tag.malum.soul_hunter_weapon": "Soul Hunter Weapon",
+  "tag.malum.soulwood_logs": "Soulwood Log",
+  "tag.malum.runewood_logs": "Runewood Log",
+  "tag.malum.sapballs": "Sapball",
+  "tag.malum.scythe": "Scythe",
+  "emi.category.malum.block_transmutation": "Block Transmutation",
+  "emi.category.malum.spirit_infusion": "Spirit Infusion",
+  "emi.category.malum.spirit_focusing": "Spirit Focusing",
+  "emi.category.malum.spirit_repair": "Spirit Repair"
 }

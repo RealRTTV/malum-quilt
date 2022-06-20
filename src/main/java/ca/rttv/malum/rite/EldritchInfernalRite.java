@@ -3,30 +3,21 @@ package ca.rttv.malum.rite;
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.spirit.SpiritType;
-import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.random.RandomGenerator;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
-import java.util.Random;
 import java.util.stream.StreamSupport;
-
-import static ca.rttv.malum.Malum.MODID;
 
 public class EldritchInfernalRite extends Rite {
     public EldritchInfernalRite(Item... items) {

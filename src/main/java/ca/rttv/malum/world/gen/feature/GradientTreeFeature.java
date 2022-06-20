@@ -17,8 +17,6 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
-import java.util.Random;
-
 public class GradientTreeFeature extends Feature<DefaultFeatureConfig> {
     private static final int minimumSapBlockCount = 2;
     private static final int extraSapBlockCount = 1;

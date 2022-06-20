@@ -6,8 +6,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 
-import java.util.Random;
-
 public class TransRite extends Rite {
     public TransRite(Item... items) {
         super(items);

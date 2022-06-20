@@ -16,8 +16,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.random.RandomGenerator;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
-import java.util.Random;
-
 import static ca.rttv.malum.Malum.MODID;
 
 public class WickedRite extends Rite {

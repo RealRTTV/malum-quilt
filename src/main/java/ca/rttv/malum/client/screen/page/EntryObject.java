@@ -33,7 +33,7 @@ public class EntryObject extends BookObject {
     @Override
     public void lateRender(MinecraftClient client, MatrixStack matrices, float xOffset, float yOffset, int mouseX, int mouseY, float partialTicks) {
         if (isHovering) {
-            ProgressionBookScreen.screen.renderTooltip(matrices, Arrays.asList(Text.literal(entry.translationKey()), Text.literal(entry.descriptionTranslationKey()).styled(style -> style.withColor(Formatting.GRAY))), mouseX, mouseY);
+            ProgressionBookScreen.screen.renderTooltip(matrices, Arrays.asList(Text.translatable(entry.translationKey()), Text.translatable(entry.descriptionTranslationKey()).styled(style -> style.withColor(Formatting.GRAY))), mouseX, mouseY);
         }
     }
 }

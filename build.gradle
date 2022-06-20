@@ -31,38 +31,44 @@ dependencies {
 	mappings loom.layered {
 		addLayer quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:v2")
 	}
-	modImplementation libs.quilt.loader
 
-	//modImplementation(libs.isnrmn)
-	modImplementation "org.quiltmc:qsl:2.0.0-beta.4+1.19"
-	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:2.0.0-alpha.3+0.55.3-1.19"
+	modImplementation(libs.quilt.loader)
+	modImplementation(libs.cardinal.components.entity) {
+		exclude group: "net.fabricmc"
+		exclude group: "net.fabricmc.fabric-api"
+	}
+	modImplementation(libs.cardinal.components.base) {
+		exclude group: "net.fabricmc"
+		exclude group: "net.fabricmc.fabric-api"
+	}
+	modImplementation(libs.quilt.loading.screen)
+	modImplementation(libs.quilted.fabric.api)
 	modImplementation(libs.trinkets) {
 		exclude group: "net.fabricmc"
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "com.terraformersmc"
 	}
+	modImplementation(libs.midnightlib)
+	modImplementation(libs.annotations)
+	modImplementation(libs.fabric.asm)
+	modImplementation(libs.isnrmn)
 	modImplementation(libs.satin)
-	include(libs.satin)
+	modImplementation(libs.qsl)
+	modImplementation(libs.emi) { transitive false }
+
 	modRuntimeOnly("maven.modrinth:sodium:mc1.19-0.4.2")
 	modRuntimeOnly("maven.modrinth:iris:1.19.x-v1.2.5")
-	runtimeOnly compileOnly("org.anarres:jcpp:1.4.14") // for iris
-    runtimeOnly('org.joml:joml:1.10.4') // for sodium
 	modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
-	modImplementation(libs.cardinal.components.base) {
-		exclude group: "net.fabricmc"
-		exclude group: "net.fabricmc.fabric-api"
-	}
-	modImplementation(libs.cardinal.components.entity) {
-		exclude group: "net.fabricmc"
-		exclude group: "net.fabricmc.fabric-api"
-	}
-	modImplementation(libs.fabric.asm)
-	modImplementation(libs.quilt.loading.screen)
-	modImplementation(libs.midnightlib)
+
+	runtimeOnly compileOnly("org.anarres:jcpp:1.4.14") // for iris
+	runtimeOnly('org.joml:joml:1.10.4') // for sodium
+
 	include(libs.fabric.asm)
+	include(libs.satin)
+
 	implementation(libs.mixin.extras)
+
 	annotationProcessor(libs.mixin.extras)
-	modImplementation("com.demonwav.mcdev:annotations:1.0")
 }
 
 configurations.all {

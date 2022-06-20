@@ -44,22 +44,22 @@ public class DoubleHeadlineTextPage extends BookPage {
 
     @Override
     public void renderLeft(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
-        Text text = Text.literal(this.getHeadlineTranslationKey());
+        Text text = Text.translatable(this.getHeadlineTranslationKey());
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 75 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 10);
         ProgressionBookScreen.renderWrappingText(matrices, getTranslationKey(), guiLeft + 16, guiTop + 31, 120);
 
-        text = Text.literal(this.getSecondHeadlineTranslationKey());
+        text = Text.translatable(this.getSecondHeadlineTranslationKey());
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 75 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 87);
         ProgressionBookScreen.renderWrappingText(matrices, getCorruptedTranslationKey(), guiLeft + 16, guiTop + 108, 120);
     }
 
     @Override
     public void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
-        Text text = Text.literal(this.getHeadlineTranslationKey());
+        Text text = Text.translatable(this.getHeadlineTranslationKey());
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 218 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 10);
         ProgressionBookScreen.renderWrappingText(matrices, getTranslationKey(), guiLeft + 158, guiTop + 31, 120);
 
-        text = Text.literal(this.getSecondHeadlineTranslationKey());
+        text = Text.translatable(this.getSecondHeadlineTranslationKey());
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 218 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 87);
         ProgressionBookScreen.renderWrappingText(matrices, getCorruptedTranslationKey(), guiLeft + 158, guiTop + 108, 120);
     }

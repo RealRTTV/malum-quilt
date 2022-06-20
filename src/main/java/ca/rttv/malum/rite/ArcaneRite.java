@@ -9,12 +9,10 @@ import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 
-import java.util.Random;
 import java.util.stream.StreamSupport;
 
 import static ca.rttv.malum.registry.MalumBlockRegistry.SOULWOOD_TOTEM_BASE;

@@ -34,7 +34,6 @@ import java.awt.*;
 
 import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumBlockRegistry.*;
-import static ca.rttv.malum.registry.MalumBlockRegistry.IRIDESCENT_WALL_ETHER_TORCH;
 import static ca.rttv.malum.registry.MalumParticleEmitterRegistry.PARTICLE_EMITTER;
 
 public final class MalumClient implements ClientModInitializer {

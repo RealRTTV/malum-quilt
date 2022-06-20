@@ -9,7 +9,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 
-import java.util.Random;
 import java.util.stream.StreamSupport;
 
 public class EldritchAqueousRite extends Rite {
