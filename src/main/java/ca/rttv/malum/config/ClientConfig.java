@@ -27,7 +27,7 @@ public class ClientConfig {
         if (dir.exists() && dir.isDirectory() || dir.mkdirs()) {
             if (!file.exists()) {
                 try {
-                    Files.writeString(file.toPath(), defaultConfig(), StandardOpenOption.WRITE);
+                    Files.writeString(file.toPath(), defaultConfig(), StandardOpenOption.CREATE_NEW);
                 } catch (Exception e) {
                     LOGGER.error("Failed writing malum-client.json config file", e);
                 }

@@ -59,7 +59,7 @@ public class CommonConfig {
         if (dir.exists() && dir.isDirectory() || dir.mkdirs()) {
             if (!file.exists()) {
                 try {
-                    Files.writeString(file.toPath(), defaultConfig(), StandardOpenOption.WRITE);
+                    Files.writeString(file.toPath(), defaultConfig(), StandardOpenOption.CREATE_NEW);
                 } catch (Exception e) {
                     LOGGER.error("Failed writing malum.json config file", e);
                 }
@@ -108,7 +108,7 @@ public class CommonConfig {
 
         SOUL_WARD_RATE = json.get("soul_ward_rate").getAsInt();
         SOUL_WARD_MAGIC = json.get("soul_ward_magic").getAsFloat();
-        SOUL_WARD_PHYSICAL = json.get("soul_ward_physical").getAsInt();
+        SOUL_WARD_PHYSICAL = json.get("soul_ward_physical").getAsFloat();
 
         HEART_OF_STONE_COST = json.get("heart_of_stone_cost").getAsDouble();
         HEART_OF_STONE_RATE = json.get("heart_of_stone_rate").getAsInt();

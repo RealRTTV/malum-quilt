@@ -1,6 +1,8 @@
 package ca.rttv.malum;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.config.ClientConfig;
+import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.enchantment.ReboundEnchantment;
 import ca.rttv.malum.registry.*;
 import ca.rttv.malum.util.listener.SpiritDataReloadListener;
@@ -32,6 +34,9 @@ public final class Malum implements ModInitializer {
 
     @Override
     public void onInitialize(ModContainer mod) {
+        ClientConfig.LOGGER.info("Finished Class-Load of Malum's ClientConfig");
+        CommonConfig.LOGGER.info("Finished Class-Load of Malum's CommonConfig");
+
         MalumAttributeRegistry.init();
         MalumParticleRegistry.init();
         MalumBlockRegistry.init();
