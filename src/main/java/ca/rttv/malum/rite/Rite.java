@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Rite {
-    private final Item[] items;
+    protected final Item[] items;
 
     public Rite(Item... items) {
         this.items = items;
