@@ -64,7 +64,7 @@ public class RenderLayers extends RenderPhase {
 
     /**
      * Queues shader uniform changes for a render layer. When we end batches in {@link RenderHandler#renderLast(net.minecraft.client.util.math.MatrixStack)}, we do so one render layer at a time.
-     * Prior to ending a batch, we run {@link ShaderUniformHandler#updateShaderData(net.minecraft.client.render.Shader shader)} if one is present for a given render layer.
+     * Prior to ending a batch, we run {@link ShaderUniformHandler#updateShaderData(net.minecraft.client.render.ShaderProgram)} if one is present for a given render layer.
      */
     public static RenderLayer queueUniformChanges(RenderLayer type, ShaderUniformHandler handler) {
         RenderHandler.HANDLERS.put(type, handler);
