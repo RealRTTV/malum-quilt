@@ -14,31 +14,31 @@ import java.util.Objects;
 public class CommonConfig {
     public static final Logger LOGGER;
 
-    public static final boolean GENERATE_RUNEWOOD_TREES; // todo, implement
-    public static final double RUNEWOOD_TREES_CHANCE_PLAINS; // todo, implement
-    public static final double RUNEWOOD_TREES_CHANCE_FOREST; // todo, implement
+    public static final boolean GENERATE_RUNEWOOD_TREES;
+    public static final double RUNEWOOD_TREES_CHANCE_PLAINS;
+    public static final double RUNEWOOD_TREES_CHANCE_FOREST;
 
-    public static final boolean GENERATE_BLAZING_QUARTZ; // todo, implement
-    public static final int BLAZING_QUARTZ_VEIN_SIZE; // todo, implement
-    public static final int BLAZING_QUARTZ_VEIN_AMOUNT; // todo, implement
+    public static final boolean GENERATE_BLAZING_QUARTZ;
+    public static final int BLAZING_QUARTZ_VEIN_SIZE;
+    public static final int BLAZING_QUARTZ_VEIN_AMOUNT;
 
-    public static final boolean GENERATE_BRILLIANT_STONE; // todo, implement
-    public static final int BRILLIANT_STONE_VEIN_SIZE; // todo, implement
-    public static final int BRILLIANT_STONE_VEIN_AMOUNT; // todo, implement
-    public static final int BRILLIANT_STONE_VEIN_MIN_Y; // todo, implement
-    public static final int BRILLIANT_STONE_VEIN_MAX_Y; // todo, implement
+    public static final boolean GENERATE_BRILLIANT_STONE;
+    public static final int BRILLIANT_STONE_VEIN_SIZE;
+    public static final int BRILLIANT_STONE_VEIN_AMOUNT;
+    public static final int BRILLIANT_STONE_VEIN_MIN_Y;
+    public static final int BRILLIANT_STONE_VEIN_MAX_Y;
 
-    public static final boolean GENERATE_UNDERGROUND_SOULSTONE; // todo, implement
-    public static final int UNDERGROUND_SOULSTONE_VEIN_SIZE; // todo, implement
-    public static final int UNDERGROUND_SOULSTONE_VEIN_AMOUNT; // todo, implement
-    public static final int UNDERGROUND_SOULSTONE_VEIN_MIN_Y; // todo, implement
-    public static final int UNDERGROUND_SOULSTONE_VEIN_MAX_Y; // todo, implement
+    public static final boolean GENERATE_UNDERGROUND_SOULSTONE;
+    public static final int UNDERGROUND_SOULSTONE_VEIN_SIZE;
+    public static final int UNDERGROUND_SOULSTONE_VEIN_AMOUNT;
+    public static final int UNDERGROUND_SOULSTONE_VEIN_MIN_Y;
+    public static final int UNDERGROUND_SOULSTONE_VEIN_MAX_Y;
 
-    public static final boolean GENERATE_SURFACE_SOULSTONE; // todo, implement
-    public static final int SURFACE_SOULSTONE_VEIN_SIZE; // todo, implement
-    public static final int SURFACE_SOULSTONE_VEIN_AMOUNT; // todo, implement
-    public static final int SURFACE_SOULSTONE_VEIN_MIN_Y; // todo, implement
-    public static final int SURFACE_SOULSTONE_VEIN_MAX_Y; // todo, implement
+    public static final boolean GENERATE_SURFACE_SOULSTONE;
+    public static final int SURFACE_SOULSTONE_VEIN_SIZE;
+    public static final int SURFACE_SOULSTONE_VEIN_AMOUNT;
+    public static final int SURFACE_SOULSTONE_VEIN_MIN_Y;
+    public static final int SURFACE_SOULSTONE_VEIN_MAX_Y;
 
     public static final boolean ULTIMATE_REBOUND;
     public static final boolean SOULLESS_SPAWNERS;
@@ -46,8 +46,8 @@ public class CommonConfig {
     public static final float SOUL_WARD_MAGIC;
     public static final float SOUL_WARD_PHYSICAL;
 
-    public static final double HEART_OF_STONE_COST; // todo, implement
-    public static final int HEART_OF_STONE_RATE; // todo, implement
+    public static final double HEART_OF_STONE_COST;
+    public static final int HEART_OF_STONE_RATE;
 
     static {
         LOGGER = LogUtils.getLogger();
@@ -101,7 +101,7 @@ public class CommonConfig {
         SURFACE_SOULSTONE_VEIN_AMOUNT = json.get("surface_soulstone_vein_amount").getAsInt();
         SURFACE_SOULSTONE_VEIN_MIN_Y = json.get("surface_soulstone_vein_min_y").getAsInt();
         SURFACE_SOULSTONE_VEIN_MAX_Y = json.get("surface_soulstone_vein_max_y").getAsInt();
-        
+
         ULTIMATE_REBOUND = json.get("ultimate_rebound").getAsBoolean();
         SOULLESS_SPAWNERS = json.get("soulless_spawners").getAsBoolean();
 

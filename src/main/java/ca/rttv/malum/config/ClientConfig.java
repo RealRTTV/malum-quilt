@@ -15,7 +15,7 @@ import java.util.Objects;
 public class ClientConfig {
     public static final Logger LOGGER;
     public static final boolean DELAYED_PARTICLE_RENDERING;
-    public static final String BOOK_THEME;
+    public static final String BOOK_THEME; // todo, implement
 
     static {
         LOGGER = LogUtils.getLogger();
