@@ -1,5 +1,6 @@
 package ca.rttv.malum.mixin;
 
+import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.registry.MalumConfiguredFeatureRegistry;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.RandomFeatureConfig;
@@ -19,7 +20,9 @@ abstract class VegetationConfiguredFeaturesMixin {
     private static <FC extends FeatureConfig> FC plainsRunewoodTrees(FC featureConfig) {
         RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;
         List<WeightedPlacedFeature> features = new ArrayList<>(config.features);
-        features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), 0.02f));
+        if (CommonConfig.GENERATE_RUNEWOOD_TREES) {
+            features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), (float) CommonConfig.RUNEWOOD_TREES_CHANCE_PLAINS));
+        }
         //noinspection unchecked
         return (FC) new RandomFeatureConfig(features, config.defaultFeature);
     }
@@ -28,7 +31,9 @@ abstract class VegetationConfiguredFeaturesMixin {
     private static <FC extends FeatureConfig> FC forestRunewoodTrees(FC featureConfig) {
         RandomFeatureConfig config = (RandomFeatureConfig) featureConfig;
         List<WeightedPlacedFeature> features = new ArrayList<>(config.features);
-        features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), 0.01f));
+        if (CommonConfig.GENERATE_RUNEWOOD_TREES) {
+            features.add(new WeightedPlacedFeature(PlacedFeatureUtil.placedInline(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE), (float) CommonConfig.RUNEWOOD_TREES_CHANCE_FOREST));
+        }
         //noinspection unchecked
         return (FC) new RandomFeatureConfig(features, config.defaultFeature);
     }
