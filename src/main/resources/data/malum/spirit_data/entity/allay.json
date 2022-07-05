@@ -1,0 +1,14 @@
+{
+  "registry_name": "minecraft:allay",
+  "primary_type": "arcane",
+  "spirits": [
+    {
+      "spirit": "arcane",
+      "count": 3
+    },
+    {
+      "spirit": "aerial",
+      "count": 2
+    }
+  ]
+}

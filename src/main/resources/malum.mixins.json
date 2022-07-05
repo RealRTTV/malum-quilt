@@ -9,6 +9,7 @@
     "AxeItemMixin",
     "BlockEntityTypeMixin",
     "BoatEntityMixin",
+    "ChestBoatEntityMixin",
     "CookingRecipeSerializerMixin",
     "DefaultBiomeFeaturesMixin",
     "EnchantingTableBlockMixin",

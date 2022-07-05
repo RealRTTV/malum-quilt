@@ -103,7 +103,7 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
     }
 
         public static class Client {
-        private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/soul_ward/trans_pride.png");
+        private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/soul_ward/default.png");
 
         public static void renderSoulWard(MatrixStack matrices, Window window) {
             final MinecraftClient client = MinecraftClient.getInstance();

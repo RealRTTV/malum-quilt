@@ -1,16 +1,26 @@
 package ca.rttv.malum.mixin;
 
+import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.item.ScytheItem;
 import ca.rttv.malum.item.TyrvingItem;
+import ca.rttv.malum.registry.MalumDamageSourceRegistry;
+import ca.rttv.malum.registry.MalumItemRegistry;
+import ca.rttv.malum.registry.MalumSoundRegistry;
 import ca.rttv.malum.util.spirit.spiritaffinity.ArcaneAffinity;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
@@ -38,6 +48,9 @@ abstract class PlayerEntityMixin extends LivingEntity {
 
     @Shadow public abstract void spawnSweepAttackParticles();
 
+    @Shadow
+    public abstract SoundCategory getSoundCategory();
+
     /**
      * Performs many reactions when being hit
      */
@@ -62,22 +75,35 @@ abstract class PlayerEntityMixin extends LivingEntity {
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"))
     private void malum$attack(Entity target, CallbackInfo ci) {
         if (this.getStackInHand(Hand.MAIN_HAND).getItem() instanceof ScytheItem) {
-            float l = 1.0F + EnchantmentHelper.getSweepingMultiplier(this) * f;
-
-            for (LivingEntity livingEntity : this.world.getNonSpectatingEntities(LivingEntity.class, target.getBoundingBox().expand(1.0, 0.25, 1.0))) {
-                if (livingEntity != this
-                 && livingEntity != target
-                 && !this.isTeammate(livingEntity)
-                 && (!(livingEntity instanceof ArmorStandEntity) || !((ArmorStandEntity)livingEntity).isMarker())
-                 && this.squaredDistanceTo(livingEntity) < 9.0)
-                {
-                    livingEntity.takeKnockback(0.4F, MathHelper.sin(this.getYaw() * (float) (Math.PI / 180.0)), -MathHelper.cos(this.getYaw() * (float) (Math.PI / 180.0)));
-                    livingEntity.damage(DamageSource.player((PlayerEntity) (Object) this), l);
-                }
+            boolean canSweep = !this.getComponent(TrinketsApi.TRINKET_COMPONENT).isEquipped(MalumItemRegistry.NECKLACE_OF_THE_NARROW_EDGE);
+            SoundEvent sound;
+            if (canSweep) {
+                spawnSweepParticles((PlayerEntity) (Object) this, MalumParticleRegistry.SCYTHE_SWEEP_ATTACK_PARTICLE);
+                sound = SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP;
+            } else {
+                spawnSweepParticles((PlayerEntity) (Object) this, MalumParticleRegistry.SCYTHE_CUT_ATTACK_PARTICLE);
+                sound = MalumSoundRegistry.SCYTHE_CUT;
             }
+            world.playSound(null, target.getX(), target.getY(), target.getZ(), sound, this.getSoundCategory(), 1, 1);
 
-            this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, this.getSoundCategory(), 1.0F, 1.0F);
-            this.spawnSweepAttackParticles();
+            float damage = 1.0F + EnchantmentHelper.getSweepingMultiplier(this) * f;
+            ;
+            world.getOtherEntities(this, target.getBoundingBox().expand(1)).forEach(e -> {
+                if (e instanceof LivingEntity livingEntity) {
+                    if (livingEntity.isAlive()) {
+                        livingEntity.damage(MalumDamageSourceRegistry.scytheSweepDamage(this), damage);
+                        livingEntity.takeKnockback(0.4F, MathHelper.sin(this.getYaw() * ((float) Math.PI / 180F)), (-MathHelper.cos(this.getYaw() * ((float) Math.PI / 180F))));
+                    }
+                }
+            });
+        }
+    }
+    @Unique
+    public void spawnSweepParticles(PlayerEntity player, DefaultParticleType type) {
+        double d0 = (-MathHelper.sin(player.getYaw() * ((float) Math.PI / 180F)));
+        double d1 = MathHelper.cos(player.getYaw() * ((float) Math.PI / 180F));
+        if (player.world instanceof ServerWorld serverWorld) {
+            serverWorld.spawnParticles(type, player.getX() + d0, player.getBodyY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
         }
     }
 

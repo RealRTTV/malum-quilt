@@ -24,6 +24,8 @@ public interface MalumParticleEmitterRegistry {
     Pair<ItemParticleEmitter, Item[]> IRIDESCENT_ETHER_WALL_STANDING_PARTICLE_EMITTER = register("iridescent_ether_wall_standing", new IridescentEtherWallStandingParticleEmitter(), IRIDESCENT_ETHER_TORCH);
     Pair<ItemParticleEmitter, Item[]> ETHER_PARTICLE_EMITTER                          = register("ether",                          new EtherParticleEmitter(), ETHER);
     Pair<ItemParticleEmitter, Item[]> IRIDESCENT_ETHER_PARTICLE_EMITTER               = register("iridescent_ether",               new IridescentEtherParticleEmitter(), IRIDESCENT_ETHER);
+    Pair<ItemParticleEmitter, Item[]> ETHER_BRAZIER_PARTICLE_EMITTER                  = register("ether_brazier",                  new EtherBrazierParticleEmitter(), TAINTED_ETHER_BRAZIER, TWISTED_ETHER_BRAZIER);
+    Pair<ItemParticleEmitter, Item[]> IRIDESCENT_ETHER_BRAZIER_PARTICLE_EMITTER       = register("iridescent_ether_brazier",       new IridescentBrazierParticleEmitter(), TAINTED_IRIDESCENT_ETHER_BRAZIER, TWISTED_IRIDESCENT_ETHER_BRAZIER);
     Pair<ItemParticleEmitter, Item[]> SACRED_SPIRIT_PARTICLE_EMITTER                  = register("spirit",                         new SpiritParticleEmitter(), SACRED_SPIRIT, WICKED_SPIRIT, ARCANE_SPIRIT, ELDRITCH_SPIRIT, EARTHEN_SPIRIT, INFERNAL_SPIRIT, AERIAL_SPIRIT, AQUEOUS_SPIRIT);
     Pair<ItemParticleEmitter, Item[]> TYRVING_PARTICLE_EMITTER                        = register("tyrving",                        new TyrvingParticleEmitter(), TYRVING);
 

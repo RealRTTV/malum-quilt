@@ -1,0 +1,14 @@
+{
+  "registry_name": "minecraft:frog",
+  "primary_type": "earthen",
+  "spirits": [
+    {
+      "spirit": "earthen",
+      "count": 2
+    },
+    {
+      "spirit": "aqueous",
+      "count": 1
+    }
+  ]
+}

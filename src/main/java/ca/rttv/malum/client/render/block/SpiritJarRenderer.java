@@ -1,6 +1,7 @@
 package ca.rttv.malum.client.render.block;
 
 import ca.rttv.malum.block.entity.SpiritJarBlockEntity;
+import ca.rttv.malum.item.SpiritItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -12,20 +13,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
+import static net.minecraft.client.render.OverlayTexture.DEFAULT_UV;
+
 public class SpiritJarRenderer implements BlockEntityRenderer<SpiritJarBlockEntity> {
     @Override
     public void render(SpiritJarBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        final MinecraftClient client = MinecraftClient.getInstance();
-        World world = client.world;
-        ItemRenderer itemRenderer = client.getItemRenderer();
-        ItemStack stack = blockEntity.getHeldItem();
-        if(!stack.isEmpty() && world != null) {
+        World world = MinecraftClient.getInstance().world;
+        ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+        if (blockEntity.getItem() != null) {
             matrices.push();
-            double y =  0.5f + Math.sin(world.getTime() / 20f) * 0.2f;
+            double y =  0.5f + Math.sin((world.getTime() + tickDelta) / 20f) * 0.2f;
             matrices.translate(0.5f,y,0.5f);
-            matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion((world.getTime() + tickDelta) * 0.05f));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3));
             matrices.scale(0.6f, 0.6f, 0.6f);
-            itemRenderer.renderItem(stack, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+            itemRenderer.renderItem(new ItemStack(blockEntity.getItem()), ModelTransformation.Mode.FIXED, light, DEFAULT_UV, matrices, vertexConsumers, 0);
             matrices.pop();
         }
     }

@@ -40,6 +40,7 @@ public abstract class BillboardScreenParticle extends ScreenParticle {
         }
       /* todo, jei tooltips render at 400 z, while the held by mouse item stack renders at around 380, we need a value between to be above the stack, but below JEI tooltips.
          There is definitely a better way of doing this.
+         We're not even using JEI but fuck if I care
        */
         int z = 390;
         bufferBuilder.vertex(vectors[0].getX(), vectors[0].getY(), z).uv(u1, v1).color(this.red, this.green, this.blue, this.alpha).light(FULL_BRIGHT).next();

@@ -9,6 +9,7 @@ import ca.rttv.malum.util.particle.screen.emitter.ParticleEmitter;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.Tessellator;
 import com.mojang.datafixers.util.Pair;
+import dev.emi.emi.screen.RecipeScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.GameModeSelectionScreen;
@@ -18,6 +19,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Matrix4f;
+import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.*;
 
@@ -58,8 +60,9 @@ public class ScreenParticleHandler {
                     ScreenParticle.RenderOrder renderOrder = AFTER_EVERYTHING;
                     Screen screen = minecraft.currentScreen;
                     if (screen != null) {
-                        // todo, rei
-                        renderOrder = BEFORE_TOOLTIPS;
+                        if (!QuiltLoader.isModLoaded("emi") || !(screen instanceof RecipeScreen)) {
+                            renderOrder = BEFORE_TOOLTIPS;
+                        }
                         if (renderingHotbar) {
                             renderOrder = BEFORE_UI;
                         }
@@ -79,9 +82,9 @@ public class ScreenParticleHandler {
     public static void renderParticles() {
         final MinecraftClient client = MinecraftClient.getInstance();
         Screen screen = client.currentScreen;
-//        if (screen instanceof IRecipesGui) {
-//            renderParticles(AFTER_EVERYTHING);
-//        }
+        if (QuiltLoader.isModLoaded("emi") && screen instanceof RecipeScreen) {
+            renderParticles(AFTER_EVERYTHING);
+        }
         if (screen == null || screen instanceof ChatScreen || screen instanceof GameModeSelectionScreen) {
             renderParticles(AFTER_EVERYTHING, BEFORE_UI);
         }
@@ -93,8 +96,7 @@ public class ScreenParticleHandler {
         final MinecraftClient client = MinecraftClient.getInstance();
         PARTICLES.forEach((pair, particles) -> {
             ParticleTextureSheet type = pair.getFirst();
-            if (Arrays.stream(renderOrders)
-                      .anyMatch(o -> o.equals(pair.getSecond()))) {
+            if (Arrays.stream(renderOrders).anyMatch(o -> o.equals(pair.getSecond()))) {
                 type.begin(TESSELATOR.getBufferBuilder(), client.getTextureManager());
                 for (ScreenParticle next : particles) {
                     if (next instanceof GenericScreenParticle genericScreenParticle) {
