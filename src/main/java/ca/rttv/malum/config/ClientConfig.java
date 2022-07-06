@@ -16,6 +16,7 @@ public class ClientConfig {
     public static final Logger LOGGER;
     public static final boolean DELAYED_PARTICLE_RENDERING;
     public static final String BOOK_THEME; // todo, implement
+    public static final String SOULWARD_TEX;
 
     static {
         LOGGER = LogUtils.getLogger();
@@ -46,6 +47,7 @@ public class ClientConfig {
 
         DELAYED_PARTICLE_RENDERING = json.get("delayed_particle_rendering").getAsBoolean();
         BOOK_THEME = json.get("book_theme").getAsString();
+        SOULWARD_TEX = json.get("soul_ward_tex").getAsString();
     }
 
     private static String defaultConfig() {
@@ -54,9 +56,12 @@ public class ClientConfig {
                {
                  // responsible for moving all rendering to a separate framebuffer, ensuring better rendering & compatibility with things like Sodium.
                  "delayed_particle_rendering": true,
-                 
-                 // 'default' or 'easy_read' are acceptable, changes the progression book's theme
-                 "book_theme": "default"
+
+                 // 'default' or 'easy_read' are valid, changes the progression book's theme
+                 "book_theme": "default",
+
+                 // changes soul ward texture: 'default', 'nonbinary_pride', 'rainbow_pride', and 'trans_pride' are valid
+                 "soul_ward_tex": "default"
                }
                """;
     }

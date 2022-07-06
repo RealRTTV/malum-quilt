@@ -4,6 +4,7 @@ import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
 import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.component.MalumComponents;
 import ca.rttv.malum.component.MalumPlayerComponent;
+import ca.rttv.malum.config.ClientConfig;
 import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumDamageSourceRegistry;
@@ -103,7 +104,7 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
     }
 
         public static class Client {
-        private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/soul_ward/default.png");
+        private static final Identifier ICONS_TEXTURE = DataHelper.prefix("textures/gui/soul_ward/"+ ClientConfig.SOULWARD_TEX + ".png");
 
         public static void renderSoulWard(MatrixStack matrices, Window window) {
             final MinecraftClient client = MinecraftClient.getInstance();
