@@ -72,7 +72,7 @@ public class RenderHelper {
         bufferbuilder.vertex(last, (float) x + (float) width, (float) y + (float) height, 0).color(r, g, b, a).uv(u + uWidth, v + vHeight).next();
         bufferbuilder.vertex(last, (float) x + (float) width, (float) y, 0).color(r, g, b, a).uv(u + uWidth, v).next();
         bufferbuilder.vertex(last, (float) x, (float) y, 0).color(r, g, b, a).uv(u, v).next();
-        BufferRenderer.draw(bufferbuilder.end());
+        BufferRenderer.drawWithShader(bufferbuilder.end());
     }
 
     public static void innerBlit(MatrixStack stack, ShaderHolder shader, int x, int y, double width, double height, float u, float v, float uWidth, float vHeight) {
@@ -84,7 +84,7 @@ public class RenderHelper {
         bufferbuilder.vertex(last, (float) x + (float) width, (float) y + (float) height, 0).uv(u + uWidth, v + vHeight).next();
         bufferbuilder.vertex(last, (float) x + (float) width, (float) y, 0).uv(u + uWidth, v).next();
         bufferbuilder.vertex(last, (float) x, (float) y, 0).uv(u, v).next();
-        BufferRenderer.draw(bufferbuilder.end());
+        BufferRenderer.drawWithShader(bufferbuilder.end());
     }
 
     public static void blit(MatrixStack stack, int x, int y, double width, double height, float u, float v, float xCanvasSize, float yCanvasSize) {

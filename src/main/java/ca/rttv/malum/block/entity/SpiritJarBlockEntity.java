@@ -230,8 +230,8 @@ public class SpiritJarBlockEntity extends ListInventoryBlockEntity {
                 return ActionResult.SUCCESS;
             }
         } else if(type != null) {
-            int max = player.isSneaking() ? 64 : 1;
-            ItemStack grabbed = this.takeStack(max);
+            ItemStack grabbed = this.takeStack();
+            System.out.println(player.isSneaking());
             if (!player.world.isClient) {
                 if(grabbed != null) {
                     if(heldStack.isEmpty()){
