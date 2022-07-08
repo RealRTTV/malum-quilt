@@ -12,7 +12,7 @@ import static ca.rttv.malum.Malum.MODID;
 
 @Mixin(BoatEntityRenderer.class)
 final class BoatEntityRendererMixin {
-    @Inject(method = "getTexture(Lnet/minecraft/entity/vehicle/BoatEntity$Type;Z)Ljava/lang/String;", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    @Inject(method = "getTexture(Lnet/minecraft/entity/vehicle/BoatEntity$Type;Z)Ljava/lang/String;", at = @At(value = "HEAD"), cancellable = true)
     private static void malum$useMalumNamespace(BoatEntity.Type type, boolean isChest, CallbackInfoReturnable<String> cir) {
         if (type == MalumBoatTypes.RUNEWOOD || type == MalumBoatTypes.SOULWOOD) {
             cir.setReturnValue(isChest ? (MODID + ":textures/entity/chest_boat/" + type.getName() + "_boat.png") : (MODID + ":textures/entity/boat/" + type.getName() + "_boat.png"));

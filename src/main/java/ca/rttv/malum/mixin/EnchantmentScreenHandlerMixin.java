@@ -16,7 +16,8 @@ import static ca.rttv.malum.registry.MalumBlockRegistry.BRILLIANT_OBELISK;
 
 @Mixin(EnchantmentScreenHandler.class)
 abstract class EnchantmentScreenHandlerMixin {
-    @ModifyVariable(method = "m_mpsetdhw", at = @At(value = "FIELD", target = "Lnet/minecraft/block/EnchantingTableBlock;POSSIBLE_BOOKSHELF_LOCATIONS:Ljava/util/List;"), index = 4)
+    @SuppressWarnings("UnresolvedMixinReference")
+    @ModifyVariable(method = {"m_mpsetdhw", "method_17411"}, at = @At(value = "FIELD", target = "Lnet/minecraft/block/EnchantingTableBlock;POSSIBLE_BOOKSHELF_LOCATIONS:Ljava/util/List;"), index = 4)
     private int malum$brilliantObeliskEnchantmentPower(int ix, ItemStack stack, World world, BlockPos pos) {
         return ix + 4 * (int) EnchantingTableBlock.POSSIBLE_BOOKSHELF_LOCATIONS.stream().filter(blockPos -> isObelisk(world, pos, blockPos)).count();
     }
