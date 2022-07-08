@@ -67,6 +67,7 @@ dependencies {
 	include(libs.satin)
 
 	implementation(libs.mixin.extras)
+	include(libs.mixin.extras)
 
 	annotationProcessor(libs.mixin.extras)
 }
