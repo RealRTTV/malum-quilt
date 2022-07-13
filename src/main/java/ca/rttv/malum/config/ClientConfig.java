@@ -16,7 +16,7 @@ public class ClientConfig {
     public static final Logger LOGGER;
     public static final boolean DELAYED_PARTICLE_RENDERING;
     public static final String BOOK_THEME; // todo, implement
-    public static final String SOULWARD_TEXTURE;
+    public static final String SOULWARD_TEX;
 
     static {
         LOGGER = LogUtils.getLogger();
@@ -47,7 +47,7 @@ public class ClientConfig {
 
         DELAYED_PARTICLE_RENDERING = json.get("delayed_particle_rendering").getAsBoolean();
         BOOK_THEME = json.get("book_theme").getAsString();
-        SOULWARD_TEXTURE = json.get("soul_ward_texture").getAsString();
+        SOULWARD_TEX = json.get("soul_ward_tex").getAsString();
     }
 
     private static String defaultConfig() {
