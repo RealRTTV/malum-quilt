@@ -1,5 +1,6 @@
 package ca.rttv.malum.client.screen;
 
+import ca.rttv.malum.api.event.ProgressionBookEntriesSetEvent;
 import ca.rttv.malum.client.screen.page.*;
 import ca.rttv.malum.recipe.IngredientWithCount;
 import ca.rttv.malum.registry.MalumRiteRegistry;
@@ -58,6 +59,7 @@ public class ProgressionBookScreen extends Screen {
         super(Text.literal("malum.gui.book.title"));
         this.client = MinecraftClient.getInstance();
         setupEntries();
+        ProgressionBookEntriesSetEvent.EVENT.invoker().addExtraEntry(entries);
         setupObjects();
     }
 
