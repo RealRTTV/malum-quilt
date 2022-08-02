@@ -1,0 +1,22 @@
+{
+  "name": "ring_of_prowess",
+  "icon": "malum:ring_of_prowess",
+  "x_offset": -7,
+  "y_offset": 6,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.ring_of_prowess",
+      "description_translation_key": "malum.gui.book.entry.page.text.ring_of_prowess_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.ring_of_prowess_b"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/ring_of_prowess"
+    }
+  ]
+}

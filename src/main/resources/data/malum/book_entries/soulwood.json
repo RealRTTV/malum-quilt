@@ -1,0 +1,84 @@
+{
+  "name": "soulwood",
+  "icon": "malum:soulwood_sapling",
+  "x_offset": 0,
+  "y_offset": 13,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.soulwood",
+      "description_translation_key": "malum.gui.book.entry.page.text.soulwood_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.soulwood_b"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:soulwood_item_pedestal",
+      "input": [
+        "malum:soulwood_planks_slab",
+        "malum:soulwood_planks_slab",
+        "malum:soulwood_planks_slab",
+        "minecraft:air",
+        "malum:soulwood_planks",
+        "minecraft:air",
+        "malum:soulwood_planks_slab",
+        "malum:soulwood_planks_slab",
+        "malum:soulwood_planks_slab"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:soulwood_item_stand",
+      "input": [
+        "minecraft:air",
+        "minecraft:air",
+        "minecraft:air",
+        "malum:soulwood_planks_slab",
+        "malum:soulwood_planks_slab",
+        "malum:soulwood_planks_slab",
+        "malum:soulwood_planks",
+        "malum:soulwood_planks",
+        "malum:soulwood_planks"
+      ]
+    },
+    {
+      "type": "malum:smelting",
+      "input": "malum:soulwood_log",
+      "output": "malum:arcane_charcoal"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:block_of_arcane_charcoal",
+      "input": [
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": {
+        "item": "malum:unholy_sapball",
+        "count": 3
+      },
+      "input": [
+        "minecraft:slime_ball",
+        "malum:unholy_sap"
+      ]
+    },
+    {
+      "type": "malum:smelting",
+      "input": "malum:unholy_sap",
+      "output": "malum:unholy_syrup"
+    }
+  ]
+}

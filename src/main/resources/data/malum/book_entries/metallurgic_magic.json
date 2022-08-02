@@ -1,0 +1,42 @@
+{
+  "name": "metallurgic_magic",
+  "icon": "malum:iron_node",
+  "x_offset": 8,
+  "y_offset": 7,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.metallurgic_magic",
+      "description_translation_key": "malum.gui.book.entry.page.text.metallurgic_magic_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.metallurgic_magic_b"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/iron_impetus"
+    },
+    {
+      "type": "malum:spirit_crucible",
+      "recipe": "malum:spirit_crucible/iron_node"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/gold_impetus"
+    },
+    {
+      "type": "malum:spirit_crucible",
+      "recipe": "malum:spirit_crucible/gold_node"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/copper_impetus"
+    },
+    {
+      "type": "malum:spirit_crucible",
+      "recipe": "malum:spirit_crucible/copper_node"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "name": "arcane_rock",
+  "icon": "malum:tainted_rock",
+  "x_offset": 3,
+  "y_offset": 6,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.tainted_rock",
+      "description_translation_key": "malum.gui.book.entry.page.text.tainted_rock"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/tainted_rock"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:tainted_rock_item_pedestal",
+      "input": [
+        "malum:tainted_rock_slab",
+        "malum:tainted_rock_slab",
+        "malum:tainted_rock_slab",
+        "minecraft:air",
+        "malum:tainted_rock",
+        "minecraft:air",
+        "malum:tainted_rock_slab",
+        "malum:tainted_rock_slab",
+        "malum:tainted_rock_slab"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:tainted_rock_item_stand",
+      "input": [
+        "minecraft:air",
+        "minecraft:air",
+        "minecraft:air",
+        "malum:tainted_rock_slab",
+        "malum:tainted_rock_slab",
+        "malum:tainted_rock_slab",
+        "malum:tainted_rock",
+        "malum:tainted_rock",
+        "malum:tainted_rock"
+      ]
+    },
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.twisted_rock",
+      "description_translation_key": "malum.gui.book.entry.page.text.twisted_rock"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/twisted_rock"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:twisted_rock_item_pedestal",
+      "input": [
+        "malum:twisted_rock_slab",
+        "malum:twisted_rock_slab",
+        "malum:twisted_rock_slab",
+        "minecraft:air",
+        "malum:twisted_rock",
+        "minecraft:air",
+        "malum:twisted_rock_slab",
+        "malum:twisted_rock_slab",
+        "malum:twisted_rock_slab"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:twisted_rock_item_stand",
+      "input": [
+        "minecraft:air",
+        "minecraft:air",
+        "minecraft:air",
+        "malum:twisted_rock_slab",
+        "malum:twisted_rock_slab",
+        "malum:twisted_rock_slab",
+        "malum:twisted_rock",
+        "malum:twisted_rock",
+        "malum:twisted_rock"
+      ]
+    }
+  ]
+}

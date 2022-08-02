@@ -1,0 +1,26 @@
+{
+  "name": "working_with_ashes",
+  "icon": "minecraft:gunpowder",
+  "x_offset": 6,
+  "y_offset": 5,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.working_with_ashes",
+      "description_translation_key": "malum.gui.book.entry.page.text.working_with_ashes"
+    },
+    {
+      "type": "malum:spirit_crucible",
+      "recipe": "malum:spirit_crucible/gunpowder"
+    },
+    {
+      "type": "malum:spirit_crucible",
+      "recipe": "malum:spirit_crucible/glowstone_dust"
+    },
+    {
+      "type": "malum:spirit_crucible",
+      "recipe": "malum:spirit_crucible/redstone"
+    }
+  ]
+}

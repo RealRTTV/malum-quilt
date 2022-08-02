@@ -3,14 +3,26 @@ package ca.rttv.malum.client.screen.page;
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
 import ca.rttv.malum.recipe.SpiritRepairRecipe;
 import ca.rttv.malum.util.helper.DataHelper;
+import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.util.Identifier;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
+import static ca.rttv.malum.Malum.MODID;
+
 public class SpiritRepairPage extends BookPage {
+    public static final Codec<SpiritRepairPage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        Identifier.CODEC.fieldOf("recipe").forGetter(page -> page.recipe.id())
+    ).apply(instance, SpiritRepairPage::new));
+
     private final SpiritRepairRecipe recipe;
 
     public SpiritRepairPage(Predicate<SpiritRepairRecipe> predicate) {
@@ -26,6 +38,21 @@ public class SpiritRepairPage extends BookPage {
     public SpiritRepairPage(SpiritRepairRecipe recipe) {
         super(DataHelper.prefix("textures/gui/book/pages/spirit_repair_page.png"));
         this.recipe = recipe;
+    }
+
+    public SpiritRepairPage(JsonObject json) {
+        this(new Identifier(json.get("recipe").getAsString()));
+    }
+
+    public SpiritRepairPage(Identifier id) {
+        super(new Identifier(MODID, "textures/gui/book/pages/spirit_repair_page.png"));
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.world == null) {
+            recipe = null;
+        } else {
+            Optional<? extends Recipe<?>> optional = client.world.getRecipeManager().get(id);
+            recipe = optional.isPresent() && optional.get() instanceof SpiritRepairRecipe spiritRepairRecipe ? spiritRepairRecipe : null;
+        }
     }
 
     @Override

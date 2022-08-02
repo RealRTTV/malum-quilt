@@ -1,0 +1,18 @@
+{
+  "name": "magebane_belt",
+  "icon": "malum:magebane_belt",
+  "x_offset": 1,
+  "y_offset": 15,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.magebane_belt",
+      "description_translation_key": "malum.gui.book.entry.page.text.magebane_belt"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/magebane_belt"
+    }
+  ]
+}

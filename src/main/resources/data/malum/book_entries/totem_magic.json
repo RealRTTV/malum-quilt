@@ -1,0 +1,26 @@
+{
+  "name": "totem_magic",
+  "icon": "malum:runewood_totem_base",
+  "x_offset": 0,
+  "y_offset": 9,
+  "entry_type": "malum:important_entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.totem_magic",
+      "description_translation_key": "malum.gui.book.entry.page.text.totem_magic_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.totem_magic_b"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.totem_magic_c"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/runewood_totem_base"
+    }
+  ]
+}

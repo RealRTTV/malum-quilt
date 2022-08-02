@@ -1,7 +1,11 @@
 package ca.rttv.malum.client.screen.page;
 
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
+import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.rite.Rite;
+import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
@@ -11,11 +15,20 @@ import net.minecraft.util.Identifier;
 import static ca.rttv.malum.Malum.MODID;
 
 public class SpiritRitePage extends BookPage {
+    public static final Codec<SpiritRitePage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        MalumRiteRegistry.RITE.getCodec().fieldOf("rite").forGetter(page -> page.rite)
+    ).apply(instance, SpiritRitePage::new));
+
     private final Rite rite;
 
     public SpiritRitePage(Rite rite) {
         super(new Identifier(MODID, "textures/gui/book/pages/spirit_rite_page.png"));
         this.rite = rite;
+    }
+
+    public SpiritRitePage(JsonObject json) {
+        super(new Identifier(MODID, "textures/gui/book/pages/spirit_rite_page.png"));
+        rite = MalumRiteRegistry.RITE.get(new Identifier(json.get("rite").getAsString()));
     }
 
     @Override

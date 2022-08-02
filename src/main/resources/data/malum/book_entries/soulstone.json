@@ -1,0 +1,37 @@
+{
+  "name": "soulstone",
+  "icon": "malum:processed_soulstone",
+  "x_offset": -1,
+  "y_offset": 2,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.soulstone",
+      "description_translation_key": "malum.gui.book.entry.page.text.soulstone_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.soulstone_b"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.soulstone_c"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:block_of_soulstone",
+      "input": [
+        "malum:processed_soulstone",
+        "malum:processed_soulstone",
+        "malum:processed_soulstone",
+        "malum:processed_soulstone",
+        "malum:processed_soulstone",
+        "malum:processed_soulstone",
+        "malum:processed_soulstone",
+        "malum:processed_soulstone",
+        "malum:processed_soulstone"
+      ]
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import ca.rttv.malum.config.ClientConfig;
 import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.enchantment.ReboundEnchantment;
 import ca.rttv.malum.registry.*;
+import ca.rttv.malum.util.listener.ProgressionBookEntriesReloadListener;
 import ca.rttv.malum.util.listener.SpiritDataReloadListener;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.item.ItemGroup;
@@ -57,15 +58,24 @@ public final class Malum implements ModInitializer {
         MalumAcceleratorTypeRegistry.init();
         MalumStatusEffectRegistry.init();
         MalumTags.init();
+        MalumPageTypeRegistry.init();
         UseItemCallback.EVENT.register(ReboundEnchantment::onRightClickItem);
 
         ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new SpiritDataReloadListenerFabricImpl());
+        ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new ProgressionBookEntriesReloadListenerFabricImpl());
     }
 
     public static class SpiritDataReloadListenerFabricImpl extends SpiritDataReloadListener implements IdentifiableResourceReloader {
         @Override
         public Identifier getQuiltId() {
             return new Identifier(MODID, "spirit_data");
+        }
+    }
+
+    public static class ProgressionBookEntriesReloadListenerFabricImpl extends ProgressionBookEntriesReloadListener implements IdentifiableResourceReloader {
+        @Override
+        public Identifier getQuiltId() {
+            return new Identifier(MODID, "book_entries");
         }
     }
 }

@@ -1,7 +1,6 @@
 package ca.rttv.malum.client.particle.emitter;
 
 import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
-import ca.rttv.malum.item.EtherBlockItem;
 import ca.rttv.malum.item.IridescentEtherBlockItem;
 import ca.rttv.malum.util.particle.Easing;
 import ca.rttv.malum.util.particle.ParticleBuilders;

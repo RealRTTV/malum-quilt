@@ -27,7 +27,7 @@ public class EntryObject extends BookObject {
         int posX = offsetPosX(xOffset);
         int posY = offsetPosY(yOffset);
         ProgressionBookScreen.renderTexture(ProgressionBookScreen.FRAME_TEXTURE, matrices, posX, posY, 1, 252, width, height, 512, 512);
-        client.getItemRenderer().renderInGuiWithOverrides(entry.iconStack.apply(client.world), posX + 8, posY + 8);
+        client.getItemRenderer().renderInGuiWithOverrides(entry.iconStacks[(int) ((client.world.getTime() / 20) % entry.iconStacks.length)], posX + 8, posY + 8);
     }
 
     @Override

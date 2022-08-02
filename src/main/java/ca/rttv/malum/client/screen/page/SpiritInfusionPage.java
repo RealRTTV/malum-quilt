@@ -3,19 +3,28 @@ package ca.rttv.malum.client.screen.page;
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
 import ca.rttv.malum.recipe.IngredientWithCount;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
+import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static ca.rttv.malum.Malum.MODID;
 
 public class SpiritInfusionPage extends BookPage {
+    public static final Codec<SpiritInfusionPage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        Identifier.CODEC.fieldOf("recipe").forGetter(page -> page.recipe.id())
+    ).apply(instance, SpiritInfusionPage::new));
+
     public static final int[] UOFFSET = {360, 393, 393, 360, 327, 294, 294, 327};
     public static final int[] VOFFSET = {  1,   1,  53,  34,   1,   1, 129, 110};
     private final SpiritInfusionRecipe recipe;
@@ -33,6 +42,21 @@ public class SpiritInfusionPage extends BookPage {
     public SpiritInfusionPage(SpiritInfusionRecipe recipe) {
         super(new Identifier(MODID, "textures/gui/book/pages/spirit_infusion_page.png"));
         this.recipe = recipe;
+    }
+
+    public SpiritInfusionPage(JsonObject json) {
+        this(new Identifier(json.get("recipe").getAsString()));
+    }
+
+    public SpiritInfusionPage(Identifier id) {
+        super(new Identifier(MODID, "textures/gui/book/pages/spirit_infusion_page.png"));
+        final MinecraftClient client = MinecraftClient.getInstance();
+        if (client.world == null) {
+            recipe = null;
+        } else {
+            Optional<? extends Recipe<?>> optional = client.world.getRecipeManager().get(id);
+            recipe = optional.isPresent() && optional.get() instanceof SpiritInfusionRecipe spiritInfusionRecipe ? spiritInfusionRecipe : null;
+        }
     }
 
     public static SpiritInfusionPage fromOutput(Item output) {

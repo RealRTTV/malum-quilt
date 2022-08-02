@@ -19,11 +19,4 @@ public final class NbtHelper {
         }
         return nbt.getInt(value);
     }
-
-    public static double getOrThrowDouble(NbtCompound nbt, String value) {
-        if (!nbt.contains(value)) {
-            throw new NullPointerException();
-        }
-        return nbt.getDouble(value);
-    }
 }

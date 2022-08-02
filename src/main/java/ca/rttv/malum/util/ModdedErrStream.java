@@ -27,7 +27,7 @@ public class ModdedErrStream extends PrintStream {
     }
 
     protected void log(@Nullable String message) {
-        if (message != null && message.replaceAll("Could not find code source for magic-at:.+\\.class: java\\.net\\.MalformedURLException: unknown protocol: magic-at", "").equals("")) {
+        if (message != null && message.matches("Could not find code source for magic-at:.+\\.class: java\\.net\\.MalformedURLException: unknown protocol: magic-at")) {
             return;
         }
         if (debug) {

@@ -1,0 +1,110 @@
+{
+  "name": "runewood",
+  "icon": "malum:runewood_sapling",
+  "x_offset": 1,
+  "y_offset": 2,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.runewood",
+      "description_translation_key": "malum.gui.book.entry.page.text.runewood_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.runewood_b"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.runewood_c"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.runewood_d"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:runewood_item_pedestal",
+      "input": [
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "minecraft:air",
+        "malum:runewood_planks",
+        "minecraft:air",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:runewood_item_stand",
+      "input": [
+        "minecraft:air",
+        "minecraft:air",
+        "minecraft:air",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks",
+        "malum:runewood_planks",
+        "malum:runewood_planks"
+      ]
+    },
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.arcane_charcoal",
+      "description_translation_key": "malum.gui.book.entry.page.text.arcane_charcoal"
+    },
+    {
+      "type": "malum:smelting",
+      "input": "malum:runewood_log",
+      "output": "malum:arcane_charcoal"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:block_of_arcane_charcoal",
+      "input": [
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal",
+        "malum:arcane_charcoal"
+      ]
+    },
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.holy_sap",
+      "description_translation_key": "malum.gui.book.entry.page.text.holy_sap_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.holy_sap_b"
+    },
+    {
+      "type": "malum:crafting",
+      "output": {
+        "item": "malum:holy_sapball",
+        "count": 3
+      },
+      "input": [
+        "minecraft:slime_ball",
+        "malum:holy_sap"
+      ]
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.holy_sap_c"
+    },
+    {
+      "type": "malum:smelting",
+      "input": "malum:holy_sap",
+      "output": "malum:holy_syrup"
+    }
+  ]
+}

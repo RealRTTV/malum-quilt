@@ -1,0 +1,19 @@
+{
+  "name": "eldritch_arcana",
+  "icon": "malum:eldritch_spirit",
+  "x_offset": 0,
+  "y_offset": 7,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:item",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.eldritch_spirit",
+      "description_translation_key": "malum.gui.book.entry.page.text.eldritch_spirit_a",
+      "output": "malum:eldritch_spirit"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.eldritch_spirit_b"
+    }
+  ]
+}

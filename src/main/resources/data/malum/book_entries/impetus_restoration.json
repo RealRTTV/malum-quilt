@@ -1,0 +1,83 @@
+{
+  "name": "impetus_restoration",
+  "icon": "malum:twisted_tablet",
+  "x_offset": 7,
+  "y_offset": 8,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.impetus_restoration",
+      "description_translation_key": "malum.gui.book.entry.page.text.impetus_restoration_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.impetus_restoration_b"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.impetus_restoration_c"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/twisted_tablet"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/alchemical_impetus_restoration"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/metal_impetus_restoration"
+    },
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.expanded_focusing",
+      "description_translation_key": "malum.gui.book.entry.page.text.expanded_focusing_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.expanded_focusing_b"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/wooden"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/stone"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/iron"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/diamond"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/gold"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/netherite"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.expanded_focusing_c"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/soul_stained_steel"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/special_soul_stained_steel"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/soul_hunter_armor"
+    }
+  ]
+}

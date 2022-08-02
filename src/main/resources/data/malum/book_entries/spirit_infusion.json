@@ -1,0 +1,76 @@
+{
+  "name": "spirit_infusion",
+  "icon": "malum:spirit_altar",
+  "x_offset": 0,
+  "y_offset": 5,
+  "entry_type": "malum:important_entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.spirit_infusion",
+      "description_translation_key": "malum.gui.book.entry.page.text.spirit_infusion_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.spirit_infusion_b"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.spirit_infusion_c"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:spirit_altar",
+      "input": [
+        "minecraft:air",
+        "malum:processed_soulstone",
+        "minecraft:air",
+        "minecraft:gold_ingot",
+        "malum:runewood_planks",
+        "minecraft:gold_ingot",
+        "malum:runewood_planks",
+        "malum:runewood_planks",
+        "malum:runewood_planks"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:runewood_item_pedestal",
+      "input": [
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "minecraft:air",
+        "malum:runewood_planks",
+        "minecraft:air",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:runewood_item_stand",
+      "input": [
+        "minecraft:air",
+        "minecraft:air",
+        "minecraft:air",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks_slab",
+        "malum:runewood_planks",
+        "malum:runewood_planks",
+        "malum:runewood_planks"
+      ]
+    },
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.hex_ash",
+      "description_translation_key": "malum.gui.book.entry.page.text.hex_ash"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/hex_ash"
+    }
+  ]
+}

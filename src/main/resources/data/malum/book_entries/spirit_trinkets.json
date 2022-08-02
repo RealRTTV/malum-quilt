@@ -1,0 +1,96 @@
+{
+  "name": "spirit_trinkets",
+  "icon": "malum:ornate_ring",
+  "x_offset": -5,
+  "y_offset": 6,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.spirit_trinkets",
+      "description_translation_key": "malum.gui.book.entry.page.text.spirit_trinkets_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.spirit_trinkets_b"
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:gilded_ring",
+      "input": [
+        "minecraft:air",
+        "minecraft:leather",
+        "malum:hallowed_gold_ingot",
+        "minecraft:leather",
+        "minecraft:air",
+        "minecraft:leather",
+        "minecraft:air",
+        "minecraft:leather",
+        "minecraft:air"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:gilded_belt",
+      "input": [
+        "minecraft:leather",
+        "minecraft:leather",
+        "minecraft:leather",
+        "malum:hallowed_gold_ingot",
+        "malum:processed_soulstone",
+        "malum:hallowed_gold_ingot",
+        "minecraft:air",
+        "malum:hallowed_gold_ingot",
+        "minecraft:air"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:ornate_ring",
+      "input": [
+        "minecraft:air",
+        "minecraft:leather",
+        "malum:soul_stained_steel_ingot",
+        "minecraft:leather",
+        "minecraft:air",
+        "minecraft:leather",
+        "minecraft:air",
+        "minecraft:leather",
+        "minecraft:air"
+      ]
+    },
+    {
+      "type": "malum:crafting",
+      "output": "malum:ornate_necklace",
+      "input": [
+        "minecraft:air",
+        "minecraft:string",
+        "minecraft:air",
+        "minecraft:string",
+        "minecraft:air",
+        "minecraft:string",
+        "minecraft:air",
+        "malum:soul_stained_steel_ingot",
+        "minecraft:air"
+      ]
+    },
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.arcane_reach",
+      "description_translation_key": "malum.gui.book.entry.page.text.arcane_reach"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/ring_of_arcane_reach"
+    },
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.arcane_spoil",
+      "description_translation_key": "malum.gui.book.entry.page.text.arcane_spoil"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/ring_of_arcane_spoil"
+    }
+  ]
+}

@@ -3,8 +3,11 @@ package ca.rttv.malum.client.screen;
 import ca.rttv.malum.api.event.ProgressionBookEntriesSetEvent;
 import ca.rttv.malum.client.screen.page.*;
 import ca.rttv.malum.recipe.IngredientWithCount;
+import ca.rttv.malum.registry.MalumEntryObjectTypeRegistry;
 import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -23,9 +26,12 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,10 +61,25 @@ public class ProgressionBookScreen extends Screen {
     public float cachedYOffset;
     public boolean ignoreNextMouseInput;
 
-    protected ProgressionBookScreen() {
+    public ProgressionBookScreen() {
         super(Text.literal("malum.gui.book.title"));
-        this.client = MinecraftClient.getInstance();
+        client = MinecraftClient.getInstance();
+        entries = new ArrayList<>();
         setupEntries();
+        File dir = new File(".", "data");
+        dir.mkdirs();
+
+        entries.forEach(entry -> {
+            JsonObject json = entry.serialize();
+
+            File file = new File(dir, entry.id + ".json");
+            try {
+                Files.writeString(file.toPath(), new GsonBuilder().setPrettyPrinting().create().toJson(json), StandardOpenOption.CREATE_NEW);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        System.exit(0);
         ProgressionBookEntriesSetEvent.EVENT.invoker().addExtraEntry(entries);
         setupObjects();
     }
@@ -69,7 +90,7 @@ public class ProgressionBookScreen extends Screen {
 
         entries.add(new BookEntry(
                 "introduction", ENCYCLOPEDIA_ARCANA, 0, 0)
-                .setObjectSupplier(ImportantEntryObject::new)
+                .setObjectSupplier(MalumEntryObjectTypeRegistry.IMPORTANT_ENTRY_OBJECT)
                 .addPage(new HeadlineTextPage("introduction", "introduction_a"))
                 .addPage(new TextPage("introduction_b"))
                 .addPage(new TextPage("introduction_c"))
@@ -123,7 +144,7 @@ public class ProgressionBookScreen extends Screen {
 
         entries.add(new BookEntry(
                 "spirit_infusion", SPIRIT_ALTAR, 0, 5)
-                .setObjectSupplier(ImportantEntryObject::new)
+                .setObjectSupplier(MalumEntryObjectTypeRegistry.IMPORTANT_ENTRY_OBJECT)
                 .addPage(new HeadlineTextPage("spirit_infusion", "spirit_infusion_a"))
                 .addPage(new TextPage("spirit_infusion_b"))
                 .addPage(new TextPage("spirit_infusion_c"))
@@ -381,14 +402,14 @@ public class ProgressionBookScreen extends Screen {
 
         entries.add(new BookEntry(
                 "mirror_magic", SPECTRAL_LENS, -6, 10)
-                .setObjectSupplier(ImportantEntryObject::new)
+                .setObjectSupplier(MalumEntryObjectTypeRegistry.IMPORTANT_ENTRY_OBJECT)
                 .addPage(new HeadlineTextPage("mirror_magic", "mirror_magic"))
                 .addPage(SpiritInfusionPage.fromOutput(SPECTRAL_LENS))
         );
 
         entries.add(new BookEntry(
                 "voodoo_magic", POPPET, 6, 10)
-                .setObjectSupplier(ImportantEntryObject::new)
+                .setObjectSupplier(MalumEntryObjectTypeRegistry.IMPORTANT_ENTRY_OBJECT)
                 .addPage(new HeadlineTextPage("voodoo_magic", "voodoo_magic"))
                 .addPage(SpiritInfusionPage.fromOutput(POPPET))
         );
@@ -403,7 +424,7 @@ public class ProgressionBookScreen extends Screen {
 
         entries.add(new BookEntry(
                 "totem_magic", RUNEWOOD_TOTEM_BASE, 0, 9)
-                .setObjectSupplier(ImportantEntryObject::new)
+                .setObjectSupplier(MalumEntryObjectTypeRegistry.IMPORTANT_ENTRY_OBJECT)
                 .addPage(new HeadlineTextPage("totem_magic", "totem_magic_a"))
                 .addPage(new TextPage("totem_magic_b"))
                 .addPage(new TextPage("totem_magic_c"))
@@ -481,7 +502,7 @@ public class ProgressionBookScreen extends Screen {
         );
 
         entries.add(new BookEntry(
-                "trans_rite", (World world) -> world.getTime() % 40L > 20L ? AERIAL_SPIRIT.getDefaultStack() : SACRED_SPIRIT.getDefaultStack(), 0, 14)
+                "trans_rite", new Item[]{AERIAL_SPIRIT, SACRED_SPIRIT}, 0, 14)
                 .addPage(new HeadlineTextPage("trans_rite", "trans_rite"))
                 .addPage(new SpiritRitePage(MalumRiteRegistry.TRANS_RITE))
         );
@@ -510,7 +531,7 @@ public class ProgressionBookScreen extends Screen {
 
         entries.add(new BookEntry(
                 "huh", THE_DEVICE, 0, -10)
-                .setObjectSupplier(VanishingEntryObject::new)
+                .setObjectSupplier(MalumEntryObjectTypeRegistry.VANISHING_ENTRY_OBJECT)
                 .addPage(new HeadlineTextPage("the_device", "the_device"))
                 .addPage(new CraftingBookPage(THE_DEVICE, TWISTED_ROCK, TAINTED_ROCK, TWISTED_ROCK, TAINTED_ROCK, TWISTED_ROCK, TAINTED_ROCK, TWISTED_ROCK, TAINTED_ROCK, TWISTED_ROCK))
         );

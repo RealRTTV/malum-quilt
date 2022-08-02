@@ -1,0 +1,49 @@
+{
+  "name": "elemental_arcana",
+  "icon": "malum:earthen_spirit",
+  "x_offset": 2,
+  "y_offset": 4,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:item",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.earthen_spirit",
+      "description_translation_key": "malum.gui.book.entry.page.text.earthen_spirit_a",
+      "output": "malum:earthen_spirit"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.earthen_spirit_b"
+    },
+    {
+      "type": "malum:item",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.infernal_spirit",
+      "description_translation_key": "malum.gui.book.entry.page.text.infernal_spirit_a",
+      "output": "malum:infernal_spirit"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.infernal_spirit_b"
+    },
+    {
+      "type": "malum:item",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.aerial_spirit",
+      "description_translation_key": "malum.gui.book.entry.page.text.aerial_spirit_a",
+      "output": "malum:aerial_spirit"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.aerial_spirit_b"
+    },
+    {
+      "type": "malum:item",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.aqueous_spirit",
+      "description_translation_key": "malum.gui.book.entry.page.text.aqueous_spirit_a",
+      "output": "malum:aqueous_spirit"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.aqueous_spirit_b"
+    }
+  ]
+}

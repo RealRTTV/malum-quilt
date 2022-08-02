@@ -1,0 +1,26 @@
+{
+  "name": "ceaseless_impetus",
+  "icon": "malum:ceaseless_impetus",
+  "x_offset": 0,
+  "y_offset": 16,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.ceaseless_impetus",
+      "description_translation_key": "malum.gui.book.entry.page.text.ceaseless_impetus_a"
+    },
+    {
+      "type": "malum:text",
+      "description": "malum.gui.book.entry.page.text.ceaseless_impetus_b"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/ceaseless_impetus"
+    },
+    {
+      "type": "malum:spirit_repair",
+      "recipe": "malum:spirit_crucible/repair/ceaseless_impetus_restoration"
+    }
+  ]
+}

@@ -1,9 +1,7 @@
 package ca.rttv.malum.client.render.block;
 
 import ca.rttv.malum.block.entity.SpiritJarBlockEntity;
-import ca.rttv.malum.item.SpiritItem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.item.ItemRenderer;

@@ -1,7 +1,6 @@
 package ca.rttv.malum.client.model;
 
 import ca.rttv.malum.util.helper.DataHelper;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.model.BipedEntityModel;

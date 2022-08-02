@@ -1,14 +1,29 @@
 package ca.rttv.malum.client.screen.page;
 
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
+import ca.rttv.malum.registry.MalumPageTypeRegistry;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static ca.rttv.malum.Malum.MODID;
 
 public class CraftingBookPage extends BookPage {
+    public static final Codec<CraftingBookPage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        ItemStack.CODEC.fieldOf("output").forGetter(page -> page.outputStack),
+        ItemStack.CODEC.listOf().fieldOf("input").forGetter(page -> Arrays.asList(page.inputStacks))
+    ).apply(instance, CraftingBookPage::new));
+
     private final ItemStack outputStack;
     private final ItemStack[] inputStacks;
 
@@ -31,6 +46,22 @@ public class CraftingBookPage extends BookPage {
             inputStacks[i] = inputItems[i].getDefaultStack();
         }
         this.inputStacks = inputStacks;
+    }
+
+    public CraftingBookPage(JsonObject json) {
+        super(new Identifier(MODID, "textures/gui/book/pages/crafting_page.png"));
+        JsonElement outputJson = json.get("output");
+        outputStack = outputJson.isJsonPrimitive() ? Registry.ITEM.get(new Identifier(outputJson.getAsString())).getDefaultStack() : new ItemStack(Registry.ITEM.get(new Identifier(outputJson.getAsJsonObject().get("item").getAsString())), outputJson.getAsJsonObject().get("count").getAsInt());
+        JsonArray array = json.get("input").getAsJsonArray();
+        inputStacks = new ItemStack[array.size()];
+        for (int i = 0; i < array.size(); i++) {
+            inputStacks[i] = Registry.ITEM.get(new Identifier(array.get(i).getAsString())).getDefaultStack();
+        }
+
+    }
+
+    public CraftingBookPage(ItemStack output, List<ItemStack> input) {
+        this(output, input.toArray(ItemStack[]::new));
     }
 
     public static CraftingBookPage fullPage(Item output, Item input) {
@@ -145,5 +176,10 @@ public class CraftingBookPage extends BookPage {
         }
 
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 209, guiTop + 126, mouseX, mouseY);
+    }
+
+    @Override
+    public MalumPageTypeRegistry.PageType type() {
+        return MalumPageTypeRegistry.CRAFTING_PAGE_TYPE;
     }
 }

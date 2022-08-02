@@ -1,0 +1,31 @@
+{
+  "name": "aqueous_rite",
+  "icon": "malum:aqueous_spirit",
+  "x_offset": 1,
+  "y_offset": 10,
+  "entry_type": "malum:entry_object",
+  "pages": [
+    {
+      "type": "malum:double_headline",
+      "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
+      "first_description_translation_key": "malum.gui.book.entry.page.text.aqueous_rite",
+      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
+      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_aqueous_rite"
+    },
+    {
+      "type": "malum:rite",
+      "rite": "malum:aqueous_rite"
+    },
+    {
+      "type": "malum:double_headline",
+      "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
+      "first_description_translation_key": "malum.gui.book.entry.page.text.eldritch_aqueous_rite",
+      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
+      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_aqueous_rite"
+    },
+    {
+      "type": "malum:rite",
+      "rite": "malum:eldritch_aqueous_rite"
+    }
+  ]
+}

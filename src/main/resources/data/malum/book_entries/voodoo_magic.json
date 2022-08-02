@@ -1,0 +1,18 @@
+{
+  "name": "voodoo_magic",
+  "icon": "malum:poppet",
+  "x_offset": 6,
+  "y_offset": 10,
+  "entry_type": "malum:important_entry_object",
+  "pages": [
+    {
+      "type": "malum:headline",
+      "headline_translation_key": "malum.gui.book.entry.page.headline.voodoo_magic",
+      "description_translation_key": "malum.gui.book.entry.page.text.voodoo_magic"
+    },
+    {
+      "type": "malum:spirit_infusion",
+      "recipe": "malum:spirit_infusion/poppet"
+    }
+  ]
+}
