@@ -1,18 +1,28 @@
 {
-  "name": "soul_stained_scythe",
-  "icon": "malum:soul_stained_steel_scythe",
-  "x_offset": -4,
-  "y_offset": 5,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.soul_stained_scythe",
-      "description_translation_key": "malum.gui.book.entry.page.text.soul_stained_scythe"
+      "description_translation_key": "malum.gui.book.entry.page.text.soul_stained_scythe",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/soul_stained_steel_scythe"
+      "recipe": "malum:spirit_infusion/soul_stained_steel_scythe",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.soul_stained_scythe",
+  "description_translation_key": "malum.gui.book.entry.soul_stained_scythe.description",
+  "name": "soul_stained_scythe",
+  "icon_stacks": [
+    {
+      "id": "malum:soul_stained_steel_scythe",
+      "Count": 1,
+      "tag": {
+        "Damage": 0
+      }
+    }
+  ],
+  "x_offset": -4,
+  "y_offset": 5
 }

@@ -1,84 +1,199 @@
 {
-  "name": "soulwood",
-  "icon": "malum:soulwood_sapling",
-  "x_offset": 0,
-  "y_offset": 13,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.soulwood",
-      "description_translation_key": "malum.gui.book.entry.page.text.soulwood_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.soulwood_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.soulwood_b"
+      "translation_key": "malum.gui.book.entry.page.text.soulwood_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:soulwood_item_pedestal",
-      "input": [
-        "malum:soulwood_planks_slab",
-        "malum:soulwood_planks_slab",
-        "malum:soulwood_planks_slab",
-        "minecraft:air",
-        "malum:soulwood_planks",
-        "minecraft:air",
-        "malum:soulwood_planks_slab",
-        "malum:soulwood_planks_slab",
-        "malum:soulwood_planks_slab"
-      ]
-    },
-    {
-      "type": "malum:crafting",
-      "output": "malum:soulwood_item_stand",
-      "input": [
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "malum:soulwood_planks_slab",
-        "malum:soulwood_planks_slab",
-        "malum:soulwood_planks_slab",
-        "malum:soulwood_planks",
-        "malum:soulwood_planks",
-        "malum:soulwood_planks"
-      ]
-    },
-    {
-      "type": "malum:smelting",
-      "input": "malum:soulwood_log",
-      "output": "malum:arcane_charcoal"
-    },
-    {
-      "type": "malum:crafting",
-      "output": "malum:block_of_arcane_charcoal",
-      "input": [
-        "malum:arcane_charcoal",
-        "malum:arcane_charcoal",
-        "malum:arcane_charcoal",
-        "malum:arcane_charcoal",
-        "malum:arcane_charcoal",
-        "malum:arcane_charcoal",
-        "malum:arcane_charcoal",
-        "malum:arcane_charcoal",
-        "malum:arcane_charcoal"
-      ]
-    },
-    {
-      "type": "malum:crafting",
       "output": {
-        "item": "malum:unholy_sapball",
-        "count": 3
+        "id": "malum:soulwood_item_pedestal",
+        "Count": 1
       },
       "input": [
-        "minecraft:slime_ball",
-        "malum:unholy_sap"
-      ]
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:smelting",
-      "input": "malum:unholy_sap",
-      "output": "malum:unholy_syrup"
+      "output": {
+        "id": "malum:soulwood_item_stand",
+        "Count": 1
+      },
+      "input": [
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks_slab",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks",
+          "Count": 1
+        },
+        {
+          "id": "malum:soulwood_planks",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
+    },
+    {
+      "input": {
+        "id": "malum:soulwood_log",
+        "Count": 1
+      },
+      "output": {
+        "id": "malum:arcane_charcoal",
+        "Count": 1
+      },
+      "type": "malum:smelting"
+    },
+    {
+      "output": {
+        "id": "malum:block_of_arcane_charcoal",
+        "Count": 1
+      },
+      "input": [
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        },
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        },
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        },
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        },
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        },
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        },
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        },
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        },
+        {
+          "id": "malum:arcane_charcoal",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
+    },
+    {
+      "output": {
+        "id": "malum:unholy_sapball",
+        "Count": 3
+      },
+      "input": [
+        {
+          "id": "minecraft:slime_ball",
+          "Count": 1
+        },
+        {
+          "id": "malum:unholy_sap",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
+    },
+    {
+      "input": {
+        "id": "malum:unholy_sap",
+        "Count": 1
+      },
+      "output": {
+        "id": "malum:unholy_syrup",
+        "Count": 1
+      },
+      "type": "malum:smelting"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.soulwood",
+  "description_translation_key": "malum.gui.book.entry.soulwood.description",
+  "name": "soulwood",
+  "icon_stacks": [
+    {
+      "id": "malum:soulwood_sapling",
+      "Count": 1
+    }
+  ],
+  "x_offset": 0,
+  "y_offset": 13
 }

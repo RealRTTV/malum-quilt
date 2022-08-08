@@ -1,18 +1,25 @@
 {
-  "name": "necklace_of_the_mystic_mirror",
-  "icon": "malum:necklace_of_the_mystic_mirror",
-  "x_offset": -6,
-  "y_offset": 5,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.necklace_of_the_mystic_mirror",
-      "description_translation_key": "malum.gui.book.entry.page.text.necklace_of_the_mystic_mirror"
+      "description_translation_key": "malum.gui.book.entry.page.text.necklace_of_the_mystic_mirror",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/necklace_of_the_mystic_mirror"
+      "recipe": "malum:spirit_infusion/necklace_of_the_mystic_mirror",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.necklace_of_the_mystic_mirror",
+  "description_translation_key": "malum.gui.book.entry.necklace_of_the_mystic_mirror.description",
+  "name": "necklace_of_the_mystic_mirror",
+  "icon_stacks": [
+    {
+      "id": "malum:necklace_of_the_mystic_mirror",
+      "Count": 1
+    }
+  ],
+  "x_offset": -6,
+  "y_offset": 5
 }

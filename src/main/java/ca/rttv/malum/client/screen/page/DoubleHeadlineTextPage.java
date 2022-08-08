@@ -2,7 +2,6 @@ package ca.rttv.malum.client.screen.page;
 
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
 import ca.rttv.malum.registry.MalumPageTypeRegistry;
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.MinecraftClient;
@@ -37,28 +36,20 @@ public class DoubleHeadlineTextPage extends BookPage {
         this(firstHeadlineTranslationKey, firstDescriptionTranslationKey, "corrupted_" + firstHeadlineTranslationKey, "corrupted_" + firstDescriptionTranslationKey);
     }
 
-    public DoubleHeadlineTextPage(JsonObject json) {
-        super(new Identifier(MODID, "textures/gui/book/pages/spirit_rite_text_page.png"));
-        firstHeadlineTranslationKey = json.get("first_headline_translation_key").getAsString();
-        firstDescriptionTranslationKey = json.get("first_description_translation_key").getAsString();
-        secondHeadlineTranslationKey = json.get("second_headline_translation_key").getAsString();
-        secondDescriptionTranslationKey = json.get("second_description_translation_key").getAsString();
-    }
-
     public String firstHeadlineTranslationKey() {
-        return "malum.gui.book.entry.page.headline." + firstHeadlineTranslationKey; // todo, fix
+        return firstHeadlineTranslationKey;
     }
 
     public String firstDescriptionTranslationKey() {
-        return "malum.gui.book.entry.page.text." + firstDescriptionTranslationKey; // todo, fix
+        return firstDescriptionTranslationKey;
     }
 
     public String secondHeadlineTranslationKey() {
-        return "malum.gui.book.entry.page.headline." + secondHeadlineTranslationKey; // todo, fix
+        return secondHeadlineTranslationKey;
     }
 
     public String secondDescriptionTranslationKey() {
-        return "malum.gui.book.entry.page.text." + secondDescriptionTranslationKey; // todo, fix
+        return secondDescriptionTranslationKey;
     }
 
     @Override

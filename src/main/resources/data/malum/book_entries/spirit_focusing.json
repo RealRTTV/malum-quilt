@@ -1,26 +1,33 @@
 {
-  "name": "spirit_focusing",
-  "icon": "malum:spirit_crucible",
-  "x_offset": 7,
-  "y_offset": 6,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.spirit_focusing",
-      "description_translation_key": "malum.gui.book.entry.page.text.spirit_focusing_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.spirit_focusing_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.spirit_focusing_b"
+      "translation_key": "malum.gui.book.entry.page.text.spirit_focusing_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/spirit_crucible"
+      "recipe": "malum:spirit_infusion/spirit_crucible",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/alchemical_impetus"
+      "recipe": "malum:spirit_infusion/alchemical_impetus",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.spirit_focusing",
+  "description_translation_key": "malum.gui.book.entry.spirit_focusing.description",
+  "name": "spirit_focusing",
+  "icon_stacks": [
+    {
+      "id": "malum:spirit_crucible",
+      "Count": 1
+    }
+  ],
+  "x_offset": 7,
+  "y_offset": 6
 }

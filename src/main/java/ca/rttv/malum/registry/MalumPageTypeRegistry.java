@@ -12,7 +12,9 @@ import static ca.rttv.malum.Malum.MODID;
 public interface MalumPageTypeRegistry {
     RegistryKey<Registry<PageType>> PAGE_TYPE_KEY = RegistryKey.ofRegistry(new Identifier(MODID, "page_type"));
     Registry<PageType> PAGE_TYPE = Registry.registerSimple(PAGE_TYPE_KEY, registry -> MalumPageTypeRegistry.CRAFTING_PAGE_TYPE);
+    Codec<BookPage> CODEC = PAGE_TYPE.getCodec().dispatch(BookPage::type, PageType::codec);
 
+    @SuppressWarnings("ClassCanBeRecord") // what if a frendo wants to make their own page type which works differently?
     class PageType {
         private final Codec<? extends BookPage> codec;
 

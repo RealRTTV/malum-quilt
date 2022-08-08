@@ -10,6 +10,7 @@ import ca.rttv.malum.client.render.entity.FloatingItemEntityRenderer;
 import ca.rttv.malum.client.render.entity.ScytheBoomerangEntityRenderer;
 import ca.rttv.malum.client.render.item.ScytheItemRenderer;
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
+import ca.rttv.malum.network.packet.s2c.play.ProgressionBookEntriesS2CPacket;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumItemRegistry;
 import ca.rttv.malum.registry.MalumParticleEmitterRegistry;
@@ -60,7 +61,8 @@ public final class MalumClient implements ClientModInitializer {
             });
         }
 
-        ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "malumparticles2cpacket"), (client, handler, buf, responceSender) -> new MalumParticleS2CPacket(buf).apply(client.getNetworkHandler()));
+        ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "malumparticles2cpacket"), (client, handler, buf, responceSender) -> new MalumParticleS2CPacket(buf).apply(handler));
+        ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "progressionbookentriess2cpacket"), (client, handler, buf, responceSender) -> new ProgressionBookEntriesS2CPacket(buf).apply(handler));
     }
     private void registerColors() {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {

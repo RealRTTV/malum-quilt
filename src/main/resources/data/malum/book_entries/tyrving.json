@@ -1,26 +1,36 @@
 {
-  "name": "tyrving",
-  "icon": "malum:tyrving",
-  "x_offset": -1,
-  "y_offset": 15,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.tyrving",
-      "description_translation_key": "malum.gui.book.entry.page.text.tyrving_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.tyrving_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/tyrving"
+      "recipe": "malum:spirit_infusion/tyrving",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.tyrving_b"
+      "translation_key": "malum.gui.book.entry.page.text.tyrving_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:spirit_repair",
-      "recipe": "malum:spirit_crucible/repair/tyrving"
+      "recipe": "malum:spirit_crucible/repair/tyrving",
+      "type": "malum:spirit_repair"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.tyrving",
+  "description_translation_key": "malum.gui.book.entry.tyrving.description",
+  "name": "tyrving",
+  "icon_stacks": [
+    {
+      "id": "malum:tyrving",
+      "Count": 1,
+      "tag": {
+        "Damage": 0
+      }
+    }
+  ],
+  "x_offset": -1,
+  "y_offset": 15
 }

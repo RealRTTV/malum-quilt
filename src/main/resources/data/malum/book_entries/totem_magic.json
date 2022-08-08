@@ -1,26 +1,33 @@
 {
-  "name": "totem_magic",
-  "icon": "malum:runewood_totem_base",
-  "x_offset": 0,
-  "y_offset": 9,
-  "entry_type": "malum:important_entry_object",
+  "object_supplier": "malum:important_entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.totem_magic",
-      "description_translation_key": "malum.gui.book.entry.page.text.totem_magic_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.totem_magic_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.totem_magic_b"
+      "translation_key": "malum.gui.book.entry.page.text.totem_magic_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.totem_magic_c"
+      "translation_key": "malum.gui.book.entry.page.text.totem_magic_c",
+      "type": "malum:text"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/runewood_totem_base"
+      "recipe": "malum:spirit_infusion/runewood_totem_base",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.totem_magic",
+  "description_translation_key": "malum.gui.book.entry.totem_magic.description",
+  "name": "totem_magic",
+  "icon_stacks": [
+    {
+      "id": "malum:runewood_totem_base",
+      "Count": 1
+    }
+  ],
+  "x_offset": 0,
+  "y_offset": 9
 }

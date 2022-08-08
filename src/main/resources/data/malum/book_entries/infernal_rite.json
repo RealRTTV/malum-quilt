@@ -1,31 +1,38 @@
 {
-  "name": "infernal_rite",
-  "icon": "malum:infernal_spirit",
-  "x_offset": 1,
-  "y_offset": 12,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:double_headline",
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.infernal_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
-      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_infernal_rite"
+      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_infernal_rite",
+      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_infernal_rite",
+      "type": "malum:double_headline"
     },
     {
-      "type": "malum:rite",
-      "rite": "malum:infernal_rite"
+      "rite": "malum:infernal_rite",
+      "type": "malum:rite"
     },
     {
-      "type": "malum:double_headline",
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.eldritch_infernal_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
-      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_infernal_rite"
+      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_infernal_rite",
+      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_infernal_rite",
+      "type": "malum:double_headline"
     },
     {
-      "type": "malum:rite",
-      "rite": "malum:eldritch_infernal_rite"
+      "rite": "malum:eldritch_infernal_rite",
+      "type": "malum:rite"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.infernal_rite",
+  "description_translation_key": "malum.gui.book.entry.infernal_rite.description",
+  "name": "infernal_rite",
+  "icon_stacks": [
+    {
+      "id": "malum:infernal_spirit",
+      "Count": 1
+    }
+  ],
+  "x_offset": 1,
+  "y_offset": 12
 }

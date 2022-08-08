@@ -1,6 +1,7 @@
 package ca.rttv.malum.client.screen.page;
 
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
+import ca.rttv.malum.registry.MalumPageTypeRegistry;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -33,26 +34,15 @@ public class SpiritTextPage extends BookPage {
     }
 
     public SpiritTextPage(String headlineTranslationKey, String descriptionTranslationKey, Item spirit) {
-        this(headlineTranslationKey, descriptionTranslationKey, spirit.getDefaultStack());
-    }
-
-    public SpiritTextPage(JsonObject json) {
-        super(new Identifier(MODID, "textures/gui/book/pages/spirit_page.png"));
-        headlineTranslationKey = json.get("headline_translation_key").getAsString();
-        descriptionTranslationKey = json.get("headline_translation_key").getAsString();
-        if (json.get("output").isJsonObject()) {
-            spiritStack = new ItemStack(Registry.ITEM.get(new Identifier(json.getAsJsonObject("item").get("item").getAsString())), json.getAsJsonObject("item").get("count").getAsInt());
-        } else {
-            spiritStack = Registry.ITEM.get(new Identifier(json.get("output").getAsString())).getDefaultStack();
-        }
+        this("malum.gui.book.entry.page.headline." + headlineTranslationKey, "malum.gui.book.entry.page.text." + descriptionTranslationKey, spirit.getDefaultStack());
     }
 
     public String headlineTranslationKey() {
-        return "malum.gui.book.entry.page.headline." + headlineTranslationKey;
+        return headlineTranslationKey;
     }
 
     public String descriptionTranslationKey() {
-        return "malum.gui.book.entry.page.text." + descriptionTranslationKey;
+        return descriptionTranslationKey;
     }
 
     @Override
@@ -69,5 +59,10 @@ public class SpiritTextPage extends BookPage {
         ProgressionBookScreen.renderText(matrices, text, guiLeft + 218 - client.textRenderer.getWidth(text.getString()) / 2, guiTop + 10);
         ProgressionBookScreen.renderWrappingText(matrices, descriptionTranslationKey(), guiLeft + 158, guiTop + 79, 125);
         ProgressionBookScreen.renderItem(matrices, spiritStack, guiLeft + 209, guiTop + 44, mouseX, mouseY);
+    }
+
+    @Override
+    public MalumPageTypeRegistry.PageType type() {
+        return MalumPageTypeRegistry.SPIRIT_TEXT_PAGE_TYPE;
     }
 }

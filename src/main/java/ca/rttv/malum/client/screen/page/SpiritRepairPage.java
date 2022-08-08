@@ -2,8 +2,8 @@ package ca.rttv.malum.client.screen.page;
 
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
 import ca.rttv.malum.recipe.SpiritRepairRecipe;
+import ca.rttv.malum.registry.MalumPageTypeRegistry;
 import ca.rttv.malum.util.helper.DataHelper;
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.MinecraftClient;
@@ -33,15 +33,6 @@ public class SpiritRepairPage extends BookPage {
             return;
         }
         this.recipe = SpiritRepairRecipe.getRecipe(client.world, predicate);
-    }
-
-    public SpiritRepairPage(SpiritRepairRecipe recipe) {
-        super(DataHelper.prefix("textures/gui/book/pages/spirit_repair_page.png"));
-        this.recipe = recipe;
-    }
-
-    public SpiritRepairPage(JsonObject json) {
-        this(new Identifier(json.get("recipe").getAsString()));
     }
 
     public SpiritRepairPage(Identifier id) {
@@ -116,5 +107,10 @@ public class SpiritRepairPage extends BookPage {
         if (recipe.spirits().isPresent()) {
             ProgressionBookScreen.renderComponents(matrices, recipe.spirits(), guiLeft + 207, guiTop + 16, mouseX, mouseY, false);
         }
+    }
+
+    @Override
+    public MalumPageTypeRegistry.PageType type() {
+        return MalumPageTypeRegistry.SPIRIT_REPAIR_PAGE_TYPE;
     }
 }

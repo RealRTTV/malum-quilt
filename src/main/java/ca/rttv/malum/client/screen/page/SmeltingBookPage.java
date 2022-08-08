@@ -38,12 +38,6 @@ public class SmeltingBookPage extends BookPage {
         this(inputItem.getDefaultStack(), outputItem.getDefaultStack());
     }
 
-    public SmeltingBookPage(JsonObject json) {
-        super(new Identifier(MODID, "textures/gui/book/pages/smelting_page.png"));
-        inputStack = Registry.ITEM.get(new Identifier(json.get("input").getAsString())).getDefaultStack();
-        outputStack = json.get("output").isJsonObject() ? new ItemStack(Registry.ITEM.get(new Identifier(json.get("output").getAsString())), json.get("count").getAsInt()) : Registry.ITEM.get(new Identifier(json.get("output").getAsString())).getDefaultStack();
-    }
-
     public static SmeltingBookPage fromInput(Item input) {
         final MinecraftClient client = MinecraftClient.getInstance();
         if (client == null) {

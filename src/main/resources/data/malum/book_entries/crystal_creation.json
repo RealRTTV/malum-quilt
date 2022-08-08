@@ -1,30 +1,37 @@
 {
-  "name": "crystal_creation",
-  "icon": "minecraft:quartz",
-  "x_offset": 9,
-  "y_offset": 5,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.crystal_creation",
-      "description_translation_key": "malum.gui.book.entry.page.text.crystal_creation"
+      "description_translation_key": "malum.gui.book.entry.page.text.crystal_creation",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_crucible",
-      "recipe": "malum:spirit_crucible/quartz"
+      "recipe": "malum:spirit_crucible/quartz",
+      "type": "malum:spirit_crucible"
     },
     {
-      "type": "malum:spirit_crucible",
-      "recipe": "malum:spirit_crucible/amethyst_shard"
+      "recipe": "malum:spirit_crucible/amethyst_shard",
+      "type": "malum:spirit_crucible"
     },
     {
-      "type": "malum:spirit_crucible",
-      "recipe": "malum:spirit_crucible/blazing_quartz"
+      "recipe": "malum:spirit_crucible/blazing_quartz",
+      "type": "malum:spirit_crucible"
     },
     {
-      "type": "malum:spirit_crucible",
-      "recipe": "malum:spirit_crucible/prismarine_crystals"
+      "recipe": "malum:spirit_crucible/prismarine_crystals",
+      "type": "malum:spirit_crucible"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.crystal_creation",
+  "description_translation_key": "malum.gui.book.entry.crystal_creation.description",
+  "name": "crystal_creation",
+  "icon_stacks": [
+    {
+      "id": "minecraft:quartz",
+      "Count": 1
+    }
+  ],
+  "x_offset": 9,
+  "y_offset": 5
 }

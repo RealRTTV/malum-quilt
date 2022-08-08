@@ -41,10 +41,6 @@ public class SpiritCruciblePage extends BookPage {
         this.recipe = recipe;
     }
 
-    public SpiritCruciblePage(JsonObject json) {
-        this(new Identifier(json.get("recipe").getAsString()));
-    }
-
     public SpiritCruciblePage(Identifier id) {
         super(new Identifier(MODID, "textures/gui/book/pages/spirit_crucible_page.png"));
         MinecraftClient client = MinecraftClient.getInstance();

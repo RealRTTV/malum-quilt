@@ -1,19 +1,29 @@
 {
-  "name": "eldritch_arcana",
-  "icon": "malum:eldritch_spirit",
-  "x_offset": 0,
-  "y_offset": 7,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:item",
       "headline_translation_key": "malum.gui.book.entry.page.headline.eldritch_spirit",
       "description_translation_key": "malum.gui.book.entry.page.text.eldritch_spirit_a",
-      "output": "malum:eldritch_spirit"
+      "item": {
+        "id": "malum:eldritch_spirit",
+        "Count": 1
+      },
+      "type": "malum:item"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.eldritch_spirit_b"
+      "translation_key": "malum.gui.book.entry.page.text.eldritch_spirit_b",
+      "type": "malum:text"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.eldritch_arcana",
+  "description_translation_key": "malum.gui.book.entry.eldritch_arcana.description",
+  "name": "eldritch_arcana",
+  "icon_stacks": [
+    {
+      "id": "malum:eldritch_spirit",
+      "Count": 1
+    }
+  ],
+  "x_offset": 0,
+  "y_offset": 7
 }

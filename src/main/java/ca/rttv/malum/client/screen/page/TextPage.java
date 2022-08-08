@@ -23,13 +23,8 @@ public class TextPage extends BookPage {
         this.translationKey = translationKey;
     }
 
-    public TextPage(JsonObject json) {
-        super(new Identifier(MODID, "textures/gui/book/pages/blank_page.png"));
-        translationKey = json.get("description").getAsString();
-    }
-
     public String translationKey() {
-        return "malum.gui.book.entry.page.text." + translationKey;
+        return translationKey;
     }
 
     @Override

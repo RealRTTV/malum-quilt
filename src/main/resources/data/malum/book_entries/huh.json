@@ -1,29 +1,66 @@
 {
-  "name": "huh",
-  "icon": "malum:the_device",
-  "x_offset": 0,
-  "y_offset": -10,
-  "entry_type": "malum:vanishing_entry_object",
+  "object_supplier": "malum:vanishing_entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.the_device",
-      "description_translation_key": "malum.gui.book.entry.page.text.the_device"
+      "description_translation_key": "malum.gui.book.entry.page.text.the_device",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:the_device",
+      "output": {
+        "id": "malum:the_device",
+        "Count": 1
+      },
       "input": [
-        "malum:twisted_rock",
-        "malum:tainted_rock",
-        "malum:twisted_rock",
-        "malum:tainted_rock",
-        "malum:twisted_rock",
-        "malum:tainted_rock",
-        "malum:twisted_rock",
-        "malum:tainted_rock",
-        "malum:twisted_rock"
-      ]
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.huh",
+  "description_translation_key": "malum.gui.book.entry.huh.description",
+  "name": "huh",
+  "icon_stacks": [
+    {
+      "id": "malum:the_device",
+      "Count": 1
+    }
+  ],
+  "x_offset": 0,
+  "y_offset": -10
 }

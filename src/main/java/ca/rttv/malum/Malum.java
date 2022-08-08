@@ -4,6 +4,7 @@ import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.config.ClientConfig;
 import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.enchantment.ReboundEnchantment;
+import ca.rttv.malum.network.packet.s2c.play.ProgressionBookEntriesS2CPacket;
 import ca.rttv.malum.registry.*;
 import ca.rttv.malum.util.listener.ProgressionBookEntriesReloadListener;
 import ca.rttv.malum.util.listener.SpiritDataReloadListener;
@@ -18,6 +19,8 @@ import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
+import org.quiltmc.qsl.networking.api.ServerPlayConnectionEvents;
+import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
 import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
 
@@ -62,20 +65,14 @@ public final class Malum implements ModInitializer {
         UseItemCallback.EVENT.register(ReboundEnchantment::onRightClickItem);
 
         ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new SpiritDataReloadListenerFabricImpl());
-        ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new ProgressionBookEntriesReloadListenerFabricImpl());
+        ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new ProgressionBookEntriesReloadListener());
+        ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> ServerPlayNetworking.send(handler.player, new Identifier(MODID, "progressionbookentriess2cpacket"), new ProgressionBookEntriesS2CPacket(ProgressionBookEntriesReloadListener.SERVER_ENTRIES).toBuf())));
     }
 
     public static class SpiritDataReloadListenerFabricImpl extends SpiritDataReloadListener implements IdentifiableResourceReloader {
         @Override
         public Identifier getQuiltId() {
             return new Identifier(MODID, "spirit_data");
-        }
-    }
-
-    public static class ProgressionBookEntriesReloadListenerFabricImpl extends ProgressionBookEntriesReloadListener implements IdentifiableResourceReloader {
-        @Override
-        public Identifier getQuiltId() {
-            return new Identifier(MODID, "book_entries");
         }
     }
 }

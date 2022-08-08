@@ -1,22 +1,29 @@
 {
-  "name": "spirit_magics",
-  "icon": "minecraft:soul_sand",
-  "x_offset": 0,
-  "y_offset": 1,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.spirit_magics",
-      "description_translation_key": "malum.gui.book.entry.page.text.spirit_magics_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.spirit_magics_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.spirit_magics_b"
+      "translation_key": "malum.gui.book.entry.page.text.spirit_magics_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.spirit_magics_c"
+      "translation_key": "malum.gui.book.entry.page.text.spirit_magics_c",
+      "type": "malum:text"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.spirit_magics",
+  "description_translation_key": "malum.gui.book.entry.spirit_magics.description",
+  "name": "spirit_magics",
+  "icon_stacks": [
+    {
+      "id": "minecraft:soul_sand",
+      "Count": 1
+    }
+  ],
+  "x_offset": 0,
+  "y_offset": 1
 }

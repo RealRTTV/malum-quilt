@@ -1,22 +1,29 @@
 {
-  "name": "ring_of_prowess",
-  "icon": "malum:ring_of_prowess",
-  "x_offset": -7,
-  "y_offset": 6,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.ring_of_prowess",
-      "description_translation_key": "malum.gui.book.entry.page.text.ring_of_prowess_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.ring_of_prowess_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.ring_of_prowess_b"
+      "translation_key": "malum.gui.book.entry.page.text.ring_of_prowess_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/ring_of_prowess"
+      "recipe": "malum:spirit_infusion/ring_of_prowess",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.ring_of_prowess",
+  "description_translation_key": "malum.gui.book.entry.ring_of_prowess.description",
+  "name": "ring_of_prowess",
+  "icon_stacks": [
+    {
+      "id": "malum:ring_of_prowess",
+      "Count": 1
+    }
+  ],
+  "x_offset": -7,
+  "y_offset": 6
 }

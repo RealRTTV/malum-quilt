@@ -1,18 +1,25 @@
 {
-  "name": "magebane_belt",
-  "icon": "malum:magebane_belt",
-  "x_offset": 1,
-  "y_offset": 15,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.magebane_belt",
-      "description_translation_key": "malum.gui.book.entry.page.text.magebane_belt"
+      "description_translation_key": "malum.gui.book.entry.page.text.magebane_belt",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/magebane_belt"
+      "recipe": "malum:spirit_infusion/magebane_belt",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.magebane_belt",
+  "description_translation_key": "malum.gui.book.entry.magebane_belt.description",
+  "name": "magebane_belt",
+  "icon_stacks": [
+    {
+      "id": "malum:magebane_belt",
+      "Count": 1
+    }
+  ],
+  "x_offset": 1,
+  "y_offset": 15
 }

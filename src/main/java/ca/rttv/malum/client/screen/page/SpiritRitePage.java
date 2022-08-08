@@ -1,6 +1,7 @@
 package ca.rttv.malum.client.screen.page;
 
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
+import ca.rttv.malum.registry.MalumPageTypeRegistry;
 import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.rite.Rite;
 import com.google.gson.JsonObject;
@@ -26,11 +27,6 @@ public class SpiritRitePage extends BookPage {
         this.rite = rite;
     }
 
-    public SpiritRitePage(JsonObject json) {
-        super(new Identifier(MODID, "textures/gui/book/pages/spirit_rite_page.png"));
-        rite = MalumRiteRegistry.RITE.get(new Identifier(json.get("rite").getAsString()));
-    }
-
     @Override
     public void renderLeft(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
         renderRite(matrices, guiLeft + 67, guiTop + 123, mouseX, mouseY, rite.items());
@@ -39,6 +35,11 @@ public class SpiritRitePage extends BookPage {
     @Override
     public void renderRight(MinecraftClient client, MatrixStack matrices, int guiTop, int guiLeft, int mouseX, int mouseY, float tickDelta) {
         renderRite(matrices, guiLeft + 209, guiTop + 123, mouseX, mouseY, rite.items());
+    }
+
+    @Override
+    public MalumPageTypeRegistry.PageType type() {
+        return MalumPageTypeRegistry.SPIRIT_RITE_PAGE_TYPE;
     }
 
     public void renderRite(MatrixStack matrices, int left, int top, int mouseX, int mouseY, Item[] spirits) {

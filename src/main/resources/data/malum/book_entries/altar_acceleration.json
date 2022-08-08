@@ -1,27 +1,34 @@
 {
-  "name": "altar_acceleration",
-  "icon": "malum:runewood_obelisk",
-  "x_offset": -1,
-  "y_offset": 8,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.runewood_obelisk",
-      "description_translation_key": "malum.gui.book.entry.page.text.runewood_obelisk"
+      "description_translation_key": "malum.gui.book.entry.page.text.runewood_obelisk",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/runewood_obelisk"
+      "recipe": "malum:spirit_infusion/runewood_obelisk",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.brilliant_obelisk",
-      "description_translation_key": "malum.gui.book.entry.page.text.brilliant_obelisk"
+      "description_translation_key": "malum.gui.book.entry.page.text.brilliant_obelisk",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/brilliant_obelisk"
+      "recipe": "malum:spirit_infusion/brilliant_obelisk",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.altar_acceleration",
+  "description_translation_key": "malum.gui.book.entry.altar_acceleration.description",
+  "name": "altar_acceleration",
+  "icon_stacks": [
+    {
+      "id": "malum:runewood_obelisk",
+      "Count": 1
+    }
+  ],
+  "x_offset": -1,
+  "y_offset": 8
 }

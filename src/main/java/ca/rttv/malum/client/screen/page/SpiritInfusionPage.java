@@ -3,6 +3,7 @@ package ca.rttv.malum.client.screen.page;
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
 import ca.rttv.malum.recipe.IngredientWithCount;
 import ca.rttv.malum.recipe.SpiritInfusionRecipe;
+import ca.rttv.malum.registry.MalumPageTypeRegistry;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -42,10 +43,6 @@ public class SpiritInfusionPage extends BookPage {
     public SpiritInfusionPage(SpiritInfusionRecipe recipe) {
         super(new Identifier(MODID, "textures/gui/book/pages/spirit_infusion_page.png"));
         this.recipe = recipe;
-    }
-
-    public SpiritInfusionPage(JsonObject json) {
-        this(new Identifier(json.get("recipe").getAsString()));
     }
 
     public SpiritInfusionPage(Identifier id) {
@@ -106,6 +103,11 @@ public class SpiritInfusionPage extends BookPage {
         renderItems(matrices, guiLeft + 157, guiTop + 51, mouseX, mouseY, Arrays.asList(recipe.spirits().getEntries()));
         ProgressionBookScreen.renderItem(matrices, inputStack, guiLeft + 209, guiTop + 59, mouseX, mouseY);
         ProgressionBookScreen.renderItem(matrices, outputStack, guiLeft + 209, guiTop + 126, mouseX, mouseY);
+    }
+
+    @Override
+    public MalumPageTypeRegistry.PageType type() {
+        return MalumPageTypeRegistry.SPIRIT_INFUSION_PAGE_TYPE;
     }
 
     public void renderIngredients(MatrixStack matrices, int left, int top, int mouseX, int mouseY, IngredientWithCount ingredients) {

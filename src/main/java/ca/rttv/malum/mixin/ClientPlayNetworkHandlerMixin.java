@@ -1,6 +1,8 @@
 package ca.rttv.malum.mixin;
 
 import ca.rttv.malum.client.init.MalumParticleRegistry;
+import ca.rttv.malum.client.screen.ProgressionBookScreen;
+import ca.rttv.malum.client.screen.page.BookEntry;
 import ca.rttv.malum.duck.MalumClientPlayPacketListener;
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.registry.MalumItemRegistry;
@@ -18,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.awt.*;
+import java.util.List;
 
 @Mixin(ClientPlayNetworkHandler.class)
 final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListener {
@@ -46,6 +49,12 @@ final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListen
                 .enableNoClip()
                 .randomMotion(0.025f, 0.025f)
                 .repeat(world, packet.x(), packet.y(), packet.z(), 20);
+    }
+
+    @Override
+    public void malum$onProgressionBookEntries(List<BookEntry> entries) {
+        ProgressionBookScreen.entries.clear();
+        ProgressionBookScreen.entries.addAll(entries);
     }
 
     @Inject(method = "getActiveTotemOfUndying", at = @At("HEAD"), cancellable = true)

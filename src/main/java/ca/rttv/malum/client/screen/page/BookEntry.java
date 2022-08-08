@@ -2,10 +2,12 @@ package ca.rttv.malum.client.screen.page;
 
 import ca.rttv.malum.registry.MalumEntryObjectTypeRegistry;
 import ca.rttv.malum.registry.MalumPageTypeRegistry;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -14,20 +16,38 @@ import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class BookEntry {
+    public static final Codec<BookEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        Codec.STRING.fieldOf("name").forGetter(page -> page.id),
+        ItemStack.CODEC.listOf().fieldOf("icon_stacks").forGetter(page -> Arrays.asList(page.iconStacks)),
+        Codec.INT.fieldOf("x_offset").forGetter(page -> page.xOffset),
+        Codec.INT.fieldOf("y_offset").forGetter(page -> page.yOffset),
+        MalumEntryObjectTypeRegistry.CODEC.fieldOf("object_supplier").forGetter(page -> page.objectSupplier),
+        MalumPageTypeRegistry.CODEC.listOf().fieldOf("pages").forGetter(page -> page.pages),
+        Codec.STRING.fieldOf("translation_key").forGetter(page -> page.translationKey),
+        Codec.STRING.fieldOf("description_translation_key").forGetter(page -> page.descriptionTranslationKey)
+    ).apply(instance, BookEntry::new));
+
     public final ItemStack[] iconStacks;
     public final String id;
     public final int xOffset;
     public final int yOffset;
-    public final ArrayList<BookPage> pages = new ArrayList<>();
-    public EntryObjectSupplier objectSupplier = MalumEntryObjectTypeRegistry.ENTRY_OBJECT;
+    public final List<BookPage> pages;
+    public EntryObjectSupplier objectSupplier;
+    public String translationKey;
+    public String descriptionTranslationKey;
 
     public BookEntry(String id, Item item, int xOffset, int yOffset) {
         this.iconStacks = new ItemStack[]{item.getDefaultStack()};
         this.id = id;
         this.xOffset = xOffset;
         this.yOffset = yOffset;
+        this.pages = new ArrayList<>();
+        this.objectSupplier = MalumEntryObjectTypeRegistry.ENTRY_OBJECT;
+        this.translationKey = "malum.gui.book.entry." + id;
+        this.descriptionTranslationKey = "malum.gui.book.entry." + id + ".description";
     }
 
     public BookEntry(String id, Item[] stacks, int xOffset, int yOffset) {
@@ -35,41 +55,29 @@ public class BookEntry {
         this.id = id;
         this.xOffset = xOffset;
         this.yOffset = yOffset;
+        this.pages = new ArrayList<>();
+        this.objectSupplier = MalumEntryObjectTypeRegistry.ENTRY_OBJECT;
+        this.translationKey = "malum.gui.book.entry." + id;
+        this.descriptionTranslationKey = "malum.gui.book.entry." + id + ".description";
     }
 
-    public BookEntry(JsonObject json) {
-        id = json.get("name").getAsString();
-        JsonElement icons = json.get("icon");
-        if (icons instanceof JsonPrimitive) {
-            iconStacks = new ItemStack[]{Registry.ITEM.get(new Identifier(icons.getAsString())).getDefaultStack()};
-        } else if (icons instanceof JsonArray jsonArray) {
-            iconStacks = new ItemStack[jsonArray.size()];
-            for (int i = 0; i < jsonArray.size(); i++) {
-                iconStacks[i] = Registry.ITEM.get(new Identifier(jsonArray.get(i).getAsString())).getDefaultStack();
-            }
-        } else {
-            throw new IllegalStateException("'icon' element must be of type string or an array of strings");
-        }
-        xOffset = json.get("x_offset").getAsInt();
-        yOffset = json.get("y_offset").getAsInt();
-        objectSupplier = MalumEntryObjectTypeRegistry.ENTRY_OBJECT_SUPPLIER.get(new Identifier(json.get("entry_type").getAsString()));
-        JsonArray pageArray = json.get("pages").getAsJsonArray();
-        pages.ensureCapacity(pageArray.size());
-        pageArray.forEach(pageJson -> {
-            String type = pageJson.getAsJsonObject().get("type").getAsString();
-            MalumPageTypeRegistry.PageType<?> pageType = MalumPageTypeRegistry.PAGE_TYPE.get(new Identifier(type));
-            if (pageType == null) throw new NullPointerException("PageType is not in page registry (the input 'type' " + type + " is not a valid page type)");
-            BookPage page = pageType.create(pageJson.getAsJsonObject());
-            pages.add(page);
-        });
+    public BookEntry(String id, List<ItemStack> iconStacks, int xOffset, int yOffset, EntryObjectSupplier objectSupplier, List<BookPage> pages, String translationKey, String descriptionTranslationKey) {
+        this.id = id;
+        this.iconStacks = iconStacks.toArray(ItemStack[]::new);
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+        this.objectSupplier = objectSupplier;
+        this.pages = pages;
+        this.translationKey = translationKey;
+        this.descriptionTranslationKey = descriptionTranslationKey;
     }
 
     public String translationKey() {
-        return "malum.gui.book.entry." + id; // todo, fix
+        return translationKey;
     }
 
     public String descriptionTranslationKey() {
-        return "malum.gui.book.entry." + id + ".description"; // todo, fix
+        return descriptionTranslationKey;
     }
 
     public BookEntry addPage(BookPage page) {
@@ -89,31 +97,6 @@ public class BookEntry {
     public BookEntry setObjectSupplier(EntryObjectSupplier objectSupplier) {
         this.objectSupplier = objectSupplier;
         return this;
-    }
-
-    public JsonObject serialize() {
-        JsonObject json = new JsonObject();
-        json.addProperty("name", id);
-
-        if (iconStacks.length == 1) {
-            json.addProperty("icon", Registry.ITEM.getId(iconStacks[0].getItem()).toString());
-        } else {
-            JsonArray icons = new JsonArray();
-            for (ItemStack stack : iconStacks) {
-                icons.add(Registry.ITEM.getId(stack.getItem()).toString());
-            }
-            json.add("icon", icons);
-        }
-
-        json.addProperty("x_offset", xOffset);
-        json.addProperty("y_offset", yOffset);
-        json.addProperty("entry_type", MalumEntryObjectTypeRegistry.ENTRY_OBJECT_SUPPLIER.getId(objectSupplier).toString());
-
-        JsonArray pages = new JsonArray();
-        this.pages.forEach(page -> pages.add(page.serialize()));
-
-        json.add("pages", pages);
-        return json;
     }
 
     public interface EntryObjectSupplier {

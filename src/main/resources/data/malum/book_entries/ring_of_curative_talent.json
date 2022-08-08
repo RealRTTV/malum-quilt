@@ -1,18 +1,25 @@
 {
-  "name": "ring_of_curative_talent",
-  "icon": "malum:ring_of_curative_talent",
-  "x_offset": -7,
-  "y_offset": 4,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.ring_of_curative_talent",
-      "description_translation_key": "malum.gui.book.entry.page.text.ring_of_curative_talent"
+      "description_translation_key": "malum.gui.book.entry.page.text.ring_of_curative_talent",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/ring_of_curative_talent"
+      "recipe": "malum:spirit_infusion/ring_of_curative_talent",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.ring_of_curative_talent",
+  "description_translation_key": "malum.gui.book.entry.ring_of_curative_talent.description",
+  "name": "ring_of_curative_talent",
+  "icon_stacks": [
+    {
+      "id": "malum:ring_of_curative_talent",
+      "Count": 1
+    }
+  ],
+  "x_offset": -7,
+  "y_offset": 4
 }

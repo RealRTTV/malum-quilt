@@ -1,37 +1,44 @@
 {
-  "name": "arcane_rite",
-  "icon": "malum:arcane_spirit",
-  "x_offset": 0,
-  "y_offset": 11,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.totem_corruption",
-      "description_translation_key": "malum.gui.book.entry.page.text.totem_corruption_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.totem_corruption_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.totem_corruption_b"
+      "translation_key": "malum.gui.book.entry.page.text.totem_corruption_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:double_headline",
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.arcane_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
-      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_arcane_rite"
+      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_arcane_rite",
+      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_arcane_rite",
+      "type": "malum:double_headline"
     },
     {
-      "type": "malum:rite",
-      "rite": "malum:arcane_rite"
+      "rite": "malum:arcane_rite",
+      "type": "malum:rite"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.totem_corruption_c"
+      "translation_key": "malum.gui.book.entry.page.text.totem_corruption_c",
+      "type": "malum:text"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/soulwood_totem_base"
+      "recipe": "malum:spirit_infusion/soulwood_totem_base",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.arcane_rite",
+  "description_translation_key": "malum.gui.book.entry.arcane_rite.description",
+  "name": "arcane_rite",
+  "icon_stacks": [
+    {
+      "id": "malum:arcane_spirit",
+      "Count": 1
+    }
+  ],
+  "x_offset": 0,
+  "y_offset": 11
 }

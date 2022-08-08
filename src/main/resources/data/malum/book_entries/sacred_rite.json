@@ -1,31 +1,38 @@
 {
-  "name": "sacred_rite",
-  "icon": "malum:sacred_spirit",
-  "x_offset": -2,
-  "y_offset": 11,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:double_headline",
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.sacred_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
-      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_sacred_rite"
+      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_sacred_rite",
+      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_sacred_rite",
+      "type": "malum:double_headline"
     },
     {
-      "type": "malum:rite",
-      "rite": "malum:sacred_rite"
+      "rite": "malum:sacred_rite",
+      "type": "malum:rite"
     },
     {
-      "type": "malum:double_headline",
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.eldritch_sacred_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
-      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_sacred_rite"
+      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_sacred_rite",
+      "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_sacred_rite",
+      "type": "malum:double_headline"
     },
     {
-      "type": "malum:rite",
-      "rite": "malum:eldritch_sacred_rite"
+      "rite": "malum:eldritch_sacred_rite",
+      "type": "malum:rite"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.sacred_rite",
+  "description_translation_key": "malum.gui.book.entry.sacred_rite.description",
+  "name": "sacred_rite",
+  "icon_stacks": [
+    {
+      "id": "malum:sacred_spirit",
+      "Count": 1
+    }
+  ],
+  "x_offset": -2,
+  "y_offset": 11
 }

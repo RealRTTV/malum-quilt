@@ -1,18 +1,25 @@
 {
-  "name": "mirror_magic",
-  "icon": "malum:spectral_lens",
-  "x_offset": -6,
-  "y_offset": 10,
-  "entry_type": "malum:important_entry_object",
+  "object_supplier": "malum:important_entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.mirror_magic",
-      "description_translation_key": "malum.gui.book.entry.page.text.mirror_magic"
+      "description_translation_key": "malum.gui.book.entry.page.text.mirror_magic",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/spectral_lens"
+      "recipe": "malum:spirit_infusion/spectral_lens",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.mirror_magic",
+  "description_translation_key": "malum.gui.book.entry.mirror_magic.description",
+  "name": "mirror_magic",
+  "icon_stacks": [
+    {
+      "id": "malum:spectral_lens",
+      "Count": 1
+    }
+  ],
+  "x_offset": -6,
+  "y_offset": 10
 }

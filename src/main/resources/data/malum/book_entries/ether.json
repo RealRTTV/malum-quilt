@@ -1,125 +1,390 @@
 {
-  "name": "ether",
-  "icon": "malum:ether",
-  "x_offset": 5,
-  "y_offset": 6,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.ether",
-      "description_translation_key": "malum.gui.book.entry.page.text.ether_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.ether_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/ether"
+      "recipe": "malum:spirit_infusion/ether",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.ether_b"
+      "translation_key": "malum.gui.book.entry.page.text.ether_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:ether_torch",
+      "output": {
+        "id": "malum:ether_torch",
+        "Count": 1,
+        "tag": {
+          "display": {
+            "SecondColor": 4607909,
+            "FirstColor": 15712278
+          }
+        }
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "malum:ether",
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:stick",
-        "minecraft:air"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:ether",
+          "Count": 1,
+          "tag": {
+            "display": {
+              "SecondColor": 4607909,
+              "FirstColor": 15712278
+            }
+          }
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:tainted_ether_brazier",
+      "output": {
+        "id": "malum:tainted_ether_brazier",
+        "Count": 1,
+        "tag": {
+          "display": {
+            "SecondColor": 4607909,
+            "FirstColor": 15712278
+          }
+        }
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "malum:tainted_rock",
-        "malum:ether",
-        "malum:tainted_rock",
-        "minecraft:stick",
-        "malum:tainted_rock",
-        "minecraft:stick"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:ether",
+          "Count": 1,
+          "tag": {
+            "display": {
+              "SecondColor": 4607909,
+              "FirstColor": 15712278
+            }
+          }
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:twisted_ether_brazier",
+      "output": {
+        "id": "malum:twisted_ether_brazier",
+        "Count": 1,
+        "tag": {
+          "display": {
+            "SecondColor": 4607909,
+            "FirstColor": 15712278
+          }
+        }
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "malum:twisted_rock",
-        "malum:ether",
-        "malum:twisted_rock",
-        "minecraft:stick",
-        "malum:twisted_rock",
-        "minecraft:stick"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:ether",
+          "Count": 1,
+          "tag": {
+            "display": {
+              "SecondColor": 4607909,
+              "FirstColor": 15712278
+            }
+          }
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.iridescent_ether",
-      "description_translation_key": "malum.gui.book.entry.page.text.iridescent_ether_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.iridescent_ether_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.iridescent_ether_b"
+      "translation_key": "malum.gui.book.entry.page.text.iridescent_ether_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/iridescent_ether"
+      "recipe": "malum:spirit_infusion/iridescent_ether",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:iridescent_ether_torch",
+      "output": {
+        "id": "malum:iridescent_ether_torch",
+        "Count": 1,
+        "tag": {
+          "display": {
+            "SecondColor": 4607909,
+            "FirstColor": 15712278
+          }
+        }
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "malum:iridescent_ether",
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:stick",
-        "minecraft:air"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:iridescent_ether",
+          "Count": 1,
+          "tag": {
+            "display": {
+              "SecondColor": 4607909,
+              "FirstColor": 15712278
+            }
+          }
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:tainted_iridescent_ether_brazier",
+      "output": {
+        "id": "malum:tainted_iridescent_ether_brazier",
+        "Count": 1,
+        "tag": {
+          "display": {
+            "SecondColor": 4607909,
+            "FirstColor": 15712278
+          }
+        }
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "malum:tainted_rock",
-        "malum:iridescent_ether",
-        "malum:tainted_rock",
-        "minecraft:stick",
-        "malum:tainted_rock",
-        "minecraft:stick"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:iridescent_ether",
+          "Count": 1,
+          "tag": {
+            "display": {
+              "SecondColor": 4607909,
+              "FirstColor": 15712278
+            }
+          }
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        },
+        {
+          "id": "malum:tainted_rock",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:twisted_iridescent_ether_brazier",
+      "output": {
+        "id": "malum:twisted_iridescent_ether_brazier",
+        "Count": 1,
+        "tag": {
+          "display": {
+            "SecondColor": 4607909,
+            "FirstColor": 15712278
+          }
+        }
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:air",
-        "minecraft:air",
-        "malum:twisted_rock",
-        "malum:iridescent_ether",
-        "malum:twisted_rock",
-        "minecraft:stick",
-        "malum:twisted_rock",
-        "minecraft:stick"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "malum:iridescent_ether",
+          "Count": 1,
+          "tag": {
+            "display": {
+              "SecondColor": 4607909,
+              "FirstColor": 15712278
+            }
+          }
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        },
+        {
+          "id": "malum:twisted_rock",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.ether",
+  "description_translation_key": "malum.gui.book.entry.ether.description",
+  "name": "ether",
+  "icon_stacks": [
+    {
+      "id": "malum:ether",
+      "Count": 1,
+      "tag": {
+        "display": {
+          "SecondColor": 4607909,
+          "FirstColor": 15712278
+        }
+      }
+    }
+  ],
+  "x_offset": 5,
+  "y_offset": 6
 }

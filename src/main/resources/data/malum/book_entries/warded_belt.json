@@ -1,18 +1,25 @@
 {
-  "name": "warded_belt",
-  "icon": "malum:warded_belt",
-  "x_offset": -9,
-  "y_offset": 5,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.warded_belt",
-      "description_translation_key": "malum.gui.book.entry.page.text.warded_belt"
+      "description_translation_key": "malum.gui.book.entry.page.text.warded_belt",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/warded_belt"
+      "recipe": "malum:spirit_infusion/warded_belt",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.warded_belt",
+  "description_translation_key": "malum.gui.book.entry.warded_belt.description",
+  "name": "warded_belt",
+  "icon_stacks": [
+    {
+      "id": "malum:warded_belt",
+      "Count": 1
+    }
+  ],
+  "x_offset": -9,
+  "y_offset": 5
 }

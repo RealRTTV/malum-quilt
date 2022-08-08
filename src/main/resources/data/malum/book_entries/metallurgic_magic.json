@@ -1,42 +1,52 @@
 {
-  "name": "metallurgic_magic",
-  "icon": "malum:iron_node",
-  "x_offset": 8,
-  "y_offset": 7,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.metallurgic_magic",
-      "description_translation_key": "malum.gui.book.entry.page.text.metallurgic_magic_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.metallurgic_magic_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.metallurgic_magic_b"
+      "translation_key": "malum.gui.book.entry.page.text.metallurgic_magic_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/iron_impetus"
+      "recipe": "malum:spirit_infusion/iron_impetus",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:spirit_crucible",
-      "recipe": "malum:spirit_crucible/iron_node"
+      "recipe": "malum:spirit_crucible/iron_node",
+      "type": "malum:spirit_crucible"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/gold_impetus"
+      "recipe": "malum:spirit_infusion/gold_impetus",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:spirit_crucible",
-      "recipe": "malum:spirit_crucible/gold_node"
+      "recipe": "malum:spirit_crucible/gold_node",
+      "type": "malum:spirit_crucible"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/copper_impetus"
+      "recipe": "malum:spirit_infusion/copper_impetus",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:spirit_crucible",
-      "recipe": "malum:spirit_crucible/copper_node"
+      "recipe": "malum:spirit_crucible/copper_node",
+      "type": "malum:spirit_crucible"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.metallurgic_magic",
+  "description_translation_key": "malum.gui.book.entry.metallurgic_magic.description",
+  "name": "metallurgic_magic",
+  "icon_stacks": [
+    {
+      "id": "malum:iron_node",
+      "Count": 1,
+      "tag": {
+        "Damage": 0
+      }
+    }
+  ],
+  "x_offset": 8,
+  "y_offset": 7
 }

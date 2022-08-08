@@ -1,13 +1,10 @@
 package ca.rttv.malum.client.screen;
 
 import ca.rttv.malum.api.event.ProgressionBookEntriesSetEvent;
-import ca.rttv.malum.client.screen.page.*;
+import ca.rttv.malum.client.screen.page.BookEntry;
+import ca.rttv.malum.client.screen.page.BookObject;
 import ca.rttv.malum.recipe.IngredientWithCount;
-import ca.rttv.malum.registry.MalumEntryObjectTypeRegistry;
-import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -20,7 +17,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -28,18 +24,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.registry.MalumItemRegistry.*;
 import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_TOOLTIPS;
-import static net.minecraft.item.Items.*;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
 
 public class ProgressionBookScreen extends Screen {
@@ -66,20 +56,20 @@ public class ProgressionBookScreen extends Screen {
         client = MinecraftClient.getInstance();
         entries = new ArrayList<>();
         setupEntries();
-        File dir = new File(".", "data");
-        dir.mkdirs();
-
-        entries.forEach(entry -> {
-            JsonObject json = entry.serialize();
-
-            File file = new File(dir, entry.id + ".json");
-            try {
-                Files.writeString(file.toPath(), new GsonBuilder().setPrettyPrinting().create().toJson(json), StandardOpenOption.CREATE_NEW);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        System.exit(0);
+//        File dir = new File(".", "data");
+//        dir.mkdirs();
+//
+//        entries.forEach(entry -> {
+//            JsonElement json = BookEntry.CODEC.encode(entry, JsonOps.INSTANCE, new JsonObject()).result().orElse(JsonNull.INSTANCE);
+//
+//            File file = new File(dir, entry.id + ".json");
+//            try {
+//                Files.writeString(file.toPath(), new GsonBuilder().setPrettyPrinting().create().toJson(json), StandardOpenOption.CREATE_NEW);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//        System.exit(0);
         ProgressionBookEntriesSetEvent.EVENT.invoker().addExtraEntry(entries);
         setupObjects();
     }
@@ -88,7 +78,7 @@ public class ProgressionBookScreen extends Screen {
         entries = new ArrayList<>();
         final Item EMPTY = ItemStack.EMPTY.getItem();
 
-        entries.add(new BookEntry(
+        /*entries.add(new BookEntry(
                 "introduction", ENCYCLOPEDIA_ARCANA, 0, 0)
                 .setObjectSupplier(MalumEntryObjectTypeRegistry.IMPORTANT_ENTRY_OBJECT)
                 .addPage(new HeadlineTextPage("introduction", "introduction_a"))
@@ -534,7 +524,7 @@ public class ProgressionBookScreen extends Screen {
                 .setObjectSupplier(MalumEntryObjectTypeRegistry.VANISHING_ENTRY_OBJECT)
                 .addPage(new HeadlineTextPage("the_device", "the_device"))
                 .addPage(new CraftingBookPage(THE_DEVICE, TWISTED_ROCK, TAINTED_ROCK, TWISTED_ROCK, TAINTED_ROCK, TWISTED_ROCK, TAINTED_ROCK, TWISTED_ROCK, TAINTED_ROCK, TWISTED_ROCK))
-        );
+        );*/
     }
 
     public static boolean isHovering(double mouseX, double mouseY, int posX, int posY, int width, int height) {

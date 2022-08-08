@@ -1,96 +1,223 @@
 {
-  "name": "spirit_trinkets",
-  "icon": "malum:ornate_ring",
-  "x_offset": -5,
-  "y_offset": 6,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.spirit_trinkets",
-      "description_translation_key": "malum.gui.book.entry.page.text.spirit_trinkets_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.spirit_trinkets_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.spirit_trinkets_b"
+      "translation_key": "malum.gui.book.entry.page.text.spirit_trinkets_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:gilded_ring",
+      "output": {
+        "id": "malum:gilded_ring",
+        "Count": 1
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:leather",
-        "malum:hallowed_gold_ingot",
-        "minecraft:leather",
-        "minecraft:air",
-        "minecraft:leather",
-        "minecraft:air",
-        "minecraft:leather",
-        "minecraft:air"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "malum:hallowed_gold_ingot",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:gilded_belt",
+      "output": {
+        "id": "malum:gilded_belt",
+        "Count": 1
+      },
       "input": [
-        "minecraft:leather",
-        "minecraft:leather",
-        "minecraft:leather",
-        "malum:hallowed_gold_ingot",
-        "malum:processed_soulstone",
-        "malum:hallowed_gold_ingot",
-        "minecraft:air",
-        "malum:hallowed_gold_ingot",
-        "minecraft:air"
-      ]
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "malum:hallowed_gold_ingot",
+          "Count": 1
+        },
+        {
+          "id": "malum:processed_soulstone",
+          "Count": 1
+        },
+        {
+          "id": "malum:hallowed_gold_ingot",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:hallowed_gold_ingot",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:ornate_ring",
+      "output": {
+        "id": "malum:ornate_ring",
+        "Count": 1
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:leather",
-        "malum:soul_stained_steel_ingot",
-        "minecraft:leather",
-        "minecraft:air",
-        "minecraft:leather",
-        "minecraft:air",
-        "minecraft:leather",
-        "minecraft:air"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "malum:soul_stained_steel_ingot",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:leather",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:ornate_necklace",
+      "output": {
+        "id": "malum:ornate_necklace",
+        "Count": 1
+      },
       "input": [
-        "minecraft:air",
-        "minecraft:string",
-        "minecraft:air",
-        "minecraft:string",
-        "minecraft:air",
-        "minecraft:string",
-        "minecraft:air",
-        "malum:soul_stained_steel_ingot",
-        "minecraft:air"
-      ]
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:string",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:string",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:string",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "malum:soul_stained_steel_ingot",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.arcane_reach",
-      "description_translation_key": "malum.gui.book.entry.page.text.arcane_reach"
+      "description_translation_key": "malum.gui.book.entry.page.text.arcane_reach",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/ring_of_arcane_reach"
+      "recipe": "malum:spirit_infusion/ring_of_arcane_reach",
+      "type": "malum:spirit_infusion"
     },
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.arcane_spoil",
-      "description_translation_key": "malum.gui.book.entry.page.text.arcane_spoil"
+      "description_translation_key": "malum.gui.book.entry.page.text.arcane_spoil",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/ring_of_arcane_spoil"
+      "recipe": "malum:spirit_infusion/ring_of_arcane_spoil",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.spirit_trinkets",
+  "description_translation_key": "malum.gui.book.entry.spirit_trinkets.description",
+  "name": "spirit_trinkets",
+  "icon_stacks": [
+    {
+      "id": "malum:ornate_ring",
+      "Count": 1
+    }
+  ],
+  "x_offset": -5,
+  "y_offset": 6
 }

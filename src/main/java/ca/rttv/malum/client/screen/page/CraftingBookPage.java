@@ -48,18 +48,6 @@ public class CraftingBookPage extends BookPage {
         this.inputStacks = inputStacks;
     }
 
-    public CraftingBookPage(JsonObject json) {
-        super(new Identifier(MODID, "textures/gui/book/pages/crafting_page.png"));
-        JsonElement outputJson = json.get("output");
-        outputStack = outputJson.isJsonPrimitive() ? Registry.ITEM.get(new Identifier(outputJson.getAsString())).getDefaultStack() : new ItemStack(Registry.ITEM.get(new Identifier(outputJson.getAsJsonObject().get("item").getAsString())), outputJson.getAsJsonObject().get("count").getAsInt());
-        JsonArray array = json.get("input").getAsJsonArray();
-        inputStacks = new ItemStack[array.size()];
-        for (int i = 0; i < array.size(); i++) {
-            inputStacks[i] = Registry.ITEM.get(new Identifier(array.get(i).getAsString())).getDefaultStack();
-        }
-
-    }
-
     public CraftingBookPage(ItemStack output, List<ItemStack> input) {
         this(output, input.toArray(ItemStack[]::new));
     }

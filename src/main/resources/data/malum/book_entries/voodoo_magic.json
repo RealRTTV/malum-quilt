@@ -1,18 +1,25 @@
 {
-  "name": "voodoo_magic",
-  "icon": "malum:poppet",
-  "x_offset": 6,
-  "y_offset": 10,
-  "entry_type": "malum:important_entry_object",
+  "object_supplier": "malum:important_entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.voodoo_magic",
-      "description_translation_key": "malum.gui.book.entry.page.text.voodoo_magic"
+      "description_translation_key": "malum.gui.book.entry.page.text.voodoo_magic",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/poppet"
+      "recipe": "malum:spirit_infusion/poppet",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.voodoo_magic",
+  "description_translation_key": "malum.gui.book.entry.voodoo_magic.description",
+  "name": "voodoo_magic",
+  "icon_stacks": [
+    {
+      "id": "malum:poppet",
+      "Count": 1
+    }
+  ],
+  "x_offset": 6,
+  "y_offset": 10
 }

@@ -1,26 +1,33 @@
 {
-  "name": "introduction",
-  "icon": "malum:encyclopedia_arcana",
-  "x_offset": 0,
-  "y_offset": 0,
-  "entry_type": "malum:important_entry_object",
+  "object_supplier": "malum:important_entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.introduction",
-      "description_translation_key": "malum.gui.book.entry.page.text.introduction_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.introduction_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.introduction_b"
+      "translation_key": "malum.gui.book.entry.page.text.introduction_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.introduction_c"
+      "translation_key": "malum.gui.book.entry.page.text.introduction_c",
+      "type": "malum:text"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.introduction_d"
+      "translation_key": "malum.gui.book.entry.page.text.introduction_d",
+      "type": "malum:text"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.introduction",
+  "description_translation_key": "malum.gui.book.entry.introduction.description",
+  "name": "introduction",
+  "icon_stacks": [
+    {
+      "id": "malum:encyclopedia_arcana",
+      "Count": 1
+    }
+  ],
+  "x_offset": 0,
+  "y_offset": 0
 }

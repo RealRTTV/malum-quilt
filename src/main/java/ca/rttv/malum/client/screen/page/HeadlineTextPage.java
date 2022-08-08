@@ -27,18 +27,12 @@ public class HeadlineTextPage extends BookPage {
         this.descriptionTranslationKey = descriptionTranslationKey;
     }
 
-    public HeadlineTextPage(JsonObject json) {
-        super(new Identifier(MODID, "textures/gui/book/pages/headline_page.png"));
-        headlineTranslationKey = json.get("headline_translation_key").getAsString();
-        descriptionTranslationKey = json.get("description_translation_key").getAsString();
-    }
-
     public String headlineTranslationKey() {
-        return "malum.gui.book.entry.page.headline." + headlineTranslationKey;
+        return headlineTranslationKey;
     }
 
     public String descriptionTranslationKey() {
-        return "malum.gui.book.entry.page.text." + descriptionTranslationKey;
+        return descriptionTranslationKey;
     }
 
     @Override

@@ -1,52 +1,95 @@
 {
-  "name": "scythes",
-  "icon": "malum:crude_scythe",
-  "x_offset": 0,
-  "y_offset": 3,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.scythes",
-      "description_translation_key": "malum.gui.book.entry.page.text.scythes_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.scythes_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.scythes_b"
+      "translation_key": "malum.gui.book.entry.page.text.scythes_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.scythes_c"
+      "translation_key": "malum.gui.book.entry.page.text.scythes_c",
+      "type": "malum:text"
     },
     {
-      "type": "malum:crafting",
-      "output": "malum:crude_scythe",
+      "output": {
+        "id": "malum:crude_scythe",
+        "Count": 1,
+        "tag": {
+          "Damage": 0
+        }
+      },
       "input": [
-        "minecraft:iron_ingot",
-        "minecraft:iron_ingot",
-        "malum:processed_soulstone",
-        "minecraft:air",
-        "minecraft:stick",
-        "minecraft:iron_ingot",
-        "minecraft:stick",
-        "minecraft:air",
-        "minecraft:air"
-      ]
+        {
+          "id": "minecraft:iron_ingot",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:iron_ingot",
+          "Count": 1
+        },
+        {
+          "id": "malum:processed_soulstone",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:iron_ingot",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:stick",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        },
+        {
+          "id": "minecraft:air",
+          "Count": 1
+        }
+      ],
+      "type": "malum:crafting"
     },
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.haunted",
-      "description_translation_key": "malum.gui.book.entry.page.text.haunted"
+      "description_translation_key": "malum.gui.book.entry.page.text.haunted",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.spirit_plunder",
-      "description_translation_key": "malum.gui.book.entry.page.text.spirit_plunder"
+      "description_translation_key": "malum.gui.book.entry.page.text.spirit_plunder",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.rebound",
-      "description_translation_key": "malum.gui.book.entry.page.text.rebound"
+      "description_translation_key": "malum.gui.book.entry.page.text.rebound",
+      "type": "malum:headline"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.scythes",
+  "description_translation_key": "malum.gui.book.entry.scythes.description",
+  "name": "scythes",
+  "icon_stacks": [
+    {
+      "id": "malum:crude_scythe",
+      "Count": 1,
+      "tag": {
+        "Damage": 0
+      }
+    }
+  ],
+  "x_offset": 0,
+  "y_offset": 3
 }

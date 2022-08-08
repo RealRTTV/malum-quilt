@@ -10,6 +10,7 @@ accessible      class     net/minecraft/network/NetworkState$PacketHandler
 accessible      class     net/minecraft/recipe/Ingredient$Entry
 accessible      class     net/minecraft/recipe/Ingredient$TagEntry
 accessible      class     net/minecraft/recipe/Ingredient$StackEntry
+accessible      class     net/minecraft/server/world/ServerWorld$ServerEntityHandler
 
 accessible      field     net/minecraft/client/render/ShaderProgram                                uniforms                     Ljava/util/List;
 accessible      field     net/minecraft/client/particle/ParticleManager                            spriteAwareFactories         Ljava/util/Map;

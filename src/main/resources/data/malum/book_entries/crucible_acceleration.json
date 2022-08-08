@@ -1,26 +1,33 @@
 {
-  "name": "crucible_acceleration",
-  "icon": "malum:spirit_catalyzer",
-  "x_offset": 7,
-  "y_offset": 4,
-  "entry_type": "malum:entry_object",
+  "object_supplier": "malum:entry_object",
   "pages": [
     {
-      "type": "malum:headline",
       "headline_translation_key": "malum.gui.book.entry.page.headline.crucible_acceleration",
-      "description_translation_key": "malum.gui.book.entry.page.text.crucible_acceleration_a"
+      "description_translation_key": "malum.gui.book.entry.page.text.crucible_acceleration_a",
+      "type": "malum:headline"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.crucible_acceleration_b"
+      "translation_key": "malum.gui.book.entry.page.text.crucible_acceleration_b",
+      "type": "malum:text"
     },
     {
-      "type": "malum:text",
-      "description": "malum.gui.book.entry.page.text.crucible_acceleration_c"
+      "translation_key": "malum.gui.book.entry.page.text.crucible_acceleration_c",
+      "type": "malum:text"
     },
     {
-      "type": "malum:spirit_infusion",
-      "recipe": "malum:spirit_infusion/spirit_catalyzer"
+      "recipe": "malum:spirit_infusion/spirit_catalyzer",
+      "type": "malum:spirit_infusion"
     }
-  ]
+  ],
+  "translation_key": "malum.gui.book.entry.crucible_acceleration",
+  "description_translation_key": "malum.gui.book.entry.crucible_acceleration.description",
+  "name": "crucible_acceleration",
+  "icon_stacks": [
+    {
+      "id": "malum:spirit_catalyzer",
+      "Count": 1
+    }
+  ],
+  "x_offset": 7,
+  "y_offset": 4
 }
