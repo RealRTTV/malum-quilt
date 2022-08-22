@@ -36,6 +36,7 @@ abstract class AbstractFurnaceBlockEntityMixin {
         addFuel(map, BLAZING_QUARTZ_FRAGMENT, 200);
         addFuel(map, BLOCK_OF_BLAZING_QUARTZ, 14400);
         addFuel(map, CHARCOAL_FRAGMENT, 200);
+        addFuel(map, COAL_FRAGMENT, 200);
     }
 
     @Shadow
