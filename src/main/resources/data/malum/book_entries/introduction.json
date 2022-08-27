@@ -21,7 +21,7 @@
   ],
   "translation_key": "malum.gui.book.entry.introduction",
   "description_translation_key": "malum.gui.book.entry.introduction.description",
-  "name": "introduction",
+  "name": "malum:introduction",
   "icon_stacks": [
     {
       "id": "malum:encyclopedia_arcana",

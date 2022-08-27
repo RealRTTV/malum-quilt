@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.soul_stained_scythe",
   "description_translation_key": "malum.gui.book.entry.soul_stained_scythe.description",
-  "name": "soul_stained_scythe",
+  "name": "malum:soul_stained_scythe",
   "icon_stacks": [
     {
       "id": "malum:soul_stained_steel_scythe",

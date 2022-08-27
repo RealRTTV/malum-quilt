@@ -21,7 +21,7 @@
   ],
   "translation_key": "malum.gui.book.entry.working_with_ashes",
   "description_translation_key": "malum.gui.book.entry.working_with_ashes.description",
-  "name": "working_with_ashes",
+  "name": "malum:working_with_ashes",
   "icon_stacks": [
     {
       "id": "minecraft:gunpowder",

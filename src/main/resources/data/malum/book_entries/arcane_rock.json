@@ -202,7 +202,7 @@
   ],
   "translation_key": "malum.gui.book.entry.arcane_rock",
   "description_translation_key": "malum.gui.book.entry.arcane_rock.description",
-  "name": "arcane_rock",
+  "name": "malum:arcane_rock",
   "icon_stacks": [
     {
       "id": "malum:tainted_rock",

@@ -80,7 +80,7 @@
   ],
   "translation_key": "malum.gui.book.entry.scythes",
   "description_translation_key": "malum.gui.book.entry.scythes.description",
-  "name": "scythes",
+  "name": "malum:scythes",
   "icon_stacks": [
     {
       "id": "malum:crude_scythe",

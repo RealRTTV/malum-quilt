@@ -410,7 +410,7 @@
   ],
   "translation_key": "malum.gui.book.entry.spirit_metals",
   "description_translation_key": "malum.gui.book.entry.spirit_metals.description",
-  "name": "spirit_metals",
+  "name": "malum:spirit_metals",
   "icon_stacks": [
     {
       "id": "malum:soul_stained_steel_ingot",

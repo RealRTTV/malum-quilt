@@ -8,11 +8,13 @@ import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.registry.MalumItemRegistry;
 import ca.rttv.malum.util.helper.ColorHelper;
 import ca.rttv.malum.util.particle.ParticleBuilders;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,9 +28,14 @@ import java.util.List;
 final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListener {
     @Shadow private ClientWorld world;
 
+    @Shadow
+    @Final
+    private MinecraftClient client;
+
     @Override
     public void malum$onMagicParticle(MalumParticleS2CPacket packet) {
-        ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+        client.execute(() -> {
+            ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
                 .setAlpha(0.1f, 0f)
                 .setLifetime(10)
                 .setSpin(0.4f)
@@ -39,7 +46,7 @@ final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListen
                 .randomMotion(0.01f, 0.01f)
                 .repeat(world, packet.x(), packet.y(), packet.z(), 20);
 
-        ParticleBuilders.create(MalumParticleRegistry.SMOKE_PARTICLE)
+            ParticleBuilders.create(MalumParticleRegistry.SMOKE_PARTICLE)
                 .setAlpha(0.05f, 0f)
                 .setLifetime(20)
                 .setSpin(0.1f)
@@ -49,12 +56,12 @@ final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListen
                 .enableNoClip()
                 .randomMotion(0.025f, 0.025f)
                 .repeat(world, packet.x(), packet.y(), packet.z(), 20);
+        });
     }
 
     @Override
     public void malum$onProgressionBookEntries(List<BookEntry> entries) {
-        ProgressionBookScreen.entries.clear();
-        ProgressionBookScreen.entries.addAll(entries);
+        client.execute(() -> ProgressionBookScreen.entries = entries);
     }
 
     @Inject(method = "getActiveTotemOfUndying", at = @At("HEAD"), cancellable = true)

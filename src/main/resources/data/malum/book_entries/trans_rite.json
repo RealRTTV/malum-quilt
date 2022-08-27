@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.trans_rite",
   "description_translation_key": "malum.gui.book.entry.trans_rite.description",
-  "name": "trans_rite",
+  "name": "malum:trans_rite",
   "icon_stacks": [
     {
       "id": "malum:aerial_spirit",

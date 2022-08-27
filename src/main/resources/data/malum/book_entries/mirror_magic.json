@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.mirror_magic",
   "description_translation_key": "malum.gui.book.entry.mirror_magic.description",
-  "name": "mirror_magic",
+  "name": "malum:mirror_magic",
   "icon_stacks": [
     {
       "id": "malum:spectral_lens",

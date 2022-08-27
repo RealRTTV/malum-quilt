@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.voodoo_magic",
   "description_translation_key": "malum.gui.book.entry.voodoo_magic.description",
-  "name": "voodoo_magic",
+  "name": "malum:voodoo_magic",
   "icon_stacks": [
     {
       "id": "malum:poppet",

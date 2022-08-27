@@ -1,8 +1,11 @@
 package ca.rttv.malum.client.screen;
 
+import ca.rttv.malum.client.recipe.BookPageRenderer;
 import ca.rttv.malum.client.screen.page.BookEntry;
 import ca.rttv.malum.client.screen.page.BookPage;
 import ca.rttv.malum.client.screen.page.EntryObject;
+import ca.rttv.malum.registry.MalumPageRendererRegistry;
+import ca.rttv.malum.registry.MalumPageTypeRegistry;
 import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -59,10 +62,12 @@ public class EntryScreen extends Screen {
             for (int i = openPages; i < openPages + 2; i++) {
                 if (i < openEntry.pages.size()) {
                     BookPage page = openEntry.pages.get(i);
+                    //noinspection ConstantConditions -- should be ok
+                    BookPageRenderer<?> renderer = MalumPageRendererRegistry.PageRendererFactory.create(MalumPageRendererRegistry.PAGE_RENDERER_FACTORY.get(MalumPageTypeRegistry.PAGE_TYPE.getId(page.type())), page);
                     if (i % 2 == 0) {
-                        page.renderBackgroundLeft(client, matrices, guiLeft, guiTop, mouseX, mouseY, tickDelta);
+                        renderer.renderBackgroundLeft(client, matrices, guiLeft, guiTop, mouseX, mouseY, tickDelta);
                     } else {
-                        page.renderBackgroundRight(client, matrices, guiLeft, guiTop, mouseX, mouseY, tickDelta);
+                        renderer.renderBackgroundRight(client, matrices, guiLeft, guiTop, mouseX, mouseY, tickDelta);
                     }
                 }
             }
@@ -88,10 +93,11 @@ public class EntryScreen extends Screen {
             for (int i = openPages; i < openPages + 2; i++) {
                 if (i < openEntry.pages.size()) {
                     BookPage page = openEntry.pages.get(i);
+                    BookPageRenderer<?> renderer = openEntry.pageRenderers().get(i);
                     if (i % 2 == 0) {
-                        page.renderLeft(client, matrices, guiTop, guiLeft, mouseX, mouseY, tickDelta);
+                        renderer.renderLeft(client, matrices, guiTop, guiLeft, mouseX, mouseY, tickDelta);
                     } else {
-                        page.renderRight(client, matrices, guiTop, guiLeft, mouseX, mouseY, tickDelta);
+                        renderer.renderRight(client, matrices, guiTop, guiLeft, mouseX, mouseY, tickDelta);
                     }
                 }
             }

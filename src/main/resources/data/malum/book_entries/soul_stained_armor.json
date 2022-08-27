@@ -33,7 +33,7 @@
   ],
   "translation_key": "malum.gui.book.entry.soul_stained_armor",
   "description_translation_key": "malum.gui.book.entry.soul_stained_armor.description",
-  "name": "soul_stained_armor",
+  "name": "malum:soul_stained_armor",
   "icon_stacks": [
     {
       "id": "malum:soul_stained_steel_helmet",

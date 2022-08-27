@@ -21,7 +21,7 @@
   ],
   "translation_key": "malum.gui.book.entry.crucible_acceleration",
   "description_translation_key": "malum.gui.book.entry.crucible_acceleration.description",
-  "name": "crucible_acceleration",
+  "name": "malum:crucible_acceleration",
   "icon_stacks": [
     {
       "id": "malum:spirit_catalyzer",

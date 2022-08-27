@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.necklace_of_the_narrow_edge",
   "description_translation_key": "malum.gui.book.entry.necklace_of_the_narrow_edge.description",
-  "name": "necklace_of_the_narrow_edge",
+  "name": "malum:necklace_of_the_narrow_edge",
   "icon_stacks": [
     {
       "id": "malum:necklace_of_the_narrow_edge",

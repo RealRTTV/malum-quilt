@@ -22,7 +22,7 @@
   ],
   "translation_key": "malum.gui.book.entry.altar_acceleration",
   "description_translation_key": "malum.gui.book.entry.altar_acceleration.description",
-  "name": "altar_acceleration",
+  "name": "malum:altar_acceleration",
   "icon_stacks": [
     {
       "id": "malum:runewood_obelisk",

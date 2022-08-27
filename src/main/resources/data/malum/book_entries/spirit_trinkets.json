@@ -211,7 +211,7 @@
   ],
   "translation_key": "malum.gui.book.entry.spirit_trinkets",
   "description_translation_key": "malum.gui.book.entry.spirit_trinkets.description",
-  "name": "spirit_trinkets",
+  "name": "malum:spirit_trinkets",
   "icon_stacks": [
     {
       "id": "malum:ornate_ring",

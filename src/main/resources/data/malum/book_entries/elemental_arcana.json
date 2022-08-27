@@ -56,7 +56,7 @@
   ],
   "translation_key": "malum.gui.book.entry.elemental_arcana",
   "description_translation_key": "malum.gui.book.entry.elemental_arcana.description",
-  "name": "elemental_arcana",
+  "name": "malum:elemental_arcana",
   "icon_stacks": [
     {
       "id": "malum:earthen_spirit",

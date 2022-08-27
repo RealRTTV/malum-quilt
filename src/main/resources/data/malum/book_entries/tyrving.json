@@ -21,7 +21,7 @@
   ],
   "translation_key": "malum.gui.book.entry.tyrving",
   "description_translation_key": "malum.gui.book.entry.tyrving.description",
-  "name": "tyrving",
+  "name": "malum:tyrving",
   "icon_stacks": [
     {
       "id": "malum:tyrving",

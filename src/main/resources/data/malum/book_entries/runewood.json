@@ -213,7 +213,7 @@
   ],
   "translation_key": "malum.gui.book.entry.runewood",
   "description_translation_key": "malum.gui.book.entry.runewood.description",
-  "name": "runewood",
+  "name": "malum:runewood",
   "icon_stacks": [
     {
       "id": "malum:runewood_sapling",

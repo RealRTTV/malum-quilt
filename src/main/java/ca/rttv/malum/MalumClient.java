@@ -62,7 +62,7 @@ public final class MalumClient implements ClientModInitializer {
         }
 
         ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "malumparticles2cpacket"), (client, handler, buf, responceSender) -> new MalumParticleS2CPacket(buf).apply(handler));
-        ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "progressionbookentriess2cpacket"), (client, handler, buf, responceSender) -> new ProgressionBookEntriesS2CPacket(buf).apply(handler));
+        ClientPlayNetworking.registerGlobalReceiver(new Identifier(MODID, "progressionbookentriess2cpacket"), (client, listener, buf, packetSender) -> new ProgressionBookEntriesS2CPacket(buf).apply(listener));
     }
     private void registerColors() {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {

@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.necklace_of_the_mystic_mirror",
   "description_translation_key": "malum.gui.book.entry.necklace_of_the_mystic_mirror.description",
-  "name": "necklace_of_the_mystic_mirror",
+  "name": "malum:necklace_of_the_mystic_mirror",
   "icon_stacks": [
     {
       "id": "malum:necklace_of_the_mystic_mirror",

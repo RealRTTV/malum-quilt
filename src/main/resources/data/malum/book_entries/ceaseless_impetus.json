@@ -21,7 +21,7 @@
   ],
   "translation_key": "malum.gui.book.entry.ceaseless_impetus",
   "description_translation_key": "malum.gui.book.entry.ceaseless_impetus.description",
-  "name": "ceaseless_impetus",
+  "name": "malum:ceaseless_impetus",
   "icon_stacks": [
     {
       "id": "malum:ceaseless_impetus",

@@ -35,7 +35,7 @@ public class ProgressionBookEntriesReloadListener extends JsonDataLoader impleme
         SERVER_ENTRIES.clear();
         prepared.forEach((id, element) -> SERVER_ENTRIES.add(BookEntry.CODEC.decode(JsonOps.INSTANCE, element)
                                                                             .result()
-                                                                            .orElseGet(() -> Pair.of(new BookEntry("null", List.of(Items.AIR.getDefaultStack()), 0, 0, MalumEntryObjectTypeRegistry.ENTRY_OBJECT, List.of(new TextPage("null")), "null", "null"), JsonNull.INSTANCE))
+                                                                            .orElseGet(() -> Pair.of(new BookEntry(new Identifier("null"), List.of(Items.AIR.getDefaultStack()), 0, 0, MalumEntryObjectTypeRegistry.ENTRY_OBJECT, List.of(new TextPage("null")), "null", "null"), JsonNull.INSTANCE))
                                                                             .getFirst()));
     }
 

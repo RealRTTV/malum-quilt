@@ -25,7 +25,7 @@
   ],
   "translation_key": "malum.gui.book.entry.crystal_creation",
   "description_translation_key": "malum.gui.book.entry.crystal_creation.description",
-  "name": "crystal_creation",
+  "name": "malum:crystal_creation",
   "icon_stacks": [
     {
       "id": "minecraft:quartz",

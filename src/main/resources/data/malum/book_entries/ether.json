@@ -372,7 +372,7 @@
   ],
   "translation_key": "malum.gui.book.entry.ether",
   "description_translation_key": "malum.gui.book.entry.ether.description",
-  "name": "ether",
+  "name": "malum:ether",
   "icon_stacks": [
     {
       "id": "malum:ether",

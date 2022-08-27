@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.ring_of_wicked_intent",
   "description_translation_key": "malum.gui.book.entry.ring_of_wicked_intent.description",
-  "name": "ring_of_wicked_intent",
+  "name": "malum:ring_of_wicked_intent",
   "icon_stacks": [
     {
       "id": "malum:ring_of_wicked_intent",

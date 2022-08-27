@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.magebane_belt",
   "description_translation_key": "malum.gui.book.entry.magebane_belt.description",
-  "name": "magebane_belt",
+  "name": "malum:magebane_belt",
   "icon_stacks": [
     {
       "id": "malum:magebane_belt",

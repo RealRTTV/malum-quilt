@@ -37,7 +37,7 @@
   ],
   "translation_key": "malum.gui.book.entry.metallurgic_magic",
   "description_translation_key": "malum.gui.book.entry.metallurgic_magic.description",
-  "name": "metallurgic_magic",
+  "name": "malum:metallurgic_magic",
   "icon_stacks": [
     {
       "id": "malum:iron_node",

@@ -25,7 +25,7 @@
   ],
   "translation_key": "malum.gui.book.entry.soul_hunter_gear",
   "description_translation_key": "malum.gui.book.entry.soul_hunter_gear.description",
-  "name": "soul_hunter_gear",
+  "name": "malum:soul_hunter_gear",
   "icon_stacks": [
     {
       "id": "malum:soul_hunter_cloak",

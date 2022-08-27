@@ -62,7 +62,7 @@
   ],
   "translation_key": "malum.gui.book.entry.soulstone",
   "description_translation_key": "malum.gui.book.entry.soulstone.description",
-  "name": "soulstone",
+  "name": "malum:soulstone",
   "icon_stacks": [
     {
       "id": "malum:processed_soulstone",

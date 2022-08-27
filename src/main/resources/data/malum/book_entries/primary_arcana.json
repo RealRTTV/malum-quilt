@@ -47,7 +47,7 @@
   ],
   "translation_key": "malum.gui.book.entry.primary_arcana",
   "description_translation_key": "malum.gui.book.entry.primary_arcana.description",
-  "name": "primary_arcana",
+  "name": "malum:primary_arcana",
   "icon_stacks": [
     {
       "id": "malum:arcane_spirit",

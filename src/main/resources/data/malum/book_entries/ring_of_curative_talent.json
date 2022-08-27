@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.ring_of_curative_talent",
   "description_translation_key": "malum.gui.book.entry.ring_of_curative_talent.description",
-  "name": "ring_of_curative_talent",
+  "name": "malum:ring_of_curative_talent",
   "icon_stacks": [
     {
       "id": "malum:ring_of_curative_talent",

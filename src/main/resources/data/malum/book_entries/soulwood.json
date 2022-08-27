@@ -187,7 +187,7 @@
   ],
   "translation_key": "malum.gui.book.entry.soulwood",
   "description_translation_key": "malum.gui.book.entry.soulwood.description",
-  "name": "soulwood",
+  "name": "malum:soulwood",
   "icon_stacks": [
     {
       "id": "malum:soulwood_sapling",

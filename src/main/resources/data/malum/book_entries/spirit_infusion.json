@@ -161,7 +161,7 @@
   ],
   "translation_key": "malum.gui.book.entry.spirit_infusion",
   "description_translation_key": "malum.gui.book.entry.spirit_infusion.description",
-  "name": "spirit_infusion",
+  "name": "malum:spirit_infusion",
   "icon_stacks": [
     {
       "id": "malum:spirit_altar",

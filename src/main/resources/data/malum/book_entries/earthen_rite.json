@@ -4,7 +4,7 @@
     {
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.earthen_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_earthen_rite",
+      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
       "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_earthen_rite",
       "type": "malum:double_headline"
     },
@@ -15,7 +15,7 @@
     {
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.eldritch_earthen_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_earthen_rite",
+      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
       "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_earthen_rite",
       "type": "malum:double_headline"
     },
@@ -26,7 +26,7 @@
   ],
   "translation_key": "malum.gui.book.entry.earthen_rite",
   "description_translation_key": "malum.gui.book.entry.earthen_rite.description",
-  "name": "earthen_rite",
+  "name": "malum:earthen_rite",
   "icon_stacks": [
     {
       "id": "malum:earthen_spirit",

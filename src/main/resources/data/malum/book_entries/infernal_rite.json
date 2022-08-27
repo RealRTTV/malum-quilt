@@ -4,7 +4,7 @@
     {
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.infernal_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_infernal_rite",
+      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
       "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_infernal_rite",
       "type": "malum:double_headline"
     },
@@ -15,7 +15,7 @@
     {
       "first_headline_translation_key": "malum.gui.book.entry.page.headline.rite_effect",
       "first_description_translation_key": "malum.gui.book.entry.page.text.eldritch_infernal_rite",
-      "second_headline_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_infernal_rite",
+      "second_headline_translation_key": "malum.gui.book.entry.page.headline.corrupted_rite_effect",
       "second_description_translation_key": "malum.gui.book.entry.page.text.corrupted_eldritch_infernal_rite",
       "type": "malum:double_headline"
     },
@@ -26,7 +26,7 @@
   ],
   "translation_key": "malum.gui.book.entry.infernal_rite",
   "description_translation_key": "malum.gui.book.entry.infernal_rite.description",
-  "name": "infernal_rite",
+  "name": "malum:infernal_rite",
   "icon_stacks": [
     {
       "id": "malum:infernal_spirit",

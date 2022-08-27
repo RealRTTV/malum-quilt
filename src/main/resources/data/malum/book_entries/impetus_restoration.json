@@ -78,7 +78,7 @@
   ],
   "translation_key": "malum.gui.book.entry.impetus_restoration",
   "description_translation_key": "malum.gui.book.entry.impetus_restoration.description",
-  "name": "impetus_restoration",
+  "name": "malum:impetus_restoration",
   "icon_stacks": [
     {
       "id": "malum:twisted_tablet",

@@ -21,7 +21,7 @@
   ],
   "translation_key": "malum.gui.book.entry.spirit_focusing",
   "description_translation_key": "malum.gui.book.entry.spirit_focusing.description",
-  "name": "spirit_focusing",
+  "name": "malum:spirit_focusing",
   "icon_stacks": [
     {
       "id": "malum:spirit_crucible",

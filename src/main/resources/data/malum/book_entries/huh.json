@@ -54,7 +54,7 @@
   ],
   "translation_key": "malum.gui.book.entry.huh",
   "description_translation_key": "malum.gui.book.entry.huh.description",
-  "name": "huh",
+  "name": "malum:huh",
   "icon_stacks": [
     {
       "id": "malum:the_device",

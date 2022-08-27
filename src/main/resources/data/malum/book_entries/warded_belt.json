@@ -13,7 +13,7 @@
   ],
   "translation_key": "malum.gui.book.entry.warded_belt",
   "description_translation_key": "malum.gui.book.entry.warded_belt.description",
-  "name": "warded_belt",
+  "name": "malum:warded_belt",
   "icon_stacks": [
     {
       "id": "malum:warded_belt",

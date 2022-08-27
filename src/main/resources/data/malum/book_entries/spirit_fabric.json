@@ -63,7 +63,7 @@
   ],
   "translation_key": "malum.gui.book.entry.spirit_fabric",
   "description_translation_key": "malum.gui.book.entry.spirit_fabric.description",
-  "name": "spirit_fabric",
+  "name": "malum:spirit_fabric",
   "icon_stacks": [
     {
       "id": "malum:spirit_fabric",

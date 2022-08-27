@@ -17,7 +17,7 @@
   ],
   "translation_key": "malum.gui.book.entry.spirit_magics",
   "description_translation_key": "malum.gui.book.entry.spirit_magics.description",
-  "name": "spirit_magics",
+  "name": "malum:spirit_magics",
   "icon_stacks": [
     {
       "id": "minecraft:soul_sand",
