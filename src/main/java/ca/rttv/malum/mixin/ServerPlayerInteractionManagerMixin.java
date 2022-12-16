@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import static ca.rttv.malum.registry.MalumStatusEffectRegistry.AQUEOUS_AURA;
 
 @Mixin(ServerPlayerInteractionManager.class)
-abstract class SeverPlayerInteractionManagerMixin {
+abstract class ServerPlayerInteractionManagerMixin {
     @Shadow
     @Final
     protected ServerPlayerEntity player;

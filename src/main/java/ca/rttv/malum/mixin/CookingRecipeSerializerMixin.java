@@ -22,7 +22,7 @@ abstract class CookingRecipeSerializerMixin {
         }
     }
 
-    @ModifyArgs(method = "read(Lnet/minecraft/util/Identifier;Lcom/google/gson/JsonObject;)Lnet/minecraft/recipe/AbstractCookingRecipe;", at = @At(value = "INVOKE", target = "Lnet/minecraft/recipe/CookingRecipeSerializer$RecipeFactory;create(Lnet/minecraft/util/Identifier;Ljava/lang/String;Lnet/minecraft/recipe/Ingredient;Lnet/minecraft/item/ItemStack;FI)Lnet/minecraft/recipe/AbstractCookingRecipe;", ordinal = 0))
+    @ModifyArgs(method = "read(Lnet/minecraft/util/Identifier;Lcom/google/gson/JsonObject;)Lnet/minecraft/recipe/AbstractCookingRecipe;", at = @At(value = "INVOKE", target = "Lnet/minecraft/recipe/CookingRecipeSerializer$RecipeFactory;create(Lnet/minecraft/util/Identifier;Ljava/lang/String;Lnet/minecraft/recipe/book/CookingRecipeCategory;Lnet/minecraft/recipe/Ingredient;Lnet/minecraft/item/ItemStack;FI)Lnet/minecraft/recipe/AbstractCookingRecipe;", ordinal = 0))
     private void malum$create(Args args, Identifier identifier, JsonObject jsonObject) {
         if (jsonObject.get("result").isJsonObject()) {
             ItemStack stack = args.get(3);

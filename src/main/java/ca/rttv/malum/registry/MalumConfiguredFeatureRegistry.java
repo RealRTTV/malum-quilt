@@ -1,6 +1,7 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.config.CommonConfig;
+import net.minecraft.registry.Holder;
 import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.*;
@@ -20,7 +21,7 @@ public interface MalumConfiguredFeatureRegistry {
     List<OreFeatureConfig.Target> SOULSTONE_ORE_TARGETS  = List.of(OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()), OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
     List<OreFeatureConfig.Target> BRILLIANCE_ORE_TARGETS = List.of(OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, BRILLIANT_STONE.getDefaultState()), OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, BRILLIANT_DEEPSLATE.getDefaultState()));
 
-    Holder<ConfiguredFeature<OreFeatureConfig, ?>>     UNDERGROUND_SOULSTONE_CONFIGURED = register("underground_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS,  CommonConfig.UNDERGROUND_SOULSTONE_VEIN_SIZE));
+    Holder<ConfiguredFeature<OreFeatureConfig, ?>> UNDERGROUND_SOULSTONE_CONFIGURED = register("underground_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS,  CommonConfig.UNDERGROUND_SOULSTONE_VEIN_SIZE));
     Holder<ConfiguredFeature<OreFeatureConfig, ?>>     SURFACE_SOULSTONE_CONFIGURED     = register("surface_soulstone",     Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS,  CommonConfig.SURFACE_SOULSTONE_VEIN_SIZE));
     Holder<ConfiguredFeature<OreFeatureConfig, ?>>     BRILLIANT_STONE_VEIN_CONFIGURED  = register("brilliant_stone",       Feature.ORE, new OreFeatureConfig(BRILLIANCE_ORE_TARGETS, CommonConfig.BRILLIANT_STONE_VEIN_SIZE));
     Holder<ConfiguredFeature<OreFeatureConfig, ?>>     BLAZING_QUARTZ_VEIN_CONFIGURED   = register("blazing_quartz",        Feature.ORE, new OreFeatureConfig(BLAZING_QUARTZ_TARGETS, CommonConfig.BLAZING_QUARTZ_VEIN_SIZE));

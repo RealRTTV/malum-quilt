@@ -1,21 +1,20 @@
 [versions]
 # The latest versions are available at https://lambdaurora.dev/tools/import_quilt.html
-minecraft = "1.19"
-quilt_mappings = "1.19+build.1"
-quilt_loader = "0.17.1-beta.1"
+minecraft = "1.19.3"
+quilt_mappings = "1.19.3+build.5"
+quilt_loader = "0.18.1-beta.25"
 
 isnrmn = "v1_03"
 fabric_asm = "v2.3"
-cca = "5.0.0-beta.1"
-mixin_extras = "0.0.11"
-trinkets = "3.4.0"
-satin = "1.8.0"
-quilt_loading_screen = "4.0.0+1.19"
-midnightlib = "0.5.2"
-emi = "0.2.0+1.19"
+cca = "5.1.0"
+mixin_extras = "0.1.1"
+trinkets = "3.5.0"
+satin = "1.10.0"
+quilt_loading_screen = "5.0.0+1.19.3-rc1"
+midnightlib = "1.1.0"
+emi = "0.5.0+1.19.3"
 annotations = "1.0"
-qsl = "2.0.0-beta.10+1.19"
-quilted_fabric_api = "2.0.0-beta.4+0.57.0-1.19"
+quilted_fabric_api = "5.0.0-alpha.5+0.68.1-1.19.3"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -33,7 +32,6 @@ midnightlib = { module = "maven.modrinth:midnightlib", version.ref = "midnightli
 satin = { module = "io.github.ladysnake:satin", version.ref = "satin" }
 emi = { module = "dev.emi:emi", version.ref = "emi" }
 annotations = { module = "com.demonwav.mcdev:annotations", version.ref = "annotations" }
-qsl = { module = "org.quiltmc:qsl", version.ref = "qsl" }
 quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilted_fabric_api" }
 
 # If you have multiple similar dependencies, you can declare a dependency bundle and reference it on the build script with "libs.bundles.example".

@@ -1,13 +1,12 @@
 package ca.rttv.malum.mixin;
 
-import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.client.screen.ProgressionBookScreen;
 import ca.rttv.malum.client.screen.page.BookEntry;
 import ca.rttv.malum.duck.MalumClientPlayPacketListener;
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.registry.MalumItemRegistry;
 import ca.rttv.malum.util.helper.ColorHelper;
-import ca.rttv.malum.util.particle.ParticleBuilders;
+import com.sammy.lodestone.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
@@ -24,6 +23,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.awt.*;
 import java.util.List;
 
+import static com.sammy.lodestone.setup.LodestoneParticles.SMOKE_PARTICLE;
+import static com.sammy.lodestone.setup.LodestoneParticles.WISP_PARTICLE;
+
 @Mixin(ClientPlayNetworkHandler.class)
 final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListener {
     @Shadow private ClientWorld world;
@@ -35,7 +37,7 @@ final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListen
     @Override
     public void malum$onMagicParticle(MalumParticleS2CPacket packet) {
         client.execute(() -> {
-            ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+            ParticleBuilders.create(WISP_PARTICLE)
                 .setAlpha(0.1f, 0f)
                 .setLifetime(10)
                 .setSpin(0.4f)
@@ -46,7 +48,7 @@ final class ClientPlayNetworkHandlerMixin implements MalumClientPlayPacketListen
                 .randomMotion(0.01f, 0.01f)
                 .repeat(world, packet.x(), packet.y(), packet.z(), 20);
 
-            ParticleBuilders.create(MalumParticleRegistry.SMOKE_PARTICLE)
+            ParticleBuilders.create(SMOKE_PARTICLE)
                 .setAlpha(0.05f, 0f)
                 .setLifetime(20)
                 .setSpin(0.1f)

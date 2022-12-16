@@ -1,7 +1,7 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.config.CommonConfig;
-import net.minecraft.util.Holder;
+import net.minecraft.registry.Holder;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.decorator.HeightRangePlacementModifier;
 import net.minecraft.world.gen.decorator.RarityFilterPlacementModifier;

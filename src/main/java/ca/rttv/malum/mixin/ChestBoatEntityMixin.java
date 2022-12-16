@@ -22,7 +22,7 @@ abstract class ChestBoatEntityMixin extends BoatEntity {
 
     @Inject(method = "asItem", at = @At("HEAD"), cancellable = true)
     private void malum$asItem(CallbackInfoReturnable<Item> cir) {
-        BoatEntity.Type type = this.getBoatType();
+        BoatEntity.Variant type = this.getVariant();
         if(type == MalumBoatTypes.SOULWOOD) {
             cir.setReturnValue(SOULWOOD_CHEST_BOAT);
         }

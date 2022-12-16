@@ -1,7 +1,7 @@
 package ca.rttv.malum.client.particle.spiritflame;
 
-import ca.rttv.malum.util.particle.world.FrameSetParticle;
-import ca.rttv.malum.util.particle.world.WorldParticleEffect;
+import com.sammy.lodestone.systems.rendering.particle.world.FrameSetParticle;
+import com.sammy.lodestone.systems.rendering.particle.world.WorldParticleEffect;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
 import net.minecraft.client.world.ClientWorld;
 
@@ -16,7 +16,7 @@ public class SpiritFlameParticle extends FrameSetParticle {
     public void tick() {
         super.tick();
         velocityX *= 0.9f;
-        if (data.gravity && age < 5) {
+        if (age < 5) {
             velocityY += 0.005f;
         } else {
             velocityY *= 0.9f;

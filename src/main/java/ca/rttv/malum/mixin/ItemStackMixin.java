@@ -40,7 +40,7 @@ abstract class ItemStackMixin {
     private double malum$getTooltip(double value, @Nullable PlayerEntity player, TooltipContext context) {
         if (player != null) {
             if (entityAttributeModifier.getId() == MAGIC_DAMAGE_MODIFIER_ID) {
-                return value + player.getAttributeBaseValue(MAGIC_DAMAGE) + SpiritHelper.getHauntedDamage((ItemStack) (Object) this);
+                return value + player.getAttributeValue(MAGIC_DAMAGE) + SpiritHelper.getHauntedDamage((ItemStack) (Object) this);
             }
         }
         return value;

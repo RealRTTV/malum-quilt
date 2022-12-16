@@ -1,8 +1,8 @@
 package ca.rttv.malum.client.particle.spiritflame;
 
 
-import ca.rttv.malum.util.particle.world.WorldParticleEffect;
 import com.mojang.serialization.Codec;
+import com.sammy.lodestone.systems.rendering.particle.world.WorldParticleEffect;
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;

@@ -28,9 +28,7 @@ loom {
 
 dependencies {
 	minecraft libs.minecraft
-	mappings loom.layered {
-		addLayer quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:v2")
-	}
+	mappings "org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:intermediary-v2"
 
 	modImplementation(libs.quilt.loader)
 	modImplementation(libs.cardinal.components.entity) {
@@ -48,12 +46,9 @@ dependencies {
 		exclude group: "net.fabricmc.fabric-api"
 		exclude group: "com.terraformersmc"
 	}
-	modImplementation(libs.midnightlib)
 	modImplementation(libs.annotations)
 	modImplementation(libs.fabric.asm)
 	modImplementation(libs.isnrmn)
-	modImplementation(libs.satin)
-	modImplementation(libs.qsl)
 	modImplementation(libs.emi) { transitive false }
 
 	modRuntimeOnly("maven.modrinth:sodium:mc1.19-0.4.2")
@@ -63,6 +58,7 @@ dependencies {
 	runtimeOnly compileOnly("org.anarres:jcpp:1.4.14") // for iris
 	runtimeOnly('org.joml:joml:1.10.4') // for sodium
 
+	modImplementation include("com.github.Arathain:LodestoneLib-Quilt:1.19.3-SNAPSHOT")
 	include(libs.fabric.asm)
 	include(libs.satin)
 
@@ -70,20 +66,6 @@ dependencies {
 	include(libs.mixin.extras)
 
 	annotationProcessor(libs.mixin.extras)
-}
-
-configurations.all {
-	resolutionStrategy.dependencySubstitution {
-		substitute module('net.fabricmc:fabric-loader') using module(libs.quilt.loader.get().toString())
-		all { DependencySubstitution dependency ->
-			if (dependency.requested instanceof ModuleComponentSelector && dependency.requested.group == 'net.fabricmc.fabric-api') {
-				if (dependency.requested.module == 'fabric-api')
-					dependency.useTarget libs.quilted.fabric.api.get().toString()
-				else
-					dependency.useTarget 'org.quiltmc.quilted-fabric-api' + ':' + dependency.requested.module + ':' + libs.versions.quilted.fabric.api.get()
-			}
-		}
-	}
 }
 
 processResources {
