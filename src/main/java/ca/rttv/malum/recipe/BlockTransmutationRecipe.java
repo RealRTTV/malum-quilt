@@ -9,10 +9,10 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
@@ -125,9 +125,9 @@ public record BlockTransmutationRecipe(Identifier id, String group, Ingredient i
                 json.addProperty("group", recipe.group());
             }
 
-            json.addProperty("input", Registry.ITEM.getId(recipe.input().getMatchingStacks()[0].getItem()).toString());
+            json.addProperty("input", Registries.ITEM.getId(recipe.input().getMatchingStacks()[0].getItem()).toString());
 
-            json.addProperty("output", Registry.ITEM.getId(recipe.output().getItem()).toString());
+            json.addProperty("output", Registries.ITEM.getId(recipe.output().getItem()).toString());
 
             return json;
         }

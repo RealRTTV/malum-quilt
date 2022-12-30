@@ -31,7 +31,7 @@ public class EldritchEarthenRite extends Rite {
 
         StreamSupport.stream(BlockPos.iterateOutwards(pos.down(), 2, 0, 2).spliterator(), false).filter(possiblePos -> !possiblePos.up().equals(pos) && world.getBlockState(possiblePos).isOf(world.getBlockState(pos.down()).getBlock())).forEach(possiblePos -> {
             world.breakBlock(possiblePos, true);
-            world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
+            world.getPlayers().stream().filter(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.EARTHEN_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
                 ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
@@ -47,7 +47,7 @@ public class EldritchEarthenRite extends Rite {
 
         StreamSupport.stream(BlockPos.iterateOutwards(pos.down(), 2, 0, 2).spliterator(), false).filter(possiblePos -> !possiblePos.up().equals(pos) && world.isAir(possiblePos)).forEach(possiblePos -> {
             world.setBlockState(possiblePos, Blocks.COBBLESTONE.getDefaultState());
-            world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
+            world.getPlayers().stream().filter(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.EARTHEN_SPIRIT.color.getRGB(), possiblePos.getX() + 0.5d, possiblePos.getY() + 0.5d, possiblePos.getZ() + 0.5d).write(buf);
                 ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);

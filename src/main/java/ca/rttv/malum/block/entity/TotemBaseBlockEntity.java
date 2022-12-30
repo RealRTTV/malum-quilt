@@ -99,8 +99,8 @@ public class TotemBaseBlockEntity extends BlockEntity {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound nbt = super.toInitialChunkDataNbt();
+    public NbtCompound toSyncedNbt() {
+        NbtCompound nbt = super.toSyncedNbt();
         this.writeNbt(nbt);
         return nbt;
     }

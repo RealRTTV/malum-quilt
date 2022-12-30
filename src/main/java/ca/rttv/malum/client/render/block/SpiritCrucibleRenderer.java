@@ -13,8 +13,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
+import org.joml.Quaternionf;
 
 public class SpiritCrucibleRenderer implements BlockEntityRenderer<SpiritCrucibleBlockEntity> {
     @Override
@@ -35,7 +35,7 @@ public class SpiritCrucibleRenderer implements BlockEntityRenderer<SpiritCrucibl
                 matrices.push();
                 Vec3d offset = SpiritCrucibleBlockEntity.spiritOffset(blockEntity, i, tickDelta);
                 matrices.translate(offset.x, offset.y, offset.z);
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3.0f)); // todo, fix the tickDelta lag
+                matrices.multiply(new Quaternionf().rotateY((world.getTime() + tickDelta) * 3.0f*((float)Math.PI/180F))); // todo, fix the tickDelta lag
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 itemRenderer.renderItem(item, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
                 matrices.pop();
@@ -46,7 +46,7 @@ public class SpiritCrucibleRenderer implements BlockEntityRenderer<SpiritCrucibl
             matrices.push();
             Vec3d offset = new Vec3d(0.5d, 0.6d, 0.5d);
             matrices.translate(offset.x, offset.y, offset.z);
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3.0f));
+            matrices.multiply(new Quaternionf().rotateY((world.getTime() + tickDelta) * 3.0f*((float)Math.PI/180F)));
             matrices.scale(0.45f, 0.45f, 0.45f);
             itemRenderer.renderItem(stack, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
             matrices.pop();

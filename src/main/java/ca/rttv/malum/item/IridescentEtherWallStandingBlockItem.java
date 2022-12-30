@@ -5,10 +5,11 @@ import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.WallStandingBlockItem;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.Direction;
 
 public class IridescentEtherWallStandingBlockItem extends WallStandingBlockItem implements DyeableItem {
     public IridescentEtherWallStandingBlockItem(Block block, Block block2, Settings settings) {
-        super(block, block2, settings);
+        super(block, block2, settings, Direction.DOWN);
     }
 
     @Override

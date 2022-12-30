@@ -4,11 +4,11 @@ import ca.rttv.malum.Malum;
 import ca.rttv.malum.util.helper.SpiritHelper;
 import ca.rttv.malum.util.spirit.MalumEntitySpiritData;
 import com.google.gson.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -30,7 +30,7 @@ public class SpiritDataReloadListener extends JsonDataLoader {
             JsonObject object = objectIn.get(location).getAsJsonObject();
             String name = object.getAsJsonPrimitive("registry_name").getAsString();
             Identifier identifier = new Identifier(name);
-            if (!Registry.ENTITY_TYPE.containsId(identifier)) {
+            if (!Registries.ENTITY_TYPE.containsId(identifier)) {
                 continue;
             }
             if (!object.has("primary_type")) {

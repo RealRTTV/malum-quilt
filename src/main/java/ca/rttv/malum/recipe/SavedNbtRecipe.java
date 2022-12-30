@@ -5,13 +5,15 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.recipe.CraftingCategory;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.Map;
@@ -22,7 +24,7 @@ public class SavedNbtRecipe extends ShapedRecipe {
     private final Item savedItem;
 
     public SavedNbtRecipe(Identifier identifier, String string, int i, int j, DefaultedList<Ingredient> defaultedList, ItemStack itemStack, Item savedItem) {
-        super(identifier, string, i, j, defaultedList, itemStack);
+        super(identifier, string, CraftingCategory.MISC, i, j, defaultedList, itemStack);
         this.savedItem = savedItem;
     }
 
@@ -70,7 +72,7 @@ public class SavedNbtRecipe extends ShapedRecipe {
             defaultedList.replaceAll(ignored -> Ingredient.fromPacket(packetByteBuf));
 
             ItemStack itemStack = packetByteBuf.readItemStack();
-            Item savedItem = Registry.ITEM.get(new Identifier(packetByteBuf.readString()));
+            Item savedItem = Registries.ITEM.get(new Identifier(packetByteBuf.readString()));
             return new SavedNbtRecipe(identifier, string, i, j, defaultedList, itemStack, savedItem);
         }
 
@@ -84,7 +86,7 @@ public class SavedNbtRecipe extends ShapedRecipe {
             }
 
             packetByteBuf.writeItemStack(savedNbtRecipe.getOutput());
-            packetByteBuf.writeString(Registry.ITEM.getId(savedNbtRecipe.savedItem).toString());
+            packetByteBuf.writeString(Registries.ITEM.getId(savedNbtRecipe.savedItem).toString());
         }
 
         @Override

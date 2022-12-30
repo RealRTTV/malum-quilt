@@ -11,8 +11,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 public class SpiritAltarRenderer implements BlockEntityRenderer<SpiritAltarBlockEntity> {
     @Override
@@ -28,9 +29,9 @@ public class SpiritAltarRenderer implements BlockEntityRenderer<SpiritAltarBlock
             ItemStack item = inventory.get(i);
             if (!item.isEmpty()) {
                 matrices.push();
-                Vec3f offset = new Vec3f(SpiritAltarBlockEntity.spiritOffset(blockEntity, i, tickDelta));
-                matrices.translate(offset.getX(), offset.getY(), offset.getZ());
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3));
+                Vector3f offset = SpiritAltarBlockEntity.spiritOffset(blockEntity, i, tickDelta).m_sruzucpd();
+                matrices.translate(offset.x(), offset.y(), offset.z());
+                matrices.multiply(new Quaternionf().rotateY((world.getTime() + tickDelta) * 3*((float)Math.PI/180F)));
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 itemRenderer.renderItem(item, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
                 matrices.pop();
@@ -41,7 +42,7 @@ public class SpiritAltarRenderer implements BlockEntityRenderer<SpiritAltarBlock
             matrices.push();
             Vec3d offset = blockEntity.itemOffset();
             matrices.translate(offset.x, offset.y, offset.z);
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3));
+            matrices.multiply(new Quaternionf().rotateY((world.getTime() + tickDelta) * 3*((float)Math.PI/180F)));
             matrices.scale(0.45f, 0.45f, 0.45f);
             itemRenderer.renderItem(stack, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
             matrices.pop();

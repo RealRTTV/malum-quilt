@@ -51,8 +51,8 @@ public abstract class AbstractItemDisplayBlockEntity extends BlockEntity impleme
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound tag = super.toInitialChunkDataNbt();
+    public NbtCompound toSyncedNbt() {
+        NbtCompound tag = super.toSyncedNbt();
         this.writeNbt(tag);
         return tag;
     }

@@ -3,8 +3,9 @@ package ca.rttv.malum.registry;
 import ca.rttv.malum.recipe.*;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,6 +29,6 @@ public interface MalumRecipeTypeRegistry {
     }
 
     static void init() {
-        RECIPE_TYPES.forEach((id, type) -> Registry.register(Registry.RECIPE_TYPE, id, type));
+        RECIPE_TYPES.forEach((id, type) -> Registry.register(Registries.RECIPE_TYPE, id, type));
     }
 }

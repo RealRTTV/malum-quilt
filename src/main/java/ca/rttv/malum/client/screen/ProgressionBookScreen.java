@@ -4,8 +4,8 @@ import ca.rttv.malum.api.event.ProgressionBookEntriesSetEvent;
 import ca.rttv.malum.client.screen.page.BookEntry;
 import ca.rttv.malum.client.screen.page.BookObject;
 import ca.rttv.malum.recipe.IngredientWithCount;
-import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.sammy.lodestone.handlers.ScreenParticleHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_TOOLTIPS;
+import static com.sammy.lodestone.systems.rendering.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_TOOLTIPS;
 import static org.lwjgl.opengl.GL11C.GL_SCISSOR_TEST;
 
 public class ProgressionBookScreen extends Screen {
@@ -91,7 +91,7 @@ public class ProgressionBookScreen extends Screen {
         client.getItemRenderer().renderInGuiWithOverrides(stack, posX, posY);
         client.getItemRenderer().renderGuiItemOverlay(screen.textRenderer, stack, posX, posY, null);
         if (isHovering(mouseX, mouseY, posX, posY, 16, 16)) {
-            screen.renderTooltip(matrices, stack.getTooltip(client.player, TooltipContext.Default.NORMAL), mouseX, mouseY);
+            screen.renderTooltip(matrices, stack.getTooltip(client.player, TooltipContext.Default.f_yceowjjc), mouseX, mouseY);
         }
     }
 

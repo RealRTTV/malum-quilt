@@ -1,42 +1,41 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.config.CommonConfig;
-import net.minecraft.registry.Holder;
-import net.minecraft.util.Holder;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.structure.rule.TagMatchRuleTest;
+import net.minecraft.world.gen.BootstrapContext;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil;
 
 import java.util.List;
 
-import static ca.rttv.malum.Malum.MODID;
 import static ca.rttv.malum.registry.MalumBlockRegistry.*;
 import static ca.rttv.malum.registry.MalumFeatureRegistry.RUNEWOOD_TREE_FEATURE;
 import static ca.rttv.malum.registry.MalumFeatureRegistry.SOULWOOD_TREE_FEATURE;
-import static net.minecraft.world.gen.feature.OreConfiguredFeatures.*;
+import static net.minecraft.registry.tag.BlockTags.DEEPSLATE_ORE_REPLACEABLES;
+import static net.minecraft.registry.tag.BlockTags.STONE_ORE_REPLACEABLES;
 
 
 public interface MalumConfiguredFeatureRegistry {
-    List<OreFeatureConfig.Target> BLAZING_QUARTZ_TARGETS = List.of(OreFeatureConfig.createTarget(NETHERRACK, BLAZING_QUARTZ_ORE.getDefaultState()));
-    List<OreFeatureConfig.Target> SOULSTONE_ORE_TARGETS  = List.of(OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, SOULSTONE_ORE.getDefaultState()), OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
-    List<OreFeatureConfig.Target> BRILLIANCE_ORE_TARGETS = List.of(OreFeatureConfig.createTarget(STONE_ORE_REPLACEABLES, BRILLIANT_STONE.getDefaultState()), OreFeatureConfig.createTarget(DEEPSLATE_ORE_REPLACEABLES, BRILLIANT_DEEPSLATE.getDefaultState()));
+    List<OreFeatureConfig.Target> BLAZING_QUARTZ_TARGETS = List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(BlockTags.BASE_STONE_NETHER), BLAZING_QUARTZ_ORE.getDefaultState()));
+    List<OreFeatureConfig.Target> SOULSTONE_ORE_TARGETS  = List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(STONE_ORE_REPLACEABLES), SOULSTONE_ORE.getDefaultState()), OreFeatureConfig.createTarget(new TagMatchRuleTest(DEEPSLATE_ORE_REPLACEABLES), DEEPSLATE_SOULSTONE_ORE.getDefaultState()));
+    List<OreFeatureConfig.Target> BRILLIANCE_ORE_TARGETS = List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(STONE_ORE_REPLACEABLES), BRILLIANT_STONE.getDefaultState()), OreFeatureConfig.createTarget(new TagMatchRuleTest(DEEPSLATE_ORE_REPLACEABLES), BRILLIANT_DEEPSLATE.getDefaultState()));
 
-    Holder<ConfiguredFeature<OreFeatureConfig, ?>> UNDERGROUND_SOULSTONE_CONFIGURED = register("underground_soulstone", Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS,  CommonConfig.UNDERGROUND_SOULSTONE_VEIN_SIZE));
-    Holder<ConfiguredFeature<OreFeatureConfig, ?>>     SURFACE_SOULSTONE_CONFIGURED     = register("surface_soulstone",     Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS,  CommonConfig.SURFACE_SOULSTONE_VEIN_SIZE));
-    Holder<ConfiguredFeature<OreFeatureConfig, ?>>     BRILLIANT_STONE_VEIN_CONFIGURED  = register("brilliant_stone",       Feature.ORE, new OreFeatureConfig(BRILLIANCE_ORE_TARGETS, CommonConfig.BRILLIANT_STONE_VEIN_SIZE));
-    Holder<ConfiguredFeature<OreFeatureConfig, ?>>     BLAZING_QUARTZ_VEIN_CONFIGURED   = register("blazing_quartz",        Feature.ORE, new OreFeatureConfig(BLAZING_QUARTZ_TARGETS, CommonConfig.BLAZING_QUARTZ_VEIN_SIZE));
-    Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE = register("runewood_tree",         RUNEWOOD_TREE_FEATURE);
-    Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_SOULWOOD_TREE_FEATURE = register("soulwood_tree",         SOULWOOD_TREE_FEATURE);
-
-    static Holder<ConfiguredFeature<DefaultFeatureConfig, ?>> register(String id, Feature<DefaultFeatureConfig> feature) {
-        return ConfiguredFeatureUtil.register(new Identifier(MODID, id).toString(), feature);
-    }
-
-    static <FC extends FeatureConfig, F extends Feature<FC>> Holder<ConfiguredFeature<FC, ?>> register(String id, F feature, FC featureConfig) {
-        return ConfiguredFeatureUtil.register(new Identifier(MODID, id).toString(), feature, featureConfig);
-    }
-
-    static void init() {
-
+    RegistryKey<ConfiguredFeature<?, ?>> UNDERGROUND_SOULSTONE_CONFIGURED = ConfiguredFeatureUtil.m_qoarwirv("underground_soulstone");
+    RegistryKey<ConfiguredFeature<?, ?>>     SURFACE_SOULSTONE_CONFIGURED     = ConfiguredFeatureUtil.m_qoarwirv("surface_soulstone");
+    RegistryKey<ConfiguredFeature<?, ?>>     BRILLIANT_STONE_VEIN_CONFIGURED  = ConfiguredFeatureUtil.m_qoarwirv("brilliant_stone");
+    RegistryKey<ConfiguredFeature<?, ?>>     BLAZING_QUARTZ_VEIN_CONFIGURED   = ConfiguredFeatureUtil.m_qoarwirv("blazing_quartz");
+    RegistryKey<ConfiguredFeature<?, ?>> CONFIGURED_RUNEWOOD_TREE_FEATURE = ConfiguredFeatureUtil.m_qoarwirv("runewood_tree");
+    RegistryKey<ConfiguredFeature<?, ?>> CONFIGURED_SOULWOOD_TREE_FEATURE = ConfiguredFeatureUtil.m_qoarwirv("soulwood_tree");
+    static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> bootstrapContext) {
+        ConfiguredFeatureUtil.m_rajyrrbd(bootstrapContext, SURFACE_SOULSTONE_CONFIGURED, Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, CommonConfig.SURFACE_SOULSTONE_VEIN_SIZE));
+        ConfiguredFeatureUtil.m_rajyrrbd(bootstrapContext, UNDERGROUND_SOULSTONE_CONFIGURED, Feature.ORE, new OreFeatureConfig(SOULSTONE_ORE_TARGETS, CommonConfig.UNDERGROUND_SOULSTONE_VEIN_SIZE));
+        ConfiguredFeatureUtil.m_rajyrrbd(bootstrapContext, BRILLIANT_STONE_VEIN_CONFIGURED, Feature.ORE, new OreFeatureConfig(BRILLIANCE_ORE_TARGETS, CommonConfig.BRILLIANT_STONE_VEIN_SIZE));
+        ConfiguredFeatureUtil.m_rajyrrbd(bootstrapContext, BLAZING_QUARTZ_VEIN_CONFIGURED, Feature.ORE, new OreFeatureConfig(BLAZING_QUARTZ_TARGETS, CommonConfig.BLAZING_QUARTZ_VEIN_SIZE));
+        ConfiguredFeatureUtil.m_fpwwfrjz(bootstrapContext, CONFIGURED_RUNEWOOD_TREE_FEATURE, RUNEWOOD_TREE_FEATURE);
+        ConfiguredFeatureUtil.m_fpwwfrjz(bootstrapContext, CONFIGURED_SOULWOOD_TREE_FEATURE, SOULWOOD_TREE_FEATURE);
     }
 }

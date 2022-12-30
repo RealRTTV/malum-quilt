@@ -33,7 +33,7 @@ public class SacredRite extends Rite {
 
         world.getEntitiesByClass(PlayerEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), player -> !player.isSpectator()).forEach(player -> {
             if (!player.hasStatusEffect(SACRED_AURA)) {
-                world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
+                world.getPlayers().stream().filter(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                     new MalumParticleS2CPacket(SpiritType.SACRED_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ()).write(buf);
                     ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
@@ -52,7 +52,7 @@ public class SacredRite extends Rite {
         world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), Entity::isLiving).forEach(entity -> {
             if (world.random.nextFloat() <= 0.04f) {
                 if (entity.getBreedingAge() < 0) {
-                    world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
+                    world.getPlayers().stream().filter(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
                         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                         new MalumParticleS2CPacket(SpiritType.SACRED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ()).write(buf);
                         ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);

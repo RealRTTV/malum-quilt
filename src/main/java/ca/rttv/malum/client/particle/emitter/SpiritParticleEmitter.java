@@ -1,8 +1,8 @@
 package ca.rttv.malum.client.particle.emitter;
 
 import ca.rttv.malum.item.SpiritItem;
-import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
-import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
+import com.sammy.lodestone.systems.rendering.particle.screen.base.ScreenParticle;
+import com.sammy.lodestone.systems.rendering.particle.screen.emitter.ItemParticleEmitter;
 import net.minecraft.item.ItemStack;
 
 import static ca.rttv.malum.util.helper.SpiritHelper.spawnSpiritScreenParticles;

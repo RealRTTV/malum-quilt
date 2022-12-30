@@ -1,14 +1,18 @@
 package ca.rttv.malum.item;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.TorchBlock;
+import net.minecraft.block.WallTorchBlock;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.WallStandingBlockItem;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.Direction;
 
 public class EtherWallStandingBlockItem extends WallStandingBlockItem implements DyeableItem {
     public EtherWallStandingBlockItem(Block block, Block block2, Settings settings) {
-        super(block, block2, settings);
+        super(block, block2, settings, Direction.DOWN);
     }
 
     @Override

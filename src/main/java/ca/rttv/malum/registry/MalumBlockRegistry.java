@@ -6,9 +6,11 @@ import ca.rttv.malum.block.sapling.RunewoodSaplingGenerator;
 import ca.rttv.malum.block.sapling.SoulwoodSaplingGenerator;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.Settings;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,7 +18,7 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public interface MalumBlockRegistry {
     Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
-    
+
     Block RUNEWOOD_LEAVES                             = register("runewood_leaves",                           new GradientLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque()));
     Block RUNEWOOD_SAPLING                            = register("runewood_sapling",                          new SaplingBlock(new RunewoodSaplingGenerator(), Settings.of(Material.LEAVES).ticksRandomly().noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)));
     Block STRIPPED_RUNEWOOD_LOG                       = register("stripped_runewood_log",                     new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
@@ -41,15 +43,16 @@ public interface MalumBlockRegistry {
     Block RUNEWOOD_TILES_STAIRS                       = register("runewood_tiles_stairs",                     new StairsBlock(RUNEWOOD_TILES.getDefaultState(), Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block CUT_RUNEWOOD_PLANKS                         = register("cut_runewood_planks",                       new Block(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block RUNEWOOD_BEAM                               = register("runewood_beam",                             new PillarBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block RUNEWOOD_DOOR                               = register("runewood_door",                             new DoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(3.0F).sounds(BlockSoundGroup.WOOD).nonOpaque()));
-    Block RUNEWOOD_TRAPDOOR                           = register("runewood_trapdoor",                         new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()));
-    Block SOLID_RUNEWOOD_TRAPDOOR                     = register("solid_runewood_trapdoor",                   new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block RUNEWOOD_PLANKS_BUTTON                      = register("runewood_planks_button",                    new WoodenButtonBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block RUNEWOOD_PLANKS_PRESSURE_PLATE              = register("runewood_planks_pressure_plate",            new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).noCollision()));
+    Block RUNEWOOD_DOOR                               = register("runewood_door",                             new DoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(3.0F).sounds(BlockSoundGroup.WOOD).nonOpaque(), SoundEvents.BLOCK_WOODEN_DOOR_CLOSE, SoundEvents.BLOCK_WOODEN_DOOR_OPEN));
+    Block RUNEWOOD_TRAPDOOR                           = register("runewood_trapdoor",                         new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque(), SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE, SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN));
+    Block SOLID_RUNEWOOD_TRAPDOOR                     = register("solid_runewood_trapdoor",                   new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD), SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE, SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN));
+    Block RUNEWOOD_PLANKS_BUTTON                      = register("runewood_planks_button",                    createButton(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
+    Block RUNEWOOD_PLANKS_PRESSURE_PLATE              = register("runewood_planks_pressure_plate",            new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).noCollision(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON));
     Block RUNEWOOD_PLANKS_FENCE                       = register("runewood_planks_fence",                     new FenceBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block RUNEWOOD_PLANKS_FENCE_GATE                  = register("runewood_planks_fence_gate",                new FenceGateBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
+    Block RUNEWOOD_PLANKS_FENCE_GATE                  = register("runewood_planks_fence_gate",                new FenceGateBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN));
     Block RUNEWOOD_ITEM_STAND                         = register("runewood_item_stand",                       new ItemStandBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block RUNEWOOD_ITEM_PEDESTAL                      = register("runewood_item_pedestal",                    new WoodenItemPedestalBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));Block SOULWOOD_LEAVES                             = register("soulwood_leaves",                           new GradientLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never)));
+    Block RUNEWOOD_ITEM_PEDESTAL                      = register("runewood_item_pedestal",                    new WoodenItemPedestalBlock(Settings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
+    Block SOULWOOD_LEAVES                             = register("soulwood_leaves",                           new GradientLeavesBlock(Settings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never)));
     Block SOULWOOD_SAPLING                            = register("soulwood_sapling",                          new SaplingBlock(new SoulwoodSaplingGenerator(), Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)));
     Block STRIPPED_SOULWOOD_LOG                       = register("stripped_soulwood_log",                     new PillarBlock(Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
     Block SOULWOOD_LOG                                = register("soulwood_log",                              new StrippableLogBlock(() -> STRIPPED_SOULWOOD_LOG, Settings.of(Material.WOOD).strength(2.0f).sounds(BlockSoundGroup.WOOD)));
@@ -71,13 +74,13 @@ public interface MalumBlockRegistry {
     Block SOULWOOD_TILES_STAIRS                       = register("soulwood_tiles_stairs",                     new StairsBlock(SOULWOOD_TILES.getDefaultState(), Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block CUT_SOULWOOD_PLANKS                         = register("cut_soulwood_planks",                       new Block(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block SOULWOOD_BEAM                               = register("soulwood_beam",                             new PillarBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block SOULWOOD_DOOR                               = register("soulwood_door",                             new DoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(3.0F).sounds(BlockSoundGroup.WOOD).nonOpaque()));
-    Block SOULWOOD_TRAPDOOR                           = register("soulwood_trapdoor",                         new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()));
-    Block SOLID_SOULWOOD_TRAPDOOR                     = register("solid_soulwood_trapdoor",                   new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque()));
-    Block SOULWOOD_PLANKS_BUTTON                      = register("soulwood_planks_button",                    new WoodenButtonBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block SOULWOOD_PLANKS_PRESSURE_PLATE              = register("soulwood_planks_pressure_plate",            new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).noCollision()));
+    Block SOULWOOD_DOOR                               = register("soulwood_door",                             new DoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(3.0F).sounds(BlockSoundGroup.WOOD).nonOpaque(), SoundEvents.BLOCK_WOODEN_DOOR_CLOSE, SoundEvents.BLOCK_WOODEN_DOOR_OPEN));
+    Block SOULWOOD_TRAPDOOR                           = register("soulwood_trapdoor",                         new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque(), SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE, SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN));
+    Block SOLID_SOULWOOD_TRAPDOOR                     = register("solid_soulwood_trapdoor",                   new TrapdoorBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque(), SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE, SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN));
+    Block SOULWOOD_PLANKS_BUTTON                      = register("soulwood_planks_button",                    createButton(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
+    Block SOULWOOD_PLANKS_PRESSURE_PLATE              = register("soulwood_planks_pressure_plate",            new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).noCollision(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON));
     Block SOULWOOD_PLANKS_FENCE                       = register("soulwood_planks_fence",                     new FenceBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
-    Block SOULWOOD_PLANKS_FENCE_GATE                  = register("soulwood_planks_fence_gate",                new FenceGateBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
+    Block SOULWOOD_PLANKS_FENCE_GATE                  = register("soulwood_planks_fence_gate",                new FenceGateBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN));
     Block SOULWOOD_ITEM_STAND                         = register("soulwood_item_stand",                       new ItemStandBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block SOULWOOD_ITEM_PEDESTAL                      = register("soulwood_item_pedestal",                    new WoodenItemPedestalBlock(Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD)));
     Block SOULSTONE_ORE                               = register("soulstone_ore",                             new ExperienceDroppingBlock(Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 3.0f).sounds(MalumBlockSoundGroupRegistry.BLOCK_SOULSTONE_SOUNDS).requiresTool()));
@@ -122,7 +125,7 @@ public interface MalumBlockRegistry {
     Block TAINTED_ROCK_COLUMN_CAP                     = register("tainted_rock_column_cap",                   new PillarCapBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block CUT_TAINTED_ROCK                            = register("cut_tainted_rock",                          new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block CHISELED_TAINTED_ROCK                       = register("chiseled_tainted_rock",                     new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
-    Block TAINTED_ROCK_PRESSURE_PLATE                 = register("tainted_rock_pressure_plate",               new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).noCollision().requiresTool()));
+    Block TAINTED_ROCK_PRESSURE_PLATE                 = register("tainted_rock_pressure_plate",               new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).noCollision().requiresTool(), SoundEvents.BLOCK_STONE_PRESSURE_PLATE_CLICK_OFF,  SoundEvents.BLOCK_STONE_PRESSURE_PLATE_CLICK_ON));
     Block TAINTED_ROCK_WALL                           = register("tainted_rock_wall",                         new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block TAINTED_ROCK_BRICKS_WALL                    = register("tainted_rock_bricks_wall",                  new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block CRACKED_TAINTED_ROCK_BRICKS_WALL            = register("cracked_tainted_rock_bricks_wall",          new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
@@ -163,7 +166,7 @@ public interface MalumBlockRegistry {
     Block TWISTED_ROCK_COLUMN_CAP                     = register("twisted_rock_column_cap",                   new PillarCapBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block CUT_TWISTED_ROCK                            = register("cut_twisted_rock",                          new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block CHISELED_TWISTED_ROCK                       = register("chiseled_twisted_rock",                     new Block(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
-    Block TWISTED_ROCK_PRESSURE_PLATE                 = register("twisted_rock_pressure_plate",               new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).noCollision().requiresTool()));
+    Block TWISTED_ROCK_PRESSURE_PLATE                 = register("twisted_rock_pressure_plate",               new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).noCollision().requiresTool(),  SoundEvents.BLOCK_STONE_PRESSURE_PLATE_CLICK_OFF,  SoundEvents.BLOCK_STONE_PRESSURE_PLATE_CLICK_ON));
     Block TWISTED_ROCK_WALL                           = register("twisted_rock_wall",                         new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block TWISTED_ROCK_BRICKS_WALL                    = register("twisted_rock_bricks_wall",                  new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block CRACKED_TWISTED_ROCK_BRICKS_WALL            = register("cracked_twisted_rock_bricks_wall",          new WallBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
@@ -191,8 +194,8 @@ public interface MalumBlockRegistry {
     Block CRACKED_SMALL_TWISTED_ROCK_BRICKS_STAIRS    = register("cracked_small_twisted_rock_bricks_stairs",  new StairsBlock(CRACKED_SMALL_TWISTED_ROCK_BRICKS.getDefaultState(), Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block TWISTED_ROCK_ITEM_STAND                     = register("twisted_rock_item_stand",                   new ItemStandBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
     Block TWISTED_ROCK_ITEM_PEDESTAL                  = register("twisted_rock_item_pedestal",                new StoneItemPedestalBlock(Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
-    Block TAINTED_ROCK_BUTTON                         = register("tainted_rock_button",                       new StoneButtonBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
-    Block TWISTED_ROCK_BUTTON                         = register("twisted_rock_button",                       new StoneButtonBlock(AbstractBlock.Settings.of(Material.STONE, MapColor.STONE_GRAY).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).strength(1.25f, 9.0f).requiresTool()));
+    Block TAINTED_ROCK_BUTTON                         = register("tainted_rock_button",                       createStoneButton(Settings.of(Material.DECORATION).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).noCollision().strength(1.25f, 9.0f).requiresTool()));
+    Block TWISTED_ROCK_BUTTON                         = register("twisted_rock_button",                       createStoneButton(Settings.of(Material.DECORATION).sounds(MalumBlockSoundGroupRegistry.BLOCK_TAINTED_ROCK_SOUNDS).noCollision().strength(1.25f, 9.0f).requiresTool()));
     Block BLOCK_OF_ARCANE_CHARCOAL                    = register("block_of_arcane_charcoal",                  new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.BLACK).strength(5.0f, 6.0f).sounds(MalumBlockSoundGroupRegistry.BLOCK_ARCANE_CHARCOAL_SOUNDS).requiresTool()));
     Block BLAZING_QUARTZ_ORE                          = register("blazing_quartz_ore",                        new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.DARK_RED).strength(3.0f, 3.0f).sounds(MalumBlockSoundGroupRegistry.BLOCK_BLAZING_QUARTZ_ORE_SOUNDS).requiresTool()));
     Block BLOCK_OF_BLAZING_QUARTZ                     = register("block_of_blazing_quartz",                   new Block(AbstractBlock.Settings.of(Material.STONE, MapColor.RED).strength(5.0f, 6.0f).sounds(MalumBlockSoundGroupRegistry.BLOCK_BLAZING_QUARTZ_BLOCK_SOUNDS).requiresTool()));
@@ -205,10 +208,22 @@ public interface MalumBlockRegistry {
         BLOCKS.put(new Identifier(Malum.MODID, id), block);
         return block;
     }
-    
+    private static AbstractButtonBlock createStoneButton(Settings settings) {
+        return new AbstractButtonBlock(
+            settings,
+            20,
+            false,
+            SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF,
+            SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON
+        );
+    }
+    private static AbstractButtonBlock createButton(Settings settings) {
+        return new AbstractButtonBlock(settings.noCollision().sounds(BlockSoundGroup.WOOD), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON);
+    }
+
     static void init() {
         MalumPlanksRegistry.init();
         MalumSignRegistry.init();
-        BLOCKS.forEach((id, block) -> Registry.register(Registry.BLOCK, id, block));
+        BLOCKS.forEach((id, block) -> Registry.register(Registries.BLOCK, id, block));
     }
 }

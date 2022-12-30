@@ -39,7 +39,7 @@ public class WickedRite extends Rite {
         }
 
         world.getEntitiesByClass(LivingEntity.class, new Box(pos.add(-8, -8, -8), pos.add(8, 8, 8)), entity -> entity.getHealth() <= 2.5f && (!(entity instanceof PlayerEntity playerEntity) || !playerEntity.getAbilities().creativeMode)).forEach(entity -> {
-            world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
+            world.getPlayers().stream().filter(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.WICKED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ()).write(buf);
                 ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);

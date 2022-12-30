@@ -3,26 +3,27 @@ package ca.rttv.malum.util.helper;
 import ca.rttv.malum.Malum;
 import ca.rttv.malum.block.entity.TotemBaseBlockEntity;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
-import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
 import ca.rttv.malum.enchantment.HauntedEnchantment;
 import ca.rttv.malum.entity.SpiritItemEntity;
 import ca.rttv.malum.item.SpiritCollectActivity;
 import ca.rttv.malum.registry.*;
-import ca.rttv.malum.util.particle.ParticleBuilders;
-import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumEntitySpiritData;
 import ca.rttv.malum.util.spirit.SpiritType;
+import com.sammy.lodestone.setup.LodestoneParticles;
+import com.sammy.lodestone.setup.LodestoneScreenParticles;
+import com.sammy.lodestone.systems.rendering.particle.ParticleBuilders;
+import com.sammy.lodestone.systems.rendering.particle.screen.base.ScreenParticle;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -134,7 +135,7 @@ public final class SpiritHelper {
     }
 
     public static MalumEntitySpiritData getEntitySpiritData(LivingEntity entity) {
-        return SpiritTypeRegistry.SPIRIT_DATA.get(Registry.ENTITY_TYPE.getId(entity.getType()));
+        return SpiritTypeRegistry.SPIRIT_DATA.get(Registries.ENTITY_TYPE.getId(entity.getType()));
     }
 
 //    public static int getEntitySpiritCount(LivingEntity entity) {
@@ -212,25 +213,25 @@ public final class SpiritHelper {
 
     public static void spawnSpiritParticles(World world, double x, double y, double z, float alphaMultiplier, Vec3d extraVelocity, Color color, Color endColor) {
         RandomGenerator rand = world.getRandom();
-        ParticleBuilders.create(MalumParticleRegistry.TWINKLE_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.TWINKLE_PARTICLE)
                 .setAlpha(0.21f * alphaMultiplier, 0f)
                 .setLifetime(10 + rand.nextInt(4))
                 .setScale(0.3f + rand.nextFloat() * 0.1f, 0)
                 .setColor(color, endColor)
-                .setColorCurveMultiplier(2f)
+                .setColorCoefficient(2f)
                 .randomOffset(0.05f)
                 .enableNoClip()
                 .addMotion(extraVelocity.x, extraVelocity.y, extraVelocity.z)
                 .randomMotion(0.02f, 0.02f)
                 .repeat(world, x, y, z, 1);
 
-        ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                 .setAlpha(0.1f * alphaMultiplier, 0f)
                 .setLifetime(20 + rand.nextInt(4))
                 .setSpin(nextFloat(rand, 0.05f, 0.1f))
                 .setScale(0.2f + rand.nextFloat() * 0.05f, 0)
                 .setColor(color, endColor)
-                .setColorCurveMultiplier(1.25f)
+                .setColorCoefficient(1.25f)
                 .randomOffset(0.1f)
                 .enableNoClip()
                 .addMotion(extraVelocity.x, extraVelocity.y, extraVelocity.z)
@@ -250,7 +251,7 @@ public final class SpiritHelper {
 
     public static void spawnSoulParticles(World world, double x, double y, double z, float alphaMultiplier, float scaleMultiplier, Vec3d extraVelocity, Color color, Color endColor) {
         RandomGenerator rand = world.getRandom();
-        ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                 .setAlpha(0.25f * alphaMultiplier, 0)
                 .setLifetime(8 + rand.nextInt(5))
                 .setScale((0.3f + rand.nextFloat() * 0.2f) * scaleMultiplier, 0)
@@ -261,7 +262,7 @@ public final class SpiritHelper {
                 .randomMotion(0.01f * scaleMultiplier, 0.01f * scaleMultiplier)
                 .repeat(world, x, y, z, 1);
 
-        ParticleBuilders.create(MalumParticleRegistry.SMOKE_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.SMOKE_PARTICLE)
                 .setAlpha(0.1f * alphaMultiplier, 0f)
                 .setLifetime(20 + rand.nextInt(10))
                 .setSpin(nextFloat(rand, 0.05f, 0.4f))
@@ -285,28 +286,28 @@ public final class SpiritHelper {
         if (client.world == null) {
             return;
         }
-        ParticleBuilders.create(MalumScreenParticleRegistry.TWINKLE)
+        ParticleBuilders.create(LodestoneScreenParticles.TWINKLE)
                 .setAlpha(0.07f, 0f)
                 .setLifetime(10 + client.world.random.nextInt(10))
                 .setScale(0.4f + client.world.random.nextFloat(), 0)
                 .setColor(color, endColor)
-                .setColorCurveMultiplier(2f)
+                .setColorCoefficient(2f)
                 .randomOffset(0.05f)
                 .randomMotion(0.05f, 0.05f)
-                .overwriteRenderOrder(renderOrder)
+                .overrideRenderOrder(renderOrder)
                 .centerOnStack(stack)
                 .repeat(pXPosition, pYPosition, 1);
 
-        ParticleBuilders.create(MalumScreenParticleRegistry.WISP)
+        ParticleBuilders.create(LodestoneScreenParticles.WISP)
                 .setAlpha(0.01f, 0f)
                 .setLifetime(20 + client.world.random.nextInt(8))
                 .setSpin(nextFloat(client.world.random, 0.2f, 0.4f))
                 .setScale(0.6f + client.world.random.nextFloat() * 0.4f, 0)
                 .setColor(color, endColor)
-                .setColorCurveMultiplier(1.25f)
+                .setColorCoefficient(1.25f)
                 .randomOffset(0.1f)
                 .randomMotion(0.4f, 0.4f)
-                .overwriteRenderOrder(renderOrder)
+                .overrideRenderOrder(renderOrder)
                 .centerOnStack(stack)
                 .repeat(pXPosition, pYPosition, 1)
                 .setLifetime(10 + client.world.random.nextInt(2))

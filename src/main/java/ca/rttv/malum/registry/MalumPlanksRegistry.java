@@ -4,8 +4,9 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface MalumPlanksRegistry { // this has to be made because of an earl
     Block SOULWOOD_PLANKS = register("soulwood_planks", new Block(AbstractBlock.Settings.of(Material.WOOD, MapColor.TERRACOTTA_PURPLE).strength(2.0f, 3.0f).sounds(WOOD)));
 
     static void init() {
-        PLANKS.forEach((id, entry) -> Registry.register(Registry.BLOCK, id, entry));
+        PLANKS.forEach((id, entry) -> Registry.register(Registries.BLOCK, id, entry));
     }
 
     static <T extends Block> T register(String id, T block) {

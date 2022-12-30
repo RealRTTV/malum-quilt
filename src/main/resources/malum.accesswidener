@@ -5,7 +5,7 @@ accessible      class     net/minecraft/block/entity/BlockEntityType$BlockEntity
 accessible      class     net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible      class     net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider
 extendable      class     net/minecraft/enchantment/EnchantmentTarget
-accessible      class     net/minecraft/util/registry/Registry$RegistryBootstrap
+accessible      class     net/minecraft/registry/Registries$RegistryBootstrap
 accessible      class     net/minecraft/network/NetworkState$PacketHandler
 accessible      class     net/minecraft/recipe/Ingredient$Entry
 accessible      class     net/minecraft/recipe/Ingredient$TagEntry
@@ -14,8 +14,6 @@ accessible      class     net/minecraft/server/world/ServerWorld$ServerEntityHan
 
 accessible      field     net/minecraft/client/render/ShaderProgram                                uniforms                     Ljava/util/List;
 accessible      field     net/minecraft/client/particle/ParticleManager                            spriteAwareFactories         Ljava/util/Map;
-accessible      field     net/minecraft/util/math/Matrix4f                                         a03                          F
-accessible      field     net/minecraft/util/math/Matrix4f                                         a13                          F
 accessible      field     net/minecraft/entity/player/PlayerInventory                              combinedInventory            Ljava/util/List;
 accessible      field     net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider       sprites                      Ljava/util/List;
 accessible      field     net/minecraft/client/render/RenderLayer$MultiPhase                       phases                       Lnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;
@@ -37,6 +35,7 @@ mutable         field     net/minecraft/item/SwordItem                          
 mutable         field     net/minecraft/item/SwordItem                                             attributeModifiers           Lcom/google/common/collect/Multimap;
 mutable         field     net/minecraft/item/ArmorItem                                             attributeModifiers           Lcom/google/common/collect/Multimap;
 
+accessible      method    net/minecraft/registry/Registries                                        registerSimple               (Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/registry/Registries$RegistryBootstrap;)Lnet/minecraft/registry/Registry;
 extendable      method    net/minecraft/client/render/ShaderProgram                                addUniform                   (Lcom/google/gson/JsonElement;)V
 accessible      method    net/minecraft/entity/damage/DamageSource                                 setUnblockable               ()Lnet/minecraft/entity/damage/DamageSource;
 accessible      method    net/minecraft/entity/damage/DamageSource                                 <init>                       (Ljava/lang/String;)V
@@ -58,10 +57,9 @@ accessible      method    net/minecraft/recipe/ShapedRecipe                     
 accessible      method    net/minecraft/recipe/ShapedRecipe                                        getPattern                   (Lcom/google/gson/JsonArray;)[Ljava/lang/String;
 accessible      method    net/minecraft/recipe/ShapedRecipe                                        createPatternMatrix          ([Ljava/lang/String;Ljava/util/Map;II)Lnet/minecraft/util/collection/DefaultedList;
 accessible      method    net/minecraft/block/TallPlantBlock                                       onBreakInCreative            (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/player/PlayerEntity;)V
-accessible      method    net/minecraft/util/registry/Registry                                     registerSimple               (Lnet/minecraft/util/registry/RegistryKey;Lnet/minecraft/util/registry/Registry$RegistryBootstrap;)Lnet/minecraft/util/registry/Registry;
 accessible      method    net/minecraft/entity/effect/StatusEffect                                 <init>                       (Lnet/minecraft/entity/effect/StatusEffectType;I)V
 accessible      method    net/minecraft/util/hit/BlockHitResult                                    <init>                       (ZLnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/BlockPos;Z)V
 accessible      method    net/minecraft/recipe/Ingredient                                          ofEntries                    (Ljava/util/stream/Stream;)Lnet/minecraft/recipe/Ingredient;
-accessible      method    net/minecraft/recipe/Ingredient$TagEntry                                 <init>                       (Lnet/minecraft/tag/TagKey;)V
+accessible      method    net/minecraft/recipe/Ingredient$TagEntry                                 <init>                       (Lnet/minecraft/registry/tag/TagKey;)V
 accessible      method    net/minecraft/recipe/Ingredient$StackEntry                               <init>                       (Lnet/minecraft/item/ItemStack;)V
 accessible      method    net/minecraft/item/ItemStack                                             <init>                       (Lnet/minecraft/item/ItemConvertible;ILjava/util/Optional;)V

@@ -2,8 +2,9 @@ package ca.rttv.malum.registry;
 
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,6 +38,6 @@ public interface MalumAttributeRegistry {
         return attribute;
     }
     static void init() {
-        ATTRIBUTES.forEach((id, attribute) -> Registry.register(Registry.ATTRIBUTE, id, attribute));
+        ATTRIBUTES.forEach((id, attribute) -> Registry.register(Registries.ENTITY_ATTRIBUTE, id, attribute));
     }
 }

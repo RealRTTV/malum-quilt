@@ -6,7 +6,7 @@ import ca.rttv.malum.client.screen.page.BookPage;
 import ca.rttv.malum.client.screen.page.EntryObject;
 import ca.rttv.malum.registry.MalumPageRendererRegistry;
 import ca.rttv.malum.registry.MalumPageTypeRegistry;
-import ca.rttv.malum.util.handler.ScreenParticleHandler;
+import com.sammy.lodestone.handlers.ScreenParticleHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,7 +18,7 @@ import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import static ca.rttv.malum.Malum.MODID;
-import static ca.rttv.malum.util.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_TOOLTIPS;
+import static com.sammy.lodestone.systems.rendering.particle.screen.base.ScreenParticle.RenderOrder.BEFORE_TOOLTIPS;
 
 public class EntryScreen extends Screen {
     public static final Identifier BOOK_TEXTURE = new Identifier(MODID, "textures/gui/book/entry.png");

@@ -4,8 +4,9 @@ import ca.rttv.malum.block.TotemPoleBlock;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.registry.MalumRiteRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
-import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.spirit.SpiritType;
+import com.sammy.lodestone.setup.LodestoneParticles;
+import com.sammy.lodestone.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -54,8 +55,8 @@ public class TotemPoleBlockEntity extends BlockEntity {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound nbt = super.toInitialChunkDataNbt();
+    public NbtCompound toSyncedNbt() {
+        NbtCompound nbt = super.toSyncedNbt();
         this.writeNbt(nbt);
         return nbt;
     }
@@ -144,26 +145,26 @@ public class TotemPoleBlockEntity extends BlockEntity {
                 endColor = Color.WHITE;
             }
         }
-        ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                 .setAlpha(0.06f, 0f)
                 .setLifetime(5)
                 .setSpin(0.2f)
                 .setScale(0.4f, 0)
                 .setColor(color, endColor)
-                .setColorCurveMultiplier(2f)
+                .setColorCoefficient(2f)
                 .addMotion(0, MathHelper.nextFloat(world.random, -0.03f, 0.03f), 0)
                 .enableNoClip()
                 .randomOffset(0.1f, 0.1f)
                 .randomMotion(0.01f, 0.01f)
                 .evenlyRepeatEdges(world, pos, 5, Direction.WEST, Direction.EAST, Direction.NORTH, Direction.SOUTH);
 
-        ParticleBuilders.create(MalumParticleRegistry.SMOKE_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.SMOKE_PARTICLE)
                 .setAlpha(0.06f, 0f)
                 .setLifetime(10)
                 .setSpin(0.1f)
                 .setScale(0.6f, 0)
                 .setColor(color, endColor)
-                .setColorCurveMultiplier(2f)
+                .setColorCoefficient(2f)
                 .addMotion(0, MathHelper.nextFloat(world.random, -0.03f, 0.03f), 0)
                 .randomOffset(0.2f)
                 .enableNoClip()

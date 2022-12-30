@@ -2,16 +2,17 @@ package ca.rttv.malum.registry;
 
 import ca.rttv.malum.client.screen.page.*;
 import com.mojang.serialization.Codec;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 
 import static ca.rttv.malum.Malum.MODID;
 
 @SuppressWarnings("unused")
 public interface MalumPageTypeRegistry {
     RegistryKey<Registry<PageType<?>>> PAGE_TYPE_KEY = RegistryKey.ofRegistry(new Identifier(MODID, "page_type"));
-    Registry<PageType<?>> PAGE_TYPE = Registry.registerSimple(PAGE_TYPE_KEY, registry -> MalumPageTypeRegistry.CRAFTING_PAGE_TYPE);
+    Registry<PageType<?>> PAGE_TYPE = Registries.registerSimple(PAGE_TYPE_KEY, registry -> MalumPageTypeRegistry.CRAFTING_PAGE_TYPE);
     Codec<BookPage> CODEC = PAGE_TYPE.getCodec().dispatch(BookPage::type, PageType::codec);
 
     @SuppressWarnings("ClassCanBeRecord") // what if a frendo wants to make their own page type which works differently?

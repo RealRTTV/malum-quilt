@@ -33,7 +33,7 @@ public class AqueousRite extends Rite {
 
         world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> {
             if (!player.hasStatusEffect(AQUEOUS_AURA)) {
-                world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
+                world.getPlayers().stream().filter(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                     new MalumParticleS2CPacket(SpiritType.AQUEOUS_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ()).write(buf);
                     ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
@@ -51,7 +51,7 @@ public class AqueousRite extends Rite {
 
         world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> {
             if (!player.hasStatusEffect(StatusEffects.WATER_BREATHING)) {
-                world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
+                world.getPlayers().stream().filter(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                     new MalumParticleS2CPacket(SpiritType.AQUEOUS_SPIRIT.color.getRGB(), player.getX(), player.getY(), player.getZ()).write(buf);
                     ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);

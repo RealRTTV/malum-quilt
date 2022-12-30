@@ -8,8 +8,8 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
+import org.joml.Quaternionf;
 
 import static net.minecraft.client.render.OverlayTexture.DEFAULT_UV;
 
@@ -22,7 +22,7 @@ public class SpiritJarRenderer implements BlockEntityRenderer<SpiritJarBlockEnti
             matrices.push();
             double y =  0.5f + Math.sin((world.getTime() + tickDelta) / 20f) * 0.2f;
             matrices.translate(0.5f,y,0.5f);
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3));
+            matrices.multiply(new Quaternionf().rotateY((world.getTime() + tickDelta) * 3*((float)Math.PI/180F)));
             matrices.scale(0.6f, 0.6f, 0.6f);
             itemRenderer.renderItem(new ItemStack(blockEntity.getItem()), ModelTransformation.Mode.FIXED, light, DEFAULT_UV, matrices, vertexConsumers, 0);
             matrices.pop();

@@ -1,7 +1,7 @@
 package ca.rttv.malum.block.entity;
 
 import ca.rttv.malum.block.SpiritCatalyzerBlock;
-import ca.rttv.malum.client.init.MalumParticleRegistry;
+import com.sammy.lodestone.setup.LodestoneParticles;
 import ca.rttv.malum.inventory.DefaultedInventory;
 import ca.rttv.malum.item.SpiritItem;
 import ca.rttv.malum.recipe.SpiritFocusingRecipe;
@@ -9,7 +9,7 @@ import ca.rttv.malum.recipe.SpiritRepairRecipe;
 import ca.rttv.malum.util.block.entity.ICrucibleAccelerator;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
-import ca.rttv.malum.util.particle.ParticleBuilders;
+import com.sammy.lodestone.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -22,6 +22,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -34,7 +35,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -177,8 +177,8 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                 });
                 queuedCracks += durabilityCost[0];
                 if (this.getHeldItem().damage(durabilityCost[0], world.random, null)) {
-                    Identifier id = Registry.ITEM.getId(this.getHeldItem().getItem());
-                    this.setStack(0, Registry.ITEM.get(new Identifier(id.getNamespace(), "cracked_" + id.getPath())).getDefaultStack());
+                    Identifier id = Registries.ITEM.getId(this.getHeldItem().getItem());
+                    this.setStack(0, Registries.ITEM.get(new Identifier(id.getNamespace(), "cracked_" + id.getPath())).getDefaultStack());
                 }
                 progress = 0;
                 this.notifyListeners();
@@ -210,7 +210,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
         if (world == null) {
             return;
         }
-        
+
         Vec3d itemPos = new Vec3d(0.5d, 0.6d, 0.5d);
         //passive spirit particles
         if (!spiritSlots.isEmpty()) {
@@ -248,7 +248,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                 Color endColor = endColors.get(i);
                 Vec3d tabletItemPos = this.getValidTablet().itemOffset();
                 Vec3d velocity = tabletItemPos.subtract(itemPos).normalize().multiply(-0.1f);
-                ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
+                ParticleBuilders.create(LodestoneParticles.STAR_PARTICLE)
                         .setAlpha(0.24f / colors.size(), 0f)
                         .setLifetime(15)
                         .setScale(0.45f + world.random.nextFloat() * 0.15f, 0)
@@ -258,7 +258,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                         .enableNoClip()
                         .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
 
-                ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
+                ParticleBuilders.create(LodestoneParticles.STAR_PARTICLE)
                         .setAlpha(0.24f / colors.size(), 0f)
                         .setLifetime(15)
                         .setScale(0.45f + world.random.nextFloat() * 0.15f, 0)
@@ -268,7 +268,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                         .enableNoClip()
                         .repeat(world, tabletItemPos.x, tabletItemPos.y, tabletItemPos.z, 1);
 
-                ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                         .setAlpha(0.4f / colors.size(), 0f)
                         .setLifetime((int) (10 + world.random.nextInt(8) + Math.sin((0.5 * world.getTime()) % 6.28f)))
                         .setScale(0.2f + world.random.nextFloat() * 0.15f, 0)
@@ -276,8 +276,8 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                         .setSpinOffset((0.075f * world.getTime() % 6.28f))
                         .setSpin(0.1f + world.random.nextFloat() * 0.05f)
                         .setColor(color.brighter(), endColor)
-                        .setAlphaCurveMultiplier(0.5f)
-                        .setColorCurveMultiplier(0.75f)
+                        .setAlphaCoefficient(0.5f)
+                        .setColorCoefficient(0.75f)
                         .setMotion(velocity.x, velocity.y, velocity.z)
                         .enableNoClip()
                         .repeat(world, tabletItemPos.x, tabletItemPos.y, tabletItemPos.z, 1);
@@ -295,20 +295,20 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                     double y = pos.getY() + offset.y;
                     double z = pos.getZ() + offset.z;
                     Vec3d velocity = new Vec3d(x, y, z).subtract(itemPos).normalize().multiply(-0.03f);
-                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                    ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                             .setAlpha(0.30f, 0f)
                             .setLifetime(40)
                             .setScale(0.2f, 0)
                             .randomOffset(0.02f)
                             .randomMotion(0.01f, 0.01f)
                             .setColor(color, endColor)
-                            .setColorCurveMultiplier(0.75f)
+                            .setColorCoefficient(0.75f)
                             .randomMotion(0.0025f, 0.0025f)
                             .addMotion(velocity.x, velocity.y, velocity.z)
                             .enableNoClip()
                             .repeat(world, x, y, z, 1);
 
-                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                    ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                             .setAlpha(0.12f / this.getSpiritCount(), 0f)
                             .setLifetime(25)
                             .setScale(0.2f + world.random.nextFloat() * 0.1f, 0)
@@ -318,7 +318,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                             .enableNoClip()
                             .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
 
-                    ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
+                    ParticleBuilders.create(LodestoneParticles.STAR_PARTICLE)
                             .setAlpha(0.16f / this.getSpiritCount(), 0f)
                             .setLifetime(25)
                             .setScale(0.45f + world.random.nextFloat() * 0.1f, 0)
@@ -434,8 +434,8 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound tag = super.toInitialChunkDataNbt();
+    public NbtCompound toSyncedNbt() {
+        NbtCompound tag = super.toSyncedNbt();
         this.writeNbt(tag);
         return tag;
     }

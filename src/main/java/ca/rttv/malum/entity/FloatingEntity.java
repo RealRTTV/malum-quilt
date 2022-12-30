@@ -1,6 +1,7 @@
 package ca.rttv.malum.entity;
 
 import ca.rttv.malum.util.spirit.SpiritType;
+import com.sammy.lodestone.helpers.EntityHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,6 +13,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -22,13 +24,14 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 import java.awt.*;
+import java.util.List;
 import java.util.ArrayList;
 
 public class FloatingEntity extends Entity {
     protected static final TrackedData<Integer> DATA_COLOR = DataTracker.registerData(FloatingEntity.class, TrackedDataHandlerRegistry.INTEGER);
     protected static final TrackedData<Integer> DATA_END_COLOR = DataTracker.registerData(FloatingEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public final float hoverStart;
-    public final ArrayList<Vec3d> pastPositions = new ArrayList<>();
+    public final ArrayList<EntityHelper.PastPosition> pastPositions = new ArrayList<>();
     public Color color = SpiritType.SACRED_SPIRIT.color;
     public Color endColor = SpiritType.SACRED_SPIRIT.endColor;
     public int maxAge;
@@ -108,33 +111,22 @@ public class FloatingEntity extends Entity {
     }
 
     public void trackPastPositions() {
-        Vec3d position = getPos().add(0, getYOffset(0) + 0.25F, 0);
-        if (!pastPositions.isEmpty()) {
-            Vec3d latest = pastPositions.get(pastPositions.size() - 1);
-            float distance = (float) latest.distanceTo(position);
-            if (distance > 0.1f) {
-                pastPositions.add(position);
-            }
-            int excess = pastPositions.size() - 1;
-            ArrayList<Vec3d> toRemove = new ArrayList<>();
-            float efficiency = (float) (excess * 0.12f + Math.exp((Math.max(0, excess - 20)) * 0.2f));
-            float ratio = 0.3f;
-            if (efficiency > 0f) {
-                for (int i = 0; i < excess; i++) {
-                    Vec3d excessPosition = pastPositions.get(i);
-                    Vec3d nextExcessPosition = pastPositions.get(i + 1);
-                    pastPositions.set(i, excessPosition.lerp(nextExcessPosition, Math.min(1, ratio * (excess - i) * (ratio + efficiency))));
-                    float excessDistance = (float) excessPosition.distanceTo(nextExcessPosition);
-                    if (excessDistance < 0.05f) {
-                        toRemove.add(pastPositions.get(i));
-                    }
-                }
-                pastPositions.removeAll(toRemove);
-            }
-        } else {
-            pastPositions.add(position);
-        }
+        EntityHelper.trackPastPositions(pastPositions, getPos().add(0, getYOffset(0) + 0.25F, 0), 0.01f);
+        removeOldPositions(pastPositions);
     }
+
+    public void removeOldPositions(List<EntityHelper.PastPosition> pastPositions) {
+        int amount = pastPositions.size() - 1;
+        List<EntityHelper.PastPosition> toRemove = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            EntityHelper.PastPosition excess = pastPositions.get(i);
+            if (excess.time > 9) {
+                toRemove.add(excess);
+            }
+        }
+        pastPositions.removeAll(toRemove);
+    }
+
 
     public void baseTick() {
         BlockHitResult result = world.raycast(new RaycastContext(getPos(), getPos().add(getVelocity()), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this));
@@ -189,7 +181,7 @@ public class FloatingEntity extends Entity {
     }
 
     @Override
-    public Packet<?> createSpawnPacket() {
+    public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this);
     }
 

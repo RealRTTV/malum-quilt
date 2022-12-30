@@ -2,9 +2,10 @@ package ca.rttv.malum.registry;
 
 import ca.rttv.malum.Malum;
 import net.minecraft.block.*;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,6 +21,6 @@ public interface MalumSignRegistry {
         return block;
     }
     static void init() {
-        BLOCKS.forEach((id, entry) -> Registry.register(Registry.BLOCK, id, entry));
+        BLOCKS.forEach((id, entry) -> Registry.register(Registries.BLOCK, id, entry));
     }
 }

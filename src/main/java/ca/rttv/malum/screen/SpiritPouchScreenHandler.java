@@ -65,7 +65,7 @@ public class SpiritPouchScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int index) {
+    public ItemStack quickTransfer(PlayerEntity player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot.hasStack()) {
@@ -88,6 +88,7 @@ public class SpiritPouchScreenHandler extends ScreenHandler {
 
         return itemStack;
     }
+
 
     @Override
     public void close(PlayerEntity player) {

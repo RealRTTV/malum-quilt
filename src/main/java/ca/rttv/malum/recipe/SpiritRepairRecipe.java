@@ -13,13 +13,14 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
@@ -153,7 +154,7 @@ public record SpiritRepairRecipe(Identifier id, String group, String itemIdRegex
         });
 
         heldItem = this.getOutput(heldItem);
-        if (!Registry.ITEM.getId(heldItem.getItem()).getPath().endsWith("_impetus")) {
+        if (!Registries.ITEM.getId(heldItem.getItem()).getPath().endsWith("_impetus")) {
             heldItem.setDamage(Math.max(0, blockEntity.getHeldItem().getDamage() - (int) (blockEntity.getHeldItem().getMaxDamage() * durabilityPercentage)));
         }
 
@@ -173,9 +174,9 @@ public record SpiritRepairRecipe(Identifier id, String group, String itemIdRegex
     }
 
     public ItemStack getOutput(ItemStack input) {
-        String id = Registry.ITEM.getId(input.getItem()).toString();
+        String id = Registries.ITEM.getId(input.getItem()).toString();
         if (id.endsWith("_impetus")) {
-            return Registry.ITEM.get(new Identifier(id.replaceAll("cracked_", ""))).getDefaultStack();
+            return Registries.ITEM.get(new Identifier(id.replaceAll("cracked_", ""))).getDefaultStack();
         } else {
             return input.copy();
         }
@@ -268,13 +269,13 @@ public record SpiritRepairRecipe(Identifier id, String group, String itemIdRegex
                   StreamSupport.stream(input.spliterator(), false)
                                .map(JsonElement::getAsString)
                                .map(string -> string.startsWith("#")
-                                            ? new Ingredient.TagEntry(TagKey.of(Registry.ITEM_KEY, new Identifier(string.substring(1))))
-                                            : new Ingredient.StackEntry(Registry.ITEM.get(new Identifier(string)).getDefaultStack())
+                                            ? new Ingredient.TagEntry(TagKey.of(RegistryKeys.ITEM, new Identifier(string.substring(1))))
+                                            : new Ingredient.StackEntry(Registries.ITEM.get(new Identifier(string)).getDefaultStack())
                                ),
                   itemIdRegex.equals("") && modIdRegex.equals("")
                                ? Stream.empty()
-                               : Registry.ITEM.stream() // expensive, but there's no better way to do it
-                                              .filter(item -> item.isDamageable() && Registry.ITEM.getId(item).getPath().matches(itemIdRegex) && Registry.ITEM.getId(item).getNamespace().matches(modIdRegex))
+                               : Registries.ITEM.stream() // expensive, but there's no better way to do it
+                                              .filter(item -> item.isDamageable() && Registries.ITEM.getId(item).getPath().matches(itemIdRegex) && Registries.ITEM.getId(item).getNamespace().matches(modIdRegex))
                                               .map(item -> new Ingredient.StackEntry(item.getDefaultStack()))
             ) // if I care about duplicate entries from the itemIdRegex and entries[] then make an implementation of hashCode on tag entry and stack entry and do a collect(Collectors.toSet()).stream() or something
         );

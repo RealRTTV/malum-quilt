@@ -10,7 +10,8 @@ import ca.rttv.malum.util.block.entity.IAltarAccelerator;
 import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
-import ca.rttv.malum.util.particle.ParticleBuilders;
+import com.sammy.lodestone.setup.LodestoneParticles;
+import com.sammy.lodestone.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -122,28 +123,28 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
                             accelerator.addParticles(color, endColor, alpha, pos, itemPos);
                         }
                     }
-                    ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+                    ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                             .setAlpha(0.125f, 0f)
                             .setLifetime(45)
                             .setScale(0.2f, 0)
                             .randomOffset(0.02f)
                             .randomMotion(0.01f, 0.01f)
                             .setColor(color, endColor)
-                            .setColorCurveMultiplier(1.25f)
+                            .setColorCoefficient(1.25f)
                             .setSpin(0.1f + world.random.nextFloat()*0.1f)
                             .randomMotion(0.0025f, 0.0025f)
                             .addMotion(velocity.x, velocity.y, velocity.z)
                             .enableNoClip()
                             .repeat(world, x, y, z, 2);
 
-                    ParticleBuilders.create(MalumParticleRegistry.SPARKLE_PARTICLE)
+                    ParticleBuilders.create(LodestoneParticles.SPARKLE_PARTICLE)
                             .setAlpha(alpha, 0f)
                             .setLifetime(25)
                             .setScale(0.5f, 0)
                             .randomOffset(0.1, 0.1)
                             .randomMotion(0.02f, 0.02f)
                             .setColor(color, endColor)
-                            .setColorCurveMultiplier(1.5f)
+                            .setColorCoefficient(1.5f)
                             .randomMotion(0.0025f, 0.0025f)
                             .enableNoClip()
                             .repeat(world, itemPos.x, itemPos.y, itemPos.z, 2);
@@ -296,8 +297,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound tag = super.toInitialChunkDataNbt();
+    public NbtCompound toSyncedNbt() {
+        NbtCompound tag = super.toSyncedNbt();
         this.writeNbt(tag);
         return tag;
     }

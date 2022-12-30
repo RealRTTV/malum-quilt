@@ -12,7 +12,7 @@ import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3f;
+import org.joml.Quaternionf;
 
 @SuppressWarnings("deprecation")
 public class ScytheBoomerangEntityRenderer extends EntityRenderer<ScytheBoomerangEntity> {
@@ -30,9 +30,9 @@ public class ScytheBoomerangEntityRenderer extends EntityRenderer<ScytheBoomeran
         matrixStack.push();
         ItemStack itemstack = entityIn.getItem();
         BakedModel ibakedmodel = this.itemRenderer.getHeldItemModel(itemstack, entityIn.world, null, 1);
-        matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90F));
+        matrixStack.multiply(new Quaternionf().rotateX(90F*((float)Math.PI/180F)));
         matrixStack.scale(2f, 2f, 2f);
-        matrixStack.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion((entityIn.age + tickDelta) * 0.8f));
+        matrixStack.multiply(new Quaternionf().rotateZ((entityIn.age + tickDelta) * 0.8f));
         itemRenderer.renderItem(itemstack, ModelTransformation.Mode.NONE, false, matrixStack, bufferIn, packedLightIn, OverlayTexture.DEFAULT_UV, ibakedmodel);
 
         matrixStack.pop();

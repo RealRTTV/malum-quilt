@@ -6,8 +6,9 @@ import ca.rttv.malum.item.SpiritPouchItem;
 import ca.rttv.malum.util.helper.BlockHelper;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.SpiritHelper;
-import ca.rttv.malum.util.particle.ParticleBuilders;
 import ca.rttv.malum.util.spirit.SpiritType;
+import com.sammy.lodestone.setup.LodestoneParticles;
+import com.sammy.lodestone.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -167,8 +168,8 @@ public class SpiritJarBlockEntity extends ListInventoryBlockEntity {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound tag = super.toInitialChunkDataNbt();
+    public NbtCompound toSyncedNbt() {
+        NbtCompound tag = super.toSyncedNbt();
         writeNbt(tag);
         return tag;
     }
@@ -262,7 +263,7 @@ public class SpiritJarBlockEntity extends ListInventoryBlockEntity {
     }
     public void spawnUseParticles(World world, BlockPos pos, SpiritType type) {
         Color color = type.color;
-        ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                 .setAlpha(0.15f, 0f)
                 .setLifetime(20)
                 .setScale(0.3f, 0)

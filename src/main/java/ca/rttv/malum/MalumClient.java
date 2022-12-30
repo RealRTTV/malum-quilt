@@ -14,18 +14,17 @@ import ca.rttv.malum.network.packet.s2c.play.ProgressionBookEntriesS2CPacket;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumItemRegistry;
 import ca.rttv.malum.registry.MalumParticleEmitterRegistry;
-import ca.rttv.malum.util.handler.RenderHandler;
-import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
+import com.sammy.lodestone.handlers.ScreenParticleHandler;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
@@ -40,7 +39,6 @@ import static ca.rttv.malum.registry.MalumParticleEmitterRegistry.PARTICLE_EMITT
 public final class MalumClient implements ClientModInitializer {
     @Override
     public void onInitializeClient(ModContainer mod) {
-        RenderHandler.init();
         MalumParticleEmitterRegistry.init();
         PARTICLE_EMITTER.forEach(ScreenParticleHandler::registerItemParticleEmitter);
         EntityModelLayerRegistry.registerModelLayer(SpiritHunterArmorModel.LAYER, SpiritHunterArmorModel::getTexturedModelData);
@@ -51,13 +49,13 @@ public final class MalumClient implements ClientModInitializer {
         EntityRendererRegistry.register(MalumEntityRegistry.NATURAL_SPIRIT, FloatingItemEntityRenderer::new);
         this.registerColors();
         for (Item item : MalumItemRegistry.SCYTHES) {
-            Identifier scytheId = Registry.ITEM.getId(item);
+            Identifier scytheId = Registries.ITEM.getId(item);
             ScytheItemRenderer scytheItemRenderer = new ScytheItemRenderer(scytheId);
             ResourceLoader.get(ResourceType.CLIENT_RESOURCES).registerReloader(scytheItemRenderer);
             BuiltinItemRendererRegistry.INSTANCE.register(item, scytheItemRenderer);
             ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
-                out.accept(new ModelIdentifier(scytheId + "_gui", "inventory"));
-                out.accept(new ModelIdentifier(scytheId + "_handheld", "inventory"));
+                out.accept(new ModelIdentifier(scytheId.withPath(scytheId.getPath() + "_gui"), "inventory"));
+                out.accept(new ModelIdentifier(scytheId.withPath(scytheId.getPath() + "_handheld"), "inventory"));
             });
         }
 

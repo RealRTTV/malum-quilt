@@ -7,11 +7,12 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.Holder;
+import net.minecraft.registry.Holder;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
             return new IngredientWithCount.StackEntry(new ItemStack(item, count));
         } else if (json.has("tag")) {
             Identifier identifier = new Identifier(JsonHelper.getString(json, "tag"));
-            TagKey<Item> tagKey = TagKey.of(Registry.ITEM_KEY, identifier);
+            TagKey<Item> tagKey = TagKey.of(RegistryKeys.ITEM, identifier);
             int count = JsonHelper.getInt(json, "count", 1);
             return new IngredientWithCount.TagEntry(tagKey, count);
         } else if (json.has("type")) {
@@ -191,7 +192,7 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
         @Override
         public JsonObject toJson() {
             JsonObject json = new JsonObject();
-            json.addProperty("item", Registry.ITEM.getId(stack.getItem()).toString());
+            json.addProperty("item", Registries.ITEM.getId(stack.getItem()).toString());
             json.addProperty("count", stack.getCount());
             return json;
         }
@@ -234,7 +235,7 @@ public final class IngredientWithCount implements Predicate<ItemStack> {
         public List<ItemStack> getStacks() {
             List<ItemStack> stacks = new ArrayList<>();
 
-            for (Holder<Item> item : Registry.ITEM.getTagOrEmpty(tag)) {
+            for (Holder<Item> item : Registries.ITEM.getTagOrEmpty(tag)) {
                 stacks.add(new ItemStack(item.value(), count));
             }
 

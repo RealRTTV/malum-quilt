@@ -1,12 +1,13 @@
 package ca.rttv.malum.registry;
 
 import ca.rttv.malum.client.particle.emitter.*;
-import ca.rttv.malum.util.particle.screen.emitter.ItemParticleEmitter;
+import com.sammy.lodestone.systems.rendering.particle.screen.emitter.ItemParticleEmitter;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ import static ca.rttv.malum.registry.MalumItemRegistry.*;
 @SuppressWarnings("unused")
 public interface MalumParticleEmitterRegistry {
     RegistryKey<Registry<Pair<ItemParticleEmitter, Item[]>>> PARTICLE_EMITTER_KEY = RegistryKey.ofRegistry(new Identifier(MODID, "particle_emitter"));
-    Registry<Pair<ItemParticleEmitter, Item[]>> PARTICLE_EMITTER = Registry.registerSimple(PARTICLE_EMITTER_KEY, registry -> MalumParticleEmitterRegistry.ETHER_WALL_STANDING_PARTICLE_EMITTER);
+    Registry<Pair<ItemParticleEmitter, Item[]>> PARTICLE_EMITTER = Registries.registerSimple(PARTICLE_EMITTER_KEY, registry -> MalumParticleEmitterRegistry.ETHER_WALL_STANDING_PARTICLE_EMITTER);
     Map<Identifier, Pair<ItemParticleEmitter, Item[]>> PARTICLE_EMITTERS = new LinkedHashMap<>();
 
     Pair<ItemParticleEmitter, Item[]> ETHER_WALL_STANDING_PARTICLE_EMITTER            = register("ether_wall_standing",            new EtherWallStandingParticleEmitter(), ETHER_TORCH);

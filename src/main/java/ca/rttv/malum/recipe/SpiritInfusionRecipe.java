@@ -13,12 +13,12 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
@@ -216,7 +216,7 @@ public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCo
             json.add("input", recipe.input().toJson());
 
             JsonObject output = new JsonObject();
-            output.addProperty("item", Registry.ITEM.getId(recipe.output().getItem()).toString());
+            output.addProperty("item", Registries.ITEM.getId(recipe.output().getItem()).toString());
             output.addProperty("item", recipe.output().getCount());
             json.add("output", output);
 

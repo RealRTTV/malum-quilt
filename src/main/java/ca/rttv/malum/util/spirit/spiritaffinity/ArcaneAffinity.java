@@ -1,7 +1,5 @@
 package ca.rttv.malum.util.spirit.spiritaffinity;
 
-import ca.rttv.malum.client.init.MalumScreenParticleRegistry;
-import ca.rttv.malum.client.init.MalumShaderRegistry;
 import ca.rttv.malum.component.MalumComponents;
 import ca.rttv.malum.component.MalumPlayerComponent;
 import ca.rttv.malum.config.ClientConfig;
@@ -9,15 +7,18 @@ import ca.rttv.malum.config.CommonConfig;
 import ca.rttv.malum.registry.MalumAttributeRegistry;
 import ca.rttv.malum.registry.MalumDamageSourceRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
-import ca.rttv.malum.util.handler.ScreenParticleHandler;
 import ca.rttv.malum.util.helper.DataHelper;
 import ca.rttv.malum.util.helper.ItemHelper;
-import ca.rttv.malum.util.helper.RenderHelper;
-import ca.rttv.malum.util.particle.ParticleBuilders;
-import ca.rttv.malum.util.particle.screen.base.ScreenParticle;
 import ca.rttv.malum.util.spirit.MalumSpiritAffinity;
 import com.mojang.blaze3d.glfw.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.sammy.lodestone.handlers.ScreenParticleHandler;
+import com.sammy.lodestone.helpers.RenderHelper;
+import com.sammy.lodestone.setup.LodestoneScreenParticles;
+import com.sammy.lodestone.setup.LodestoneShaders;
+import com.sammy.lodestone.systems.rendering.VFXBuilders;
+import com.sammy.lodestone.systems.rendering.particle.ParticleBuilders;
+import com.sammy.lodestone.systems.rendering.particle.screen.base.ScreenParticle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.ShaderProgram;
@@ -31,7 +32,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vector4f;
+import org.joml.Vector4f;
 
 import java.util.Objects;
 
@@ -131,11 +132,14 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                         RenderSystem.defaultBlendFunc();
                         RenderSystem.setShaderTexture(0, ICONS_TEXTURE);
                         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
-                        ShaderProgram shader = MalumShaderRegistry.DISTORTED_TEXTURE.getInstance().get();
+                        ShaderProgram shader = LodestoneShaders.DISTORTED_TEXTURE.getInstance().get();
                         shader.getUniformOrDefault("YFrequency").setFloat(15f);
                         shader.getUniformOrDefault("XFrequency").setFloat(15f);
                         shader.getUniformOrDefault("Speed").setFloat(550f);
                         shader.getUniformOrDefault("Intensity").setFloat(150f);
+                        VFXBuilders.ScreenVFXBuilder builder = VFXBuilders.createScreen()
+                            .setPosColorTexLightmapDefaultFormat()
+                            .setShader(() -> shader);
                         for (int i = 0; i < Math.ceil(soulWard / 3f); i++) {
                             int row = (int) (Math.ceil(i) / 10f);
                             int x = left + i % 10 * 8;
@@ -146,20 +150,22 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                             shader.getUniformOrDefault("UVCoordinates").setVec4(new Vector4f(xTextureOffset / 45f, (xTextureOffset + 12) / 45f, 1 / 45f, 13 / 45f));
                             shader.getUniformOrDefault("TimeOffset").setFloat(i * 150f);
 
-                            RenderHelper.blit(matrices, MalumShaderRegistry.DISTORTED_TEXTURE, x - 2, y - 2, 13, 13, 1, 1, 1, 1, xTextureOffset, 1, 45f);
-
+                            builder.setPositionWithWidth(x - 2, y - 2, 13, 13)
+                                .setUVWithWidth(xTextureOffset, 0, 13, 13, 45)
+                                .draw(matrices);
                             if (ScreenParticleHandler.canSpawnParticles) {
-                                ParticleBuilders.create(MalumScreenParticleRegistry.WISP)
+                                ParticleBuilders.create(LodestoneScreenParticles.WISP)
                                         .setLifetime(20)
                                         .setColor(ARCANE_SPIRIT.color, ARCANE_SPIRIT.endColor)
-                                        .setAlphaCurveMultiplier(0.75f)
+                                        .setAlphaCoefficient(0.75f)
                                         .setScale(0.2f*progress, 0f)
                                         .setAlpha(0.05f, 0)
                                         .setSpin(client.world.random.nextFloat() * 6.28f)
                                         .setSpinOffset(client.world.random.nextFloat() * 6.28f)
                                         .randomOffset(2)
                                         .randomMotion(0.5f, 0.5f)
-                                        .overwriteRenderOrder(ScreenParticle.RenderOrder.BEFORE_UI)
+                                        .addMotion(0, 0.2)
+                                        .overrideRenderOrder(ScreenParticle.RenderOrder.BEFORE_UI)
                                         .repeat(x + 5, y + 5, 1);
                             }
                         }

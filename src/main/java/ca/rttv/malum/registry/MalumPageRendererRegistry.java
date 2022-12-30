@@ -2,14 +2,15 @@ package ca.rttv.malum.registry;
 
 import ca.rttv.malum.client.recipe.*;
 import ca.rttv.malum.client.screen.page.*;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 
 @SuppressWarnings("unused")
 public interface MalumPageRendererRegistry {
     RegistryKey<Registry<PageRendererFactory<?>>> PAGE_RENDERER_FACTORY_KEY = RegistryKey.ofRegistry(new Identifier("malum", "page_renderer_factory"));
-    Registry<PageRendererFactory<?>> PAGE_RENDERER_FACTORY = Registry.registerSimple(PAGE_RENDERER_FACTORY_KEY, registry -> MalumPageRendererRegistry.CRAFTING);
+    Registry<PageRendererFactory<?>> PAGE_RENDERER_FACTORY = Registries.registerSimple(PAGE_RENDERER_FACTORY_KEY, registry -> MalumPageRendererRegistry.CRAFTING);
 
     interface PageRendererFactory<T extends BookPage> {
         BookPageRenderer<T> create(T page);

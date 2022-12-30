@@ -42,8 +42,8 @@ public class ScytheItemRenderer implements BuiltinItemRendererRegistry.DynamicIt
             applyProfiler.push("listener");
             final MinecraftClient client = MinecraftClient.getInstance();
             this.itemRenderer = client.getItemRenderer();
-            this.inventoryScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(this.scytheId + "_gui", "inventory"));
-            this.worldScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(this.scytheId + "_handheld", "inventory"));
+            this.inventoryScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(scytheId.withPath(scytheId.getPath() + "_gui"), "inventory"));
+            this.worldScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(scytheId.withPath(scytheId.getPath() + "_handheld"), "inventory"));
             applyProfiler.pop();
             applyProfiler.endTick();
         }, applyExecutor);

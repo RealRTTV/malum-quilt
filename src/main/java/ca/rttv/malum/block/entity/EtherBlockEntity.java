@@ -6,8 +6,9 @@ import ca.rttv.malum.block.EtherWallTorchBlock;
 import ca.rttv.malum.client.init.MalumParticleRegistry;
 import ca.rttv.malum.util.helper.ColorHelper;
 import ca.rttv.malum.util.helper.NbtHelper;
-import ca.rttv.malum.util.particle.Easing;
-import ca.rttv.malum.util.particle.ParticleBuilders;
+import com.sammy.lodestone.setup.LodestoneParticles;
+import com.sammy.lodestone.systems.rendering.particle.Easing;
+import com.sammy.lodestone.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.WallTorchBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -70,12 +71,12 @@ public class EtherBlockEntity extends BlockEntity {
             lifeTime -= 2;
             scale *= 1.25f;
         }
-        ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.WISP_PARTICLE)
                 .setScale(scale, 0)
                 .setLifetime(lifeTime)
                 .setAlpha(0.8f, 0.5f)
                 .setColor(firstColor, secondColor)
-                .setColorCurveMultiplier(0.8f)
+                .setColorCoefficient(0.8f)
                 .setColorEasing(Easing.CIRC_OUT)
                 .setSpinOffset((world.getTime() * 0.2f) % 6.28f)
                 .setSpin(0, 0.4f)
@@ -83,13 +84,13 @@ public class EtherBlockEntity extends BlockEntity {
                 .addMotion(0, velocity, 0)
                 .enableNoClip()
                 .spawn(world, x, y, z);
-        ParticleBuilders.create(MalumParticleRegistry.SPARKLE_PARTICLE)
+        ParticleBuilders.create(LodestoneParticles.SPARKLE_PARTICLE)
                 .setScale(scale * 2, 0)
                 .setLifetime(lifeTime)
                 .setAlpha(0.2f)
                 .setColor(firstColor, secondColor)
-                .setColorCurveMultiplier(1.5f)
-                .setAlphaCurveMultiplier(1.5f)
+                .setColorCoefficient(1.5f)
+                .setAlphaCoefficient(1.5f)
                 .setSpin(0, 2)
                 .setSpinEasing(Easing.QUARTIC_IN)
                 .enableNoClip()
@@ -99,8 +100,8 @@ public class EtherBlockEntity extends BlockEntity {
             ParticleBuilders.create(MalumParticleRegistry.SPIRIT_FLAME_PARTICLE)
                     .setScale(0.75f, 0)
                     .setColor(firstColor, secondColor)
-                    .setColorCurveMultiplier(2f)
-                    .setAlphaCurveMultiplier(3f)
+                    .setColorCoefficient(2f)
+                    .setAlphaCoefficient(3f)
                     .randomOffset(0.15f, 0.2f)
                     .addMotion(0, 0.03f, 0)
                     .enableNoClip()
@@ -108,8 +109,8 @@ public class EtherBlockEntity extends BlockEntity {
             ParticleBuilders.create(MalumParticleRegistry.SPIRIT_FLAME_PARTICLE)
                     .setScale(0.5f, 0)
                     .setColor(firstColor, secondColor)
-                    .setColorCurveMultiplier(3f)
-                    .setAlphaCurveMultiplier(3f)
+                    .setColorCoefficient(3f)
+                    .setAlphaCoefficient(3f)
                     .randomOffset(0.15f, 0.2f)
                     .addMotion(0, velocity, 0)
                     .enableNoClip()
@@ -136,8 +137,8 @@ public class EtherBlockEntity extends BlockEntity {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound tag = super.toInitialChunkDataNbt();
+    public NbtCompound toSyncedNbt() {
+        NbtCompound tag = super.toSyncedNbt();
         this.writeNbt(tag);
         return tag;
     }

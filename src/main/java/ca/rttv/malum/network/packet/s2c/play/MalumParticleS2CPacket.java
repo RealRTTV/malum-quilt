@@ -31,7 +31,7 @@ public record MalumParticleS2CPacket(int color, double x, double y, double z) im
     }
 
     public static void sendParticle(ServerWorld world, BlockPos pos, SpiritType spirit) {
-        world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(pos).x, new ChunkPos(pos).z)).forEach(players -> {
+        world.getPlayers().stream().filter(players -> players.getWorld().isChunkLoaded(new ChunkPos(pos).x, new ChunkPos(pos).z)).forEach(players -> {
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
             new MalumParticleS2CPacket(spirit.color.getRGB(), pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d).write(buf);
             ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
