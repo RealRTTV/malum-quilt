@@ -12,17 +12,23 @@ import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.networking.api.ServerPlayConnectionEvents;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.registry.api.event.RegistryEvents;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
 import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
+
+import java.util.Set;
 
 import static ca.rttv.malum.registry.MalumItemRegistry.*;
 
@@ -69,6 +75,14 @@ public final class Malum implements ModInitializer {
         ClientConfig.LOGGER.info("Finished Class-Load of Malum's ClientConfig");
         CommonConfig.LOGGER.info("Finished Class-Load of Malum's CommonConfig");
 
+        RegistryEvents.DYNAMIC_REGISTRY_SETUP.register((ctx) -> {
+            ctx.withRegistries(registries -> {
+                Registry<ConfiguredFeature<?, ?>> configured = registries.get(RegistryKeys.CONFIGURED_FEATURE);
+                MalumConfiguredFeatureRegistry.init(configured);
+                MalumPlacedFeatureRegistry.init(configured, registries);
+                }
+                , Set.of(RegistryKeys.PLACED_FEATURE, RegistryKeys.CONFIGURED_FEATURE));
+        });
         MalumAttributeRegistry.init();
         MalumParticleRegistry.init();
         MalumBlockRegistry.init();

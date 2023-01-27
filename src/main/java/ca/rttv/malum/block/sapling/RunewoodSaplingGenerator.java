@@ -8,6 +8,6 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 public class RunewoodSaplingGenerator extends SaplingGenerator {
     protected RegistryKey<ConfiguredFeature<?, ?>> getTreeFeature(RandomGenerator random, boolean bees) {
-        return MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE;
+        return MalumConfiguredFeatureRegistry.CONFIGURED_FEATURE_KEYS.get(MalumConfiguredFeatureRegistry.CONFIGURED_RUNEWOOD_TREE_FEATURE);
     }
 }
