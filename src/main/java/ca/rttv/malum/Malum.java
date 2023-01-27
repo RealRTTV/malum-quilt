@@ -80,8 +80,7 @@ public final class Malum implements ModInitializer {
                 Registry<ConfiguredFeature<?, ?>> configured = registries.get(RegistryKeys.CONFIGURED_FEATURE);
                 MalumConfiguredFeatureRegistry.init(configured);
                 MalumPlacedFeatureRegistry.init(configured, registries);
-                }
-                , Set.of(RegistryKeys.PLACED_FEATURE, RegistryKeys.CONFIGURED_FEATURE));
+                }, Set.of(RegistryKeys.PLACED_FEATURE, RegistryKeys.CONFIGURED_FEATURE));
         });
         MalumAttributeRegistry.init();
         MalumParticleRegistry.init();
