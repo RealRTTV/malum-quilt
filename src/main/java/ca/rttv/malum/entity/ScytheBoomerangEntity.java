@@ -45,6 +45,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
     public PlayerEntity owner;
     public int slot;
     public float damage;
+    public float magicDamage;
     public int age;
     public int returnAge = 8;
     public boolean returning;
@@ -97,6 +98,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
                     }
                 }
                 entity.damage(source, damage);
+                entity.damage(DamageSource.MAGIC, magicDamage);
             }
             returnAge += 4;
             entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), MalumSoundRegistry.SCYTHE_CUT, entity.getSoundCategory(), 1.0F, 0.9f + entity.world.random.nextFloat() * 0.2f);
@@ -195,8 +197,9 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         return owner;
     }
 
-    public void setData(float damage, UUID ownerUUID, int slot, ItemStack scythe) {
+    public void setData(float damage, float magicDamage, UUID ownerUUID, int slot, ItemStack scythe) {
         this.damage = damage;
+        this.magicDamage = magicDamage;
         this.ownerUUID = ownerUUID;
         this.slot = slot;
         this.scythe = scythe;
@@ -220,6 +223,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         }
         nbt.putInt("slot", slot);
         nbt.putFloat("damage", damage);
+        nbt.putFloat("magicDamage", magicDamage);
         nbt.putInt("age", age);
         nbt.putBoolean("returning", returning);
         nbt.putInt("returnAge", returnAge);
@@ -239,6 +243,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         }
         slot = nbt.getInt("slot");
         damage = nbt.getFloat("damage");
+        magicDamage = nbt.getFloat("magicDamage");
         age = nbt.getInt("age");
         returning = nbt.getBoolean("returning");
         returnAge = nbt.getInt("returnAge");
