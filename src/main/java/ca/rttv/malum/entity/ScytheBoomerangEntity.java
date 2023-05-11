@@ -98,7 +98,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
                     }
                 }
                 entity.damage(source, damage);
-                entity.damage(DamageSource.MAGIC, magicDamage);
+//                entity.damage(DamageSource.MAGIC, magicDamage);
             }
             returnAge += 4;
             entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), MalumSoundRegistry.SCYTHE_CUT, entity.getSoundCategory(), 1.0F, 0.9f + entity.world.random.nextFloat() * 0.2f);
