@@ -1,0 +1,18 @@
+{
+  "registry_name": "minecraft:ender_dragon",
+  "primary_type": "arcane",
+  "spirits": [
+    {
+      "spirit": "wicked",
+      "count": 5
+    },
+    {
+      "spirit": "arcane",
+      "count": 5
+    },
+    {
+      "spirit": "aerial",
+      "count": 5
+    }
+  ]
+}
