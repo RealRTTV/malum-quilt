@@ -170,7 +170,11 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
             if (age > 8) {
                 if (distance < 3f) {
                     if (isAlive()) {
-                        owner.giveItemStack(scythe);
+                        if (owner.getInventory().getEmptySlot() == -1) {
+                            owner.dropItem(scythe, true);
+                        } else {
+                            owner.giveItemStack(scythe);
+                        }
                         if (!owner.getAbilities().creativeMode) {
                             int cooldown = 100 - 25 * (EnchantmentHelper.getLevel(MalumEnchantments.REBOUND, scythe) - 1);
                             owner.getItemCooldownManager().set(scythe.getItem(), cooldown);
