@@ -1,0 +1,29 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:any_mod_loaded",
+      "values": ["bewitchment"]
+    }
+  ],
+  "type": "malum:spirit_repair",
+  "itemIdRegex": "silver_.+",
+  "modIdRegex": ".+",
+  "durabilityPercentage": 0.5,
+  "inputs": [
+    "bewitchment:athame"
+  ],
+  "repairMaterial": {
+    "item": "bewitchment:silver_ingot",
+    "count": 2
+  },
+  "spirits": [
+    {
+      "type": "arcane",
+      "count": 4
+    },
+    {
+      "type": "sacred",
+      "count": 4
+    }
+  ]
+}

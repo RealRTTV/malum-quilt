@@ -1,0 +1,24 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": ["create", "bewitchment"]
+    }
+  ],
+  "type": "create:splashing",
+  "ingredients": [
+    {
+      "item": "malum:silver_node"
+    }
+  ],
+  "results": [
+    {
+      "item": "bewitchment:silver_nugget",
+      "count": 6
+    },
+    {
+      "item": "minecraft:clay_ball",
+      "chance": 0.5
+    }
+  ]
+}
