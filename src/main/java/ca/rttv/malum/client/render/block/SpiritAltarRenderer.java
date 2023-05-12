@@ -22,6 +22,7 @@ public class SpiritAltarRenderer implements BlockEntityRenderer<SpiritAltarBlock
         if (world == null) {
             return;
         }
+        float angle = world.getTime() % 360 + tickDelta;
         ItemRenderer itemRenderer = client.getItemRenderer();
         DefaultedList<ItemStack> inventory = blockEntity.spiritSlots;
         for (int i = 0; i < inventory.size(); i++) {
@@ -30,7 +31,7 @@ public class SpiritAltarRenderer implements BlockEntityRenderer<SpiritAltarBlock
                 matrices.push();
                 Vec3f offset = new Vec3f(SpiritAltarBlockEntity.spiritOffset(blockEntity, i, tickDelta));
                 matrices.translate(offset.getX(), offset.getY(), offset.getZ());
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(angle * 3));
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 itemRenderer.renderItem(item, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
                 matrices.pop();
@@ -41,7 +42,7 @@ public class SpiritAltarRenderer implements BlockEntityRenderer<SpiritAltarBlock
             matrices.push();
             Vec3d offset = blockEntity.itemOffset();
             matrices.translate(offset.x, offset.y, offset.z);
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(angle * 3));
             matrices.scale(0.45f, 0.45f, 0.45f);
             itemRenderer.renderItem(stack, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
             matrices.pop();

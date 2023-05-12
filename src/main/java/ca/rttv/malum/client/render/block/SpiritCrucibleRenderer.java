@@ -27,6 +27,7 @@ public class SpiritCrucibleRenderer implements BlockEntityRenderer<SpiritCrucibl
         if (world == null) {
             return;
         }
+        float angle = world.getTime() % 360 + tickDelta;
         ItemRenderer itemRenderer = client.getItemRenderer();
         DefaultedList<ItemStack> inventory = blockEntity.spiritSlots;
         for (int i = 0; i < inventory.size(); i++) {
@@ -35,7 +36,7 @@ public class SpiritCrucibleRenderer implements BlockEntityRenderer<SpiritCrucibl
                 matrices.push();
                 Vec3d offset = SpiritCrucibleBlockEntity.spiritOffset(blockEntity, i, tickDelta);
                 matrices.translate(offset.x, offset.y, offset.z);
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3.0f)); // todo, fix the tickDelta lag
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(angle * 3.0f)); // todo, fix the tickDelta lag
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 itemRenderer.renderItem(item, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
                 matrices.pop();
@@ -46,7 +47,7 @@ public class SpiritCrucibleRenderer implements BlockEntityRenderer<SpiritCrucibl
             matrices.push();
             Vec3d offset = new Vec3d(0.5d, 0.6d, 0.5d);
             matrices.translate(offset.x, offset.y, offset.z);
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3.0f));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(angle * 3.0f));
             matrices.scale(0.45f, 0.45f, 0.45f);
             itemRenderer.renderItem(stack, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
             matrices.pop();

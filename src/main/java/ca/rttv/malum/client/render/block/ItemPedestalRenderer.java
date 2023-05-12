@@ -20,14 +20,15 @@ public class ItemPedestalRenderer implements BlockEntityRenderer<ItemPedestalBlo
         ItemRenderer itemRenderer = client.getItemRenderer();
         ItemStack stack = entity.getHeldItem();
         if (!stack.isEmpty() && world != null) {
+            float angle = world.getTime() % 360 + tickDelta;
             matrices.push();
             Vec3f offset = new Vec3f(entity.itemOffset());
             if (stack.getItem() instanceof SpiritItem) {
-                double y = Math.sin((world.getTime() + tickDelta) / 20f) * 0.1f;
+                double y = Math.sin(angle * 0.034906584F) * 0.1f;
                 matrices.translate(0, y, 0);
             }
             matrices.translate(offset.getX(), offset.getY(), offset.getZ());
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 3));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(angle * 3));
             matrices.scale(0.6f, 0.6f, 0.6f);
             itemRenderer.renderItem(stack, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
             matrices.pop();
