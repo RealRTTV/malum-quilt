@@ -231,7 +231,7 @@ public class SpiritJarBlockEntity extends ListInventoryBlockEntity {
             }
         } else if(type != null) {
             ItemStack grabbed = this.takeStack();
-            System.out.println(player.isSneaking());
+//            System.out.println(player.isSneaking());
             if (!player.world.isClient) {
                 if(grabbed != null) {
                     if(heldStack.isEmpty()){
