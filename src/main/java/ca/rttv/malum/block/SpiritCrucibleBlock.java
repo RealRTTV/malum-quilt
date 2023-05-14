@@ -123,8 +123,9 @@ public class SpiritCrucibleBlock extends BlockWithEntity implements Waterloggabl
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof SpiritCrucibleBlockEntity) {
+            if (blockEntity instanceof SpiritCrucibleBlockEntity crucibleBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
+                ItemScatterer.spawn(world, pos, crucibleBlockEntity.spiritSlots);
             }
 
             super.onStateReplaced(state, world, pos, newState, moved);
