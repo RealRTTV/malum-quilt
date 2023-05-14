@@ -17,13 +17,13 @@
               "source": "block_entity",
               "ops": [
                 {
-                  "source": "firstColor",
-                  "target": "display.firstColor",
+                  "source": "FirstColor",
+                  "target": "display.FirstColor",
                   "op": "replace"
                 },
                 {
-                  "source": "secondColor",
-                  "target": "display.secondColor",
+                  "source": "SecondColor",
+                  "target": "display.SecondColor",
                   "op": "replace"
                 }
               ]
