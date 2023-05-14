@@ -74,7 +74,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         spiritAmount = Math.max(1, MathHelper.lerp(0.1f, spiritAmount, getSpiritCount(spiritSlots)));
-        if (recipe != null && this.hasExtraItems(state, world, pos, this.getExtraItemsAndCacheAccelerators(state, world, pos), recipe)) {
+        List<ItemStack> extraItems = this.getExtraItemsAndCacheAccelerators(state, world, pos);
+        if (recipe != null && hasExtraItems(extraItems, recipe)) {
             if (spinUp < 10) {
                 spinUp++;
                 this.notifyListeners();
@@ -83,7 +84,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
                 int progressCap = (int) (300 * Math.exp(-0.15 * speed));
                 if (progress >= progressCap) {
                     recipe.craft(this);
-                    recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
+                    recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots, extraItems);
                     this.progress = 0;
                     this.notifyListeners();
                 }
@@ -160,7 +161,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
         } else {
             this.swapSlots(state, world, pos, player, hand, hit);
         }
-        recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), this.spiritSlots);
+        recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), this.spiritSlots, this.getExtraItemsAndCacheAccelerators(state, world, pos));
 
         return ActionResult.CONSUME;
     }
@@ -180,13 +181,14 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
                 player.setStackInHand(hand, this.spiritSlots.get(i));
                 this.spiritSlots.set(i, ItemStack.EMPTY);
                 this.notifyListeners();
-                this.recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
+                this.recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots,
+                    this.getExtraItemsAndCacheAccelerators(state, world, pos));
                 return;
             }
         }
     }
 
-    private boolean hasExtraItems(BlockState state, World world, BlockPos pos, List<ItemStack> extraItems, SpiritInfusionRecipe recipe) {
+    public static boolean hasExtraItems(List<ItemStack> extraItems, SpiritInfusionRecipe recipe) {
         for (IngredientWithCount.Entry entry : recipe.extraItems().getEntries()) {
             boolean found = false;
             for (ItemStack extraItem : extraItems) {
@@ -216,7 +218,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
                     handStack.decrement(maxAddition);
                 }
                 this.notifyListeners();
-                recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
+                recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots,
+                    this.getExtraItemsAndCacheAccelerators(state, world, pos));
                 return;
             }
         }

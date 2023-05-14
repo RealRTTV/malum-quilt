@@ -48,8 +48,9 @@ public record SpiritInfusionRecipe(Identifier id, String group, IngredientWithCo
         return null;
     }
 
-    public static SpiritInfusionRecipe getRecipe(World world, ItemStack stack, List<ItemStack> spirits) {
-        return getRecipe(world, recipe -> recipe.doesInputMatch(stack) && recipe.doSpiritsMatch(spirits));
+    public static SpiritInfusionRecipe getRecipe(World world, ItemStack stack, List<ItemStack> spirits, List<ItemStack> extraItems) {
+        return getRecipe(world,recipe ->
+            recipe.doesInputMatch(stack) && recipe.doSpiritsMatch(spirits) && SpiritAltarBlockEntity.hasExtraItems(extraItems, recipe));
     }
 
     public boolean doSpiritsMatch(List<ItemStack> spirits) {
