@@ -56,6 +56,8 @@ dependencies {
 	modImplementation(libs.qsl)
 	modImplementation(libs.emi) { transitive false }
 
+	modCompileOnly("maven.modrinth:enchanting-infuser:v4.0.3-1.19-Fabric")
+
 	modRuntimeOnly("maven.modrinth:sodium:mc1.19-0.4.2")
 	modRuntimeOnly("maven.modrinth:iris:1.19.x-v1.2.5")
 	modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
