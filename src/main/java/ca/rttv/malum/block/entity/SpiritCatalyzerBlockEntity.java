@@ -46,7 +46,6 @@ public class SpiritCatalyzerBlockEntity extends AbstractItemDisplayBlockEntity {
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         this.swapSlots(state, world, pos, player, hand, hit);
-        this.scheduledTick();
         return ActionResult.CONSUME;
     }
 
@@ -69,16 +68,7 @@ public class SpiritCatalyzerBlockEntity extends AbstractItemDisplayBlockEntity {
             this.getHeldItem().decrement(1);
             if (this.getHeldItem().isEmpty()) {
                 this.setStack(0, ItemStack.EMPTY);
-                this.scheduledTick();
             }
         }
-    }
-
-    public void scheduledTick() {
-        BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(possiblePos -> {
-            if (world.getBlockEntity(possiblePos) instanceof SpiritCrucibleBlockEntity spiritCrucibleBlockEntity) {
-                spiritCrucibleBlockEntity.accelerators = null;
-            }
-        });
     }
 }

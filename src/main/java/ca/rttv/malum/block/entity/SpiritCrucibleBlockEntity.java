@@ -41,6 +41,7 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_CRUCIBLE_BLOCK_ENTITY;
 
@@ -53,7 +54,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     @Nullable
     public SpiritRepairRecipe repairRecipe;
     @Nullable
-    Map<String, List<Pair<ICrucibleAccelerator, BlockPos>>> accelerators = null;
+    List<Pair<ICrucibleAccelerator, BlockPos>> accelerators = null;
     private float progress = 0.0f;
     private float speed = 0.0f;
     private int queuedCracks = 0;
@@ -138,24 +139,19 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
 //            }
 //        }
 
-        // bad code (i tried to make it efficient, it is but it's still heavy, especially if it has to re-cache) AND THIS RUNS  E V E R Y   T I C K, todo, fix this speed
         if (focusingRecipe != null) {
             if (accelerators == null) {
-                accelerators = new HashMap<>();
-                BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(possiblePos -> {
+                accelerators = new ArrayList<>();
+                StreamSupport.stream(BlockPos.iterateOutwards(pos, 4, 2, 4).spliterator(), false).filter(possiblePos -> {
                     BlockState state2 = world.getBlockState(possiblePos);
-                    if (state2.getBlock() instanceof ICrucibleAccelerator accelerator && (!state2.contains(SpiritCatalyzerBlock.HALF) || state2.get(SpiritCatalyzerBlock.HALF) == DoubleBlockHalf.UPPER) && accelerator.canAccelerate(possiblePos, world)) {
-                        List<Pair<ICrucibleAccelerator, BlockPos>> accs = accelerators.get(accelerator.name());
-                        if (accs != null && accs.size() <= 8) {
-                            accs.add(new Pair<>(accelerator, possiblePos.toImmutable()));
-                        } else {
-                            accelerators.put(accelerator.name(), new ArrayList<>(Collections.singleton(new Pair<>(accelerator, possiblePos.toImmutable()))));
-                        }
+                    if (state2.getBlock() instanceof ICrucibleAccelerator accelerator && (!state2.contains(SpiritCatalyzerBlock.HALF) || state2.get(SpiritCatalyzerBlock.HALF) == DoubleBlockHalf.UPPER)) {
+                        accelerators.add(new Pair<>(accelerator, possiblePos.toImmutable()));
                     }
-                });
+                    return accelerators.size() >= 8;
+                }).findFirst();
             }
 
-            int cnt = Math.min(accelerators.values().stream().flatMap(List::stream).filter(pair -> pair.getLeft().canAccelerate(pair.getRight(), world)).mapToInt(pair -> {
+            int cnt = Math.min(accelerators.stream().filter(pair -> pair.getLeft().canAccelerate(pair.getRight(), world)).mapToInt(pair -> {
                 pair.getLeft().tick(pair.getRight(), world);
                 return 1;
             }).sum(), SpiritCatalyzerBlock.SPEED_INCREASE.length - 1);
@@ -339,6 +335,10 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     @Override
     public BlockState getCachedState() {
         return super.getCachedState();
+    }
+
+    public void resetAccelerators() {
+        accelerators = null;
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {

@@ -1,6 +1,7 @@
 package ca.rttv.malum.block;
 
 import ca.rttv.malum.block.entity.SpiritCatalyzerBlockEntity;
+import ca.rttv.malum.block.entity.SpiritCrucibleBlockEntity;
 import ca.rttv.malum.util.block.entity.ICrucibleAccelerator;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
@@ -81,11 +82,6 @@ public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAc
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
-        ((SpiritCatalyzerBlockEntity) world.getBlockEntity(pos)).scheduledTick();
-    }
-
-    @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (state.get(HALF) == DoubleBlockHalf.UPPER) {
             world.scheduleBlockTick(pos, state.getBlock(), 1);
@@ -110,6 +106,12 @@ public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAc
             if (blockEntity instanceof SpiritCatalyzerBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
             }
+
+            BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(blockPos -> {
+                if (world.getBlockEntity(blockPos) instanceof SpiritCrucibleBlockEntity spiritCrucibleBlockEntity) {
+                    spiritCrucibleBlockEntity.resetAccelerators();
+                }
+            });
 
             super.onStateReplaced(state, world, pos, newState, moved);
         }
@@ -162,7 +164,9 @@ public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAc
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER).with(FACING, state.get(FACING)), 3);
         BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(blockPos -> {
-
+            if (world.getBlockEntity(blockPos) instanceof SpiritCrucibleBlockEntity spiritCrucibleBlockEntity) {
+                spiritCrucibleBlockEntity.resetAccelerators();
+            }
         });
     }
 
@@ -194,7 +198,11 @@ public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAc
 
     @Override
     public boolean canAccelerate(BlockPos pos, World world) {
-        return AbstractFurnaceBlockEntity.canUseAsFuel(((SpiritCatalyzerBlockEntity) world.getBlockEntity(pos)).getHeldItem());
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity == null) {
+            return false;
+        }
+        return AbstractFurnaceBlockEntity.canUseAsFuel(((SpiritCatalyzerBlockEntity) blockEntity).getHeldItem());
     }
 
     @Override
