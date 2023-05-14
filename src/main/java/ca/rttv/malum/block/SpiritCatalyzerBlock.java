@@ -37,9 +37,9 @@ import static ca.rttv.malum.registry.MalumBlockEntityRegistry.SPIRIT_CATALYZER_B
 
 @SuppressWarnings("deprecation")
 public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAccelerator {
-    public static final float[] DAMAGE_CHANCES = new float[]{0.2f,  0.25f, 0.3f,  0.4f, 0.45f, 0.5f, 0.6f, 0.8f};   // chance to damage
-    public static final   int[] DAMAGE_ROLLS   =   new int[]{1,     1,     1,     2,    2,     3,    3,    5   };  // damage rolls
-    public static final float[] SPEED_INCREASE = new float[]{0.25f, 0.5f,  0.75f, 1f,   1.5f,  2f,   3f,   8f  }; // speed increase
+    public static final float[] DAMAGE_CHANCES = new float[]{0f, 0.2f,  0.25f, 0.3f,  0.4f, 0.5f, 0.6f, 0.7f, 0.9f}; // chance to damage
+    public static final int[] DAMAGE_MAX_VALUE = new   int[]{0,  1,     2,     2,     3,    3,    4,    5,    6   }; // damage max value
+    public static final float[] SPEED_INCREASE = new float[]{0f, 0.25f, 0.5f,  0.75f, 1f,   1.5f, 2f,   3f,   8f  }; // speed increase
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     public static final VoxelShape LOWER_Z = VoxelShapes.union(

@@ -53,7 +53,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     @Nullable
     public SpiritRepairRecipe repairRecipe;
     @Nullable
-    Map<String, List<Pair<ICrucibleAccelerator, BlockPos>>> accelerators;
+    Map<String, List<Pair<ICrucibleAccelerator, BlockPos>>> accelerators = null;
     private float progress = 0.0f;
     private float speed = 0.0f;
     private int queuedCracks = 0;
@@ -140,7 +140,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
 
         // bad code (i tried to make it efficient, it is but it's still heavy, especially if it has to re-cache) AND THIS RUNS  E V E R Y   T I C K, todo, fix this speed
         if (focusingRecipe != null) {
-            if (accelerators == null || accelerators.isEmpty()) {
+            if (accelerators == null) {
                 accelerators = new HashMap<>();
                 BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(possiblePos -> {
                     BlockState state2 = world.getBlockState(possiblePos);
@@ -154,29 +154,23 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                     }
                 });
             }
-            speed = 0.0f;
-            accelerators.forEach((name, accs) -> {
-                accs.forEach(accelerator -> accelerator.getLeft().tick(accelerator.getRight(), world));
-                speed += SpiritCatalyzerBlock.SPEED_INCREASE[(int) accs.stream().filter(pair -> pair.getLeft().canAccelerate(pair.getRight(), world)).count() - 1];
-            });
+
+            int cnt = Math.min(accelerators.values().stream().flatMap(List::stream).filter(pair -> pair.getLeft().canAccelerate(pair.getRight(), world)).mapToInt(pair -> {
+                pair.getLeft().tick(pair.getRight(), world);
+                return 1;
+            }).sum(), SpiritCatalyzerBlock.SPEED_INCREASE.length - 1);
+            speed = SpiritCatalyzerBlock.SPEED_INCREASE[cnt];
             progress += speed + 1;
+
             if (progress >= focusingRecipe.time()) {
                 focusingRecipe.craft(this);
-                final int[] durabilityCost = {focusingRecipe.durabilityCost()};
-                accelerators.forEach((name, accs) -> {
-                    float chance = SpiritCatalyzerBlock.DAMAGE_CHANCES[accs.size() - 1];
-                    int rolls = SpiritCatalyzerBlock.DAMAGE_ROLLS[accs.size() - 1];
-                    for (int i = 0; i < rolls; i++) {
-                        if (world.random.nextFloat() <= chance) {
-                            durabilityCost[0]++;
-                            chance *= chance;
-                            continue;
-                        }
-                        break;
-                    }
-                });
-                queuedCracks += durabilityCost[0];
-                if (this.getHeldItem().damage(durabilityCost[0], world.random, null)) {
+
+                int durabilityCost = focusingRecipe.durabilityCost();
+                if (world.random.nextFloat() <= SpiritCatalyzerBlock.DAMAGE_CHANCES[cnt]) {
+                    durabilityCost += world.random.nextInt(SpiritCatalyzerBlock.DAMAGE_MAX_VALUE[cnt] + 1);
+                }
+                queuedCracks += durabilityCost;
+                if (this.getHeldItem().damage(durabilityCost, world.random, null)) {
                     Identifier id = Registry.ITEM.getId(this.getHeldItem().getItem());
                     this.setStack(0, Registry.ITEM.get(new Identifier(id.getNamespace(), "cracked_" + id.getPath())).getDefaultStack());
                 }
@@ -210,7 +204,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
         if (world == null) {
             return;
         }
-        
+
         Vec3d itemPos = new Vec3d(0.5d, 0.6d, 0.5d);
         //passive spirit particles
         if (!spiritSlots.isEmpty()) {
