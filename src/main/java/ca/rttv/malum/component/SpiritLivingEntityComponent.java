@@ -73,18 +73,6 @@ public class SpiritLivingEntityComponent implements AutoSyncedComponent {
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        tag.putFloat("soulHarvestProgress", soulHarvestProgress);
-        tag.putFloat("exposedSoul", exposedSoul);
-        tag.putBoolean("soulless", soulless);
-        tag.putBoolean("spawnerSpawned", spawnerSpawned);
-        if (ownerUuid != null) {
-            tag.putUuid("ownerUUID", ownerUuid);
-        }
-        if(spiritData != null)
-        spiritData.saveTo(tag);
-    }
-    @Override
-    public void writeToNbt(NbtCompound tag) {
         soulHarvestProgress = tag.getFloat("soulHarvestProgress");
         exposedSoul = tag.getFloat("exposedSoul");
         soulless = tag.getBoolean("soulless");
@@ -92,7 +80,21 @@ public class SpiritLivingEntityComponent implements AutoSyncedComponent {
         if (tag.contains("ownerUUID")) {
             ownerUuid = tag.getUuid("ownerUUID");
         }
-        if(MalumEntitySpiritData.readNbt(tag) != null)
-        spiritData = MalumEntitySpiritData.readNbt(tag);
+        if(MalumEntitySpiritData.readNbt(tag) != null) {
+            spiritData = MalumEntitySpiritData.readNbt(tag);
+        }
+    }
+    @Override
+    public void writeToNbt(NbtCompound tag) {
+        tag.putFloat("soulHarvestProgress", soulHarvestProgress);
+        tag.putFloat("exposedSoul", exposedSoul);
+        tag.putBoolean("soulless", soulless);
+        tag.putBoolean("spawnerSpawned", spawnerSpawned);
+        if (ownerUuid != null) {
+            tag.putUuid("ownerUUID", ownerUuid);
+        }
+        if(spiritData != null) {
+            spiritData.saveTo(tag);
+        }
     }
 }
