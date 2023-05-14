@@ -1,0 +1,37 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:any_mod_loaded",
+      "values": ["create"]
+    }
+  ],
+  "type": "malum:spirit_infusion",
+  "input": {
+    "item": "malum:alchemical_impetus",
+    "count": 1
+  },
+  "output": {
+    "item": "malum:zinc_impetus",
+    "count": 1
+  },
+  "extra_items": [
+    {
+      "item": "minecraft:gunpowder",
+      "count": 4
+    },
+    {
+      "item": "create:zinc_ingot",
+      "count": 6
+    }
+  ],
+  "spirits": [
+    {
+      "type": "earthen",
+      "count": 8
+    },
+    {
+      "type": "infernal",
+      "count": 8
+    }
+  ]
+}
