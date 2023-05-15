@@ -55,6 +55,9 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     public SpiritRepairRecipe repairRecipe;
     @Nullable
     List<Pair<ICrucibleAccelerator, BlockPos>> accelerators = null;
+    @Nullable
+    private List<ItemStack> tabletStacks = null;
+    private Vec3d tabletItemPos = new Vec3d(0, 0, 0); // todo
     private float progress = 0.0f;
     private float speed = 0.0f;
     private int queuedCracks = 0;
@@ -66,44 +69,30 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     public SpiritCrucibleBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
-    public TabletBlockEntity getValidTablet() {
-        if (focusingRecipe == null && !getTablets().isEmpty()) {
-            for (TabletBlockEntity tablet : getTablets()) {
-                repairRecipe = SpiritRepairRecipe.getRecipe(world, this.getHeldItem(), spiritSlots, this.getTabletStacks());
-                if (repairRecipe != null) {
-                    return tablet;
-                }
-            }
+
+    public void searchRecipes(boolean checkFocusing) {
+        if (checkFocusing) {
+            focusingRecipe = SpiritFocusingRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
         }
-        return null;
-    }
-    public ArrayList<TabletBlockEntity> getTablets() {
-        ArrayList<TabletBlockEntity> twistedTablets = new ArrayList<>();
-        BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
-            if (world != null && world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock) {
-                twistedTablets.add(displayBlock);
+
+        if (focusingRecipe == null) {
+            if (tabletStacks == null) {
+                Map<Item, Integer> map = new LinkedHashMap<>();
+                BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(possiblePos -> {
+                    if (world != null && world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
+                        Item key = displayBlock.getHeldItem().getItem();
+                        Integer value = displayBlock.getHeldItem().getCount();
+                        map.merge(key, value, Integer::sum);
+                        tabletItemPos = displayBlock.itemOffset();
+                    }
+                });
+                tabletStacks = new ArrayList<>();
+                map.forEach((item, count) -> tabletStacks.add(new ItemStack(item, count)));
             }
-        });
-        return twistedTablets;
+            repairRecipe = SpiritRepairRecipe.getRecipe(world, this.getHeldItem(), spiritSlots, tabletStacks);
+        }
     }
 
-    public List<ItemStack> getTabletStacks() {
-        Map<Item, Integer> map = new LinkedHashMap<>();
-        BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
-            if (world != null && world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
-                Item key = displayBlock.getHeldItem().getItem();
-                Integer value = displayBlock.getHeldItem().getCount();
-                if (!map.containsKey(key)) {
-                    map.put(key, value);
-                } else {
-                    map.put(key, value + map.get(key));
-                }
-            }
-        });
-        List<ItemStack> stacks = new ArrayList<>();
-        map.forEach((item, count) -> stacks.add(new ItemStack(item, count)));
-        return stacks;
-    }
     public static Vec3d spiritOffset(SpiritCrucibleBlockEntity blockEntity, int slot, float tickDelta) {
         float distance = 0.75f + (float) Math.sin(blockEntity.spiritSpin / 20f) * 0.025f;
         float height = 0.75f;
@@ -117,15 +106,6 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
-        // todo, make only run on first tick
-
-        if (focusingRecipe == null) {
-            focusingRecipe = SpiritFocusingRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
-        }
-
-        if (repairRecipe == null) {
-            repairRecipe = SpiritRepairRecipe.getRecipe(world, this.getHeldItem(), spiritSlots, this.getTabletStacks());
-        }
 
 //        if (queuedCracks > 0) {
 //            crackTimer++;
@@ -172,17 +152,18 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                 }
                 progress = 0;
                 this.notifyListeners();
-                this.focusingRecipe = null;
+                searchRecipes(true);
             }
-        } else if (repairRecipe != null && this.getValidTablet() != null) {
+        } else if (repairRecipe != null) {
             ItemStack damagedItem = this.getHeldItem();
             int time = 400 + damagedItem.getDamage() * 5;
             progress++;
             if (progress >= time) {
                 repairRecipe.craft(this);
                 progress = 0;
+                tabletStacks = null;
                 this.notifyListeners();
-                this.repairRecipe = null;
+                searchRecipes(true);
             }
         }
 
@@ -221,7 +202,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
         if (repairRecipe != null) {
             ArrayList<Color> colors = new ArrayList<>();
             ArrayList<Color> endColors = new ArrayList<>();
-            if (this.getTabletStacks().get(0).getItem() instanceof SpiritItem spiritItem) {
+            if (tabletStacks != null && tabletStacks.get(0).getItem() instanceof SpiritItem spiritItem) {
                 colors.add(spiritItem.type.color);
                 endColors.add(spiritItem.type.endColor);
             } else if (!spiritSlots.isEmpty()) {
@@ -236,7 +217,6 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
             for (int i = 0; i < colors.size(); i++) {
                 Color color = colors.get(i);
                 Color endColor = endColors.get(i);
-                Vec3d tabletItemPos = this.getValidTablet().itemOffset();
                 Vec3d velocity = tabletItemPos.subtract(itemPos).normalize().multiply(-0.1f);
                 ParticleBuilders.create(MalumParticleRegistry.STAR_PARTICLE)
                         .setAlpha(0.24f / colors.size(), 0f)
@@ -344,6 +324,14 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
             }
         });
     }
+    public static void resetTablets(World world, BlockPos center) {
+        BlockPos.iterateOutwards(center, 4, 2, 4).forEach(blockPos -> {
+            if (world.getBlockEntity(blockPos) instanceof SpiritCrucibleBlockEntity spiritCrucibleBlockEntity) {
+                spiritCrucibleBlockEntity.tabletStacks = null;
+                spiritCrucibleBlockEntity.searchRecipes(false);
+            }
+        });
+    }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (player.getStackInHand(hand).getItem() instanceof SpiritItem) {
@@ -370,8 +358,8 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                     stack.increment(maxAddition);
                     handStack.decrement(maxAddition);
                 }
+                searchRecipes(true);
                 this.notifyListeners();
-                focusingRecipe = SpiritFocusingRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
                 return;
             }
         }
@@ -385,6 +373,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
         if (index == -1) return;
         this.spiritSlots.set(index, handStack);
         player.setStackInHand(hand, ItemStack.EMPTY);
+        searchRecipes(true);
         this.notifyListeners();
     }
 
@@ -398,7 +387,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
         ItemStack prevItem = getHeldItem();
         this.setStack(0, player.getStackInHand(hand));
         player.setStackInHand(hand, prevItem);
-        focusingRecipe = SpiritFocusingRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
+        searchRecipes(true);
     }
 
     private void grabSpirit(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -407,7 +396,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                 player.setStackInHand(hand, this.spiritSlots.get(i));
                 this.spiritSlots.set(i, ItemStack.EMPTY);
                 this.notifyListeners();
-                focusingRecipe = SpiritFocusingRecipe.getRecipe(world, this.getHeldItem(), spiritSlots);
+                searchRecipes(true);
                 return;
             }
         }

@@ -1,5 +1,6 @@
 package ca.rttv.malum.block;
 
+import ca.rttv.malum.block.entity.SpiritCrucibleBlockEntity;
 import ca.rttv.malum.block.entity.TabletBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -113,6 +114,7 @@ public class TabletBlock extends BlockWithEntity {
             if (blockEntity instanceof TabletBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
                 world.updateComparators(pos, this);
+                SpiritCrucibleBlockEntity.resetTablets(world, pos);
             }
 
             super.onStateReplaced(state, world, pos, newState, moved);
