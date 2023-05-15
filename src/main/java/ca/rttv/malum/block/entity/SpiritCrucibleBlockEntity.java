@@ -80,7 +80,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     public ArrayList<TabletBlockEntity> getTablets() {
         ArrayList<TabletBlockEntity> twistedTablets = new ArrayList<>();
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
-            if (world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock) {
+            if (world != null && world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock) {
                 twistedTablets.add(displayBlock);
             }
         });
@@ -90,7 +90,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     public List<ItemStack> getTabletStacks() {
         Map<Item, Integer> map = new LinkedHashMap<>();
         BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
-            if (world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
+            if (world != null && world.getBlockEntity(possiblePos) instanceof TabletBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
                 Item key = displayBlock.getHeldItem().getItem();
                 Integer value = displayBlock.getHeldItem().getCount();
                 if (!map.containsKey(key)) {
@@ -337,8 +337,12 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
         return super.getCachedState();
     }
 
-    public void resetAccelerators() {
-        accelerators = null;
+    public static void resetAccelerators(World world, BlockPos center) {
+        BlockPos.iterateOutwards(center, 4, 2, 4).forEach(blockPos -> {
+            if (world.getBlockEntity(blockPos) instanceof SpiritCrucibleBlockEntity spiritCrucibleBlockEntity) {
+                spiritCrucibleBlockEntity.accelerators = null;
+            }
+        });
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {

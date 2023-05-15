@@ -106,12 +106,7 @@ public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAc
             if (blockEntity instanceof SpiritCatalyzerBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
             }
-
-            BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(blockPos -> {
-                if (world.getBlockEntity(blockPos) instanceof SpiritCrucibleBlockEntity spiritCrucibleBlockEntity) {
-                    spiritCrucibleBlockEntity.resetAccelerators();
-                }
-            });
+            SpiritCrucibleBlockEntity.resetAccelerators(world, pos);
 
             super.onStateReplaced(state, world, pos, newState, moved);
         }
@@ -163,11 +158,7 @@ public class SpiritCatalyzerBlock extends BlockWithEntity implements ICrucibleAc
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER).with(FACING, state.get(FACING)), 3);
-        BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(blockPos -> {
-            if (world.getBlockEntity(blockPos) instanceof SpiritCrucibleBlockEntity spiritCrucibleBlockEntity) {
-                spiritCrucibleBlockEntity.resetAccelerators();
-            }
-        });
+        SpiritCrucibleBlockEntity.resetAccelerators(world, pos);
     }
 
     @Override
