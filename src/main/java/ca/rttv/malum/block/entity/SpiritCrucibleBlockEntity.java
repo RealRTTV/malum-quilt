@@ -192,7 +192,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     }
 
     public void clientTick(World world, BlockPos pos, BlockState state) {
-        spiritSpin += (1 + Math.cos(Math.sin(world.getTime() * 0.1f))) * (1 + speed * 0.1f);
+        spiritSpin += (1 + Math.cos(Math.sin(world.getTime() % 710 * 0.1f))) * (1 + speed * 0.1f);
         passiveParticles();
     }
 
@@ -243,7 +243,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                         .setLifetime(15)
                         .setScale(0.45f + world.random.nextFloat() * 0.15f, 0)
                         .randomOffset(0.05)
-                        .setSpinOffset((0.075f * world.getTime()) % 6.28f)
+                        .setSpinOffset(world.getTime() % 710 * 0.075f)
                         .setColor(color, endColor)
                         .enableNoClip()
                         .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
@@ -253,17 +253,17 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                         .setLifetime(15)
                         .setScale(0.45f + world.random.nextFloat() * 0.15f, 0)
                         .randomOffset(0.05)
-                        .setSpinOffset((-0.075f * world.getTime()) % 6.28f)
+                        .setSpinOffset(world.getTime() % 710 * -0.075f)
                         .setColor(color, endColor)
                         .enableNoClip()
                         .repeat(world, tabletItemPos.x, tabletItemPos.y, tabletItemPos.z, 1);
 
                 ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
                         .setAlpha(0.4f / colors.size(), 0f)
-                        .setLifetime((int) (10 + world.random.nextInt(8) + Math.sin((0.5 * world.getTime()) % 6.28f)))
+                        .setLifetime((int) (10 + world.random.nextInt(8) + Math.sin(world.getTime() % 710 * 0.5)))
                         .setScale(0.2f + world.random.nextFloat() * 0.15f, 0)
                         .randomOffset(0.05)
-                        .setSpinOffset((0.075f * world.getTime() % 6.28f))
+                        .setSpinOffset(world.getTime() % 710 * 0.075f)
                         .setSpin(0.1f + world.random.nextFloat() * 0.05f)
                         .setColor(color.brighter(), endColor)
                         .setAlphaCurveMultiplier(0.5f)
@@ -303,7 +303,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                             .setLifetime(25)
                             .setScale(0.2f + world.random.nextFloat() * 0.1f, 0)
                             .randomOffset(0.05)
-                            .setSpinOffset((0.075f * world.getTime() % 6.28f))
+                            .setSpinOffset(world.getTime() % 710 * 0.075f)
                             .setColor(color, endColor)
                             .enableNoClip()
                             .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);
@@ -313,7 +313,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
                             .setLifetime(25)
                             .setScale(0.45f + world.random.nextFloat() * 0.1f, 0)
                             .randomOffset(0.05)
-                            .setSpinOffset((0.075f * world.getTime() % 6.28f))
+                            .setSpinOffset(world.getTime() % 710 * 0.075f)
                             .setColor(color, endColor)
                             .enableNoClip()
                             .repeat(world, itemPos.x, itemPos.y, itemPos.z, 1);

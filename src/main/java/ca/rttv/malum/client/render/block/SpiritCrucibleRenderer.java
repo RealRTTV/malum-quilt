@@ -36,7 +36,7 @@ public class SpiritCrucibleRenderer implements BlockEntityRenderer<SpiritCrucibl
                 matrices.push();
                 Vec3d offset = SpiritCrucibleBlockEntity.spiritOffset(blockEntity, i, tickDelta);
                 matrices.translate(offset.x, offset.y, offset.z);
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(angle * 3.0f)); // todo, fix the tickDelta lag
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(angle * 3.0f));
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 itemRenderer.renderItem(item, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
                 matrices.pop();

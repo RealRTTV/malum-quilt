@@ -77,7 +77,7 @@ public class EtherBlockEntity extends BlockEntity {
                 .setColor(firstColor, secondColor)
                 .setColorCurveMultiplier(0.8f)
                 .setColorEasing(Easing.CIRC_OUT)
-                .setSpinOffset((world.getTime() * 0.2f) % 6.28f)
+                .setSpinOffset(world.getTime() % 710 * 0.2f)
                 .setSpin(0, 0.4f)
                 .setSpinEasing(Easing.QUARTIC_IN)
                 .addMotion(0, velocity, 0)

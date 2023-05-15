@@ -600,7 +600,7 @@ public class ProgressionBookScreen extends Screen {
     public static float glow(float offset) {
         final MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return 0.0f;
-        return MathHelper.sin(offset + client.player.world.getTime() / 40f) / 2f + 0.5f;
+        return MathHelper.sin(offset + client.player.world.getTime() % 710 / 40f) / 2f + 0.5f;
     }
 
     public static void openScreen(boolean ignoreNextMouseClick) {

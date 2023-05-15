@@ -20,7 +20,7 @@ public class IridescentEtherWallStandingParticleEmitter implements ItemParticleE
         if (world == null) {
             return;
         }
-        float gameTime = world.getTime() + client.getTickDelta();
+        float gameTime = world.getTime() % 710 + client.getTickDelta();
         IridescentEtherWallStandingBlockItem etherItem = (IridescentEtherWallStandingBlockItem) stack.getItem();
         Color firstColor = new Color(etherItem.getFirstColor(stack));
         Color secondColor = new Color(etherItem.getSecondColor(stack));
@@ -31,7 +31,7 @@ public class IridescentEtherWallStandingParticleEmitter implements ItemParticleE
                 .setColor(firstColor, secondColor)
                 .setColorCurveMultiplier(1.25f)
                 .randomOffset(0.05f)
-                .setSpinOffset(0.025f * gameTime % 6.28f)
+                .setSpinOffset(0.025f * gameTime)
                 .setSpin(0, 1)
                 .setSpinEasing(Easing.EXPO_IN_OUT)
                 .setAlphaEasing(Easing.QUINTIC_IN)
@@ -40,7 +40,7 @@ public class IridescentEtherWallStandingParticleEmitter implements ItemParticleE
                 .repeat(x, y, 1)
                 .setScale((float) (0.75f - Math.sin(gameTime * 0.075f) * 0.125f), 0)
                 .setColor(secondColor, firstColor)
-                .setSpinOffset(0.785f-0.01f * gameTime % 6.28f)
+                .setSpinOffset(0.785f-0.01f * gameTime)
                 .repeat(x, y, 1);
     }
 }

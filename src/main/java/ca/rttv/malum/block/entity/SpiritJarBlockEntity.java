@@ -123,7 +123,7 @@ public class SpiritJarBlockEntity extends ListInventoryBlockEntity {
         if (this.getItem() instanceof SpiritItem item) {
             Vec3d vec = DataHelper.fromBlockPos(pos).add(new Vec3d(0.5f, 0.5f, 0.5f));
             double x = vec.x;
-            double y = vec.y + Math.sin(world.getTime() / 20f) * 0.1f;
+            double y = vec.y + Math.sin(world.getTime() % 710 / 20f) * 0.1f;
             double z = vec.z;
             SpiritHelper.spawnSpiritParticles(world, x, y, z, item.type.color, item.type.endColor);
         }
@@ -271,7 +271,7 @@ public class SpiritJarBlockEntity extends ListInventoryBlockEntity {
                 .randomOffset(0.1f, 0.1f)
                 .setColor(color, color.darker())
                 .enableNoClip()
-                .repeat(world, pos.getX()+0.5f, pos.getY()+0.5f + Math.sin(world.getTime() / 20f) * 0.2f, pos.getZ()+0.5f, 10);
+                .repeat(world, pos.getX()+0.5f, pos.getY()+0.5f + Math.sin(world.getTime() % 710 / 20f) * 0.2f, pos.getZ()+0.5f, 10);
     }
 
     @Override
