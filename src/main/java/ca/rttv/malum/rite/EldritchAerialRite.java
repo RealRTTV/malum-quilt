@@ -37,7 +37,7 @@ public class EldritchAerialRite extends Rite {
 
         StreamSupport.stream(BlockPos.iterateOutwards(pos.down(), 2, 0, 2).spliterator(), false).filter(fallingPos -> !fallingPos.up().equals(pos)).forEach(fallingPos -> {
             FallingBlockEntity.fall(world, fallingPos, world.getBlockState(fallingPos));
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            world.setBlockState(fallingPos, Blocks.AIR.getDefaultState());
             world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(fallingPos).x, new ChunkPos(fallingPos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 new MalumParticleS2CPacket(SpiritType.AERIAL_SPIRIT.color.getRGB(), fallingPos.getX() + 0.5d, fallingPos.getY() + 0.5d, fallingPos.getZ() + 0.5d).write(buf);
