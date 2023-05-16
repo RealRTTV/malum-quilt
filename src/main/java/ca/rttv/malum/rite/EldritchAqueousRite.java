@@ -9,6 +9,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 
+import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
 public class EldritchAqueousRite extends Rite {
@@ -16,17 +17,23 @@ public class EldritchAqueousRite extends Rite {
         super(items);
     }
 
+    private Iterator<BlockPos> posIterator;
+
     @Override
     public void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 40 != 0) {
+        if (tick % 20 != 0) {
             return;
         }
+        if (posIterator == null || !posIterator.hasNext()) {
+            posIterator = BlockPos.iterateOutwards(pos, 8, 8, 8).iterator();
+        }
 
-        StreamSupport.stream(BlockPos.iterateOutwards(pos, 8, 8, 8).spliterator(), false).filter(dripstonePos -> world.getBlockState(dripstonePos).getBlock() instanceof PointedDripstoneBlock).forEach(dripstonePos -> {
-            if (world.random.nextFloat() <= 0.1f) {
+        for (int i = 0; i < 128 && posIterator.hasNext(); ++i) {
+            BlockPos dripstonePos = posIterator.next();
+            if (world.getBlockState(dripstonePos).getBlock() instanceof PointedDripstoneBlock) {
                 world.getBlockState(dripstonePos).randomTick(world, dripstonePos, world.random);
             }
-        });
+        }
     }
 
     @Override
