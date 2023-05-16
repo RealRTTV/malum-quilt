@@ -50,12 +50,15 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
     public int progress;
     public int spinUp;
 
-    public LinkedHashMap<BlockPos, IAltarAccelerator> accelerators = new LinkedHashMap<>();
+    @Nullable
+    public LinkedHashMap<BlockPos, IAltarAccelerator> accelerators = null;
     public float spiritAmount;
     public float spiritSpin;
 
     @Nullable
     public SpiritInfusionRecipe recipe;
+    @Nullable
+    private List<ItemStack> extraItems = null;
     public final DefaultedList<ItemStack> heldItem = DefaultedList.ofSize(1, ItemStack.EMPTY);
     public final DefaultedList<ItemStack> spiritSlots = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
@@ -72,39 +75,104 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
         passiveParticles();
     }
 
+    public void searchRecipes(boolean rescanPedestals) {
+        if (getHeldItem().isEmpty() || spiritSlots.stream().filter(stack -> !stack.isEmpty()).findAny().isEmpty()) {
+            if (rescanPedestals) {
+                extraItems = null;
+            }
+            recipe = null;
+            progress = 0;
+            return;
+        }
+        if (accelerators == null) {
+            resetAccelerators();
+        }
+        if (rescanPedestals || extraItems == null) {
+            Map<Item, Integer> map = new LinkedHashMap<>();
+            BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(possiblePos -> {
+                if (world != null && world.getBlockEntity(possiblePos) instanceof AbstractItemDisplayBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
+                    Item key = displayBlock.getHeldItem().getItem();
+                    Integer value = displayBlock.getHeldItem().getCount();
+                    map.merge(key, value, Integer::sum);
+                }
+            });
+            extraItems = new ArrayList<>();
+            map.forEach((item, count) -> extraItems.add(new ItemStack(item, count)));
+        }
+        recipe = SpiritInfusionRecipe.getRecipe(world, getHeldItem(), spiritSlots, extraItems);
+    }
+
+    public static void updateAccelerator(World world, BlockPos center, IAltarAccelerator accelerator, boolean remove) {
+        BlockPos.iterateOutwards(center, 4, 2, 4).forEach(blockPos -> {
+            if (world.getBlockEntity(blockPos) instanceof SpiritAltarBlockEntity spiritAltarBlockEntity) {
+                if (spiritAltarBlockEntity.accelerators == null) {
+                    spiritAltarBlockEntity.resetAccelerators();
+                } else if (remove) {
+                    spiritAltarBlockEntity.accelerators.remove(center);
+                    spiritAltarBlockEntity.speed -= accelerator.getAcceleration();
+                } else {
+                    spiritAltarBlockEntity.accelerators.put(center, accelerator);
+                    spiritAltarBlockEntity.speed += accelerator.getAcceleration();
+                    spiritAltarBlockEntity.speed = spiritAltarBlockEntity.speed > 4 ? 4 : spiritAltarBlockEntity.speed;
+                }
+            }
+        });
+    }
+    private void resetAccelerators() {
+        if (world == null) {
+            return;
+        }
+        accelerators = new LinkedHashMap<>();
+        speed = 0;
+        BlockPos.iterateOutwards(pos, 4, 2, 4).forEach(possiblePos -> {
+            if (world.getBlockState(possiblePos).getBlock() instanceof IAltarAccelerator accelerator) {
+                if (!world.getBlockState(possiblePos).contains(ObeliskBlock.HALF) || world.getBlockState(possiblePos).get(ObeliskBlock.HALF) == DoubleBlockHalf.LOWER) {
+                    accelerators.put(possiblePos, accelerator);
+                    speed += accelerator.getAcceleration();
+                }
+            }
+        });
+        speed = speed > 4 ? 4 : speed;
+    }
+    public static void resetRecipes(World world, BlockPos center) {
+        BlockPos.iterateOutwards(center, 4, 2, 4).forEach(blockPos -> {
+            if (world.getBlockEntity(blockPos) instanceof SpiritAltarBlockEntity spiritAltarBlockEntity) {
+                spiritAltarBlockEntity.searchRecipes(true);
+            }
+        });
+    }
+
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
-        spiritAmount = Math.max(1, MathHelper.lerp(0.1f, spiritAmount, getSpiritCount(spiritSlots)));
-        List<ItemStack> extraItems = this.getExtraItemsAndCacheAccelerators(state, world, pos);
-        if (recipe != null && hasExtraItems(extraItems, recipe)) {
+        if (recipe != null) {
             if (spinUp < 10) {
                 spinUp++;
                 this.notifyListeners();
             }
-                progress += 1 + speed;
-                int progressCap = (int) (300 * Math.exp(-0.15 * speed));
-                if (progress >= progressCap) {
-                    recipe.craft(this);
-                    recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots, extraItems);
-                    this.progress = 0;
-                    this.notifyListeners();
-                }
+            progress += 1 + speed;
+            int progressCap = (int) (300 * Math.exp(-0.15 * speed));
+            if (progress >= progressCap) {
+                recipe.craft(this);
+                searchRecipes(true);
+                this.progress = 0;
+                this.notifyListeners();
+            }
         } else {
             progress = 0;
             if (spinUp > 0) {
                 spinUp--;
             }
         }
-
-        world.scheduleBlockTick(pos, state.getBlock(), 1);
     }
 
     public void passiveParticles() {
         Vec3d itemPos = itemPos(this);
         for (int i = 0; i < spiritSlots.size(); i++) {
             ItemStack item = spiritSlots.get(i);
-            for (IAltarAccelerator accelerator : accelerators.values()) {
-                if (accelerator != null) {
-                    accelerator.addParticles(pos, itemPos);
+            if (accelerators != null) {
+                for (IAltarAccelerator accelerator : accelerators.values()) {
+                    if (accelerator != null) {
+                        accelerator.addParticles(pos, itemPos);
+                    }
                 }
             }
             if (item.getItem() instanceof SpiritItem spiritSplinterItem && world != null) {
@@ -118,9 +186,11 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
                 if (recipe != null && !recipe.isEmpty()) {
                     Vec3d velocity = new Vec3d(x, y, z).subtract(itemPos).normalize().multiply(-0.03f);
                     float alpha = 0.07f /* / spiritSlots. */;
-                    for (IAltarAccelerator accelerator : accelerators.values()) {
-                        if (accelerator != null) {
-                            accelerator.addParticles(color, endColor, alpha, pos, itemPos);
+                    if (accelerators != null) {
+                        for (IAltarAccelerator accelerator : accelerators.values()) {
+                            if (accelerator != null) {
+                                accelerator.addParticles(color, endColor, alpha, pos, itemPos);
+                            }
                         }
                     }
                     ParticleBuilders.create(MalumParticleRegistry.WISP_PARTICLE)
@@ -161,7 +231,8 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
         } else {
             this.swapSlots(state, world, pos, player, hand, hit);
         }
-        recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), this.spiritSlots, this.getExtraItemsAndCacheAccelerators(state, world, pos));
+        spiritAmount = Math.max(1, MathHelper.lerp(0.1f, spiritAmount, getSpiritCount(spiritSlots)));
+        searchRecipes(false);
 
         return ActionResult.CONSUME;
     }
@@ -181,8 +252,6 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
                 player.setStackInHand(hand, this.spiritSlots.get(i));
                 this.spiritSlots.set(i, ItemStack.EMPTY);
                 this.notifyListeners();
-                this.recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots,
-                    this.getExtraItemsAndCacheAccelerators(state, world, pos));
                 return;
             }
         }
@@ -218,8 +287,6 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
                     handStack.decrement(maxAddition);
                 }
                 this.notifyListeners();
-                recipe = SpiritInfusionRecipe.getRecipe(world, this.getHeldItem(), spiritSlots,
-                    this.getExtraItemsAndCacheAccelerators(state, world, pos));
                 return;
             }
         }
@@ -234,33 +301,6 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
         this.spiritSlots.set(index, handStack);
         player.setStackInHand(hand, ItemStack.EMPTY);
         this.notifyListeners();
-    }
-
-    public List<ItemStack> getExtraItemsAndCacheAccelerators(BlockState state, World world, BlockPos pos) {
-        // id have to use a map because I don't think there's an @Override to equals on itemstack thus memory location equals
-        accelerators.clear();
-        speed = 0;
-        Map<Item, Integer> map = new LinkedHashMap<>();
-        BlockPos.iterate(pos.getX() - 4, pos.getY() - 2, pos.getZ() - 4, pos.getX() + 4, pos.getY() + 2, pos.getZ() + 4).forEach(possiblePos -> {
-            if (world.getBlockEntity(possiblePos) instanceof AbstractItemDisplayBlockEntity displayBlock && !displayBlock.getHeldItem().isEmpty()) {
-                Item key = displayBlock.getHeldItem().getItem();
-                Integer value = displayBlock.getHeldItem().getCount();
-                if (!map.containsKey(key)) {
-                    map.put(key, value);
-                } else {
-                    map.put(key, value + map.get(key));
-                }
-            } else if (world.getBlockState(possiblePos).getBlock() instanceof IAltarAccelerator accelerator) {
-                if (!world.getBlockState(possiblePos).contains(ObeliskBlock.HALF) || world.getBlockState(possiblePos).get(ObeliskBlock.HALF) == DoubleBlockHalf.LOWER) {
-                    accelerators.put(possiblePos, accelerator);
-                }
-            }
-        });
-        accelerators.forEach((accPos, accelerator) -> speed += accelerator.getAcceleration());
-        speed = speed > 4 ? 4 : speed;
-        ArrayList<ItemStack> stacks = new ArrayList<>();
-        map.forEach((item, count) -> stacks.add(new ItemStack(item, count)));
-        return stacks;
     }
 
     @Override
@@ -319,7 +359,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
         spinUp = nbt.getInt("spinUp");
         speed = nbt.getFloat("speed");
 
-        accelerators.clear();
+        accelerators = new LinkedHashMap<>();
         int amount = nbt.getInt("acceleratorAmount");
         for (int i = 0; i < amount; i++) {
             BlockPos pos = BlockHelper.loadBlockPos(nbt, String.valueOf(i));
@@ -346,7 +386,7 @@ public class SpiritAltarBlockEntity extends BlockEntity implements DefaultedInve
         nbt.putFloat("speed", speed);
         nbt.putFloat("spiritAmount", spiritAmount);
         // maybe unnecessary
-        if (!accelerators.isEmpty()) {
+        if (accelerators != null && !accelerators.isEmpty()) {
             nbt.putInt("acceleratorAmount", accelerators.size());
             List<BlockPos> accs = accelerators.keySet()
                                               .stream()

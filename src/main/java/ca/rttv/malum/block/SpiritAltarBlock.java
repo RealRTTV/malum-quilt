@@ -60,6 +60,7 @@ public class SpiritAltarBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         ((SpiritAltarBlockEntity) world.getBlockEntity(pos)).scheduledTick(state, world, pos, random);
+        world.scheduleBlockTick(pos, state.getBlock(), 1);
     }
 
     @Override

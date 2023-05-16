@@ -1,6 +1,7 @@
 package ca.rttv.malum.block;
 
 import ca.rttv.malum.block.entity.ItemStandBlockEntity;
+import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -68,6 +69,7 @@ public class ItemStandBlock extends BlockWithEntity implements Waterloggable {
             if (blockEntity instanceof ItemStandBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory)blockEntity);
                 world.updateComparators(pos, this);
+                SpiritAltarBlockEntity.resetRecipes(world, pos);
             }
 
             super.onStateReplaced(state, world, pos, newState, moved);

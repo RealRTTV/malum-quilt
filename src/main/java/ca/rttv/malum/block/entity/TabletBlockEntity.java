@@ -38,10 +38,4 @@ public class TabletBlockEntity extends AbstractItemDisplayBlockEntity {
         Vec3d directionVector = Vec3d.of(direction.getVector());
         return new Vec3d(0.5f + directionVector.x * 0.25f, 0.5f + directionVector.y * 0.4f, 0.5f + directionVector.z * 0.25f);
     }
-
-    @Override
-    public void notifyListeners() {
-        super.notifyListeners();
-        SpiritCrucibleBlockEntity.resetTablets(world, pos);
-    }
 }

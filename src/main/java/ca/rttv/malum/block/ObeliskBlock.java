@@ -1,5 +1,6 @@
 package ca.rttv.malum.block;
 
+import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import ca.rttv.malum.util.block.entity.IAltarAccelerator;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -108,6 +109,13 @@ public class ObeliskBlock extends Block implements Waterloggable, IAltarAccelera
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER).with(WATERLOGGED, world.getFluidState(pos.up()).getFluid() == Fluids.WATER), 3);
+        SpiritAltarBlockEntity.updateAccelerator(world, pos, this, false);
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        super.onStateReplaced(state, world, pos, newState, moved);
+        SpiritAltarBlockEntity.updateAccelerator(world, pos, this, true);
     }
 
     @Override

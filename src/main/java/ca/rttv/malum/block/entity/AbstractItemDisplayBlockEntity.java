@@ -76,6 +76,15 @@ public abstract class AbstractItemDisplayBlockEntity extends BlockEntity impleme
     }
 
     @Override
+    public void notifyListeners() {
+        DefaultedInventory.super.notifyListeners();
+        if (this instanceof TabletBlockEntity) {
+            SpiritCrucibleBlockEntity.resetTablets(world, pos);
+        }
+        SpiritAltarBlockEntity.resetRecipes(world, pos);
+    }
+
+    @Override
     public World getWorld() {
         return super.getWorld();
     }

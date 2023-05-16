@@ -2,6 +2,7 @@ package ca.rttv.malum.block;
 
 import ca.rttv.malum.block.entity.AbstractItemDisplayBlockEntity;
 import ca.rttv.malum.block.entity.ItemPedestalBlockEntity;
+import ca.rttv.malum.block.entity.SpiritAltarBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -63,6 +64,7 @@ public abstract class AbstractItemPedestalBlock extends BlockWithEntity implemen
             if (blockEntity instanceof AbstractItemDisplayBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory)blockEntity);
                 world.updateComparators(pos, this);
+                SpiritAltarBlockEntity.resetRecipes(world, pos);
             }
 
             super.onStateReplaced(state, world, pos, newState, moved);
