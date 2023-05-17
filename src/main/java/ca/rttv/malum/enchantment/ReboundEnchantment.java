@@ -35,6 +35,7 @@ public class ReboundEnchantment extends Enchantment {
                     player.setStackInHand(hand, ItemStack.EMPTY);
                     double baseDamage = player.getAttributes().getValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
                     double magicDamage = player.getAttributes().getValue(MalumAttributeRegistry.MAGIC_DAMAGE);
+                    double magicProficiency = player.getAttributeValue(MalumAttributeRegistry.MAGIC_PROFICIENCY);
                     float multiplier = 1.2f;
                     double damage = 1.0F + baseDamage * multiplier;
 
@@ -42,7 +43,7 @@ public class ReboundEnchantment extends Enchantment {
                     ScytheBoomerangEntity entity = new ScytheBoomerangEntity(world);
                     entity.setPos(player.getPos().x, player.getPos().y + player.getHeight() / 2f, player.getPos().z);
 
-                    entity.setData((float) damage, (float) magicDamage, player.getUuid(), slot, stack);
+                    entity.setData((float) damage, (float) magicDamage, (float) magicProficiency, player.getUuid(), slot, stack);
                     entity.getDataTracker().set(ScytheBoomerangEntity.SCYTHE, stack);
 
                     entity.shootFromRotation(player, player.getPitch(), player.getYaw(), 0.0F, (float) (1.5d + player.getAttributeValue(MalumAttributeRegistry.SCYTHE_PROFICIENCY) * 0.125f), 0F);

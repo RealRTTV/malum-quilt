@@ -30,10 +30,7 @@ public class TyrvingItem extends SwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         int lastDamageTaken = (int) target.lastDamageTaken;
         target.lastDamageTaken = 0;
-        int spiritSum = SpiritHelper.getSpiritItemStacks(target).stream()
-            .mapToInt(ItemStack::getCount)
-            .reduce(0, Integer::sum);
-        target.damage(DamageSource.magic(null, attacker), (float) ((spiritSum == 0 ? 3 : spiritSum) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
+        target.damage(DamageSource.magic(null, attacker), getSpiritDamage(target, (float) attacker.getAttributeValue(MAGIC_PROFICIENCY)));
         target.lastDamageTaken += lastDamageTaken;
         if ((TrinketsApi.getTrinketComponent(attacker).orElseThrow().isEquipped(NECKLACE_OF_THE_MYSTIC_MIRROR))) {
             TrinketsApi.getTrinketComponent(attacker).orElseThrow().forEach((slot, trinket) -> {
@@ -43,5 +40,12 @@ public class TyrvingItem extends SwordItem {
             });
         }
         return super.postHit(stack, target, attacker);
+    }
+
+    public static float getSpiritDamage(LivingEntity target, float attackerMagicProficiency) {
+        int spiritSum = SpiritHelper.getSpiritItemStacks(target).stream()
+            .mapToInt(ItemStack::getCount)
+            .reduce(0, Integer::sum);
+        return (spiritSum == 0 ? 3 : spiritSum) + 0.5f * attackerMagicProficiency;
     }
 }

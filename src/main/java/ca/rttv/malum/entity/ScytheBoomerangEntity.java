@@ -1,6 +1,7 @@
 package ca.rttv.malum.entity;
 
 import ca.rttv.malum.item.ScytheItem;
+import ca.rttv.malum.item.TyrvingItem;
 import ca.rttv.malum.registry.MalumEnchantments;
 import ca.rttv.malum.registry.MalumEntityRegistry;
 import ca.rttv.malum.registry.MalumSoundRegistry;
@@ -46,6 +47,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
     public int slot;
     public float damage;
     public float magicDamage;
+    public float magicProficiency;
     public int age;
     public int returnAge = 8;
     public boolean returning;
@@ -99,7 +101,8 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
                     }
                     float lastDamageTaken = livingentity.lastDamageTaken;
                     livingentity.lastDamageTaken = 0;
-                    entity.damage(DamageSource.magic(this, owner), magicDamage);
+                    entity.damage(DamageSource.magic(this, owner),
+                        scythe.getItem() instanceof TyrvingItem ? TyrvingItem.getSpiritDamage(livingentity, magicProficiency) : magicDamage);
                     livingentity.lastDamageTaken += lastDamageTaken;
                 }
             }
@@ -200,9 +203,10 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         return owner;
     }
 
-    public void setData(float damage, float magicDamage, UUID ownerUUID, int slot, ItemStack scythe) {
+    public void setData(float damage, float magicDamage, float magicProficiency, UUID ownerUUID, int slot, ItemStack scythe) {
         this.damage = damage;
         this.magicDamage = magicDamage;
+        this.magicProficiency = magicProficiency;
         this.ownerUUID = ownerUUID;
         this.slot = slot;
         this.scythe = scythe;
@@ -227,6 +231,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         nbt.putInt("slot", slot);
         nbt.putFloat("damage", damage);
         nbt.putFloat("magicDamage", magicDamage);
+        nbt.putFloat("magicProficiency", magicProficiency);
         nbt.putInt("age", age);
         nbt.putBoolean("returning", returning);
         nbt.putInt("returnAge", returnAge);
@@ -247,6 +252,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         slot = nbt.getInt("slot");
         damage = nbt.getFloat("damage");
         magicDamage = nbt.getFloat("magicDamage");
+        magicProficiency = nbt.getFloat("magicProficiency");
         age = nbt.getInt("age");
         returning = nbt.getBoolean("returning");
         returnAge = nbt.getInt("returnAge");
