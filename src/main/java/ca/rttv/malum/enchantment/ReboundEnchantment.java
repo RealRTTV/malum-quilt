@@ -36,7 +36,7 @@ public class ReboundEnchantment extends Enchantment {
                     double baseDamage = player.getAttributes().getValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
                     double magicDamage = player.getAttributes().getValue(MalumAttributeRegistry.MAGIC_DAMAGE);
                     float multiplier = 1.2f;
-                    double damage = 1.0F + (baseDamage + magicDamage) * multiplier;
+                    double damage = 1.0F + baseDamage * multiplier;
 
                     int slot = hand == Hand.OFF_HAND ? player.getInventory().size() - 1 : player.getInventory().selectedSlot;
                     ScytheBoomerangEntity entity = new ScytheBoomerangEntity(world);

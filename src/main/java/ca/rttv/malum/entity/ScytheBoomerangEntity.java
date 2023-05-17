@@ -89,6 +89,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
         boolean success = !entity.isInvulnerable();
         if (success) {
             if (!world.isClient) {
+                entity.damage(source, damage);
                 if (entity instanceof LivingEntity livingentity) {
                     scythe.damage(1, owner, (e) -> remove(RemovalReason.KILLED));
                     ItemHelper.applyEnchantments(owner, livingentity, scythe);
@@ -96,9 +97,11 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
                     if (i > 0) {
                         livingentity.setOnFireFor(i * 4);
                     }
+                    float lastDamageTaken = livingentity.lastDamageTaken;
+                    livingentity.lastDamageTaken = 0;
+                    entity.damage(DamageSource.MAGIC, magicDamage);
+                    livingentity.lastDamageTaken += lastDamageTaken;
                 }
-                entity.damage(source, damage);
-//                entity.damage(DamageSource.MAGIC, magicDamage);
             }
             returnAge += 4;
             entity.world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), MalumSoundRegistry.SCYTHE_CUT, entity.getSoundCategory(), 1.0F, 0.9f + entity.world.random.nextFloat() * 0.2f);
