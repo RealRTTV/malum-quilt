@@ -116,8 +116,8 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                         float maxHealth = (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).getValue();
                         float armor = (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR)).getValue();
 
-                        int left = window.getScaledWidth() / 2 - 91;
-                        int top = window.getScaledHeight() - 59;
+                        int left = window.getScaledWidth() / 2 - 102;
+                        int top = window.getScaledHeight() - 50;
 
                         if (armor == 0) {
                             top += 4;
