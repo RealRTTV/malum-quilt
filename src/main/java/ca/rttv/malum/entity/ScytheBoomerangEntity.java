@@ -99,7 +99,7 @@ public class ScytheBoomerangEntity extends ThrownItemEntity {
                     }
                     float lastDamageTaken = livingentity.lastDamageTaken;
                     livingentity.lastDamageTaken = 0;
-                    entity.damage(DamageSource.MAGIC, magicDamage);
+                    entity.damage(DamageSource.magic(this, owner), magicDamage);
                     livingentity.lastDamageTaken += lastDamageTaken;
                 }
             }

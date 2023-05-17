@@ -152,7 +152,7 @@ public final class SpiritHelper {
     public static void applySpiritDamage(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         int lastDamageTaken = (int) target.lastDamageTaken;
         target.lastDamageTaken = 0;
-        target.damage(DamageSource.MAGIC, (float) (attacker.getAttributeValue(MAGIC_DAMAGE) + (float) getHauntedDamage(stack) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
+        target.damage(DamageSource.magic(null, attacker), (float) (attacker.getAttributeValue(MAGIC_DAMAGE) + (float) getHauntedDamage(stack) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
         target.lastDamageTaken += lastDamageTaken;
         if ((TrinketsApi.getTrinketComponent(attacker).orElseThrow().isEquipped(NECKLACE_OF_THE_MYSTIC_MIRROR))) {
             TrinketsApi.getTrinketComponent(attacker).orElseThrow().forEach((slot, trinket) -> {

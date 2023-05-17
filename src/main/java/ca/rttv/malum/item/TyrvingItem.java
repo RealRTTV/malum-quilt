@@ -33,7 +33,7 @@ public class TyrvingItem extends SwordItem {
         int spiritSum = SpiritHelper.getSpiritItemStacks(target).stream()
             .mapToInt(ItemStack::getCount)
             .reduce(0, Integer::sum);
-        target.damage(DamageSource.MAGIC, (float) ((spiritSum == 0 ? 3 : spiritSum) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
+        target.damage(DamageSource.magic(null, attacker), (float) ((spiritSum == 0 ? 3 : spiritSum) + 0.5f * attacker.getAttributeValue(MAGIC_PROFICIENCY)));
         target.lastDamageTaken += lastDamageTaken;
         if ((TrinketsApi.getTrinketComponent(attacker).orElseThrow().isEquipped(NECKLACE_OF_THE_MYSTIC_MIRROR))) {
             TrinketsApi.getTrinketComponent(attacker).orElseThrow().forEach((slot, trinket) -> {
