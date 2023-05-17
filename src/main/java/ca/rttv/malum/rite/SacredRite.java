@@ -27,7 +27,7 @@ public class SacredRite extends Rite {
 
     @Override
     public void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 20 != 0) {
+        if (tick % 100 != 0) {
             return;
         }
 
@@ -45,20 +45,18 @@ public class SacredRite extends Rite {
 
     @Override
     public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 20 != 0) {
+        if (tick % 100 != 0) {
             return;
         }
 
-        world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), Entity::isLiving).forEach(entity -> {
-            if (world.random.nextFloat() <= 0.04f) {
-                if (entity.getBreedingAge() < 0) {
-                    world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
-                        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-                        new MalumParticleS2CPacket(SpiritType.SACRED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ()).write(buf);
-                        ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
-                    });
-                    entity.setBreedingAge(entity.getBreedingAge() + 25);
-                }
+        world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), entity -> entity.getBreedingAge() < 0).forEach(entity -> {
+            if (world.random.nextFloat() <= 0.2f) {
+                world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
+                    PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                    new MalumParticleS2CPacket(SpiritType.SACRED_SPIRIT.color.getRGB(), entity.getX(), entity.getY(), entity.getZ()).write(buf);
+                    ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
+                });
+                entity.setBreedingAge(entity.getBreedingAge() + 500);
             }
         });
     }

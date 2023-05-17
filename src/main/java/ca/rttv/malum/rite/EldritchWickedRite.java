@@ -29,13 +29,17 @@ public class EldritchWickedRite extends Rite {
 
     @Override
     public void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 20 != 0) {
+        if (tick % 60 != 0) {
             world.getEntitiesByClass(LivingEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), entity -> (!(entity instanceof PlayerEntity playerEntity) || !playerEntity.getAbilities().creativeMode)).forEach(entity -> entity.damage(MalumDamageSourceRegistry.VOODOO, 2.0f));
         }
     }
 
     @Override
     public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
+        if (tick % 20 != 0) {
+            return;
+        }
+
         List<AnimalEntity> list = world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), Entity::isLiving);
         if (list.size() < 30) {
             return;

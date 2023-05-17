@@ -3,6 +3,7 @@ package ca.rttv.malum.rite;
 import ca.rttv.malum.network.packet.s2c.play.MalumParticleS2CPacket;
 import ca.rttv.malum.util.spirit.SpiritType;
 import io.netty.buffer.Unpooled;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
@@ -25,11 +26,12 @@ public class EldritchEarthenRite extends Rite {
 
     @Override
     public void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 60 != 0) {
+        if (tick % 100 != 0) {
             return;
         }
 
-        StreamSupport.stream(BlockPos.iterateOutwards(pos.down(), 2, 0, 2).spliterator(), false).filter(possiblePos -> !possiblePos.up().equals(pos) && world.getBlockState(possiblePos).isOf(world.getBlockState(pos.down()).getBlock())).forEach(possiblePos -> {
+        Block targetBlock = world.getBlockState(pos.down()).getBlock();
+        StreamSupport.stream(BlockPos.iterateOutwards(pos.down(), 2, 0, 2).spliterator(), false).filter(possiblePos -> !possiblePos.up().equals(pos) && world.getBlockState(possiblePos).isOf(targetBlock)).forEach(possiblePos -> {
             world.breakBlock(possiblePos, true);
             world.getPlayers(players -> players.getWorld().isChunkLoaded(new ChunkPos(possiblePos).x, new ChunkPos(possiblePos).z)).forEach(players -> {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
@@ -41,7 +43,7 @@ public class EldritchEarthenRite extends Rite {
 
     @Override
     public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 20 != 0) {
+        if (tick % 100 != 0) {
             return;
         }
 

@@ -27,7 +27,7 @@ public class EarthenRite extends Rite {
 
     @Override
     public void onTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 20 != 0) {
+        if (tick % 60 != 0) {
             return;
         }
 
@@ -46,7 +46,7 @@ public class EarthenRite extends Rite {
 
     @Override
     public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 20 != 0) {
+        if (tick % 60 != 0) {
             return;
         }
 

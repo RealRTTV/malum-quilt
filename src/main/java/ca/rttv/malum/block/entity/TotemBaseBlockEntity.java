@@ -142,7 +142,7 @@ public class TotemBaseBlockEntity extends BlockEntity {
         if (rite == null) {
             return;
         }
-
+        // todo check this
         if (this.isCorrupt()) {
             rite.onCorruptTick(state, world, pos, random, ++tick);
         } else {

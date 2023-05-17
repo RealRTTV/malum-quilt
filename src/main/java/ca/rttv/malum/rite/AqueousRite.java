@@ -30,7 +30,7 @@ public class AqueousRite extends Rite {
         if (tick % 20 != 0) {
             return;
         }
-
+        // todo fix long reach, see https://github.com/JamiesWhiteShirt/reach-entity-attributes
         world.getEntitiesByClass(PlayerEntity.class, new Box(pos.subtract(new Vec3i(8, 8, 8)), pos.add(8, 8, 8)), player -> !player.isSpectator()).forEach(player -> {
             if (!player.hasStatusEffect(AQUEOUS_AURA)) {
                 world.getPlayers(players -> players.getWorld().isChunkLoaded(player.getChunkPos().x, player.getChunkPos().z)).forEach(players -> {
@@ -45,7 +45,7 @@ public class AqueousRite extends Rite {
 
     @Override
     public void onCorruptTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random, long tick) {
-        if (tick % 20 != 0) {
+        if (tick % 60 != 0) {
             return;
         }
 
@@ -57,7 +57,7 @@ public class AqueousRite extends Rite {
                     ServerPlayNetworking.send(players, new Identifier(MODID, "malumparticles2cpacket"), buf);
                 });
             }
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 200, 0));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 220, 0));
         });
     }
 }
