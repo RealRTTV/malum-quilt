@@ -55,10 +55,8 @@ public class EldritchSacredRite extends Rite {
             return;
         }
 
-        world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), entity -> entity.isLiving() && entity.getBreedingAge() != 0).stream()
-                                                                                                                                                                                 .limit(30)
-                                                                                                                                                                                 .forEach(entity ->
-            {
+        world.getEntitiesByClass(AnimalEntity.class, new Box(pos.add(-4, -4, -4), pos.add(4, 4, 4)), entity -> entity.getBreedingAge() == 0).stream()
+                .limit(30).forEach(entity -> {
             if (entity.canEat() && world.random.nextFloat() <= 0.05f) {
                 entity.setLoveTicks(600);
                 world.getPlayers(players -> players.getWorld().isChunkLoaded(entity.getChunkPos().x, entity.getChunkPos().z)).forEach(players -> {
