@@ -19,7 +19,6 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
-    "SeverPlayerInteractionManagerMixin",
     "StatusEffectMixin",
     "StatusEffectUtilMixin",
     "UnbreakingEnchantmentMixin",
@@ -28,7 +27,6 @@
   "client": [
     "BlockEntityRendererFactoriesMixin",
     "BoatEntityRendererMixin",
-    "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientRecipeBookMixin",
     "EnchantmentTargetMixin",

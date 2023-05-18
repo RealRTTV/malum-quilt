@@ -16,6 +16,7 @@ emi = "0.2.0+1.19"
 annotations = "1.0"
 qsl = "2.0.0-beta.10+1.19"
 quilted_fabric_api = "2.0.0-beta.4+0.57.0-1.19"
+reach_entity_attributes = "2.3.0"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -35,6 +36,7 @@ emi = { module = "dev.emi:emi", version.ref = "emi" }
 annotations = { module = "com.demonwav.mcdev:annotations", version.ref = "annotations" }
 qsl = { module = "org.quiltmc:qsl", version.ref = "qsl" }
 quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilted_fabric_api" }
+reach_entity_attributes = { module = "com.jamieswhiteshirt:reach-entity-attributes", version.ref = "reach_entity_attributes" }
 
 # If you have multiple similar dependencies, you can declare a dependency bundle and reference it on the build script with "libs.bundles.example".
 # [bundles]

@@ -14,6 +14,12 @@ repositories {
 		    includeGroup 'maven.modrinth'
 	    }
 	}
+	maven {
+		url "https://maven.jamieswhiteshirt.com/libs-release"
+		content {
+			includeGroup "com.jamieswhiteshirt"
+		}
+	}
 	maven { url 'https://maven.quiltmc.org/repository/snapshot' }
 	maven { url 'https://maven.terraformersmc.com' }
 	maven { url 'https://ladysnake.jfrog.io/artifactory/mods' }
@@ -55,6 +61,7 @@ dependencies {
 	modImplementation(libs.satin)
 	modImplementation(libs.qsl)
 	modImplementation(libs.emi) { transitive false }
+	modImplementation(libs.reach.entity.attributes)
 
 	modCompileOnly("maven.modrinth:enchanting-infuser:v4.0.3-1.19-Fabric")
 
@@ -67,6 +74,7 @@ dependencies {
 
 	include(libs.fabric.asm)
 	include(libs.satin)
+	include(libs.reach.entity.attributes)
 
 	implementation(libs.mixin.extras)
 	include(libs.mixin.extras)
