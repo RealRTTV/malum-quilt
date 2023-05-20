@@ -112,18 +112,19 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
             if (player != null && client.world != null && !player.isCreative() && !player.isSpectator()) {
                 float soulWard = MalumComponents.PLAYER_COMPONENT.get(player).soulWard;
                     if (soulWard > 0) {
-                        float absorb = MathHelper.ceil(player.getAbsorptionAmount());
-                        float maxHealth = (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).getValue();
-                        float armor = (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR)).getValue();
+                        int absorb = MathHelper.ceil(player.getAbsorptionAmount());
+                        int maxHealth = (int)Math.ceil(Math.max(player.getAttributeValue(EntityAttributes.GENERIC_MAX_HEALTH), player.getHealth()));
 
-                        int left = window.getScaledWidth() / 2 - 102;
-                        int top = window.getScaledHeight() - 50;
+                        int left = window.getScaledWidth() / 2 - 91;
+                        int top = window.getScaledHeight() - 59;
 
-                        if (armor == 0) {
-                            top += 4;
+                        if (player.getArmor() == 0) {
+                            top += 9;
                         }
-                        int healthRows = MathHelper.ceil((maxHealth + absorb) / 2.0F / 10.0F);
-                        int rowHeight = Math.max(10 - (healthRows - 2), 3);
+
+                        int healthRows = MathHelper.ceil((maxHealth + absorb) / 2.0F / 10.0F) - 1;
+                        int rowHeight = Math.max(10 - (healthRows - 1), 3);
+                        top -= healthRows * rowHeight;
 
                         matrices.push();
                         RenderSystem.depthMask(false);
@@ -137,9 +138,8 @@ public class ArcaneAffinity extends MalumSpiritAffinity {
                         shader.getUniformOrDefault("Speed").setFloat(550f);
                         shader.getUniformOrDefault("Intensity").setFloat(150f);
                         for (int i = 0; i < Math.ceil(soulWard / 3f); i++) {
-                            int row = (int) (Math.ceil(i) / 10f);
                             int x = left + i % 10 * 8;
-                            int y = top - row * 4 + rowHeight * 2 - 15;
+                            int y = top  - i / 10 * 9;
                             int progress = Math.min(3, (int) soulWard - i * 3);
                             int xTextureOffset = 1 + (3 - progress) * 15;
 
