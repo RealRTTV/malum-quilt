@@ -23,7 +23,7 @@ public class ItemPedestalRenderer implements BlockEntityRenderer<ItemPedestalBlo
             matrices.push();
             Vec3f offset = new Vec3f(entity.itemOffset());
             if (stack.getItem() instanceof SpiritItem) {
-                double y = Math.sin((world.getTime() % 710 + tickDelta) / 20f) * 0.1f;
+                double y = Math.sin((world.getTime() % 14200 + tickDelta) / 20f) * 0.1f;
                 matrices.translate(0, y, 0);
             }
             matrices.translate(offset.getX(), offset.getY(), offset.getZ());

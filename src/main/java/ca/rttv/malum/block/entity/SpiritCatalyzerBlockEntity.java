@@ -38,7 +38,7 @@ public class SpiritCatalyzerBlockEntity extends AbstractItemDisplayBlockEntity {
         if (this.getHeldItem().getItem() instanceof SpiritItem item) {
             Vec3d vec = DataHelper.fromBlockPos(pos).add(itemOffset());
             double x = vec.x;
-            double y = vec.y + Math.sin(world.getTime() % 710 / 20f) * 0.1f;
+            double y = vec.y + Math.sin(world.getTime() % 14200 / 20f) * 0.1f;
             double z = vec.z;
             SpiritHelper.spawnSpiritParticles(world, x, y, z, item.type.color, item.type.endColor);
         }

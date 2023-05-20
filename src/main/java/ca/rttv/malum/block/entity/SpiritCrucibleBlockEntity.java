@@ -173,7 +173,7 @@ public class SpiritCrucibleBlockEntity extends BlockEntity implements DefaultedI
     }
 
     public void clientTick(World world, BlockPos pos, BlockState state) {
-        spiritSpin += (1 + Math.cos(Math.sin(world.getTime() % 710 * 0.1f))) * (1 + speed * 0.1f);
+        spiritSpin += (1 + Math.cos(Math.sin(world.getTime() % 7100 * 0.1f))) * (1 + speed * 0.1f);
         passiveParticles();
     }
 
